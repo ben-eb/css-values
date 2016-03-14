@@ -1,0 +1,90 @@
+{
+  "name": "css-values",
+  "version": "0.0.0",
+  "description": "A work in progress CSS grammar parser & code generator.",
+  "main": "dist/run.js",
+  "scripts": {
+    "acquire": "node ./dist/acquire.js > ./data/data.json",
+    "generate": "node ./dist/run.js",
+    "pretest": "eslint src",
+    "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
+    "report": "nyc report --reporter=html",
+    "test": "nyc ava src/__tests__/*.js"
+  },
+  "keywords": [
+    "css"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer": "^6.3.3",
+    "babel-generator": "^6.7.2",
+    "babel-template": "^6.7.0",
+    "babel-traverse": "^6.7.3",
+    "babel-types": "^6.7.2",
+    "camelcase": "^2.1.1",
+    "chalk": "^1.1.1",
+    "html-entities": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "object-assign": "^4.0.1",
+    "postcss": "^5.0.19"
+  },
+  "devDependencies": {
+    "ava": "^0.13.0",
+    "babel-cli": "^6.5.1",
+    "babel-core": "^6.5.1",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-precompile-charcodes": "^1.0.0",
+    "babel-preset-es2015-loose": "^7.0.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.7.2",
+    "cheerio": "^0.20.0",
+    "coveralls": "^2.11.6",
+    "cross-env": "^1.0.7",
+    "del-cli": "^0.2.0",
+    "eslint": "^2.0.0",
+    "eslint-config-cssnano": "^2.0.0",
+    "got": "^6.2.0",
+    "ncp": "^2.0.0",
+    "nyc": "^6.0.0",
+    "postcss-value-parser": "^3.3.0"
+  },
+  "homepage": "https://github.com/ben-eb/css-values",
+  "author": {
+    "name": "Ben Briggs",
+    "email": "beneb.info@gmail.com",
+    "url": "http://beneb.info"
+  },
+  "repository": "ben-eb/css-values",
+  "files": [
+    "data/data.json",
+    "dist",
+    "LICENSE-MIT"
+  ],
+  "nyc": {
+    "exclude": [
+      "**/__tests__"
+    ]
+  },
+  "ava": {
+    "require": "babel-register"
+  },
+  "eslintConfig": {
+    "extends": "cssnano"
+  },
+  "babel": {
+    "presets": [
+      "es2015-loose",
+      "stage-0"
+    ],
+    "plugins": [
+      "add-module-exports",
+      "precompile-charcodes"
+    ],
+    "env": {
+      "development": {
+        "sourceMaps": "inline"
+      }
+    }
+  }
+}
