@@ -9,15 +9,12 @@ import prefixer from './prefixer';
 import ncp from 'ncp';
 import path from 'path';
 import * as fixtures from './fixtures';
+import percentage from './util/percentage';
 
 let stats = {
     parsed: 0,
     count: 0
 };
-
-function percentage (a, b) {
-    return ((a / b) * 100).toFixed(2);
-}
 
 function known (parsed) {
     return parsed.nodes.every(node => {
