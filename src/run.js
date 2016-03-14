@@ -204,7 +204,7 @@ Promise.all(promises).then(() => {
     test.end();
     console.log(`\n  Parsed: ${chalk.green(stats.parsed)} (${percentage(stats.parsed, stats.count)}%)`);
     console.log(`   Total: ${stats.count}`);
-    ncp(path.join(__dirname, '../src/validators'), path.join(__dirname, '../output/validators'), err => {
+    ncp(path.join(__dirname, './validators'), path.join(__dirname, '../output/validators'), err => {
         if (err) {
             return console.error(err);
         }
