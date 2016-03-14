@@ -8,6 +8,7 @@ import * as generator from './generator';
 import prefixer from './prefixer';
 import ncp from 'ncp';
 import path from 'path';
+import * as fixtures from './fixtures';
 
 let stats = {
     parsed: 0,
@@ -150,28 +151,28 @@ properties.forEach(property => {
                         };
 
                         if (hasInteger(parsed)) {
-                            opts.valid = opts.valid.concat(['10', '+10', '-10', '0', '+0', '-0']);
-                            opts.invalid = opts.invalid.concat(['12.0', '+---12', '3e4', '\\4E94', '_5']);
+                            opts.valid = opts.valid.concat(fixtures.integer.valid);
+                            opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
                         }
 
                         if (hasNumber(parsed)) {
-                            opts.valid = opts.valid.concat(['12', '4.01', '-456.8', '0.0', '+0.0', '-0.0', '.60', '10e3', '-3.4e-2']);
-                            opts.invalid = opts.invalid.concat(['12.', '+-12.2', '12.1.1']);
+                            opts.valid = opts.valid.concat(fixtures.number.valid);
+                            opts.invalid = opts.invalid.concat(fixtures.number.invalid);
                         }
 
                         if (hasPercentage(parsed)) {
-                            opts.valid = opts.valid.concat(['1%', '88%', '99.99%', '+100%']);
-                            opts.invalid = opts.invalid.concat(['12.%', '42.2.3.4.7.8.1.2%']);
+                            opts.valid = opts.valid.concat(fixtures.percentage.valid);
+                            opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
                         }
 
                         if (hasLength(parsed)) {
-                            opts.valid = opts.valid.concat(['0', '16px', '1pc', '2.34254645654324rem']);
-                            opts.invalid = opts.invalid.concat(['16.px', 'px16', 'one rem']);
+                            opts.valid = opts.valid.concat(fixtures.length.valid);
+                            opts.invalid = opts.invalid.concat(fixtures.length.invalid);
                         }
 
                         if (hasTime(parsed)) {
-                            opts.valid = opts.valid.concat(['2s', '1500ms', '0.75s']);
-                            opts.invalid = opts.invalid.concat(['2 seconds', '1000μs', '10.s']);
+                            opts.valid = opts.valid.concat(fixtures.time.valid);
+                            opts.invalid = opts.invalid.concat(fixtures.time.invalid);
                         }
 
                         test.write(generator.test(opts));
