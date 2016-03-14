@@ -1,6 +1,6 @@
 {
   "name": "css-values",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A work in progress CSS grammar parser & code generator.",
   "main": "dist/run.js",
   "scripts": {
