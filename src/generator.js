@@ -3,6 +3,7 @@ import generate from 'babel-generator';
 import * as t from 'babel-types';
 import traverse from 'babel-traverse';
 import flatten from 'flatten';
+import toStringLiteral from './util/toStringLiteral';
 
 let generateConditions = (...conditions) => {
     if (conditions.length === 1) {
@@ -66,11 +67,10 @@ export let plugin = () => {
         });
         var parsed = valueParser(parts[1]);
         var invalid = validators.some(validator => {
-            var valid = validator(parts[0], parsed);
-            if (typeof valid === 'undefined') {
-                return false;
+            if (!~validator.properties.indexOf(parts[0])) {
+                return;
             }
-            return !valid;
+            return !validator(parsed);
         });
         return !invalid;
     }
@@ -83,9 +83,7 @@ export let plugin = () => {
 
 export let property = opts => {
     const tmpl = template(`
-    module.exports = function (prop, parsed) {
-        PROPERTY;
-
+    module.exports = function (parsed) {
         var valid = true;
         var count = 0;
 
@@ -99,16 +97,14 @@ export let property = opts => {
     }
     `);
     
+    const properties = template(`module.exports.properties = EXPORTS;`)({
+        EXPORTS: t.arrayExpression(opts.properties.map(toStringLiteral))
+    });
+    
     let config = ['SEPARATOR', 'STRING', 'WORD'].reduce((list, key) => {
         list[key] = t.emptyStatement();
         return list;
     }, {});
-    
-    config.PROPERTY = template('if (inject) { return; }')({
-        inject: generateConditions.apply(null, opts.properties.map(prop => {
-            return template(`prop !== "${prop}"`)().expression;
-        }))
-    });
 
     config.COUNT = t.numericLiteral(opts.count);
 
@@ -120,7 +116,7 @@ export let property = opts => {
             conditions.push(template(`node.value !== "${opts.values[0]}"`)().expression);
         } else {
             conditions.push(template(`!~VALUES.indexOf(node.value)`)({
-                VALUES: t.arrayExpression(opts.values.map(value => t.stringLiteral(value)))
+                VALUES: t.arrayExpression(opts.values.map(toStringLiteral))
             }).expression);
         }
     }
@@ -153,7 +149,7 @@ export let property = opts => {
         config.SEPARATOR = template(`if (node.type === 'div' && node.value === "${opts.repeat.separator}") { count --; }`)();
     }
 
-    let program = t.program([ tmpl(config) ]);
+    let program = t.program([ tmpl(config), properties ]);
 
     traverse(program, {
         noScope: true,
