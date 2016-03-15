@@ -10,11 +10,37 @@ import ncp from 'ncp';
 import path from 'path';
 import * as fixtures from './fixtures';
 import percentage from './util/percentage';
+import arrayEqual from './util/arrayEqual';
 
 let stats = {
     parsed: 0,
     count: 0
 };
+
+function mergeProperties (data) {
+    return Object.keys(data).reduce((list, key) => {
+        let values = data[key];
+        if (!list.length) {
+            list.push({
+                properties: [key],
+                values: values
+            });
+        } else {
+            let copy = list.filter(property => {
+                return arrayEqual(property.values, values);
+            });
+            if (copy[0]) {
+                copy[0].properties.push(key);
+            } else {
+                list.push({
+                    properties: [key],
+                    values: values
+                });
+            }
+        }
+        return list;
+    }, []);
+}
 
 function known (parsed) {
     return parsed.nodes.every(node => {
@@ -110,10 +136,11 @@ properties.forEach(property => {
                     if (!Object.keys(results).length) {
                         results[property.name] = [];
                     }
-                    Object.keys(results).forEach(prop => {
-                        let result = results[prop];
-                        let propName = camelCase(prop);
-
+                    let merged = mergeProperties(results);
+                    merged.forEach(merge => {
+                        // Assume the specification property is on the bottom of the array
+                        let propName = camelCase(merge.properties.slice(0).reverse()[0]);
+                        
                         imported += generator.requireModule({
                             identifier: propName,
                             module: `./${group}/${propName}`
@@ -124,8 +151,8 @@ properties.forEach(property => {
                         let script = fs.createWriteStream(`output/properties/${group}/${propName}.js`);
 
                         script.write(generator.property({
-                            property: prop,
-                            values: result,
+                            properties: merge.properties,
+                            values: merge.values,
                             repeat: getRepeat(parsed),
                             length: hasLength(parsed),
                             integer: hasInteger(parsed),
@@ -142,8 +169,8 @@ properties.forEach(property => {
                         let test = fs.createWriteStream(`output/tests/${group}/${propName}.js`);
 
                         let opts = {
-                            property: prop,
-                            valid: result,
+                            properties: merge.properties,
+                            valid: merge.values,
                             invalid: []
                         };
 

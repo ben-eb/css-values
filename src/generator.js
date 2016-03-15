@@ -2,6 +2,7 @@ import template from 'babel-template';
 import generate from 'babel-generator';
 import * as t from 'babel-types';
 import traverse from 'babel-traverse';
+import flatten from 'flatten';
 
 let generateConditions = (...conditions) => {
     if (conditions.length === 1) {
@@ -83,9 +84,7 @@ export let plugin = () => {
 export let property = opts => {
     const tmpl = template(`
     module.exports = function (prop, parsed) {
-        if (prop !== PROPERTY) {
-            return;
-        }
+        PROPERTY;
 
         var valid = true;
         var count = 0;
@@ -104,8 +103,13 @@ export let property = opts => {
         list[key] = t.emptyStatement();
         return list;
     }, {});
+    
+    config.PROPERTY = template('if (inject) { return; }')({
+        inject: generateConditions.apply(null, opts.properties.map(prop => {
+            return template(`prop !== "${prop}"`)().expression;
+        }))
+    });
 
-    config.PROPERTY = t.stringLiteral(opts.property);
     config.COUNT = t.numericLiteral(opts.count);
 
     let conditions = [];
@@ -162,12 +166,12 @@ export let property = opts => {
 };
 
 export let test = opts => {
-    let tests = valid => {
+    let tests = (prop, valid) => {
         return value => {
             return t.objectExpression([
                 t.objectProperty(
                     t.identifier('fixture'),
-                    t.stringLiteral(`${opts.property}: ${value}`)
+                    t.stringLiteral(`${prop}: ${value}`)
                 ),
                 t.objectProperty(
                     t.identifier('valid'),
@@ -176,9 +180,11 @@ export let test = opts => {
             ]);
         };
     };
-
-    let values = opts.valid.map(tests(true)).concat(opts.invalid.map(tests(false)));
-    let out = t.arrayExpression(values);
+    
+    let out = t.arrayExpression(flatten(opts.properties.map(prop => {
+        const {valid, invalid} = opts;
+        return valid.map(tests(prop, true)).concat(invalid.map(tests(prop, false)));
+    })));
 
     let program = t.program([
         template('module.exports = EXPORTS;')({EXPORTS: out}),
