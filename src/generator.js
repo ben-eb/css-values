@@ -66,7 +66,7 @@ export let plugin = () => {
             return value.trim();
         });
         var parsed = valueParser(parts[1]);
-        var invalid = validators.some(validator => {
+        var invalid = validators.some(function (validator) {
             if (!~validator.properties.indexOf(parts[0])) {
                 return;
             }
@@ -177,13 +177,14 @@ export let test = opts => {
         };
     };
     
-    let out = t.arrayExpression(flatten(opts.properties.map(prop => {
-        const {valid, invalid} = opts;
-        return valid.map(tests(prop, true)).concat(invalid.map(tests(prop, false)));
-    })));
-
     let program = t.program([
-        template('module.exports = EXPORTS;')({EXPORTS: out}),
+        template('module.exports = EXPORTS;')({
+            EXPORTS: t.arrayExpression(flatten(opts.properties.map(prop => {
+                const valid   = opts.valid.map(tests(prop, true));
+                const invalid = opts.invalid.map(tests(prop, false));
+                return valid.concat(invalid);
+            })))
+        })
     ]);
 
     return warning() + generate(program).code;
