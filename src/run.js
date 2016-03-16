@@ -11,6 +11,7 @@ import path from 'path';
 import * as fixtures from './fixtures';
 import percentage from './util/percentage';
 import arrayEqual from './util/arrayEqual';
+import globals from './util/globals';
 
 let stats = {
     parsed: 0,
@@ -170,7 +171,7 @@ properties.forEach(property => {
 
                         let opts = {
                             properties: merge.properties,
-                            valid: merge.values,
+                            valid: merge.values.concat(globals),
                             invalid: []
                         };
 

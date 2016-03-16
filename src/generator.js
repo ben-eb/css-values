@@ -4,6 +4,7 @@ import * as t from 'babel-types';
 import traverse from 'babel-traverse';
 import flatten from 'flatten';
 import toStringLiteral from './util/toStringLiteral';
+import globals from './util/globals';
 
 let generateConditions = (...conditions) => {
     if (conditions.length === 1) {
@@ -66,6 +67,9 @@ export let plugin = () => {
             return value.trim();
         });
         var parsed = valueParser(parts[1]);
+        if (parsed.nodes.length === 1 && ~GLOBALS.indexOf(parsed.nodes[0].value)) {
+            return true;
+        }
         var invalid = validators.some(function (validator) {
             if (!~validator.properties.indexOf(parts[0])) {
                 return;
@@ -76,7 +80,9 @@ export let plugin = () => {
     }
     `);
     
-    let program = t.program([ tmpl() ]);
+    let program = t.program([ tmpl({
+        GLOBALS: t.arrayExpression(globals.map(toStringLiteral))
+    }) ]);
     
     return warning() + dependencies.join('') + generate(program).code;
 };
