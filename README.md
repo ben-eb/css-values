@@ -1,4 +1,4 @@
-# css-values [![Build Status](https://travis-ci.org/ben-eb/css-values.svg?branch=master)][ci] [![NPM version](https://badge.fury.io/js/css-values.svg)][npm]
+# css-values [![Build Status](https://travis-ci.org/ben-eb/css-values.svg?branch=master)][ci] [![NPM version](https://badge.fury.io/js/css-values.svg)][npm] [![Coverage Status](https://coveralls.io/repos/github/ben-eb/css-values/badge.svg?branch=master)](https://coveralls.io/github/ben-eb/css-values?branch=master)
 
 > A work in progress CSS grammar parser & code generator.
 
