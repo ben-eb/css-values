@@ -108,7 +108,7 @@ function getRepeat (parsed) {
 }
 
 let promises = [];
-let imported = '';
+let imported = [];
 let exported = [];
 
 properties.forEach(property => {
@@ -142,7 +142,7 @@ properties.forEach(property => {
                         // Assume the specification property is on the bottom of the array
                         let propName = camelCase(merge.properties.slice(0).reverse()[0]);
                         
-                        imported += generator.requireModule({
+                        imported.push({
                             identifier: propName,
                             module: `./${group}/${propName}`
                         });
@@ -216,11 +216,15 @@ properties.forEach(property => {
 });
 
 Promise.all(promises).then(() => {
+    let contents = generator.generateProgram([
+        generator.requireModules.apply(null, imported),
+        generator.exportModules(exported)
+    ]);
     let index = fs.createWriteStream(`output/properties/index.js`);
-    index.write(generator.warning() + imported + '\n\n' + generator.exportModules(exported));
+    index.write(contents);
     index.end();
     let index2 = fs.createWriteStream(`output/tests/index.js`);
-    index2.write(generator.warning() + imported + '\n\n' + generator.exportModules(exported));
+    index2.write(contents);
     index2.end();
     let plugin = fs.createWriteStream(`output/plugin.js`);
     plugin.write(generator.plugin());
