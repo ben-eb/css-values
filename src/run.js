@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import mkdirp from 'mkdirp';
 import camelCase from 'camelcase';
 import fs from 'fs';
-import * as generator from './generator';
+import * as generator from './generators/index';
 import prefixer from './prefixer';
 import ncp from 'ncp';
 import path from 'path';
@@ -216,7 +216,7 @@ properties.forEach(property => {
 });
 
 Promise.all(promises).then(() => {
-    let contents = generator.generateProgram([
+    let contents = generator.program([
         generator.requireModules.apply(null, imported),
         generator.exportModules(exported)
     ]);
