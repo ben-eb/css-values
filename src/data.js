@@ -11,7 +11,6 @@ const overrides = {
     // properties
     '-webkit-tap-highlight-color': '<color>#',
     'text-emphasis-style': 'none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>',
-    'transition-property': 'none | <single-transition-property>#',
     // syntaxes
     'feature-value-name': '<IDENT>',
     'single-animation-name': 'none | <IDENT>',

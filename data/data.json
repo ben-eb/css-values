@@ -6118,7 +6118,7 @@
                 "status": "standard"
             },
             "transition-property": {
-                "syntax": "none | &lt;single-transition-property&gt;# [ ‘,’ &lt;single-transition-property&gt;# ]*",
+                "syntax": "none | &lt;single-transition-property&gt;#",
                 "media": "visual",
                 "inherited": false,
                 "animatable": "no",
