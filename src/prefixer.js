@@ -15,7 +15,7 @@ function handleResults (results) {
     }, {});
 }
 
-export default (property, values) => {
+export default ({property, values}) => {
     let promises = values.reduce((properties, value) => {
         properties.push(pipe.process(`${property}:${value}`).then(result => {
             return result.root.nodes.reduce((list, node) => {

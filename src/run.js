@@ -1,13 +1,13 @@
 import {properties} from './data';
 import Parser from './parser';
 import chalk from 'chalk';
-import mkdirp from 'mkdirp';
+import mkdirp from 'mkdirp-promise';
 import camelCase from 'camelcase';
 import fs from 'fs';
 import * as generator from './generators/index';
 import prefixer from './prefixer';
 import ncp from 'ncp';
-import path from 'path';
+import {join} from 'path';
 import * as fixtures from './fixtures';
 import percentage from './util/percentage';
 import arrayEqual from './util/arrayEqual';
@@ -124,93 +124,89 @@ properties.forEach(property => {
     let group = property.groups.map(g => {
         return camelCase(g.replace('CSS', '').trim());
     })[0];
-    let promise = new Promise((resolve, reject) => {
-        return mkdirp(`output/properties/${group}`, err => {
-            if (err) {
-                return reject(err);
+    let promise = mkdirp(`output/properties/${group}`)
+        .then(`output/tests/${group}`)
+        .then(() => {
+            return {
+                property: property.name,
+                values: getExclusives(parsed)
+            };
+        })
+        .then(prefixer)
+        .then(results => {
+            if (!Object.keys(results).length) {
+                results[property.name] = [];
             }
-            return mkdirp(`output/tests/${group}`, err2 => {
-                if (err2) {
-                    return reject(err2);
-                }
-                return prefixer(property.name, getExclusives(parsed)).then(results => {
-                    if (!Object.keys(results).length) {
-                        results[property.name] = [];
-                    }
-                    let merged = mergeProperties(results);
-                    merged.forEach(merge => {
-                        // Assume the specification property is on the bottom of the array
-                        let propName = camelCase(merge.properties.slice(0).reverse()[0]);
-                        
-                        imported.push({
-                            identifier: propName,
-                            module: `./${group}/${propName}`
-                        });
-
-                        exported.push(propName);
-
-                        let script = fs.createWriteStream(`output/properties/${group}/${propName}.js`);
-
-                        script.write(generator.property({
-                            properties: merge.properties,
-                            values: merge.values,
-                            repeat: getRepeat(parsed),
-                            length: hasLength(parsed),
-                            integer: hasInteger(parsed),
-                            percentage: hasPercentage(parsed),
-                            number: hasNumber(parsed),
-                            time: hasTime(parsed),
-                            string: hasString(parsed),
-                            count: 1
-                        }));
-
-                        script.write('\n');
-                        script.end();
-
-                        let test = fs.createWriteStream(`output/tests/${group}/${propName}.js`);
-
-                        let opts = {
-                            properties: merge.properties,
-                            valid: merge.values.concat(globals),
-                            invalid: []
-                        };
-
-                        if (hasInteger(parsed)) {
-                            opts.valid = opts.valid.concat(fixtures.integer.valid);
-                            opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
-                        }
-
-                        if (hasNumber(parsed)) {
-                            opts.valid = opts.valid.concat(fixtures.number.valid);
-                            opts.invalid = opts.invalid.concat(fixtures.number.invalid);
-                        }
-
-                        if (hasPercentage(parsed)) {
-                            opts.valid = opts.valid.concat(fixtures.percentage.valid);
-                            opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
-                        }
-
-                        if (hasLength(parsed)) {
-                            opts.valid = opts.valid.concat(fixtures.length.valid);
-                            opts.invalid = opts.invalid.concat(fixtures.length.invalid);
-                        }
-
-                        if (hasTime(parsed)) {
-                            opts.valid = opts.valid.concat(fixtures.time.valid);
-                            opts.invalid = opts.invalid.concat(fixtures.time.invalid);
-                        }
-
-                        test.write(generator.test(opts));
-
-                        test.write('\n');
-                        test.end();
-                    });
-
-                    resolve();
+            let merged = mergeProperties(results);
+            merged.forEach(merge => {
+                // Assume the specification property is on the bottom of the array
+                let propName = camelCase(merge.properties.slice(0).reverse()[0]);
+                
+                imported.push({
+                    identifier: propName,
+                    module: `./${group}/${propName}`
                 });
+
+                exported.push(propName);
+
+                let script = fs.createWriteStream(`output/properties/${group}/${propName}.js`);
+
+                script.write(generator.property({
+                    properties: merge.properties,
+                    values: merge.values,
+                    repeat: getRepeat(parsed),
+                    length: hasLength(parsed),
+                    integer: hasInteger(parsed),
+                    percentage: hasPercentage(parsed),
+                    number: hasNumber(parsed),
+                    time: hasTime(parsed),
+                    string: hasString(parsed),
+                    count: 1
+                }));
+
+                script.write('\n');
+                script.end();
+
+                let test = fs.createWriteStream(`output/tests/${group}/${propName}.js`);
+
+                let opts = {
+                    properties: merge.properties,
+                    valid: merge.values.concat(globals),
+                    invalid: []
+                };
+
+                if (hasInteger(parsed)) {
+                    opts.valid = opts.valid.concat(fixtures.integer.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
+                }
+
+                if (hasNumber(parsed)) {
+                    opts.valid = opts.valid.concat(fixtures.number.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.number.invalid);
+                }
+
+                if (hasPercentage(parsed)) {
+                    opts.valid = opts.valid.concat(fixtures.percentage.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
+                }
+
+                if (hasLength(parsed)) {
+                    opts.valid = opts.valid.concat(fixtures.length.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.length.invalid);
+                }
+
+                if (hasTime(parsed)) {
+                    opts.valid = opts.valid.concat(fixtures.time.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.time.invalid);
+                }
+
+                test.write(generator.test(opts));
+
+                test.write('\n');
+                test.end();
             });
-        });
-    });
+        })
+        .catch(err => console.log(err));
 
     promises.push(promise);
 });
@@ -234,7 +230,7 @@ Promise.all(promises).then(() => {
     test.end();
     console.log(`\n  Parsed: ${chalk.green(stats.parsed)} (${percentage(stats.parsed, stats.count)}%)`);
     console.log(`   Total: ${stats.count}`);
-    ncp(path.join(__dirname, './validators'), path.join(__dirname, '../output/validators'), err => {
+    ncp(join(__dirname, './validators'), join(__dirname, '../output/validators'), err => {
         if (err) {
             return console.error(err);
         }
