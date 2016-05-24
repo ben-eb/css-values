@@ -125,7 +125,7 @@ properties.forEach(property => {
         return camelCase(g.replace('CSS', '').trim());
     })[0];
     let promise = mkdirp(`output/properties/${group}`)
-        .then(`output/tests/${group}`)
+        .then(mkdirp(`output/tests/${group}`))
         .then(() => {
             return {
                 property: property.name,
