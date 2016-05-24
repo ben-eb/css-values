@@ -1,21 +1,22 @@
-import {properties} from './data';
-import Parser from './parser';
 import chalk from 'chalk';
 import mkdirp from 'mkdirp-promise';
 import camelCase from 'camelcase';
 import fs from 'fs';
-import * as generator from './generators/index';
-import prefixer from './prefixer';
+import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
 import {join} from 'path';
-import * as fixtures from './fixtures';
+import * as generator from './generators/index';
 import percentage from './util/percentage';
-import arrayEqual from './util/arrayEqual';
 import globals from './util/globals';
+import {properties} from './data';
+import Parser from './parser';
+import prefixer from './prefixer';
+import * as fixtures from './fixtures';
 
 let stats = {
     parsed: 0,
-    count: 0
+    count: 0,
+    files: 0,
 };
 
 function mergeProperties (data) {
@@ -28,7 +29,7 @@ function mergeProperties (data) {
             });
         } else {
             let copy = list.filter(property => {
-                return arrayEqual(property.values, values);
+                return nanoEqual(property.values, values);
             });
             if (copy[0]) {
                 copy[0].properties.push(key);
@@ -138,20 +139,14 @@ properties.forEach(property => {
                 results[property.name] = [];
             }
             let merged = mergeProperties(results);
+            let config = [];
             merged.forEach(merge => {
                 // Assume the specification property is on the bottom of the array
-                let propName = camelCase(merge.properties.slice(0).reverse()[0]);
-                
-                imported.push({
-                    identifier: propName,
-                    module: `./${group}/${propName}`
-                });
+                let identifier = camelCase(merge.properties.slice(0).reverse()[0]);
 
-                exported.push(propName);
-
-                let script = fs.createWriteStream(`output/properties/${group}/${propName}.js`);
-
-                script.write(generator.property({
+                config.push({
+                    identifier,
+                    group,
                     properties: merge.properties,
                     values: merge.values,
                     repeat: getRepeat(parsed),
@@ -162,12 +157,9 @@ properties.forEach(property => {
                     time: hasTime(parsed),
                     string: hasString(parsed),
                     count: 1
-                }));
+                });
 
-                script.write('\n');
-                script.end();
-
-                let test = fs.createWriteStream(`output/tests/${group}/${propName}.js`);
+                let test = fs.createWriteStream(`output/tests/${group}/${identifier}.js`);
 
                 let opts = {
                     properties: merge.properties,
@@ -202,16 +194,65 @@ properties.forEach(property => {
 
                 test.write(generator.test(opts));
 
-                test.write('\n');
                 test.end();
             });
+            
+            return config;
         })
         .catch(err => console.log(err));
 
     promises.push(promise);
 });
 
-Promise.all(promises).then(() => {
+function canMergeValidators (a, b) {
+    return nanoEqual({
+        ...a,
+        properties: null,
+        identifier: null,
+        group: null,
+    }, {
+        ...b,
+        properties: null,
+        identifier: null,
+        group: null,
+    });
+}
+
+Promise.all(promises).then((configs) => {
+    const outputs = configs.reduce((list, configArray) => {
+        configArray.forEach(config => {
+            const canMerge = Object.keys(list).some(key => {
+                const value = list[key];
+                if (canMergeValidators(value, config)) {
+                    list[key].properties = [
+                        ...value.properties,
+                        ...config.properties,
+                    ];
+                    return true;
+                }
+                return false;
+            });
+            if (!canMerge) {
+                list[config.identifier] = config;
+            }
+        });
+        return list;
+    }, {});
+    Object.keys(outputs).forEach(output => {
+        stats.files ++;
+        const config = outputs[output];
+        imported.push({
+            identifier: config.identifier,
+            module: `./${config.group}/${config.identifier}`
+        });
+
+        exported.push(config.identifier);
+
+        let script = fs.createWriteStream(`output/properties/${config.group}/${config.identifier}.js`);
+
+        script.write(generator.property(config));
+        script.end();
+    });
     let contents = generator.program([
         generator.requireModules.apply(null, imported),
         generator.exportModules(exported)
@@ -229,7 +270,8 @@ Promise.all(promises).then(() => {
     test.write(generator.tests());
     test.end();
     console.log(`\n  Parsed: ${chalk.green(stats.parsed)} (${percentage(stats.parsed, stats.count)}%)`);
-    console.log(`   Total: ${stats.count}`);
+    console.log(`  Total: ${stats.count}`);
+    console.log(`  Files written: ${stats.files + 4}`);
     ncp(join(__dirname, './validators'), join(__dirname, '../output/validators'), err => {
         if (err) {
             return console.error(err);
