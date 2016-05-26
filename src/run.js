@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import mkdirp from 'mkdirp-promise';
 import camelCase from 'camelcase';
 import fs from 'fs';
@@ -6,7 +5,7 @@ import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
 import {join} from 'path';
 import * as generator from './generators/index';
-import percentage from './util/percentage';
+import * as log from './loggers/console';
 import formatGroup from './util/formatGroup';
 import globals from './util/globals';
 import {properties} from './data';
@@ -14,11 +13,7 @@ import Parser from './parser';
 import prefixer from './prefixer';
 import * as fixtures from './fixtures';
 
-let stats = {
-    parsed: 0,
-    count: 0,
-    files: 0,
-};
+let files = 0;
 
 function mergeProperties (data) {
     return Object.keys(data).reduce((list, key) => {
@@ -114,15 +109,13 @@ let imported = [];
 let exported = [];
 
 properties.forEach(property => {
-    stats.count ++;
     let parsed = new Parser(property.syntax);
     let hasUnknown = !known(parsed);
     if (hasUnknown) {
-        console.log(`${chalk.red(property.name)}: ${property.syntax}`);
+        log.fail(property.name, property.syntax, parsed);
         return;
     }
-    console.log(`${chalk.green(property.name)}: ${chalk.grey(property.syntax)}`);
-    stats.parsed ++;
+    log.pass(property.name, property.syntax, parsed);
     let group = property.groups.map(formatGroup)[0];
     let promise = mkdirp(`output/properties/${group}`)
         .then(mkdirp(`output/tests/${group}`))
@@ -159,6 +152,8 @@ properties.forEach(property => {
                 });
 
                 let test = fs.createWriteStream(`output/tests/${group}/${identifier}.js`);
+
+                files ++;
 
                 let opts = {
                     properties: merge.properties,
@@ -238,7 +233,7 @@ Promise.all(promises).then((configs) => {
         return list;
     }, {});
     Object.keys(outputs).forEach(output => {
-        stats.files ++;
+        files ++;
         const config = outputs[output];
         imported.push({
             identifier: config.identifier,
@@ -268,9 +263,7 @@ Promise.all(promises).then((configs) => {
     let test = fs.createWriteStream(`output/test.js`);
     test.write(generator.tests());
     test.end();
-    console.log(`\n  Parsed: ${chalk.green(stats.parsed)} (${percentage(stats.parsed, stats.count)}%)`);
-    console.log(`  Total: ${stats.count}`);
-    console.log(`  Files written: ${stats.files + 4}`);
+    log.total(files + 4);
     ncp(join(__dirname, './validators'), join(__dirname, '../output/validators'), err => {
         if (err) {
             return console.error(err);
