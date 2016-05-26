@@ -5,7 +5,7 @@ import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
 import {join} from 'path';
 import * as generator from './generators/index';
-import * as log from './loggers/console';
+import * as log from './loggers/html';
 import formatGroup from './util/formatGroup';
 import globals from './util/globals';
 import {properties} from './data';
