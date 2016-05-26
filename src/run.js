@@ -7,6 +7,7 @@ import ncp from 'ncp';
 import {join} from 'path';
 import * as generator from './generators/index';
 import percentage from './util/percentage';
+import formatGroup from './util/formatGroup';
 import globals from './util/globals';
 import {properties} from './data';
 import Parser from './parser';
@@ -122,9 +123,7 @@ properties.forEach(property => {
     }
     console.log(`${chalk.green(property.name)}: ${chalk.grey(property.syntax)}`);
     stats.parsed ++;
-    let group = property.groups.map(g => {
-        return camelCase(g.replace('CSS', '').trim());
-    })[0];
+    let group = property.groups.map(formatGroup)[0];
     let promise = mkdirp(`output/properties/${group}`)
         .then(mkdirp(`output/tests/${group}`))
         .then(() => {
