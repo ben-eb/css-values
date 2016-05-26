@@ -24,9 +24,7 @@ function mergeProperties (data) {
                 values: values
             });
         } else {
-            let copy = list.filter(property => {
-                return nanoEqual(property.values, values);
-            });
+            const copy = list.filter(prop => nanoEqual(prop.values, values));
             if (copy[0]) {
                 copy[0].properties.push(key);
             } else {
