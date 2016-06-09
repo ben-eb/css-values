@@ -124,8 +124,16 @@ const suite = [
     ["<'grid-column-gap'> <'grid-row-gap'>?", {
         nodes: [{
             type: 'data',
+            value: 'percentage',
+            exclusive: true
+        }, {
+            type: 'data',
             value: 'length',
             exclusive: false
+        }, {
+            type: 'data',
+            value: 'percentage',
+            exclusive: true
         }, {
             type: 'data',
             value: 'length',
@@ -154,4 +162,4 @@ const suite = [
     }]
 ];
 
-suite.forEach(spec => ava(spec[0], t => t.same(new Parser(spec[0]), spec[1])));
+suite.forEach(spec => ava(spec[0], t => t.deepEqual(new Parser(spec[0]), spec[1])));
