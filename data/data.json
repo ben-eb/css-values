@@ -3649,19 +3649,19 @@
       "status": "standard"
     },
     "grid-column-gap": {
-      "syntax": "&lt;length&gt;",
+      "syntax": "&lt;percentage&gt; | &lt;length&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
         "as": "length"
       },
-      "percentages": "no",
+      "percentages": "yes, as the dimension of the element",
       "groups": [
         "CSS Grid Layout"
       ],
       "initial": "<code>0</code>",
       "appliesto": "gridContainers",
-      "computed": "absoluteLength",
+      "computed": "percentageAsSpecifiedOrAbsoluteLength",
       "order": "uniqueOrder",
       "status": "standard"
     },
@@ -3741,19 +3741,19 @@
       "status": "standard"
     },
     "grid-row-gap": {
-      "syntax": "&lt;length&gt;",
+      "syntax": "&lt;percentage&gt; | &lt;length&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
         "as": "length"
       },
-      "percentages": "no",
+      "percentages": "yes, as the dimension of the element",
       "groups": [
         "CSS Grid Layout"
       ],
       "initial": "<code>0</code>",
       "appliesto": "gridContainers",
-      "computed": "absoluteLength",
+      "computed": "percentageAsSpecifiedOrAbsoluteLength",
       "order": "uniqueOrder",
       "status": "standard"
     },
@@ -6406,6 +6406,16 @@
       ],
       "status": "standard"
     },
+    "<custom-ident>": {
+      "groups": [
+        "CSS Will Change",
+        "CSS Counter Styles 3",
+        "CSS Lists and Counters",
+        "CSS Animations",
+        "CSS Types"
+      ],
+      "status": "standard"
+    },
     "<frequency>": {
       "groups": [
         "CSS Types"
@@ -6654,7 +6664,7 @@
     "translateX()": "translateX( &lt;length&gt; | &lt;percentage&gt; )",
     "translateY()": "translateY( &lt;length&gt; | &lt;percentage&gt; )",
     "translateZ()": "translateZ( &lt;length&gt; )",
-    "type-or-unit": "string | integer | color | url | integer | number | length | angle | time | frequency | em | ex | px | rem | vw | vh | vmin | vmax | mm | cm | in | pt | pc | deg | grad | rad | ms | s | Hz | kHz | %",
+    "type-or-unit": "string | integer | color | url | integer | number | length | angle | time | frequency | em | ex | px | rem | vw | vh | vmin | vmax | mm | q | cm | in | pt | pc | deg | grad | rad | ms | s | Hz | kHz | %",
     "viewport-length": "auto | &lt;length&gt; | &lt;percentage&gt;"
   },
   "atRules": {
@@ -7692,6 +7702,13 @@
       "status": "standard"
     },
     "pc": {
+      "groups": [
+        "CSS Units",
+        "CSS Lengths"
+      ],
+      "status": "standard"
+    },
+    "q": {
       "groups": [
         "CSS Units",
         "CSS Lengths"
