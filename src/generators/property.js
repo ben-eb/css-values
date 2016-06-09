@@ -10,7 +10,7 @@ let generateConditions = (...conditions) => {
     }
     return t.logicalExpression(
         '&&',
-        generateConditions.apply(null, conditions.slice(0, conditions.length - 1)),
+        generateConditions(...conditions.slice(0, conditions.length - 1)),
         conditions[conditions.length - 1]
     );
 };
@@ -44,14 +44,16 @@ export default opts => {
 
     let conditions = [];
     let dependencies = [];
+    let keywords = null;
 
     if (opts.values && opts.values.length) {
         if (opts.values.length === 1) {
             conditions.push(template(`node.value !== "${opts.values[0]}"`)().expression);
         } else {
-            conditions.push(template(`!~VALUES.indexOf(node.value)`)({
-                VALUES: t.arrayExpression(opts.values.map(toStringLiteral))
-            }).expression);
+            conditions.push(template(`!~keywords.indexOf(node.value)`)().expression);
+            keywords = template(`var keywords = INJECT;`)({
+                INJECT: arrayOfStrings(opts.values)
+            });
         }
     }
 
@@ -70,7 +72,7 @@ export default opts => {
     if (conditions.length) {
         config.WORD = template(`if (node.type === 'word') { inject; count++; }`)({
             inject: template('if (inject) { valid = false; return false; }')({
-                inject: generateConditions.apply(null, conditions)
+                inject: generateConditions(...conditions)
             })
         });
     }
@@ -82,9 +84,18 @@ export default opts => {
     if (opts.repeat && opts.repeat.separator) {
         config.SEPARATOR = template(`if (node.type === 'div' && node.value === "${opts.repeat.separator}") { count --; }`)();
     }
-    
+
+    if (keywords) {
+        return generateProgram([
+            requireModules(...dependencies),
+            [keywords],
+            tmpl(config),
+            properties
+        ]);
+    }
+
     return generateProgram([
-        requireModules.apply(null, dependencies),
+        requireModules(...dependencies),
         tmpl(config),
         properties
     ]);

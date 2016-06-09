@@ -13,9 +13,7 @@ export default contents => {
 
     traverse(script, {
         noScope: true,
-        EmptyStatement: function (path) {
-            path.remove();
-        }
+        EmptyStatement: path => path.remove()
     });
 
     return warning + generate(script).code + '\n';

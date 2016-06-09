@@ -21,7 +21,7 @@ function mergeProperties (data) {
         if (!list.length) {
             list.push({
                 properties: [key],
-                values: values
+                values
             });
         } else {
             const copy = list.filter(prop => nanoEqual(prop.values, values));
@@ -30,7 +30,7 @@ function mergeProperties (data) {
             } else {
                 list.push({
                     properties: [key],
-                    values: values
+                    values
                 });
             }
         }
@@ -246,7 +246,7 @@ Promise.all(promises).then((configs) => {
         script.end();
     });
     let contents = generator.program([
-        generator.requireModules.apply(null, imported),
+        generator.requireModules(...imported),
         generator.exportModules(exported)
     ]);
     let index = fs.createWriteStream(`output/properties/index.js`);
