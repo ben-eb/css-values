@@ -11,16 +11,15 @@ export default () => {
             return value.trim();
         });
         var parsed = valueParser(parts[1]);
-        if (parsed.nodes.length === 1 && ~GLOBALS.indexOf(parsed.nodes[0].value)) {
+        if (parsed.nodes.length === 1 && ~globals.indexOf(parsed.nodes[0].value)) {
             return true;
         }
-        var invalid = validators.some(function (validator) {
+        return validators.some(function (validator) {
             if (!~validator.properties.indexOf(parts[0])) {
                 return;
             }
-            return !validator(parsed);
+            return validator(parsed);
         });
-        return !invalid;
     }
     `);
 
@@ -32,8 +31,9 @@ export default () => {
             identifier: 'valueParser',
             module: 'postcss-value-parser'
         }),
-        tmpl({
-            GLOBALS: arrayOfStrings(globals)
-        })
+        template(`var globals = INJECT;`)({
+            INJECT: arrayOfStrings(globals)
+        }),
+        tmpl()
     ]);
 };
