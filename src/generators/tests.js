@@ -7,7 +7,7 @@ export default () => {
     suites.forEach(function (suite) {
         suite.forEach(function (test) {
             ava(test.fixture, function (t) {
-                t.same(plugin(test.fixture), test.valid);
+                t.deepEqual(plugin(test.fixture), test.valid);
             });
         });
     });

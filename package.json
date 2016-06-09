@@ -33,7 +33,7 @@
     "postcss": "^5.0.19"
   },
   "devDependencies": {
-    "ava": "^0.13.0",
+    "ava": "^0.15.0",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
     "babel-plugin-add-module-exports": "^0.1.2",
