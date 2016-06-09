@@ -1,6 +1,6 @@
 import template from 'babel-template';
 import * as t from 'babel-types';
-import toStringLiteral from '../util/toStringLiteral';
+import arrayOfStrings from '../util/arrayOfStrings';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
@@ -32,7 +32,7 @@ export default opts => {
     `);
     
     const properties = template(`module.exports.properties = EXPORTS;`)({
-        EXPORTS: t.arrayExpression(opts.properties.map(toStringLiteral))
+        EXPORTS: arrayOfStrings(opts.properties)
     });
     
     let config = ['SEPARATOR', 'STRING', 'WORD'].reduce((list, key) => {

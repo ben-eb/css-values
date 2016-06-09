@@ -1,9 +1,8 @@
 import template from 'babel-template';
-import * as t from 'babel-types';
 import generateProgram from './program';
 import requireModules from './requireModules';
 import globals from '../util/globals';
-import toStringLiteral from '../util/toStringLiteral';
+import arrayOfStrings from '../util/arrayOfStrings';
 
 export default () => {
     const tmpl = template(`
@@ -34,7 +33,7 @@ export default () => {
             module: 'postcss-value-parser'
         }),
         tmpl({
-            GLOBALS: t.arrayExpression(globals.map(toStringLiteral))
+            GLOBALS: arrayOfStrings(globals)
         })
     ]);
 };

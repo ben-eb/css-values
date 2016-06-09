@@ -132,6 +132,25 @@ const suite = [
             exclusive: false,
             optional: true
         }]
+    }],
+    ["normal | [<number> <integer>?]", {
+        nodes: [{
+            type: 'keyword',
+            value: 'normal',
+            exclusive: true
+        }, {
+            type: 'group',
+            nodes: [{
+                type: 'data',
+                value: 'number',
+                exclusive: false
+            }, {
+                type: 'data',
+                value: 'integer',
+                exclusive: false,
+                optional: true
+            }]
+        }]
     }]
 ];
 
