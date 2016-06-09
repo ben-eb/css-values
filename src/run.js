@@ -147,7 +147,7 @@ properties.forEach(property => {
 
                 let opts = {
                     properties: merge.properties,
-                    valid: merge.values.concat(globals),
+                    valid: merge.values.concat(globals).filter(Boolean),
                     invalid: [],
                 };
 
