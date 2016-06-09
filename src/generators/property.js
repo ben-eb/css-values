@@ -1,21 +1,120 @@
 import template from 'babel-template';
 import * as t from 'babel-types';
 import arrayOfStrings from '../util/arrayOfStrings';
+import capitalise from '../util/capitalise';
+import singleValue from '../util/singleValue';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
-let generateConditions = (...conditions) => {
-    if (conditions.length === 1) {
-        return conditions[0];
+function generateConditionsFactory (operator) {
+    return function generateConditions (...conditions) {
+        if (conditions.length === 1) {
+            return conditions[0];
+        }
+        return t.logicalExpression(
+            operator,
+            generateConditions(...conditions.slice(0, conditions.length - 1)),
+            conditions[conditions.length - 1]
+        );
+    };
+}
+
+const generateConditions = generateConditionsFactory('&&');
+const generateOrConditions = generateConditionsFactory('||');
+
+function templateExpression (tmpl, opts = {}) {
+    return template(tmpl)(opts).expression;
+}
+
+function getValues (candidates) {
+    return candidates.reduce((list, candidate) => {
+        if (candidate.type === 'keyword') {
+            list.push(candidate.value);
+        }
+        return list;
+    }, []);
+}
+
+function handleSingle (opts) {
+    const tmpl = template(`
+    module.exports = function (parsed) {
+        if (parsed.nodes.length === 1) {
+            var node  = parsed.nodes[0];
+            var type  = node.type;
+            var value = node.value;
+            return CONDITIONS;
+        }
+        return false;
     }
-    return t.logicalExpression(
-        '&&',
-        generateConditions(...conditions.slice(0, conditions.length - 1)),
-        conditions[conditions.length - 1]
-    );
-};
+    `);
+
+    let config = {STRING: null};
+
+    const properties = template(`module.exports.properties = EXPORTS;`)({
+        EXPORTS: arrayOfStrings(opts.properties)
+    });
+
+    const conditions = [];
+    const dependencies = [];
+    let keywords = null;
+
+    const values = getValues(opts.candidates);
+
+    if (values && values.length) {
+        if (values.length === 1) {
+            conditions.push(templateExpression(`value === "${values[0]}"`));
+        } else {
+            conditions.push(templateExpression(`~_pos0.indexOf(value)`));
+            keywords = template(`var _pos0 = INJECT;`)({
+                INJECT: arrayOfStrings(values.filter(Boolean))
+            });
+        }
+    }
+
+    const dataValues = opts.candidates.filter(c => c.type === 'data');
+    dataValues.forEach(({value}) => {
+        const camel = `is${capitalise(value)}`;
+        conditions.push(templateExpression(`${camel}(value)`));
+        dependencies.push({
+            identifier: camel,
+            module: `../../validators/${camel}`
+        });
+    });
+
+    if (opts.candidates.filter(c => c.type === 'string').length) {
+        config.STRING = templateExpression(`type === 'string'`);
+    }
+
+    if (conditions.length) {
+        config.CONDITIONS = generateOrConditions(...[
+            templateExpression(`type === 'word' && CONDITIONS`, {
+                CONDITIONS: generateOrConditions(...conditions)
+            }),
+            templateExpression(`type === 'function' && value === 'var'`),
+            config.STRING
+        ].filter(Boolean));
+    }
+
+    if (keywords) {
+        return generateProgram([
+            requireModules(...dependencies),
+            [keywords],
+            tmpl(config),
+            properties
+        ]);
+    }
+
+    return generateProgram([
+        requireModules(...dependencies),
+        tmpl(config),
+        properties
+    ]);
+}
 
 export default opts => {
+    if (singleValue(opts.candidates)) {
+        return handleSingle(opts);
+    }
     const tmpl = template(`
     module.exports = function (parsed) {
         var valid = true;
@@ -46,23 +145,23 @@ export default opts => {
     let dependencies = [];
     let keywords = null;
 
-    if (opts.values && opts.values.length) {
-        if (opts.values.length === 1) {
-            conditions.push(template(`node.value !== "${opts.values[0]}"`)().expression);
+    const values = getValues(opts.candidates);
+
+    if (values && values.length) {
+        if (values.length === 1) {
+            conditions.push(templateExpression(`node.value !== "${values[0]}"`));
         } else {
-            conditions.push(template(`!~keywords.indexOf(node.value)`)().expression);
-            keywords = template(`var keywords = INJECT;`)({
-                INJECT: arrayOfStrings(opts.values)
+            conditions.push(templateExpression(`!~_pos0.indexOf(node.value)`));
+            keywords = template(`var _pos0 = INJECT;`)({
+                INJECT: arrayOfStrings(values.filter(Boolean))
             });
         }
     }
 
-    ['length', 'integer', 'percentage', 'number', 'time'].forEach(type => {
-        if (!opts[type]) {
-            return;
-        }
-        const camel = 'is' + type[0].toUpperCase() + type.slice(1, type.length);
-        conditions.push(template(`!${camel}(node.value)`)().expression);
+    const dataValues = opts.candidates.filter(c => c.type === 'data');
+    dataValues.forEach(({value}) => {
+        const camel = `is${capitalise(value)}`;
+        conditions.push(templateExpression(`!${camel}(node.value)`));
         dependencies.push({
             identifier: camel,
             module: `../../validators/${camel}`

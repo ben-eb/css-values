@@ -8,6 +8,7 @@ import * as generator from './generators/index';
 import * as log from './loggers/html';
 import formatGroup from './util/formatGroup';
 import globals from './util/globals';
+import singleValue from './util/singleValue';
 import {properties} from './data';
 import Parser from './parser';
 import prefixer from './prefixer';
@@ -37,6 +38,12 @@ function mergeProperties (data) {
         return list;
     }, []);
 }
+
+/**
+ * This is a temporary function to be removed
+ * once generation of all functions has been
+ * achieved.
+ */
 
 function known (parsed) {
     return parsed.nodes.every(node => {
@@ -134,21 +141,6 @@ properties.forEach(property => {
                 // Assume the specification property is on the bottom of the array
                 let identifier = camelCase(merge.properties.slice(0).reverse()[0]);
 
-                config.push({
-                    identifier,
-                    group,
-                    properties: merge.properties,
-                    values: merge.values,
-                    repeat: getRepeat(parsed),
-                    length: hasLength(parsed),
-                    integer: hasInteger(parsed),
-                    percentage: hasPercentage(parsed),
-                    number: hasNumber(parsed),
-                    time: hasTime(parsed),
-                    string: hasString(parsed),
-                    count: 1
-                });
-
                 let test = fs.createWriteStream(`output/tests/${group}/${identifier}.js`);
 
                 files ++;
@@ -156,39 +148,67 @@ properties.forEach(property => {
                 let opts = {
                     properties: merge.properties,
                     valid: merge.values.concat(globals),
-                    invalid: []
+                    invalid: [],
                 };
 
-                if (hasInteger(parsed)) {
-                    opts.valid = opts.valid.concat(fixtures.integer.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
-                }
-
-                if (hasNumber(parsed)) {
-                    opts.valid = opts.valid.concat(fixtures.number.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.number.invalid);
-                }
-
-                if (hasPercentage(parsed)) {
-                    opts.valid = opts.valid.concat(fixtures.percentage.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
-                }
+                let candidates = merge.values.map(value => {
+                    return {
+                        type: 'keyword',
+                        value,
+                    };
+                });
 
                 if (hasLength(parsed)) {
+                    candidates.push({type: 'data', value: 'length'});
                     opts.valid = opts.valid.concat(fixtures.length.valid);
                     opts.invalid = opts.invalid.concat(fixtures.length.invalid);
                 }
 
+                if (hasInteger(parsed)) {
+                    candidates.push({type: 'data', value: 'integer'});
+                    opts.valid = opts.valid.concat(fixtures.integer.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
+                }
+
+                if (hasPercentage(parsed)) {
+                    candidates.push({type: 'data', value: 'percentage'});
+                    opts.valid = opts.valid.concat(fixtures.percentage.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
+                }
+
+                if (hasNumber(parsed)) {
+                    candidates.push({type: 'data', value: 'number'});
+                    opts.valid = opts.valid.concat(fixtures.number.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.number.invalid);
+                }
+
                 if (hasTime(parsed)) {
+                    candidates.push({type: 'data', value: 'time'});
                     opts.valid = opts.valid.concat(fixtures.time.valid);
                     opts.invalid = opts.invalid.concat(fixtures.time.invalid);
                 }
 
-                test.write(generator.test(opts));
+                if (hasString(parsed)) {
+                    candidates.push({type: 'string', value: 'string'});
+                }
 
+                if (singleValue(candidates)) {
+                    opts.valid = opts.valid.concat('var(--someVar)');
+                }
+
+                config.push({
+                    identifier,
+                    group,
+                    properties: merge.properties,
+                    repeat: getRepeat(parsed),
+                    count: 1,
+                    candidates,
+                });
+
+                test.write(generator.test(opts));
                 test.end();
             });
-            
+
             return config;
         })
         .catch(err => console.log(err));
