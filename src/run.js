@@ -88,6 +88,7 @@ function hasDataValue (value) {
     };
 }
 
+let hasAngle = hasDataValue('angle');
 let hasLength = hasDataValue('length');
 let hasInteger = hasDataValue('integer');
 let hasPercentage = hasDataValue('percentage');
@@ -157,6 +158,12 @@ properties.forEach(property => {
                         value,
                     };
                 });
+
+                if (hasAngle(parsed)) {
+                    candidates.push({type: 'data', value: 'angle'});
+                    opts.valid = opts.valid.concat(fixtures.angle.valid);
+                    opts.invalid = opts.invalid.concat(fixtures.length.invalid);
+                }
 
                 if (hasLength(parsed)) {
                     candidates.push({type: 'data', value: 'length'});
