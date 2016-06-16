@@ -1,5 +1,5 @@
 import {unit} from 'postcss-value-parser';
-import endsWith from './endsWith';
+import endsWith from 'ends-with';
 
 export default num => {
     let int = unit(num);
