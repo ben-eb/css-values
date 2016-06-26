@@ -129,11 +129,11 @@ export default opts => {
         return count > COUNT ? false : valid;
     }
     `);
-    
+
     const properties = template(`module.exports.properties = EXPORTS;`)({
         EXPORTS: arrayOfStrings(opts.properties)
     });
-    
+
     let config = ['SEPARATOR', 'STRING', 'WORD'].reduce((list, key) => {
         list[key] = t.emptyStatement();
         return list;

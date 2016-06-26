@@ -18,7 +18,7 @@ export default opts => {
             ]);
         };
     };
-    
+
     return generateProgram([
         template('module.exports = EXPORTS;')({
             EXPORTS: t.arrayExpression(flatten(opts.properties.map(prop => {

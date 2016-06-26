@@ -12,7 +12,7 @@ export default () => {
         });
     });
     `);
-    
+
     return generateProgram([
         requireModules({
             identifier: 'ava',
