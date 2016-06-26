@@ -49,7 +49,6 @@
     "eslint": "^2.0.0",
     "eslint-config-cssnano": "^2.0.0",
     "got": "^6.2.0",
-    "ncp": "^2.0.0",
     "nyc": "^6.0.0",
     "postcss-value-parser": "^3.3.0"
   },
