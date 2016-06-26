@@ -3,12 +3,17 @@ import fs from 'fs';
 import {join} from 'path';
 import {inspect} from 'util';
 import HtmlEntities from 'html-entities';
+import completed from '../completed';
 
 const encode = new HtmlEntities.AllHtmlEntities().encode;
 
 const entries = [];
 
 export function pass (property, syntax, parsed) {
+    // Don't log properties that we completed
+    if (~completed.indexOf(property)) {
+        return;
+    }
     entries.push(`
     <h1 id="${camelCase(property)}"><a href="#${camelCase(property)}">${property}</a></h1>
     <p>${encode(syntax)}</p>
