@@ -11,6 +11,7 @@ const overrides = {
     // properties
     '-webkit-tap-highlight-color': '<color>#',
     'text-emphasis-style': 'none | [ [ filled | open ] || [ dot | circle | double-circle | triangle | sesame ] ] | <string>',
+    'text-indent': '[ <length> | <percentage> ] && hanging? && each-line?',
     // syntaxes
     'feature-value-name': '<IDENT>',
     'single-animation-name': 'none | <IDENT>',
