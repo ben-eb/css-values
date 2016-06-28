@@ -1,3 +1,5 @@
+import toDecimal from './util/toDecimal';
+
 const PIPE              = '|'.charCodeAt(0);
 const SPACE             = ' '.charCodeAt(0);
 const FEED              = '\f'.charCodeAt(0);
@@ -51,14 +53,9 @@ export default function tokenize (input) {
             break;
         case OPEN_CURLY:
             next = input.indexOf('}', pos + 1);
-
-            if (!~next) {
-                throw new Error('Missing closing curly brace }');
-            } else {
-                content = input.slice(pos + 1, next).split(',').map(n => parseInt(n, 10));
-                tokens.push(['range', {min: content[0], max: content[1]}]);
-                pos = next + 1;
-            }
+            const [min, max] = input.slice(pos + 1, next).split(',').map(toDecimal);
+            tokens.push(['range', {min, max}]);
+            pos = next + 1;
             break;
         case OPEN_PARENTHESES:
             tokens.push(['(', '(']);
@@ -89,10 +86,12 @@ export default function tokenize (input) {
             do {
                 next += 1;
                 code = input.charCodeAt(next);
-            } while ( code === SPACE   ||
-            code === TAB     ||
-            code === CR      ||
-            code === FEED );
+            } while (
+                code === SPACE ||
+                code === TAB   ||
+                code === CR    ||
+                code === FEED
+            );
 
             tokens.push(['space', input.slice(pos, next)]);
             pos = next - 1;
