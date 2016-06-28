@@ -37,7 +37,6 @@
     "ava": "^0.15.0",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
-    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-precompile-charcodes": "^1.0.0",
     "babel-preset-es2015-loose": "^7.0.0",
     "babel-preset-stage-0": "^6.5.0",
@@ -81,7 +80,6 @@
       "stage-0"
     ],
     "plugins": [
-      "add-module-exports",
       "precompile-charcodes"
     ],
     "env": {
