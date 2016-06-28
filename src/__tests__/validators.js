@@ -2,6 +2,7 @@ import test from 'ava';
 import angle from '../validators/isAngle';
 import integer from '../validators/isInteger';
 import length from '../validators/isLength';
+import negative from '../validators/isNegative';
 import number from '../validators/isNumber';
 import percentage from '../validators/isPercentage';
 import time from '../validators/isTime';
@@ -11,6 +12,7 @@ const validators = {
     angle,
     integer,
     length,
+    negative,
     number,
     percentage,
     time,
