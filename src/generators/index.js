@@ -6,10 +6,10 @@ import generateRequireModules from './requireModules';
 import generateTest from './test';
 import generateTests from './tests';
 
-export let exportModules = generateExportModules;
-export let plugin = generatePlugin;
-export let program = generateProgram;
-export let property = generateProperty;
-export let requireModules = generateRequireModules;
-export let test = generateTest;
-export let tests = generateTests;
+export const exportModules = generateExportModules;
+export const plugin = generatePlugin;
+export const program = generateProgram;
+export const property = generateProperty;
+export const requireModules = generateRequireModules;
+export const test = generateTest;
+export const tests = generateTests;

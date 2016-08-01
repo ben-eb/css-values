@@ -1,7 +1,7 @@
-import camelCase from 'camelcase';
 import fs from 'fs';
 import {join} from 'path';
 import {inspect} from 'util';
+import camelCase from 'camelcase';
 import HtmlEntities from 'html-entities';
 import completed from '../completed';
 
