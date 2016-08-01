@@ -14,7 +14,7 @@ export default opts => {
                 t.objectProperty(
                     t.identifier('valid'),
                     t.identifier(valid ? 'true' : 'false')
-                )
+                ),
             ]);
         };
     };
@@ -25,7 +25,7 @@ export default opts => {
                 const valid   = opts.valid.map(tests(prop, true));
                 const invalid = opts.invalid.map(tests(prop, false));
                 return valid.concat(invalid);
-            })))
-        })
+            }))),
+        }),
     ]);
 };

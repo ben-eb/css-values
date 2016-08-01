@@ -1,8 +1,8 @@
 import template from 'babel-template';
-import generateProgram from './program';
-import requireModules from './requireModules';
 import globals from '../util/globals';
 import arrayOfStrings from '../util/arrayOfStrings';
+import generateProgram from './program';
+import requireModules from './requireModules';
 
 export default () => {
     const tmpl = template(`
@@ -26,14 +26,14 @@ export default () => {
     return generateProgram([
         requireModules({
             identifier: 'validators',
-            module: './properties/'
+            module: './properties/',
         }, {
             identifier: 'valueParser',
-            module: 'postcss-value-parser'
+            module: 'postcss-value-parser',
         }),
         template(`var globals = INJECT;`)({
-            INJECT: arrayOfStrings(globals)
+            INJECT: arrayOfStrings(globals),
         }),
-        tmpl()
+        tmpl(),
     ]);
 };

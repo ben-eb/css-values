@@ -14,10 +14,10 @@ const lengths = [
     'cm',
     'in',
     'pt',
-    'pc'
+    'pc',
 ];
 
 export default num => {
     let int = isNumber(num);
-    return int && (int.number === '0' || ~lengths.indexOf(int.unit)); 
+    return int && (int.number === '0' || ~lengths.indexOf(int.unit));
 };

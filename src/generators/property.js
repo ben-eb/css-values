@@ -51,7 +51,7 @@ function handleSingle (opts) {
     let config = {STRING: null};
 
     const properties = template(`module.exports.properties = EXPORTS;`)({
-        EXPORTS: arrayOfStrings(opts.properties)
+        EXPORTS: arrayOfStrings(opts.properties),
     });
 
     const conditions = [];
@@ -66,7 +66,7 @@ function handleSingle (opts) {
         } else {
             conditions.push(templateExpression(`~_pos0.indexOf(value)`));
             keywords = template(`var _pos0 = INJECT;`)({
-                INJECT: arrayOfStrings(values.filter(Boolean))
+                INJECT: arrayOfStrings(values.filter(Boolean)),
             });
         }
     }
@@ -77,7 +77,7 @@ function handleSingle (opts) {
         conditions.push(templateExpression(`${camel}(value)`));
         dependencies.push({
             identifier: camel,
-            module: `../../validators/${camel}`
+            module: `../../validators/${camel}`,
         });
     });
 
@@ -88,10 +88,10 @@ function handleSingle (opts) {
     if (conditions.length) {
         config.CONDITIONS = generateOrConditions(...[
             templateExpression(`type === 'word' && CONDITIONS`, {
-                CONDITIONS: generateOrConditions(...conditions)
+                CONDITIONS: generateOrConditions(...conditions),
             }),
             templateExpression(`type === 'function' && value === 'var'`),
-            config.STRING
+            config.STRING,
         ].filter(Boolean));
     }
 
@@ -100,14 +100,14 @@ function handleSingle (opts) {
             requireModules(...dependencies),
             [keywords],
             tmpl(config),
-            properties
+            properties,
         ]);
     }
 
     return generateProgram([
         requireModules(...dependencies),
         tmpl(config),
-        properties
+        properties,
     ]);
 }
 
@@ -131,7 +131,7 @@ export default opts => {
     `);
 
     const properties = template(`module.exports.properties = EXPORTS;`)({
-        EXPORTS: arrayOfStrings(opts.properties)
+        EXPORTS: arrayOfStrings(opts.properties),
     });
 
     let config = ['SEPARATOR', 'STRING', 'WORD'].reduce((list, key) => {
@@ -153,7 +153,7 @@ export default opts => {
         } else {
             conditions.push(templateExpression(`!~_pos0.indexOf(node.value)`));
             keywords = template(`var _pos0 = INJECT;`)({
-                INJECT: arrayOfStrings(values.filter(Boolean))
+                INJECT: arrayOfStrings(values.filter(Boolean)),
             });
         }
     }
@@ -164,15 +164,15 @@ export default opts => {
         conditions.push(templateExpression(`!${camel}(node.value)`));
         dependencies.push({
             identifier: camel,
-            module: `../../validators/${camel}`
+            module: `../../validators/${camel}`,
         });
     });
 
     if (conditions.length) {
         config.WORD = template(`if (node.type === 'word') { inject; count++; }`)({
             inject: template('if (inject) { valid = false; return false; }')({
-                inject: generateConditions(...conditions)
-            })
+                inject: generateConditions(...conditions),
+            }),
         });
     }
 
@@ -189,13 +189,13 @@ export default opts => {
             requireModules(...dependencies),
             [keywords],
             tmpl(config),
-            properties
+            properties,
         ]);
     }
 
     return generateProgram([
         requireModules(...dependencies),
         tmpl(config),
-        properties
+        properties,
     ]);
 };

@@ -2,7 +2,7 @@ import isNumber from './isNumber';
 
 const units = [
     's',
-    'ms'
+    'ms',
 ];
 
 export default num => {

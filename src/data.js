@@ -1,5 +1,5 @@
-import data from '../data/data.json';
 import HtmlEntities from 'html-entities';
+import data from '../data/data.json';
 
 const decode = new HtmlEntities.AllHtmlEntities().decode;
 
@@ -16,10 +16,10 @@ const overrides = {
     // syntaxes
     'feature-value-name': '<IDENT>',
     'single-animation-name': 'none | <IDENT>',
-    'single-transition-property': 'all | <IDENT>'
+    'single-transition-property': 'all | <IDENT>',
 };
 
-export let properties = Object.keys(data.properties).map(key => {
+export const properties = Object.keys(data.properties).map(key => {
     let syntax = positionGrammar(decode(data.properties[key].syntax));
     if (overrides[key]) {
         syntax = overrides[key];
@@ -27,7 +27,7 @@ export let properties = Object.keys(data.properties).map(key => {
     return {
         ...data.properties[key],
         name: key,
-        syntax: syntax
+        syntax: syntax,
     };
 });
 
@@ -38,13 +38,13 @@ export let properties = Object.keys(data.properties).map(key => {
 
 const filter = key => key !== 'image' && key !== 'image()';
 
-export let syntaxes = Object.keys(data.syntaxes).filter(filter).map(key => {
+export const syntaxes = Object.keys(data.syntaxes).filter(filter).map(key => {
     let syntax = positionGrammar(decode(data.syntaxes[key]));
     if (overrides[key]) {
         syntax = overrides[key];
     }
     return {
         name: key,
-        syntax: syntax
+        syntax: syntax,
     };
 });

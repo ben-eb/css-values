@@ -27,10 +27,7 @@ function invalidMacro (t, type, input) {
 }
 
 Object.keys(fixtures).forEach(key => {
-    if (key === '__esModule') {
-        return;
-    }
-    const fixture = fixtures[key];
+    const fixture = fixtures[key]; // eslint-disable-line
     fixture.valid.forEach(value => {
         test(`${value} (valid ${key})`, validMacro, key, value);
     });

@@ -10,6 +10,6 @@ export default exported => {
                 return t.identifier(`\n    ${value}\n`);
             }
             return t.identifier(`\n    ${value}`);
-        }))
+        })),
     });
 };

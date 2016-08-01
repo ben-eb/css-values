@@ -6,12 +6,12 @@ const suite = [
         nodes: [{
             type: 'keyword',
             value: 'block',
-            exclusive: true
+            exclusive: true,
         }, {
             type: 'keyword',
             value: 'inline',
-            exclusive: true
-        }]
+            exclusive: true,
+        }],
     }],
     ['<string>+', {
         nodes: [{
@@ -21,9 +21,9 @@ const suite = [
             repeat: {
                 min: 1,
                 max: false,
-                separator: ' '
-            }
-        }]
+                separator: ' ',
+            },
+        }],
     }],
     ['<time>#', {
         nodes: [{
@@ -33,21 +33,21 @@ const suite = [
             repeat: {
                 min: 1,
                 max: false,
-                separator: ','
-            }
-        }]
+                separator: ',',
+            },
+        }],
     }],
     ['<length> <length>?', {
         nodes: [{
             type: 'data',
             value: 'length',
-            exclusive: false
+            exclusive: false,
         }, {
             type: 'data',
             value: 'length',
             exclusive: false,
-            optional: true
-        }]
+            optional: true,
+        }],
     }],
     ['[ over | under ] && [ right | left ]', {
         nodes: [{
@@ -55,29 +55,29 @@ const suite = [
             nodes: [{
                 type: 'keyword',
                 value: 'over',
-                exclusive: true
+                exclusive: true,
             }, {
                 type: 'keyword',
                 value: 'under',
-                exclusive: true
+                exclusive: true,
             }],
             exclusive: false,
             required: true,
-            order: 'any'
+            order: 'any',
         }, {
             type: 'group',
             nodes: [{
                 type: 'keyword',
                 value: 'right',
-                exclusive: true
+                exclusive: true,
             }, {
                 type: 'keyword',
                 value: 'left',
-                exclusive: true
+                exclusive: true,
             }],
             required: true,
-            order: 'any'
-        }]
+            order: 'any',
+        }],
     }],
     ['[ <length> | <number> ]{1,4}', {
         nodes: [{
@@ -85,25 +85,25 @@ const suite = [
             nodes: [{
                 type: 'data',
                 value: 'length',
-                exclusive: true
+                exclusive: true,
             }, {
                 type: 'data',
                 value: 'number',
-                exclusive: true
+                exclusive: true,
             }],
             exclusive: false,
             repeat: {
                 min: 1,
                 max: 4,
-                separator: ' '
-            }
-        }]
+                separator: ' ',
+            },
+        }],
     }],
     ['none | [ weight || style ]', {
         nodes: [{
             type: 'keyword',
             value: 'none',
-            exclusive: true
+            exclusive: true,
         }, {
             type: 'group',
             nodes: [{
@@ -111,55 +111,55 @@ const suite = [
                 value: 'weight',
                 exclusive: false,
                 order: 'any',
-                optional: true
+                optional: true,
             }, {
                 type: 'keyword',
                 value: 'style',
                 exclusive: false,
                 order: 'any',
-                optional: true
-            }]
-        }]
+                optional: true,
+            }],
+        }],
     }],
     ["<'grid-column-gap'> <'grid-row-gap'>?", {
         nodes: [{
             type: 'data',
             value: 'percentage',
-            exclusive: true
-        }, {
-            type: 'data',
-            value: 'length',
-            exclusive: false
-        }, {
-            type: 'data',
-            value: 'percentage',
-            exclusive: true
+            exclusive: true,
         }, {
             type: 'data',
             value: 'length',
             exclusive: false,
-            optional: true
-        }]
+        }, {
+            type: 'data',
+            value: 'percentage',
+            exclusive: true,
+        }, {
+            type: 'data',
+            value: 'length',
+            exclusive: false,
+            optional: true,
+        }],
     }],
     ["normal | [<number> <integer>?]", {
         nodes: [{
             type: 'keyword',
             value: 'normal',
-            exclusive: true
+            exclusive: true,
         }, {
             type: 'group',
             nodes: [{
                 type: 'data',
                 value: 'number',
-                exclusive: false
+                exclusive: false,
             }, {
                 type: 'data',
                 value: 'integer',
                 exclusive: false,
-                optional: true
-            }]
-        }]
-    }]
+                optional: true,
+            }],
+        }],
+    }],
 ];
 
 suite.forEach(spec => ava(spec[0], t => t.deepEqual(new Parser(spec[0]), spec[1])));

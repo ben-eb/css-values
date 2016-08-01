@@ -26,7 +26,7 @@ export default class Parser {
     brackets () {
         let last = this.node = {
             type: 'group',
-            nodes: []
+            nodes: [],
         };
 
         let cache = this.current;
@@ -64,13 +64,13 @@ export default class Parser {
             if (requested) {
                 this.node = {
                     type: 'group',
-                    nodes: new Parser(requested.syntax).nodes
+                    nodes: new Parser(requested.syntax).nodes,
                 };
             } else {
                 this.node = {
                     type: 'data',
                     value: range,
-                    exclusive: true
+                    exclusive: true,
                 };
             }
         }
@@ -82,7 +82,7 @@ export default class Parser {
             this.last.repeat = {
                 min: 1,
                 max: false,
-                separator: ','
+                separator: ',',
             };
             this.last.exclusive = false;
         }
@@ -93,7 +93,7 @@ export default class Parser {
         this.last.repeat = {
             min: 1,
             max: false,
-            separator: ' '
+            separator: ' ',
         };
         this.last.exclusive = false;
         this.position ++;
@@ -190,12 +190,12 @@ export default class Parser {
                 this.node = {
                     type: 'group',
                     exclusive: true,
-                    nodes: new Parser(requested[0].syntax).nodes
+                    nodes: new Parser(requested[0].syntax).nodes,
                 };
             } else {
                 this.node = {
                     type: 'function',
-                    value: name
+                    value: name,
                 };
             }
             // Skips: 1 - word, 2 - (, 3 - ), 4 - >
@@ -205,7 +205,7 @@ export default class Parser {
         this.node = {
             type: 'keyword',
             value: this.currToken[1],
-            exclusive: true
+            exclusive: true,
         };
         this.position ++;
     }
@@ -213,7 +213,7 @@ export default class Parser {
     unknown () {
         this.node = {
             type: 'unknown',
-            token: this.currToken
+            token: this.currToken,
         };
         this.position ++;
     }

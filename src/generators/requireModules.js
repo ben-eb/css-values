@@ -5,7 +5,7 @@ export default (...modules) => {
     return modules.map(opts => {
         return template(`var IDENTIFIER = require(MODULE);`)({
             IDENTIFIER: t.identifier(opts.identifier),
-            MODULE: t.stringLiteral(opts.module)
+            MODULE: t.stringLiteral(opts.module),
         });
     });
 };

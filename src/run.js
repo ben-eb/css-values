@@ -1,9 +1,9 @@
+import fs from 'fs';
+import {join} from 'path';
 import mkdirp from 'mkdirp-promise';
 import camelCase from 'camelcase';
-import fs from 'fs';
 import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
-import {join} from 'path';
 import * as generator from './generators/index';
 import * as log from './loggers/html';
 import formatGroup from './util/formatGroup';
@@ -22,7 +22,7 @@ function mergeProperties (data) {
         if (!list.length) {
             list.push({
                 properties: [key],
-                values
+                values,
             });
         } else {
             const copy = list.filter(prop => nanoEqual(prop.values, values));
@@ -31,7 +31,7 @@ function mergeProperties (data) {
             } else {
                 list.push({
                     properties: [key],
-                    values
+                    values,
                 });
             }
         }
@@ -128,7 +128,7 @@ properties.forEach(property => {
         .then(() => {
             return {
                 property: property.name,
-                values: getExclusives(parsed)
+                values: getExclusives(parsed),
             };
         })
         .then(prefixer)
@@ -262,7 +262,7 @@ Promise.all(promises).then((configs) => {
         const config = outputs[output];
         imported.push({
             identifier: config.identifier,
-            module: `./${config.group}/${config.identifier}`
+            module: `./${config.group}/${config.identifier}`,
         });
 
         exported.push(config.identifier);
@@ -274,7 +274,7 @@ Promise.all(promises).then((configs) => {
     });
     let contents = generator.program([
         generator.requireModules(...imported),
-        generator.exportModules(exported)
+        generator.exportModules(exported),
     ]);
     let index = fs.createWriteStream(`output/properties/index.js`);
     index.write(contents);

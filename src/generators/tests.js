@@ -16,14 +16,14 @@ export default () => {
     return generateProgram([
         requireModules({
             identifier: 'ava',
-            module: `ava`
+            module: `ava`,
         }, {
             identifier: 'plugin',
-            module: `./plugin`
+            module: `./plugin`,
         }, {
             identifier: 'suites',
-            module: `./tests`
+            module: `./tests`,
         }),
-        tmpl()
+        tmpl(),
     ]);
 };
