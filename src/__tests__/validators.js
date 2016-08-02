@@ -1,20 +1,54 @@
 import test from 'ava';
+import absoluteSize from '../validators/isAbsoluteSize';
 import angle from '../validators/isAngle';
+import box from '../validators/isBox';
+import brStyle from '../validators/isBrStyle';
+import brWidth from '../validators/isBrWidth';
+import compositeStyle from '../validators/isCompositeStyle';
+import compositingOperator from '../validators/isCompositingOperator';
+import customIdent from '../validators/isCustomIdent';
+import genericFamily from '../validators/isGenericFamily';
 import integer from '../validators/isInteger';
 import length from '../validators/isLength';
+import lengthPercentage from '../validators/isLengthPercentage';
+import maskingMode from '../validators/isMaskingMode';
 import negative from '../validators/isNegative';
 import number from '../validators/isNumber';
+import numericFigureValue from '../validators/isNumericFigureValue';
+import numericFractionValue from '../validators/isNumericFractionValue';
+import numericSpacingValue from '../validators/isNumericSpacingValue';
 import percentage from '../validators/isPercentage';
+import relativeSize from '../validators/isRelativeSize';
+import singleAnimationDirection from '../validators/isSingleAnimationDirection';
+import singleAnimationFillMode from '../validators/isSingleAnimationFillMode';
+import singleAnimationPlayState from '../validators/isSingleAnimationPlayState';
 import time from '../validators/isTime';
 import * as fixtures from '../fixtures';
 
 const validators = {
+    absoluteSize,
     angle,
+    box,
+    brStyle,
+    brWidth,
+    compositeStyle,
+    compositingOperator,
+    customIdent,
+    genericFamily,
     integer,
     length,
+    lengthPercentage,
+    maskingMode,
     negative,
     number,
+    numericFigureValue,
+    numericFractionValue,
+    numericSpacingValue,
     percentage,
+    relativeSize,
+    singleAnimationDirection,
+    singleAnimationFillMode,
+    singleAnimationPlayState,
     time,
 };
 
