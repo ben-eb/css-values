@@ -47,7 +47,7 @@
       "status": "nonstandard"
     },
     "-moz-border-bottom-colors": {
-      "syntax": "[&lt;color&gt;]* &lt;color&gt; | none",
+      "syntax": "[ &lt;color&gt; ]* &lt;color&gt; | none",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -62,7 +62,7 @@
       "status": "nonstandard"
     },
     "-moz-border-left-colors": {
-      "syntax": "[&lt;color&gt;]* &lt;color&gt; | none",
+      "syntax": "[ &lt;color&gt; ]* &lt;color&gt; | none",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -77,7 +77,7 @@
       "status": "nonstandard"
     },
     "-moz-border-right-colors": {
-      "syntax": "[&lt;color&gt;]* &lt;color&gt; | none",
+      "syntax": "[ &lt;color&gt; ]* &lt;color&gt; | none",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -92,7 +92,7 @@
       "status": "nonstandard"
     },
     "-moz-border-top-colors": {
-      "syntax": "[&lt;color&gt;]* &lt;color&gt; | none",
+      "syntax": "[ &lt;color&gt; ]* &lt;color&gt; | none",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -167,7 +167,7 @@
       "status": "nonstandard"
     },
     "-moz-outline-radius": {
-      "syntax": "&lt;outline-radius&gt;{1,4} [ / &lt;outline-radius&gt;{1,4}]?",
+      "syntax": "&lt;outline-radius&gt;{1,4} [ / &lt;outline-radius&gt;{1,4} ]?",
       "media": "visual",
       "inherited": false,
       "animatable": [
@@ -437,7 +437,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask": {
-      "syntax": "&lt;mask-image&gt; [&lt;mask-repeat&gt; || &lt;mask-attachment&gt; || &lt;mask-position&gt; || &lt;mask-origin&gt; || &lt;mask-clip&gt;]*",
+      "syntax": "&lt;mask-image&gt; [ &lt;mask-repeat&gt; || &lt;mask-attachment&gt; || &lt;mask-position&gt; || &lt;mask-origin&gt; || &lt;mask-clip&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -466,7 +466,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-attachment": {
-      "syntax": "&lt;attachment&gt;[, &lt;attachment&gt;]*",
+      "syntax": "&lt;attachment&gt; [ , &lt;attachment&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -481,7 +481,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-clip": {
-      "syntax": "&lt;clip-style&gt;[, &lt;clip-style&gt;]*",
+      "syntax": "&lt;clip-style&gt; [ , &lt;clip-style&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -496,7 +496,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-composite": {
-      "syntax": "&lt;composite-style&gt;[, &lt;composite-style&gt;]*",
+      "syntax": "&lt;composite-style&gt; [ , &lt;composite-style&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -511,7 +511,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-image": {
-      "syntax": "&lt;mask-image&gt;[, &lt;mask-image&gt;]*",
+      "syntax": "&lt;mask-image&gt; [ , &lt;mask-image&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -526,7 +526,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-origin": {
-      "syntax": "[ padding | border | content ][, [ border | padding | content ]]*",
+      "syntax": "[ padding | border | content ][ , [ border | padding | content ]]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -541,7 +541,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-position": {
-      "syntax": "&lt;mask-position&gt;[, &lt;mask-position&gt;]#",
+      "syntax": "&lt;mask-position&gt; [ , &lt;mask-position&gt; ]#",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -586,7 +586,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-repeat": {
-      "syntax": "&lt;repeat-style&gt;[, &lt;repeat-style&gt;]*",
+      "syntax": "&lt;repeat-style&gt; [ , &lt;repeat-style&gt; ]*",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -934,6 +934,21 @@
       "order": "uniqueOrder",
       "status": "standard"
     },
+    "appearance": {
+      "syntax": "auto | none",
+      "media": "all",
+      "inherited": "no",
+      "animatable": "discrete",
+      "percentages": "no",
+      "groups": [
+        "CSS User Interface"
+      ],
+      "initial": "auto",
+      "appliesto": "allElements",
+      "computed": "As specified",
+      "order": "per grammar",
+      "status": "experimental"
+    },
     "azimuth": {
       "syntax": "&lt;angle&gt; | [[ left-side | far-left | left | center-left | center | center-right | right | far-right | right-side ] || behind ] | leftwards | rightwards",
       "media": "aural",
@@ -1173,7 +1188,7 @@
       "status": "standard"
     },
     "background-position-x": {
-      "syntax": "[ center | [ left | right | x-start | x-end ] [ &lt;percentage&gt; | &lt;length&gt; ]? ]#",
+      "syntax": "[ center | [ left | right | x-start | x-end ] &lt;length-percentage&gt;? ]#",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -1188,7 +1203,7 @@
       "status": "experimental"
     },
     "background-position-y": {
-      "syntax": "[ center | [ top | bottom | y-start | y-end ] [ &lt;percentage&gt; | &lt;length&gt; ]? ]#",
+      "syntax": "[ center | [ top | bottom | y-start | y-end ] &lt;length-percentage&gt;? ]#",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -1678,7 +1693,7 @@
       "status": "standard"
     },
     "border-image-slice": {
-      "syntax": "[&lt;number&gt; | &lt;percentage&gt;]{1,4} &amp;&amp; fill?",
+      "syntax": "[&lt;number&gt; | &lt;percentage&gt; ]{1,4} &amp;&amp; fill?",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -1956,7 +1971,7 @@
       "status": "standard"
     },
     "border-radius": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ]{1,4} [ / [ &lt;length&gt; | &lt;percentage&gt; ]{1,4} ]?",
+      "syntax": "&lt;length-percentage&gt;{1,4} [ / &lt;length-percentage&gt;{1,4} ]?",
       "media": "visual",
       "inherited": false,
       "animatable": [
@@ -2800,6 +2815,21 @@
       "order": "orderOfAppearance",
       "status": "standard"
     },
+    "contain": {
+      "syntax": "none | strict | content | [ size || layout || style || paint ]",
+      "media": "all",
+      "inherited": "false",
+      "animatable": "discrete",
+      "percentages": "no",
+      "groups": [
+        "CSS Containment"
+      ],
+      "initial": "none",
+      "appliesto": "allElements",
+      "computed": "asSpecified",
+      "order": "per grammar",
+      "status": "experimental"
+    },
     "content": {
       "syntax": "normal | none | [ &lt;string&gt; | &lt;uri&gt; | &lt;counter&gt; | attr() | open-quote | close-quote | no-open-quote | no-close-quote ]+",
       "media": "all",
@@ -2816,7 +2846,7 @@
       "status": "standard"
     },
     "counter-increment": {
-      "syntax": "[&lt;custom-ident&gt; &lt;integer&gt;?]+ | none",
+      "syntax": "[ &lt;custom-ident&gt; &lt;integer&gt;? ]+ | none",
       "media": "all",
       "inherited": false,
       "animatable": "no",
@@ -2831,7 +2861,7 @@
       "status": "standard"
     },
     "counter-reset": {
-      "syntax": "[&lt;custom-ident&gt; &lt;integer&gt;?]+ | none",
+      "syntax": "[ &lt;custom-ident&gt; &lt;integer&gt;? ]+ | none",
       "media": "all",
       "inherited": false,
       "animatable": "no",
@@ -2846,7 +2876,7 @@
       "status": "standard"
     },
     "cursor": {
-      "syntax": "[ [ &lt;uri&gt; [&lt;x&gt; &lt;y&gt;]?,]* [ auto | default | none | context-menu | help | pointer | progress | wait | cell | crosshair | text | vertical-text | alias | copy | move | no-drop | not-allowed | e-resize | n-resize | ne-resize | nw-resize | s-resize | se-resize | sw-resize | w-resize | ew-resize | ns-resize | nesw-resize | nwse-resize | col-resize | row-resize | all-scroll | zoom-in | zoom-out | grab | grabbing ] ]",
+      "syntax": "[ [ &lt;uri&gt; [ &lt;x&gt; &lt;y&gt; ]? , ]* [ auto | default | none | context-menu | help | pointer | progress | wait | cell | crosshair | text | vertical-text | alias | copy | move | no-drop | not-allowed | e-resize | n-resize | ne-resize | nw-resize | s-resize | se-resize | sw-resize | w-resize | ew-resize | ns-resize | nesw-resize | nwse-resize | col-resize | row-resize | all-scroll | zoom-in | zoom-out | grab | grabbing ] ]",
       "media": "visual, interactive",
       "inherited": true,
       "animatable": "no",
@@ -3844,7 +3874,7 @@
       "status": "standard"
     },
     "height": {
-      "syntax": "[&lt;length&gt; | &lt;percentage&gt;] &amp;&amp; [border-box | content-box]? | available | min-content | max-content | fit-content | auto",
+      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ] &amp;&amp; [ border-box | content-box ]? | available | min-content | max-content | fit-content | auto",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -3876,7 +3906,7 @@
       "status": "standard"
     },
     "image-orientation": {
-      "syntax": "from-image | &lt;angle&gt; | [&lt;angle&gt;? flip]",
+      "syntax": "from-image | &lt;angle&gt; | [ &lt;angle&gt;? flip ]",
       "media": "visual",
       "inherited": true,
       "animatable": "no",
@@ -3936,7 +3966,7 @@
       "status": "standard"
     },
     "initial-letter": {
-      "syntax": "normal | [&lt;number&gt; &lt;integer&gt;?]",
+      "syntax": "normal | [ &lt;number&gt; &lt;integer&gt;? ]",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -5270,7 +5300,7 @@
       "status": "standard"
     },
     "perspective-origin": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ]",
+      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom ] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ]",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -5318,7 +5348,7 @@
       "status": "standard"
     },
     "quotes": {
-      "syntax": "[&lt;string&gt; &lt;string&gt;]+ | none",
+      "syntax": "[ &lt;string&gt; &lt;string&gt; ]+ | none",
       "media": "visual",
       "inherited": true,
       "animatable": "no",
@@ -5843,7 +5873,7 @@
       "status": "standard"
     },
     "text-indent": {
-      "syntax": "&lt;length&gt; | &lt;percentage&gt; &amp;&amp; [ hanging || each-line ]",
+      "syntax": "&lt;length-percentage&gt; &amp;&amp; [ hanging || each-line ]",
       "media": "visual",
       "inherited": true,
       "animatable": {
@@ -6045,7 +6075,7 @@
       "status": "standard"
     },
     "transform-origin": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ] &lt;length&gt;?",
+      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom ] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ] &lt;length&gt;?",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -6262,7 +6292,7 @@
       "status": "standard"
     },
     "width": {
-      "syntax": "[&lt;length&gt; | &lt;percentage&gt;] &amp;&amp; [border-box | content-box]? | available | min-content | max-content | fit-content | auto",
+      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ] &amp;&amp; [ border-box | content-box ]? | available | min-content | max-content | fit-content | auto",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -6309,7 +6339,7 @@
       "status": "standard"
     },
     "word-spacing": {
-      "syntax": "normal | &lt;length&gt; | &lt;percentage&gt;",
+      "syntax": "normal | &lt;length-percentage&gt;",
       "media": "visual",
       "inherited": true,
       "animatable": {
@@ -6527,9 +6557,12 @@
   "syntaxes": {
     "absolute-size": "xx-small | x-small | small | medium | large | x-large | xx-large",
     "alpha-value": "&lt;number&gt;",
+    "an-plus-b": "<var>A</var>n+<var>B</var> | even | odd",
+    "angle-percentage": "&lt;angle&gt; | &lt;percentage&gt;",
     "animateable-feature": "scroll-position | contents | &lt;custom-ident&gt;",
     "attachment": "scroll | fixed | local",
     "attr()": "attr( &lt;attr-name&gt; &lt;type-or-unit&gt;? [, &lt;attr-fallback&gt; ]? )",
+    "auto-repeat": "repeat( [ auto-fill | auto-fit ] , [ &lt;line-names&gt;? &lt;fixed-size&gt; ]+ &lt;line-names&gt;? )",
     "auto-track-list": "[ &lt;line-names&gt;? [ &lt;fixed-size&gt; | &lt;fixed-repeat&gt; ] ]+ &lt;auto-repeat&gt; [ &lt;line-names&gt;? [ &lt;fixed-size&gt; | &lt;fixed-repeat&gt; ] ]+ &lt;line-names&gt;?",
     "basic-shape": "&lt;inset()&gt; | &lt;circle()&gt; | &lt;ellipse()&gt; | &lt;polygon()&gt;",
     "bg-image": "none | &lt;image&gt;",
@@ -6546,7 +6579,7 @@
     "calc-value": "&lt;number&gt; | &lt;dimension&gt; | &lt;percentage&gt; | ( &lt;calc-sum&gt; )",
     "cf-final-image": "&lt;image&gt; | &lt;color&gt;",
     "cf-mixing-image": "&lt;percentage&gt;? && &lt;image&gt;",
-    "circle()": "circle( [&lt;shape-radius&gt;]? [at &lt;position&gt;]? )",
+    "circle()": "circle( [ &lt;shape-radius&gt; ]? [ at &lt;position&gt; ]? )",
     "clip-source": "&lt;url&gt;",
     "color": "&lt;rgb()&gt; | &lt;rgba()&gt; | &lt;hsl()&gt; | &lt;hsla()&gt; | &lt;hex-color&gt; | &lt;named-color&gt; | currentcolor | &lt;deprecated-system-color&gt;",
     "color-stop": "&lt;color&gt; [ &lt;percentage&gt; | &lt;length&gt; ]?",
@@ -6565,7 +6598,7 @@
     "east-asian-variant-values": "[ jis78 | jis83 | jis90 | jis04 | simplified | traditional ]",
     "east-asian-width-values": "[ full-width | proportional-width ]",
     "element()": "element( &lt;id-selector&gt; )",
-    "ellipse()": "ellipse( [&lt;shape-radius&gt;{2}]? [at &lt;position&gt;]? )",
+    "ellipse()": "ellipse( [ &lt;shape-radius&gt;{2} ]? [ at &lt;position&gt; ]? )",
     "ending-shape": "circle | ellipse",
     "family-name": "&lt;string&gt; | &lt;IDENT&gt;+",
     "feature-tag-value": "&lt;string&gt; [ &lt;integer&gt; | on | off ]?",
@@ -6575,8 +6608,10 @@
     "filter-function-list": "[ &lt;filter-function&gt; | &lt;url&gt; ]+",
     "final-bg-layer": "&lt;bg-image&gt; || &lt;position&gt; [ / &lt;bg-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt; || &lt;box&gt; || &lt;'background-color'&gt;",
     "fixed-breadth": "&lt;length&gt; | &lt;percentage&gt;",
+    "fixed-repeat": "repeat( [ &lt;positive-integer&gt; ] , [ &lt;line-names&gt;? &lt;fixed-size&gt; ]+ &lt;line-names&gt;? )",
     "fixed-size": "&lt;fixed-breadth&gt; | minmax( &lt;fixed-breadth&gt; , &lt;track-breadth&gt; )",
-    "font-variant-css21": "[normal | small-caps]",
+    "font-variant-css21": "[ normal | small-caps ]",
+    "frequency-percentage": "&lt;frequency&gt; | &lt;percentage&gt;",
     "generic-family": "serif | sans-serif | cursive | fantasy | monospace",
     "generic-name": "serif | sans-serif | cursive | fantasy | monospace",
     "geometry-box": "&lt;shape-box&gt; | fill-box | stroke-box | view-box",
@@ -6592,8 +6627,9 @@
     "image()": "image( [ [ &lt;image&gt; | &lt;string&gt; ]? , &lt;color&gt;? ]! )",
     "image-set()": "image-set( &lt;image-set-option&gt;# )",
     "image-set-option": "[ &lt;image&gt; | &lt;string&gt; ] &lt;resolution&gt;",
-    "inset()": "inset( &lt;shape-arg&gt;{1,4} [round &lt;border-radius&gt;]? )",
+    "inset()": "inset( &lt;length-percentage&gt;{1,4} [ round &lt;border-radius&gt; ]? )",
     "invert()": "invert( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "length-percentage": "&lt;length&gt; | &lt;percentage&gt;",
     "line-names": "'[' &lt;custom-ident&gt;* ']'",
     "line-name-list": "[ &lt;line-names&gt; | &lt;name-repeat&gt; ]+",
     "linear-gradient()": "linear-gradient( [ &lt;angle&gt; | to &lt;side-or-corner&gt; ]? , &lt;color-stop-list&gt; )",
@@ -6606,15 +6642,17 @@
     "matrix3d()": "matrix3d( &lt;number&gt; [, &lt;number&gt; ]{15,15} )",
     "named-color": "&lt;ident&gt;",
     "namespace-prefix": "IDENT",
+    "number-percentage": "&lt;number&gt; | &lt;percentage&gt;",
     "numeric-figure-values": "[ lining-nums | oldstyle-nums ]",
     "numeric-fraction-values": "[ diagonal-fractions | stacked-fractions ]",
     "numeric-spacing-values": "[ proportional-nums | tabular-nums ]",
     "opacity()": "opacity( [ &lt;number&gt; | &lt;percentage&gt; ] )",
     "perspective()": "perspective( &lt;length&gt; )",
-    "polygon()": "polygon( [&lt;fill-rule&gt;,]? [&lt;shape-arg&gt; &lt;shape-arg&gt;]# )",
+    "polygon()": "polygon( &lt;fill-rule&gt;? , [ &lt;length-percentage&gt; &lt;length-percentage&gt; ]# )",
+    "position": "[[ left | center | right | top | bottom | &lt;percentage&gt; | &lt;length&gt; ] | [ left | center | right | &lt;percentage&gt; | &lt;length&gt; ] [ top | center | bottom | &lt;percentage&gt; | &lt;length&gt; ] |  [ center | [ left | right ] [ &lt;percentage&gt; | &lt;length&gt; ]? ] && [ center | [ top | bottom ] [ &lt;percentage&gt; | &lt;length&gt; ]? ]]",
     "radial-gradient()": "radial-gradient( [ &lt;ending-shape&gt; || &lt;size&gt; ]? [ at &lt;position&gt; ]? , &lt;color-stop-list&gt; )",
     "relative-size": "larger | smaller",
-    "repeat-style": "repeat-x | repeat-y | [repeat | space | round | no-repeat]{1,2}",
+    "repeat-style": "repeat-x | repeat-y | [ repeat | space | round | no-repeat ]{1,2}",
     "repeating-linear-gradient()": "repeating-linear-gradient( [ &lt;angle&gt; | to &lt;side-or-corner&gt; ]? , &lt;color-stop-list&gt; )",
     "repeating-radial-gradient()": "repeating-radial-gradient( [ &lt;ending-shape&gt; || &lt;size&gt; ]? [ at &lt;position&gt; ]? , &lt;color-stop-list&gt; )",
     "rgb()": "rgb( &lt;rgb-component&gt;#{3} )",
@@ -6631,8 +6669,7 @@
     "scaleX()": "scaleX( &lt;number&gt; )",
     "scaleY()": "scaleY( &lt;number&gt; )",
     "scaleZ()": "scaleZ( &lt;number&gt; )",
-    "shape-arg": "&lt;length&gt; | &lt;percentage&gt;",
-    "shape-radius": "&lt;length&gt; | &lt;percentage&gt; | closest-side | farthest-side",
+    "shape-radius": "&lt;length-percentage&gt; | closest-side | farthest-side",
     "skew()": "skew( &lt;angle&gt; [, &lt;angle&gt; ]? )",
     "skewX()": "skewX( &lt;angle&gt; )",
     "skewY()": "skewY( &lt;angle&gt; )",
@@ -6654,8 +6691,10 @@
     "single-transition-property": "all | IDENT",
     "size": "closest-side | farthest-side | closest-corner | farthest-corner | &lt;length&gt; | [ &lt;length&gt; | &lt;percentage&gt; ]{2}",
     "symbol": "&lt;string&gt; | &lt;image&gt; | &lt;ident&gt;",
+    "time-percentage": "&lt;time&gt; | &lt;percentage&gt;",
     "track-breadth": "&lt;length&gt; | &lt;percentage&gt; | &lt;flex&gt; | min-content | max-content | auto",
     "track-list": "[ &lt;line-names&gt;? [ &lt;track-size&gt; | &lt;track-repeat&gt; ] ]+ &lt;line-names&gt;?",
+    "track-repeat": "repeat( [ &lt;positive-integer&gt; ] , [ &lt;line-names&gt;? &lt;track-size&gt; ]+ &lt;line-names&gt;? )",
     "track-size": "&lt;track-breadth&gt; | minmax( &lt;track-breadth&gt; , &lt;track-breadth&gt; )",
     "transform-function": "[ &lt;matrix()&gt; || &lt;translate()&gt; || &lt;translateX()&gt; || &lt;translateY()&gt; || &lt;scale()&gt; || &lt;scaleX()&gt; || &lt;scaleY()&gt; || &lt;rotate()&gt; || &lt;skew()&gt; || &lt;skewX()&gt; || &lt;skewY()&gt; || &lt;matrix3d()&gt; || &lt;translate3d()&gt; || &lt;translateZ()&gt; || &lt;scale3d()&gt; || &lt;scaleZ()&gt; || &lt;rotate3d()&gt; || &lt;rotateX()&gt; || &lt;rotateY()&gt; || &lt;rotateZ()&gt; || &lt;perspective()&gt; ]+",
     "transform-list": "&lt;transform-function&gt;+",
@@ -6766,7 +6805,7 @@
           "status": "standard"
         },
         "system": {
-          "syntax": "cyclic | numeric | alphabetic | symbolic | additive | [fixed &lt;integer&gt;?] | [ extends &lt;counter-style-name&gt; ]",
+          "syntax": "cyclic | numeric | alphabetic | symbolic | additive | [ fixed &lt;integer&gt;? ] | [ extends &lt;counter-style-name&gt; ]",
           "media": "all",
           "initial": "<code>symbolic</code>",
           "percentages": "no",
@@ -6789,7 +6828,7 @@
       "status": "nonstandard"
     },
     "@font-face": {
-      "syntax": "@font-face {\n  [ font-family: &lt;family-name&gt;; ] ||\n  [ src: [ &lt;uri&gt; [format(&lt;string&gt;#)]? | &lt;font-face-name&gt; ]#; ] ||\n  [ unicode-range: &lt;urange&gt;#; ] ||\n  [ font-variant: &lt;font-variant&gt;; ] ||\n  [ font-feature-settings: normal | &lt;feature-tag-value&gt;#; ] ||\n  [ font-stretch: &lt;font-stretch&gt;; ] ||\n  [ font-weight: &lt;weight&gt;; ] ||\n  [ font-style: &lt;style&gt;; ]\n}",
+      "syntax": "@font-face {\n  [ font-family: &lt;family-name&gt;; ] ||\n  [ src: [ &lt;uri&gt; [ format(&lt;string&gt;#) ]? | &lt;font-face-name&gt; ]#; ] ||\n  [ unicode-range: &lt;urange&gt;#; ] ||\n  [ font-variant: &lt;font-variant&gt;; ] ||\n  [ font-feature-settings: normal | &lt;feature-tag-value&gt;#; ] ||\n  [ font-stretch: &lt;font-stretch&gt;; ] ||\n  [ font-weight: &lt;weight&gt;; ] ||\n  [ font-style: &lt;style&gt;; ]\n}",
       "interfaces": [
         "CSSFontFaceRule"
       ],
@@ -6883,7 +6922,7 @@
       "status": "standard"
     },
     "@import": {
-      "syntax": "@import [ &lt;string&gt; | &lt;url&gt; ] [&lt;media-query-list&gt;]?;",
+      "syntax": "@import [ &lt;string&gt; | &lt;url&gt; ] [ &lt;media-query-list&gt; ]?;",
       "groups": [
         "Media Queries"
       ],
@@ -7158,147 +7197,154 @@
       "status": "standard"
     },
     ":active": {
-      "syntax": ":active",
+      "syntax": ":active { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":any": {
-      "syntax": ":any",
+      "syntax": ":-moz-any( &lt;selector&gt;# ) { <var>style properties</var> }\n:-webkit-any( &lt;selector&gt;# ) { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-classes"
+      ],
+      "status": "experimental"
+    },
+    ":any-link": {
+      "syntax": ":any-link( <var>style properties</var> ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "experimental"
     },
     ":checked": {
-      "syntax": ":checked",
+      "syntax": ":checked { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":default": {
-      "syntax": ":default",
+      "syntax": ":default { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":dir": {
-      "syntax": ":dir()",
+      "syntax": ":dir( ltr | rtl ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":disabled": {
-      "syntax": ":disabled",
+      "syntax": ":disabled { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":empty": {
-      "syntax": ":empty",
+      "syntax": ":empty { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":enabled": {
-      "syntax": ":enabled",
+      "syntax": ":enabled { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":first": {
-      "syntax": ":first",
+      "syntax": ":first { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":first-child": {
-      "syntax": ":first-child",
+      "syntax": ":first-child { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":first-of-type": {
-      "syntax": ":first-of-type",
+      "syntax": ":first-of-type { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":fullscreen": {
-      "syntax": ":fullscreen",
+      "syntax": ":fullscreen { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":focus": {
-      "syntax": ":focus",
+      "syntax": ":focus { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":hover": {
-      "syntax": ":hover",
+      "syntax": ":hover { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":indeterminate": {
-      "syntax": ":indeterminate",
+      "syntax": ":indeterminate { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":in-range": {
-      "syntax": ":in-range",
+      "syntax": ":in-range { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":invalid": {
-      "syntax": ":invalid",
+      "syntax": ":invalid { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":lang": {
-      "syntax": ":lang()",
+      "syntax": ":lang( &lt;language-code&gt; ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":last-child": {
-      "syntax": ":last-child",
+      "syntax": ":last-child { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":last-of-type": {
-      "syntax": ":last-of-type",
+      "syntax": ":last-of-type { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":left": {
-      "syntax": ":left",
+      "syntax": ":left { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes",
         "CSS Pages"
@@ -7306,98 +7352,98 @@
       "status": "standard"
     },
     ":link": {
-      "syntax": ":link",
+      "syntax": ":link { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":not": {
-      "syntax": ":not()",
+      "syntax": ":not( &lt;selector&gt;# ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":nth-child": {
-      "syntax": ":nth-child()",
+      "syntax": ":nth-child( &lt;an-plus-b&gt; [ of &lt;selector&gt# ]? ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":nth-last-child": {
-      "syntax": ":nth-last-child()",
+      "syntax": ":nth-last-child( &lt;an-plus-b&gt; [ of &lt;selector&gt# ]? ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":nth-last-of-type": {
-      "syntax": ":nth-last-of-type()",
+      "syntax": ":nth-last-of-type( &lt;an-plus-b&gt; ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":nth-of-type": {
-      "syntax": ":nth-of-type()",
+      "syntax": ":nth-of-type( &lt;an-plus-b&gt; ) { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":only-child": {
-      "syntax": ":only-child",
+      "syntax": ":only-child { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":only-of-type": {
-      "syntax": ":only-of-type",
+      "syntax": ":only-of-type { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":optional": {
-      "syntax": ":optional",
+      "syntax": ":optional { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":out-of-range": {
-      "syntax": ":out-of-range",
+      "syntax": ":out-of-range { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":read-only": {
-      "syntax": ":read-only",
+      "syntax": ":read-only { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":read-write": {
-      "syntax": ":read-write",
+      "syntax": ":read-write { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":required": {
-      "syntax": ":required",
+      "syntax": ":required { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":right": {
-      "syntax": ":right",
+      "syntax": ":right { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes",
         "CSS Pages"
@@ -7405,7 +7451,7 @@
       "status": "standard"
     },
     ":root": {
-      "syntax": ":root",
+      "syntax": ":root { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes",
         "CSS Pages"
@@ -7413,89 +7459,42 @@
       "status": "standard"
     },
     ":scope": {
-      "syntax": ":scope",
+      "syntax": ":scope { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":target": {
-      "syntax": ":target",
+      "syntax": ":target { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":unresolved": {
-      "syntax": ":unresolved",
+      "syntax": ":unresolved { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":valid": {
-      "syntax": ":valid",
+      "syntax": ":valid { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
     ":visited": {
-      "syntax": ":visited",
+      "syntax": ":visited { <var>style properties</var> }",
       "groups": [
         "Pseudo-classes"
       ],
       "status": "standard"
     },
-    "::after": {
-      "syntax": "::after",
-      "groups": [
-        "Pseudo-elements"
-      ],
-      "status": "standard"
-    },
-    "::-ms-fill": {
-      "syntax": "::-ms-fill",
-      "groups": [
-        "Pseudo-elements",
-        "Microsoft Extensions"
-      ],
-      "status": "nonstandard"
-    },
-    "::-ms-fill-lower": {
-      "syntax": "::-ms-fill-lower",
-      "groups": [
-        "Pseudo-elements",
-        "Microsoft Extensions"
-      ],
-      "status": "nonstandard"
-    },
-    "::-ms-fill-upper": {
-      "syntax": "::-ms-fill-upper",
-      "groups": [
-        "Pseudo-elements",
-        "Microsoft Extensions"
-      ],
-      "status": "nonstandard"
-    },
-    "::-ms-thumb": {
-      "syntax": "::-ms-thumb",
-      "groups": [
-        "Pseudo-elements",
-        "Microsoft Extensions"
-      ],
-      "status": "nonstandard"
-    },
-    "::-ms-track": {
-      "syntax": "::-ms-track",
-      "groups": [
-        "Pseudo-elements",
-        "Microsoft Extensions"
-      ],
-      "status": "nonstandard"
-    },
     "::-moz-progress-bar": {
-      "syntax": "::-moz-progress-bar",
+      "syntax": "::-moz-progress-bar { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "Mozilla Extensions"
@@ -7503,7 +7502,7 @@
       "status": "nonstandard"
     },
     "::-moz-range-progress": {
-      "syntax": "::-moz-range-progress",
+      "syntax": "::-moz-range-progress { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "Mozilla Extensions"
@@ -7511,7 +7510,7 @@
       "status": "nonstandard"
     },
     "::-moz-range-thumb": {
-      "syntax": "::-moz-range-thumb",
+      "syntax": "::-moz-range-thumb { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "Mozilla Extensions"
@@ -7519,15 +7518,55 @@
       "status": "nonstandard"
     },
     "::-moz-range-track": {
-      "syntax": "::-moz-range-track",
+      "syntax": "::-moz-range-track { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "Mozilla Extensions"
       ],
       "status": "nonstandard"
     },
+    "::-ms-fill": {
+      "syntax": "::-ms-fill { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements",
+        "Microsoft Extensions"
+      ],
+      "status": "nonstandard"
+    },
+    "::-ms-fill-lower": {
+      "syntax": "::-ms-fill-lower { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements",
+        "Microsoft Extensions"
+      ],
+      "status": "nonstandard"
+    },
+    "::-ms-fill-upper": {
+      "syntax": "::-ms-fill-upper { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements",
+        "Microsoft Extensions"
+      ],
+      "status": "nonstandard"
+    },
+    "::-ms-thumb": {
+      "syntax": "::-ms-thumb { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements",
+        "Microsoft Extensions"
+      ],
+      "status": "nonstandard"
+    },
+    "::-ms-track": {
+      "syntax": "::-ms-track { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements",
+        "Microsoft Extensions"
+      ],
+      "status": "nonstandard"
+    },
     "::-webkit-progress-bar": {
-      "syntax": "::--webkit-progress-bar",
+      "syntax": "::-webkit-progress-bar { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "WebKit Extensions"
@@ -7535,7 +7574,7 @@
       "status": "nonstandard"
     },
     "::-webkit-progress-inner-value": {
-      "syntax": "::--webkit-progress-inner-value",
+      "syntax": "::-webkit-progress-inner-value { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "WebKit Extensions"
@@ -7543,7 +7582,7 @@
       "status": "nonstandard"
     },
     "::-webkit-progress-value": {
-      "syntax": "::--webkit-progress-value",
+      "syntax": "::-webkit-progress-value { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "WebKit Extensions"
@@ -7551,7 +7590,7 @@
       "status": "nonstandard"
     },
     "::-webkit-slider-runnable-track": {
-      "syntax": "::--webkit-slider-runnable-track",
+      "syntax": "::-webkit-slider-runnable-track { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "WebKit Extensions"
@@ -7559,43 +7598,50 @@
       "status": "nonstandard"
     },
     "::-webkit-slider-thumb": {
-      "syntax": "::-webkit-slider-thumb",
+      "syntax": "::-webkit-slider-thumb { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements",
         "WebKit Extensions"
       ],
       "status": "nonstandard"
     },
-    "::before": {
-      "syntax": "::before",
-      "groups": [
-        "Pseudo-elements"
-      ],
-      "status": "standard"
-    },
-    "::first-letter": {
-      "syntax": "::first-letter",
-      "groups": [
-        "Pseudo-elements"
-      ],
-      "status": "standard"
-    },
-    "::first-line": {
-      "syntax": "::first-line",
-      "groups": [
-        "Pseudo-elements"
-      ],
-      "status": "standard"
-    },
-    "::selection": {
-      "syntax": "::selection",
+    "::after": {
+      "syntax": "/* CSS3 syntax */\n::after { <var>style properties</var> }\n\n/* CSS2 syntax */\n:after { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements"
       ],
       "status": "standard"
     },
     "::backdrop": {
-      "syntax": "::backdrop",
+      "syntax": "::backdrop { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements"
+      ],
+      "status": "standard"
+    },
+    "::before": {
+      "syntax": "/* CSS3 syntax */\n::before { <var>style properties</var> }\n\n/* CSS2 syntax */\n:before { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements"
+      ],
+      "status": "standard"
+    },
+    "::first-letter": {
+      "syntax": "/* CSS3 syntax */\n::first-letter { <var>style properties</var> }\n\n/* CSS2 syntax */\n:first-letter { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements"
+      ],
+      "status": "standard"
+    },
+    "::first-line": {
+      "syntax": "/* CSS3 syntax */\n::first-line { <var>style properties</var> }\n\n/* CSS2 syntax */\n:first-line { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-elements"
+      ],
+      "status": "standard"
+    },
+    "::selection": {
+      "syntax": "::selection { <var>style properties</var> }",
       "groups": [
         "Pseudo-elements"
       ],
