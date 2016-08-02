@@ -31,14 +31,7 @@ export const properties = Object.keys(data.properties).map(key => {
     };
 });
 
-// The filter function is temporary to stop a RangeError in the
-// image and image() syntaxes. Perhaps we should do nested
-// parsing in the same parser, and keep a call stack to catch
-// circular syntaxes instead.
-
-const filter = key => key !== 'image' && key !== 'image()';
-
-export const syntaxes = Object.keys(data.syntaxes).filter(filter).map(key => {
+export const syntaxes = Object.keys(data.syntaxes).map(key => {
     let syntax = positionGrammar(decode(data.syntaxes[key]));
     if (overrides[key]) {
         syntax = overrides[key];
