@@ -9,6 +9,7 @@ import * as log from './loggers/html';
 import formatGroup from './util/formatGroup';
 import globals from './util/globals';
 import singleValue from './util/singleValue';
+import handleError from './util/handleError';
 import {properties} from './data';
 import Parser from './parser';
 import prefixer from './prefixer';
@@ -218,7 +219,7 @@ properties.forEach(property => {
 
             return config;
         })
-        .catch(err => console.log(err));
+        .catch(handleError);
 
     promises.push(promise);
 });
@@ -291,8 +292,8 @@ Promise.all(promises).then((configs) => {
     log.total(files + 4);
     ncp(join(__dirname, './validators'), join(__dirname, '../output/validators'), err => {
         if (err) {
-            return console.error(err);
+            return handleError(err);
         }
         console.log('\nDone.');
     });
-}).catch(err => console.log(err));
+}).catch(handleError);
