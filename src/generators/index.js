@@ -1,15 +1,8 @@
-import generateExportModules from './exportModules';
-import generatePlugin from './plugin';
-import generateProgram from './program';
-import generateProperty from './property';
-import generateRequireModules from './requireModules';
-import generateTest from './test';
-import generateTests from './tests';
-
-export const exportModules = generateExportModules;
-export const plugin = generatePlugin;
-export const program = generateProgram;
-export const property = generateProperty;
-export const requireModules = generateRequireModules;
-export const test = generateTest;
-export const tests = generateTests;
+export exportModules from './exportModules';
+export plugin from './plugin';
+export program from './program';
+export property from './property';
+export requireModules from './requireModules';
+export requireNamespacedModules from './requireNamespacedModules';
+export test from './test';
+export tests from './tests';
