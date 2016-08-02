@@ -6,6 +6,7 @@
   "scripts": {
     "acquire": "node ./dist/acquire.js > ./data/data.json",
     "generate": "node ./dist/run.js",
+    "generate-es5": "npm run generate && cross-env BABEL_ENV=publish babel output --out-dir output",
     "pretest": "eslint src",
     "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
     "report": "nyc report --reporter=html",

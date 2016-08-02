@@ -3,6 +3,7 @@ import * as t from 'babel-types';
 import arrayOfStrings from '../util/arrayOfStrings';
 import capitalise from '../util/capitalise';
 import singleValue from '../util/singleValue';
+import exportConst from './exportConst';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
@@ -50,8 +51,9 @@ function handleSingle (opts) {
 
     let config = {STRING: null};
 
-    const properties = template(`module.exports.properties = EXPORTS;`)({
-        EXPORTS: arrayOfStrings(opts.properties),
+    const properties = exportConst({
+        identifier: 'properties',
+        exported: arrayOfStrings(opts.properties),
     });
 
     const conditions = [];
@@ -130,8 +132,9 @@ export default opts => {
     }
     `);
 
-    const properties = template(`module.exports.properties = EXPORTS;`)({
-        EXPORTS: arrayOfStrings(opts.properties),
+    const properties = exportConst({
+        identifier: 'properties',
+        exported: arrayOfStrings(opts.properties),
     });
 
     let config = ['SEPARATOR', 'STRING', 'WORD'].reduce((list, key) => {

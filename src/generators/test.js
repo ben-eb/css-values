@@ -1,6 +1,6 @@
-import template from 'babel-template';
 import * as t from 'babel-types';
 import flatten from 'flatten';
+import template from '../util/moduleTemplate';
 import generateProgram from './program';
 
 export default opts => {

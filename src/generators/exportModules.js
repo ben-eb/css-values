@@ -1,15 +1,10 @@
-import template from 'babel-template';
 import * as t from 'babel-types';
+import template from '../util/moduleTemplate';
 
 export default exported => {
-    const exportTemplate = template('module.exports = EXPORTS');
+    const exportTemplate = template('export default EXPORTS;');
 
     return exportTemplate({
-        EXPORTS: t.arrayExpression(exported.map((value, index) => {
-            if (index === exported.length - 1) {
-                return t.identifier(`\n    ${value}\n`);
-            }
-            return t.identifier(`\n    ${value}`);
-        })),
+        EXPORTS: t.arrayExpression(exported.map(value => t.identifier(value))),
     });
 };

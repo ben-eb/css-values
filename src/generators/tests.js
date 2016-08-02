@@ -1,4 +1,4 @@
-import template from 'babel-template';
+import template from '../util/moduleTemplate';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
