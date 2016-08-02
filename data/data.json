@@ -556,7 +556,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-position-x": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right ]#",
+      "syntax": "[ &lt;length-percentage&gt; | left | center | right ]#",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -571,7 +571,7 @@
       "status": "nonstandard"
     },
     "-webkit-mask-position-y": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | top  | center | bottom ]#",
+      "syntax": "[ &lt;length-percentage&gt; | top  | center | bottom ]#",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -1492,7 +1492,7 @@
       "status": "standard"
     },
     "border-bottom-left-radius": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ]{1,2}",
+      "syntax": "&lt;length-percentage&gt;{1,2}",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -1512,7 +1512,7 @@
       "status": "standard"
     },
     "border-bottom-right-radius": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ]{1,2}",
+      "syntax": "&lt;length-percentage&gt;{1,2}",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -1693,7 +1693,7 @@
       "status": "standard"
     },
     "border-image-slice": {
-      "syntax": "[&lt;number&gt; | &lt;percentage&gt; ]{1,4} &amp;&amp; fill?",
+      "syntax": "&lt;number-percentage&gt;{1,4} &amp;&amp; fill?",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -1729,7 +1729,7 @@
       "status": "standard"
     },
     "border-image-width": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; | &lt;number&gt; | auto ]{1,4}",
+      "syntax": "[ &lt;length-percentage&gt; | &lt;number&gt; | auto ]{1,4}",
       "media": "visual",
       "inherited": false,
       "animatable": "no",
@@ -2185,7 +2185,7 @@
       "status": "standard"
     },
     "border-top-left-radius": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ]{1,2}",
+      "syntax": "&lt;length-percentage&gt;{1,2}",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -2205,7 +2205,7 @@
       "status": "standard"
     },
     "border-top-right-radius": {
-      "syntax": "[ &lt;length&gt; | &lt;percentage&gt; ]{1,2}",
+      "syntax": "&lt;length-percentage&gt;{1,2}",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -3267,7 +3267,7 @@
       "status": "standard"
     },
     "font-size": {
-      "syntax": "&lt;absolute-size&gt; | &lt;relative-size&gt; | &lt;length&gt; | &lt;percentage&gt;",
+      "syntax": "&lt;absolute-size&gt; | &lt;relative-size&gt; | &lt;length-percentage&gt;",
       "media": "visual",
       "inherited": true,
       "animatable": {
@@ -3679,7 +3679,7 @@
       "status": "standard"
     },
     "grid-column-gap": {
-      "syntax": "&lt;percentage&gt; | &lt;length&gt;",
+      "syntax": "&lt;length-percentage&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -3771,7 +3771,7 @@
       "status": "standard"
     },
     "grid-row-gap": {
-      "syntax": "&lt;percentage&gt; | &lt;length&gt;",
+      "syntax": "&lt;length-percentage&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -4705,7 +4705,7 @@
       "status": "experimental"
     },
     "motion-offset": {
-      "syntax": "&lt;length&gt; | &lt;percentage&gt;",
+      "syntax": "&lt;length-percentage&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -5300,7 +5300,7 @@
       "status": "standard"
     },
     "perspective-origin": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom ] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ]",
+      "syntax": "&lt;position&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -5581,7 +5581,7 @@
       "status": "standard"
     },
     "shape-margin": {
-      "syntax": "&lt;length&gt; | &lt;percentage&gt;",
+      "syntax": "&lt;length-percentage&gt;",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -6075,7 +6075,7 @@
       "status": "standard"
     },
     "transform-origin": {
-      "syntax": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right | top | bottom ] | [ [ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] &amp;&amp; [ &lt;percentage&gt; | &lt;length&gt; | top | center | bottom ] ] &lt;length&gt;?",
+      "syntax": "[ &lt;length-percentage&gt; | left | center | right | top | bottom ] | [ [ &lt;length-percentage&gt; | left | center | right ] &amp;&amp; [ &lt;length-percentage&gt; | top | center | bottom ] ] &lt;length&gt;?",
       "media": "visual",
       "inherited": false,
       "animatable": {
@@ -6567,12 +6567,12 @@
     "basic-shape": "&lt;inset()&gt; | &lt;circle()&gt; | &lt;ellipse()&gt; | &lt;polygon()&gt;",
     "bg-image": "none | &lt;image&gt;",
     "bg-layer": "&lt;bg-image&gt; || &lt;position&gt; [ / &lt;bg-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt;{1,2}",
-    "bg-size": "[ &lt;length&gt; | &lt;percentage&gt; | auto ]{1,2} | cover | contain",
+    "bg-size": "[ &lt;length-percentage&gt; | auto ]{1,2} | cover | contain",
     "blur()": "blur( &lt;length&gt; )",
     "box": "border-box | padding-box | content-box",
     "br-style": "none | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset",
     "br-width": "&lt;length&gt; | thin | medium | thick",
-    "brightness()": "brightness( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "brightness()": "brightness( &lt;number-percentage&gt; )",
     "calc()": "calc( &lt;calc-sum&gt; )",
     "calc-sum": "&lt;calc-product&gt; [ [ '+' | '-' ] &lt;calc-product&gt; ]*",
     "calc-product": "&lt;calc-value&gt; [ '*' &lt;calc-value&gt; | '/' &lt;number&gt; ]*",
@@ -6582,13 +6582,13 @@
     "circle()": "circle( [ &lt;shape-radius&gt; ]? [ at &lt;position&gt; ]? )",
     "clip-source": "&lt;url&gt;",
     "color": "&lt;rgb()&gt; | &lt;rgba()&gt; | &lt;hsl()&gt; | &lt;hsla()&gt; | &lt;hex-color&gt; | &lt;named-color&gt; | currentcolor | &lt;deprecated-system-color&gt;",
-    "color-stop": "&lt;color&gt; [ &lt;percentage&gt; | &lt;length&gt; ]?",
+    "color-stop": "&lt;color&gt; &lt;length-percentage&gt;?",
     "color-stop-list": "&lt;color-stop&gt;{2,}",
     "common-lig-values": "[ common-ligatures | no-common-ligatures ]",
     "composite-style": "clear | copy | source-over | source-in | source-out | source-atop | destination-over | destination-in | destination-out | destination-atop | xor",
     "compositing-operator": "add | subtract | intersect | exclude",
     "contextual-alt-values": "[ contextual | no-contextual ]",
-    "contrast()": "contrast( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "contrast()": "contrast( [ &lt;number-percentage&gt; ] )",
     "counter-style": "&lt;counter-style-name&gt; | symbols()",
     "counter-style-name": "&lt;custom-ident&gt;",
     "cross-fade()": "cross-fade( &lt;cf-mixing-image&gt; , &lt;cf-final-image&gt;? )",
@@ -6607,7 +6607,7 @@
     "filter-function": "&lt;blur()&gt; | &lt;brightness()&gt; | &lt;contrast()&gt; | &lt;drop-shadow()&gt; | &lt;grayscale()&gt; | &lt;hue-rotate()&gt; | &lt;invert()&gt; | &lt;opacity()&gt; | &lt;sepia()&gt; | &lt;saturate()&gt;",
     "filter-function-list": "[ &lt;filter-function&gt; | &lt;url&gt; ]+",
     "final-bg-layer": "&lt;bg-image&gt; || &lt;position&gt; [ / &lt;bg-size&gt; ]? || &lt;repeat-style&gt; || &lt;attachment&gt; || &lt;box&gt; || &lt;box&gt; || &lt;'background-color'&gt;",
-    "fixed-breadth": "&lt;length&gt; | &lt;percentage&gt;",
+    "fixed-breadth": "&lt;length-percentage&gt;",
     "fixed-repeat": "repeat( [ &lt;positive-integer&gt; ] , [ &lt;line-names&gt;? &lt;fixed-size&gt; ]+ &lt;line-names&gt;? )",
     "fixed-size": "&lt;fixed-breadth&gt; | minmax( &lt;fixed-breadth&gt; , &lt;track-breadth&gt; )",
     "font-variant-css21": "[ normal | small-caps ]",
@@ -6616,7 +6616,7 @@
     "generic-name": "serif | sans-serif | cursive | fantasy | monospace",
     "geometry-box": "&lt;shape-box&gt; | fill-box | stroke-box | view-box",
     "gradient": "&lt;linear-gradient()&gt; | &lt;repeating-linear-gradient()&gt; | &lt;radial-gradient()&gt; | &lt;repeating-radial-gradient()&gt;",
-    "grayscale()": "grayscale( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "grayscale()": "grayscale( &lt;number-percentage&gt; )",
     "grid-line": "auto | &lt;custom-ident&gt; | [ &lt;integer&gt; && &lt;custom-ident&gt;? ] | [ span && [ &lt;integer&gt; || &lt;custom-ident&gt; ] ]",
     "historical-lig-values": "[ historical-ligatures | no-historical-ligatures ]",
     "hsl()": "hsl( &lt;hue&gt;, &lt;percentage&gt;, &lt;percentage&gt; )",
@@ -6628,13 +6628,13 @@
     "image-set()": "image-set( &lt;image-set-option&gt;# )",
     "image-set-option": "[ &lt;image&gt; | &lt;string&gt; ] &lt;resolution&gt;",
     "inset()": "inset( &lt;length-percentage&gt;{1,4} [ round &lt;border-radius&gt; ]? )",
-    "invert()": "invert( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "invert()": "invert( &lt;number-percentage&gt; )",
     "length-percentage": "&lt;length&gt; | &lt;percentage&gt;",
     "line-names": "'[' &lt;custom-ident&gt;* ']'",
     "line-name-list": "[ &lt;line-names&gt; | &lt;name-repeat&gt; ]+",
     "linear-gradient()": "linear-gradient( [ &lt;angle&gt; | to &lt;side-or-corner&gt; ]? , &lt;color-stop-list&gt; )",
     "mask-layer": "&lt;mask-reference&gt; &lt;masking-mode&gt;? || &lt;position&gt; [ / &lt;bg-size&gt; ]? || &lt;repeat-style&gt; || &lt;geometry-box&gt; || [ &lt;geometry-box&gt; | no-clip ] || &lt;compositing-operator&gt;",
-    "mask-position": "[ &lt;percentage&gt; | &lt;length&gt; | left | center | right ] [ &lt;percentage&gt; | &lt;length&gt; | top  | center | bottom ]?",
+    "mask-position": "[ &lt;length-percentage&gt; | left | center | right ] [ &lt;length-percentage&gt; | top  | center | bottom ]?",
     "mask-reference": "none | &lt;image&gt; | &lt;mask-source&gt;",
     "mask-source": "&lt;url&gt;",
     "masking-mode": "alpha | luminance | match-source",
@@ -6646,10 +6646,10 @@
     "numeric-figure-values": "[ lining-nums | oldstyle-nums ]",
     "numeric-fraction-values": "[ diagonal-fractions | stacked-fractions ]",
     "numeric-spacing-values": "[ proportional-nums | tabular-nums ]",
-    "opacity()": "opacity( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "opacity()": "opacity( [ &lt;number-percentage&gt; ] )",
     "perspective()": "perspective( &lt;length&gt; )",
     "polygon()": "polygon( &lt;fill-rule&gt;? , [ &lt;length-percentage&gt; &lt;length-percentage&gt; ]# )",
-    "position": "[[ left | center | right | top | bottom | &lt;percentage&gt; | &lt;length&gt; ] | [ left | center | right | &lt;percentage&gt; | &lt;length&gt; ] [ top | center | bottom | &lt;percentage&gt; | &lt;length&gt; ] |  [ center | [ left | right ] [ &lt;percentage&gt; | &lt;length&gt; ]? ] && [ center | [ top | bottom ] [ &lt;percentage&gt; | &lt;length&gt; ]? ]]",
+    "position": "[[ left | center | right | top | bottom | &lt;length-percentage&gt; ] | [ left | center | right | &lt;length-percentage&gt; ] [ top | center | bottom | &lt;length-percentage&gt; ] | [ center | [ left | right ] &lt;length-percentage&gt;? ] && [ center | [ top | bottom ] &lt;length-percentage&gt;? ]]",
     "radial-gradient()": "radial-gradient( [ &lt;ending-shape&gt; || &lt;size&gt; ]? [ at &lt;position&gt; ]? , &lt;color-stop-list&gt; )",
     "relative-size": "larger | smaller",
     "repeat-style": "repeat-x | repeat-y | [ repeat | space | round | no-repeat ]{1,2}",
@@ -6663,7 +6663,7 @@
     "rotateX()": "rotateX( &lt;angle&gt; )",
     "rotateY()": "rotateY( &lt;angle&gt; )",
     "rotateZ()": "rotateZ( &lt;angle&gt; )",
-    "saturate()": "saturate( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "saturate()": "saturate( &lt;number-percentage&gt; )",
     "scale()": "scale( &lt;number&gt; [, &lt;number&gt; ]? )",
     "scale3d()": "scale3d( &lt;number&gt; , &lt;number&gt;, &lt;number&gt; )",
     "scaleX()": "scaleX( &lt;number&gt; )",
@@ -6673,7 +6673,7 @@
     "skew()": "skew( &lt;angle&gt; [, &lt;angle&gt; ]? )",
     "skewX()": "skewX( &lt;angle&gt; )",
     "skewY()": "skewY( &lt;angle&gt; )",
-    "sepia()": "sepia( [ &lt;number&gt; | &lt;percentage&gt; ] )",
+    "sepia()": "sepia( &lt;number-percentage&gt; )",
     "shadow": "inset? &amp;&amp; &lt;length&gt;{2,4} &amp;&amp; &lt;color&gt;?",
     "shadow-t": "[ &lt;length&gt;{2,3} &amp;&amp; &lt;color&gt;? ]",
     "shape": "rect(&lt;top&gt;, &lt;right&gt;, &lt;bottom&gt;, &lt;left&gt;)",
@@ -6689,22 +6689,22 @@
     "single-transition": "[ none | &lt;single-transition-property&gt; ] || &lt;time&gt; || &lt;single-transition-timing-function&gt; || &lt;time&gt;",
     "single-transition-timing-function": "ease | linear | ease-in | ease-out | ease-in-out | step-start | step-end | steps(&lt;integer&gt;[, [ start | end ] ]?) | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;)",
     "single-transition-property": "all | IDENT",
-    "size": "closest-side | farthest-side | closest-corner | farthest-corner | &lt;length&gt; | [ &lt;length&gt; | &lt;percentage&gt; ]{2}",
+    "size": "closest-side | farthest-side | closest-corner | farthest-corner | &lt;length&gt; | &lt;length-percentage&gt;{2}",
     "symbol": "&lt;string&gt; | &lt;image&gt; | &lt;ident&gt;",
     "time-percentage": "&lt;time&gt; | &lt;percentage&gt;",
-    "track-breadth": "&lt;length&gt; | &lt;percentage&gt; | &lt;flex&gt; | min-content | max-content | auto",
+    "track-breadth": "&lt;length-percentage&gt; | &lt;flex&gt; | min-content | max-content | auto",
     "track-list": "[ &lt;line-names&gt;? [ &lt;track-size&gt; | &lt;track-repeat&gt; ] ]+ &lt;line-names&gt;?",
     "track-repeat": "repeat( [ &lt;positive-integer&gt; ] , [ &lt;line-names&gt;? &lt;track-size&gt; ]+ &lt;line-names&gt;? )",
     "track-size": "&lt;track-breadth&gt; | minmax( &lt;track-breadth&gt; , &lt;track-breadth&gt; )",
     "transform-function": "[ &lt;matrix()&gt; || &lt;translate()&gt; || &lt;translateX()&gt; || &lt;translateY()&gt; || &lt;scale()&gt; || &lt;scaleX()&gt; || &lt;scaleY()&gt; || &lt;rotate()&gt; || &lt;skew()&gt; || &lt;skewX()&gt; || &lt;skewY()&gt; || &lt;matrix3d()&gt; || &lt;translate3d()&gt; || &lt;translateZ()&gt; || &lt;scale3d()&gt; || &lt;scaleZ()&gt; || &lt;rotate3d()&gt; || &lt;rotateX()&gt; || &lt;rotateY()&gt; || &lt;rotateZ()&gt; || &lt;perspective()&gt; ]+",
     "transform-list": "&lt;transform-function&gt;+",
-    "translate()": "translate( &lt;length&gt; | &lt;percentage&gt; [, &lt;length&gt; | &lt;percentage&gt; ]? )",
-    "translate3d()": "translate3d( &lt;length&gt; | &lt;percentage&gt; , &lt;length&gt; | &lt;percentage&gt; , &lt;length&gt; )",
-    "translateX()": "translateX( &lt;length&gt; | &lt;percentage&gt; )",
-    "translateY()": "translateY( &lt;length&gt; | &lt;percentage&gt; )",
+    "translate()": "translate( &lt;length-percentage&gt; [, &lt;length-percentage&gt; ]? )",
+    "translate3d()": "translate3d( &lt;length-percentage&gt; , &lt;length-percentage&gt; , &lt;length&gt; )",
+    "translateX()": "translateX( &lt;length-percentage&gt; )",
+    "translateY()": "translateY( &lt;length-percentage&gt; )",
     "translateZ()": "translateZ( &lt;length&gt; )",
     "type-or-unit": "string | integer | color | url | integer | number | length | angle | time | frequency | em | ex | px | rem | vw | vh | vmin | vmax | mm | q | cm | in | pt | pc | deg | grad | rad | ms | s | Hz | kHz | %",
-    "viewport-length": "auto | &lt;length&gt; | &lt;percentage&gt;"
+    "viewport-length": "auto | &lt;length-percentage&gt;"
   },
   "atRules": {
     "@charset": {
@@ -6836,6 +6836,15 @@
         "CSS Fonts"
       ],
       "descriptors": {
+        "font-display": {
+          "syntax": "[ auto | block | swap | fallback | optional ]",
+          "media": "visual",
+          "percentages": "no",
+          "initial": "auto",
+          "computed": "asSpecified",
+          "order": "uniqueOrder",
+          "status": "experimental"
+        },
         "font-family": {
           "syntax": "&lt;family-name&gt;",
           "media": "all",
@@ -7048,7 +7057,7 @@
           "status": "standard"
         },
         "max-zoom": {
-          "syntax": "auto | &lt;number&gt; | &lt;percentage&gt;",
+          "syntax": "auto | &lt;number-percentage&gt;",
           "media": "visual, continuous",
           "initial": "<code>auto</code>",
           "percentages": "the zoom factor itself",
@@ -7075,7 +7084,7 @@
           "status": "standard"
         },
         "min-zoom": {
-          "syntax": "auto | &lt;number&gt; | &lt;percentage&gt;",
+          "syntax": "auto | &lt;number-percentage&gt;",
           "media": "visual, continuous",
           "initial": "<code>auto</code>",
           "percentages": "the zoom factor itself",
@@ -7120,7 +7129,7 @@
           "status": "standard"
         },
         "zoom": {
-          "syntax": "auto | &lt;number&gt; | &lt;percentage&gt;",
+          "syntax": "auto | &lt;number-percentage&gt;",
           "media": "visual, continuous",
           "initial": "<code>auto</code>",
           "percentages": "the zoom factor itself",
