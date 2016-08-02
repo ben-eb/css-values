@@ -6,14 +6,13 @@ import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
 import * as generator from './generators/index';
 import * as log from './loggers/html';
+import capitalise from './util/capitalise';
 import formatGroup from './util/formatGroup';
-import globals from './util/globals';
-import singleValue from './util/singleValue';
 import handleError from './util/handleError';
 import {properties} from './data';
 import Parser from './parser';
 import prefixer from './prefixer';
-import * as fixtures from './fixtures';
+import validators from './validators';
 
 let files = 0;
 
@@ -47,68 +46,19 @@ function mergeProperties (data) {
  */
 
 function known (parsed) {
-    return parsed.nodes.every(node => {
-        if (node.nodes) {
-            return known(node);
-        } else {
-            return (node.type === 'keyword' && node.exclusive) ||
-                (node.type === 'data' && node.value === 'length') ||
-                (node.type === 'data' && node.value === 'integer') ||
-                (node.type === 'data' && node.value === 'percentage') ||
-                (node.type === 'data' && node.value === 'number') ||
-                (node.type === 'data' && node.value === 'time') ||
-                (node.type === 'data' && node.value === 'string');
-        }
+    return parsed.every(node => {
+        return node.type === 'keyword' ||
+        (node.type === 'data' && ~validators.indexOf(`is${capitalise(camelCase(node.value))}`));
     });
 }
 
 function getExclusives (parsed) {
-    return parsed.nodes.reduce((list, node) => {
-        if (node.nodes) {
-            list = list.concat(getExclusives(node));
-        } else if (node.exclusive && node.type === 'keyword') {
+    return parsed.reduce((list, node) => {
+        if (node.type === 'keyword') {
             list.push(node.value);
         }
         return list;
     }, []);
-}
-
-function hasDataValue (value) {
-    return function hasValue (parsed) {
-        return parsed.nodes.some(node => {
-            if (node.type === 'function') {
-                return false;
-            }
-            if (node.type === 'data' && node.value === value) {
-                return true;
-            }
-            if (node.nodes) {
-                return hasValue(node);
-            }
-        });
-    };
-}
-
-let hasAngle = hasDataValue('angle');
-let hasLength = hasDataValue('length');
-let hasInteger = hasDataValue('integer');
-let hasPercentage = hasDataValue('percentage');
-let hasNumber = hasDataValue('number');
-let hasTime = hasDataValue('time');
-let hasString = hasDataValue('string');
-
-function getRepeat (parsed) {
-    let repeat;
-    parsed.nodes.some(node => {
-        if (typeof node.repeat !== 'undefined') {
-            repeat = node.repeat;
-            return repeat;
-        }
-        if (node.nodes) {
-            return getRepeat(node);
-        }
-    });
-    return repeat;
 }
 
 let promises = [];
@@ -143,78 +93,27 @@ properties.forEach(property => {
                 // Assume the specification property is on the bottom of the array
                 let identifier = camelCase(merge.properties.slice(0).reverse()[0]);
 
-                let test = fs.createWriteStream(`output/tests/${group}/${identifier}.js`);
+                let candidates = merge.values.reduce((list, value) => {
+                    if (list.some(p => p.type === 'keyword' && p.value === value)) {
+                        return list;
+                    }
+                    list.push({type: 'keyword', value});
+                    return list;
+                }, parsed.slice(0));
 
-                files ++;
-
-                let opts = {
-                    properties: merge.properties,
-                    valid: merge.values.concat(globals).filter(Boolean),
-                    invalid: [],
-                };
-
-                let candidates = merge.values.map(value => {
-                    return {
-                        type: 'keyword',
-                        value,
-                    };
-                });
-
-                if (hasAngle(parsed)) {
-                    candidates.push({type: 'data', value: 'angle'});
-                    opts.valid = opts.valid.concat(fixtures.angle.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.length.invalid);
-                }
-
-                if (hasLength(parsed)) {
-                    candidates.push({type: 'data', value: 'length'});
-                    opts.valid = opts.valid.concat(fixtures.length.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.length.invalid);
-                }
-
-                if (hasInteger(parsed)) {
-                    candidates.push({type: 'data', value: 'integer'});
-                    opts.valid = opts.valid.concat(fixtures.integer.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.integer.invalid);
-                }
-
-                if (hasPercentage(parsed)) {
-                    candidates.push({type: 'data', value: 'percentage'});
-                    opts.valid = opts.valid.concat(fixtures.percentage.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.percentage.invalid);
-                }
-
-                if (hasNumber(parsed)) {
-                    candidates.push({type: 'data', value: 'number'});
-                    opts.valid = opts.valid.concat(fixtures.number.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.number.invalid);
-                }
-
-                if (hasTime(parsed)) {
-                    candidates.push({type: 'data', value: 'time'});
-                    opts.valid = opts.valid.concat(fixtures.time.valid);
-                    opts.invalid = opts.invalid.concat(fixtures.time.invalid);
-                }
-
-                if (hasString(parsed)) {
-                    candidates.push({type: 'string', value: 'string'});
-                }
-
-                if (singleValue(candidates)) {
-                    opts.valid = opts.valid.concat('var(--someVar)');
+                // The all property is already covered by the global
+                // validator, but this is important to still generate
+                // a CSS custom property validator for it.
+                if (identifier === 'all') {
+                    candidates = [];
                 }
 
                 config.push({
                     identifier,
                     group,
                     properties: merge.properties,
-                    repeat: getRepeat(parsed),
-                    count: 1,
                     candidates,
                 });
-
-                test.write(generator.test(opts));
-                test.end();
             });
 
             return config;
@@ -259,7 +158,7 @@ Promise.all(promises).then((configs) => {
         return list;
     }, {});
     Object.keys(outputs).forEach(output => {
-        files ++;
+        files += 2;
         const config = outputs[output];
         imported.push({
             identifier: config.identifier,
@@ -272,8 +171,17 @@ Promise.all(promises).then((configs) => {
 
         script.write(generator.property(config));
         script.end();
+
+        let test = fs.createWriteStream(`output/tests/${config.group}/${config.identifier}.js`);
+
+        test.write(generator.test(config));
+        test.end();
     });
     let contents = generator.program([
+        generator.requireNamespacedModules(...imported),
+        generator.exportModules(exported),
+    ]);
+    let testContents = generator.program([
         generator.requireModules(...imported),
         generator.exportModules(exported),
     ]);
@@ -281,7 +189,7 @@ Promise.all(promises).then((configs) => {
     index.write(contents);
     index.end();
     let index2 = fs.createWriteStream(`output/tests/index.js`);
-    index2.write(contents);
+    index2.write(testContents);
     index2.end();
     let plugin = fs.createWriteStream(`output/plugin.js`);
     plugin.write(generator.plugin());
@@ -290,7 +198,7 @@ Promise.all(promises).then((configs) => {
     test.write(generator.tests());
     test.end();
     log.total(files + 4);
-    ncp(join(__dirname, './validators'), join(__dirname, '../output/validators'), err => {
+    ncp(join(__dirname, '../src/validators'), join(__dirname, '../output/validators'), err => {
         if (err) {
             return handleError(err);
         }
