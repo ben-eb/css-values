@@ -7,21 +7,33 @@ import completed from '../completed';
 
 const encode = new HtmlEntities.AllHtmlEntities().encode;
 
-const entries = [];
+const passes = [];
+const progressing = [];
+const fails = [];
 
 export function pass (property, syntax, parsed) {
-    // Don't log properties that we completed
     if (~completed.indexOf(property)) {
+        passes.push(`
+        <h2 id="${camelCase(property)}"><a href="#${camelCase(property)}">${property}</a></h2>
+        <p>${encode(syntax)}</p>
+        <pre><code>${inspect(parsed, false, null)}</code></pre>
+        `);
         return;
     }
-    entries.push(`
-    <h1 id="${camelCase(property)}"><a href="#${camelCase(property)}">${property}</a></h1>
+    progressing.push(`
+    <h2 id="${camelCase(property)}"><a href="#${camelCase(property)}">${property}</a></h2>
     <p>${encode(syntax)}</p>
     <pre><code>${inspect(parsed, false, null)}</code></pre>
     `);
 }
 
-export function fail () {}
+export function fail (property, syntax, parsed) {
+    fails.push(`
+    <h2 id="${camelCase(property)}"><a href="#${camelCase(property)}">${property}</a></h2>
+    <p>${encode(syntax)}</p>
+    <pre><code>${inspect(parsed, false, null)}</code></pre>
+    `);
+}
 
 export function total () {
     let stats = fs.createWriteStream(join(__dirname, `../../output/stats.html`));
@@ -40,16 +52,16 @@ export function total () {
                     font-family: monospace, monospace;
                 }
 
-                h1 {
+                h2 {
                     font-size: 1rem;
                     font-weight: normal;
                 }
 
-                h1, h1 a {
+                h2, h2 a {
                     color: #fc3;
                 }
 
-                h1, p {
+                h2, p {
                     border-bottom: 1px solid #527889;
                     padding: 10px 0;
                     margin: 0;
@@ -61,7 +73,19 @@ export function total () {
             </style>
         </head>
         <body>
-            ${entries.join('\n')}
+            <h1>In progress</h1>
+            <p>These properties are parsed by the parser, but are not marked
+            as <em>completed</em>; so their implementation may be missing or
+            incomplete.</p>
+            ${progressing.join('\n')}
+            <h1>Missing</h1>
+            <p>Either parsing or creating validators for these properties
+            <em>may</em> be incomplete. You can add them to the "in progress"
+            list by broadening the "known" function in <em>src/run.js</em>.</p>
+            ${fails.join('\n')}
+            <h1>Complete</h1>
+            <p>These properties have been fully implemented.</p>
+            ${passes.join('\n')}
         </body>
     </html>
     `);
