@@ -27,7 +27,7 @@ export const properties = Object.keys(data.properties).map(key => {
     return {
         ...data.properties[key],
         name: key,
-        syntax: syntax,
+        syntax: syntax.trim(),
     };
 });
 
