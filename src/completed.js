@@ -29,6 +29,7 @@ export default [
     'animation-play-state',
     'appearance',
     'backface-visibility',
+    'background-attachment',
     'background-clip',
     'background-origin',
     'border-bottom-style',

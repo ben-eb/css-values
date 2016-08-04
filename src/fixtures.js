@@ -4,6 +4,7 @@
  */
 
 import {absoluteSizes} from './validators/isAbsoluteSize';
+import {attachments} from './validators/isAttachment';
 import {boxes} from './validators/isBox';
 import {brStyles} from './validators/isBrStyle';
 import {brWidths} from './validators/isBrWidth';
@@ -27,6 +28,11 @@ export const absoluteSize = {
 export const angle = {
     valid: ['0', '90deg', '1turn', '100grad', '2rad'],
     invalid: ['1circle', 'halfturn', 'deg90'],
+};
+
+export const attachment = {
+    valid: attachments,
+    invalid: ['local-scroll'],
 };
 
 export const box = {

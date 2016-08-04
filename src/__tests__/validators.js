@@ -1,6 +1,7 @@
 import test from 'ava';
 import absoluteSize from '../validators/isAbsoluteSize';
 import angle from '../validators/isAngle';
+import attachment from '../validators/isAttachment';
 import box from '../validators/isBox';
 import brStyle from '../validators/isBrStyle';
 import brWidth from '../validators/isBrWidth';
@@ -28,6 +29,7 @@ import * as fixtures from '../fixtures';
 const validators = {
     absoluteSize,
     angle,
+    attachment,
     box,
     brStyle,
     brWidth,

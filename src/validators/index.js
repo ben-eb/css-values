@@ -1,6 +1,7 @@
 export default [
     'isAbsoluteSize',
     'isAngle',
+    'isAttachment',
     'isBox',
     'isBrStyle',
     'isBrWidth',
