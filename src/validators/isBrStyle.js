@@ -14,3 +14,5 @@ export const brStyles = [
 export default ({type, value}) => {
     return type === 'word' && ~brStyles.indexOf(value);
 };
+
+export const type = 'node';

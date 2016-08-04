@@ -6,3 +6,5 @@ export const numericFractionValues = [
 export default ({type, value}) => {
     return type === 'word' && ~numericFractionValues.indexOf(value);
 };
+
+export const type = 'node';

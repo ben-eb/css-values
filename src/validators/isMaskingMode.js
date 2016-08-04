@@ -7,3 +7,5 @@ export const maskingModes = [
 export default ({type, value}) => {
     return type === 'word' && ~maskingModes.indexOf(value);
 };
+
+export const type = 'node';

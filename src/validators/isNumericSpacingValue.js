@@ -6,3 +6,5 @@ export const numericSpacingValues = [
 export default ({type, value}) => {
     return type === 'word' && ~numericSpacingValues.indexOf(value);
 };
+
+export const type = 'node';

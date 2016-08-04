@@ -13,3 +13,5 @@ export default ({type, value}) => {
     }
     return !/[0-9]/.test(value[0]);
 };
+
+export const type = 'node';

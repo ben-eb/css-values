@@ -11,3 +11,5 @@ export default ({type, value}) => {
     }
     return false;
 };
+
+export const type = 'node';

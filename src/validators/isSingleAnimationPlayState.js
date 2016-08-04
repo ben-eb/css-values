@@ -6,3 +6,5 @@ export const singleAnimationPlayStates = [
 export default ({type, value}) => {
     return type === 'word' && ~singleAnimationPlayStates.indexOf(value);
 };
+
+export const type = 'node';

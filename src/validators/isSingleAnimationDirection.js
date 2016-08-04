@@ -8,3 +8,5 @@ export const singleAnimationDirections = [
 export default ({type, value}) => {
     return type === 'word' && ~singleAnimationDirections.indexOf(value);
 };
+
+export const type = 'node';

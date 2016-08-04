@@ -7,3 +7,5 @@ export const boxes = [
 export default ({type, value}) => {
     return type === 'word' && ~boxes.indexOf(value);
 };
+
+export const type = 'node';

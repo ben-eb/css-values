@@ -11,3 +11,5 @@ export const absoluteSizes = [
 export default ({type, value}) => {
     return type === 'word' && ~absoluteSizes.indexOf(value);
 };
+
+export const type = 'node';

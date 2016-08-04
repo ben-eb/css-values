@@ -8,3 +8,5 @@ export const compositingOperators = [
 export default ({type, value}) => {
     return type === 'word' && ~compositingOperators.indexOf(value);
 };
+
+export const type = 'node';

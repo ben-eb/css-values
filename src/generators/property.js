@@ -2,7 +2,7 @@ import * as t from 'babel-types';
 import arrayOfStrings from '../util/arrayOfStrings';
 import dataValidator from '../util/dataValidator';
 import template from '../util/moduleTemplate';
-import validators from '../validators';
+import * as validators from '../validators';
 import exportConst from './exportConst';
 import generateProgram from './program';
 import requireModules from './requireModules';
@@ -40,13 +40,14 @@ export default opts => {
         }
         if (candidate.type === 'data') {
             const camel = dataValidator(candidate.value);
-            if (!~validators.indexOf(camel)) {
+            if (!validators[camel]) { // eslint-disable-line
                 return config;
             }
             config.dependencies.push({
                 identifier: camel,
                 module: `../../validators/${camel}`,
             });
+            const type = validators[camel].type // eslint-disable-line
             if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
                 config.repeatingConditions.push(
                     template(`if (cons) { valid = false; }`)({
@@ -54,7 +55,7 @@ export default opts => {
                             generateConditions(
                                 templateExpression(`even`),
                                 generateConditions(
-                                    templateExpression(`!${camel}(node)`),
+                                    templateExpression(`!${camel}(${type})`),
                                     templateExpression('!isVar(node)'),
                                 ),
                             ),
@@ -68,7 +69,7 @@ export default opts => {
                 );
                 return config;
             }
-            config.conditions.push(templateExpression(`${camel}(node)`));
+            config.conditions.push(templateExpression(`${camel}(${type})`));
         }
         return config;
     }, {

@@ -8,3 +8,5 @@ export const singleAnimationFillModes = [
 export default ({type, value}) => {
     return type === 'word' && ~singleAnimationFillModes.indexOf(value);
 };
+
+export const type = 'node';

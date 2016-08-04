@@ -15,3 +15,5 @@ export const compositeStyles = [
 export default ({type, value}) => {
     return type === 'word' && ~compositeStyles.indexOf(value);
 };
+
+export const type = 'node';

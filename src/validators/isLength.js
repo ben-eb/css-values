@@ -22,3 +22,5 @@ export default node => {
     let int = isNumber(node);
     return int && (int.number === '0' || ~lengths.indexOf(int.unit));
 };
+
+export const type = 'node';

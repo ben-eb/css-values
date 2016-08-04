@@ -9,3 +9,5 @@ export const brWidths = [
 export default node => {
     return isLength(node) || node.type === 'word' && ~brWidths.indexOf(node.value);
 };
+
+export const type = 'node';

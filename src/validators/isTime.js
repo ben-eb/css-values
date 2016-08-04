@@ -9,3 +9,5 @@ export default node => {
     let int = isNumber(node);
     return int && ~units.indexOf(int.unit);
 };
+
+export const type = 'node';

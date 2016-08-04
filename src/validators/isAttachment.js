@@ -7,3 +7,5 @@ export const attachments = [
 export default ({type, value}) => {
     return type === 'word' && ~attachments.indexOf(value);
 };
+
+export const type = 'node';

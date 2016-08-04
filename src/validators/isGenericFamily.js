@@ -9,3 +9,5 @@ export const genericFamilies = [
 export default ({type, value}) => {
     return type === 'word' && ~genericFamilies.indexOf(value);
 };
+
+export const type = 'node';

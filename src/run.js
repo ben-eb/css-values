@@ -6,13 +6,13 @@ import nanoEqual from 'nano-equal';
 import ncp from 'ncp';
 import * as generator from './generators/index';
 import * as log from './loggers/html';
-import capitalise from './util/capitalise';
+import dataValidator from './util/dataValidator';
 import formatGroup from './util/formatGroup';
 import handleError from './util/handleError';
 import {properties} from './data';
 import Parser from './parser';
 import prefixer from './prefixer';
-import validators from './validators';
+import * as validators from './validators/index';
 
 let files = 0;
 
@@ -48,7 +48,7 @@ function mergeProperties (data) {
 function known (parsed) {
     return parsed.every(node => {
         return node.type === 'keyword' ||
-        (node.type === 'data' && ~validators.indexOf(`is${capitalise(camelCase(node.value))}`));
+        (node.type === 'data' && validators[dataValidator(node.value)]); // eslint-disable-line
     });
 }
 
