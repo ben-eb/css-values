@@ -3,7 +3,7 @@ import camelCase from 'camelcase';
 import arrayOfStrings from '../util/arrayOfStrings';
 import globals from '../util/globals';
 import template from '../util/moduleTemplate';
-import * as fixtures from '../fixtures';
+import * as fixtures from '../fixtures/index';
 import generateProgram from './program';
 
 function createTest (fixture, valid = true) {
@@ -31,16 +31,17 @@ export default opts => {
         if (candidate.type === 'data') {
             const camel = camelCase(candidate.value);
             if (fixtures[camel]) { // eslint-disable-line
-                list.push.apply(list, fixtures[camel].valid.map(fixture => { // eslint-disable-line
+                const values = fixtures[camel].fixtures; // eslint-disable-line
+                list.push.apply(list, values.valid.map(fixture => {
                     return createTest(fixture);
                 }));
-                list.push.apply(list, fixtures[camel].invalid.map(fixture => { // eslint-disable-line
+                list.push.apply(list, values.invalid.map(fixture => {
                     return createTest(fixture, false);
                 }));
                 if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
                     list.push(
-                        createTest(`${fixtures[camel].valid[0]}, ${fixtures[camel].valid[0]}`), // eslint-disable-line
-                        createTest(`${fixtures[camel].valid[0]}, ${fixtures[camel].valid[0]},`, false), // eslint-disable-line
+                        createTest(`${values.valid[0]}, ${values.valid[0]}`),
+                        createTest(`${values.valid[0]}, ${values.valid[0]},`, false),
                         createTest(`var(--foo), var(--bar)`),
                         createTest(`var(--foo), var(--bar),`, false)
                     );

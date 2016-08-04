@@ -25,7 +25,8 @@ import singleAnimationDirection from '../validators/isSingleAnimationDirection';
 import singleAnimationFillMode from '../validators/isSingleAnimationFillMode';
 import singleAnimationPlayState from '../validators/isSingleAnimationPlayState';
 import time from '../validators/isTime';
-import * as fixtures from '../fixtures';
+import variable from '../validators/isVar';
+import * as fixtures from '../fixtures/index';
 
 const validators = {
     absoluteSize,
@@ -54,14 +55,8 @@ const validators = {
     singleAnimationFillMode,
     singleAnimationPlayState,
     time,
+    variable,
 };
-
-function toWord (value) {
-    return {
-        type: 'word',
-        value,
-    };
-}
 
 function validMacro (t, type, input) {
     t.truthy(validators[type](input));
@@ -72,12 +67,7 @@ function invalidMacro (t, type, input) {
 }
 
 Object.keys(fixtures).forEach(key => {
-    const fixture = fixtures[key]; // eslint-disable-line
-    // All validation functions except isNegative take a node type
-    if (key !== 'negative') {
-        fixture.valid = fixture.valid.map(toWord);
-        fixture.invalid = fixture.invalid.map(toWord);
-    }
+    const fixture = fixtures[key].nodes; // eslint-disable-line
     fixture.valid.forEach(value => {
         test(`${value} (valid ${key})`, validMacro, key, value);
     });
