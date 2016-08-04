@@ -20,6 +20,7 @@ export * as isNumericFractionValue from './isNumericFractionValue';
 export * as isNumericSpacingValue from './isNumericSpacingValue';
 export * as isPercentage from './isPercentage';
 export * as isRelativeSize from './isRelativeSize';
+export * as isRepeatStyle from './isRepeatStyle';
 export * as isSingleAnimationDirection from './isSingleAnimationDirection';
 export * as isSingleAnimationFillMode from './isSingleAnimationFillMode';
 export * as isSingleAnimationPlayState from './isSingleAnimationPlayState';

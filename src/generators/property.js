@@ -7,6 +7,7 @@ import exportConst from './exportConst';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
+const validatorPath = '../../validators/';
 const isCssVar = templateExpression(`isVar(node)`);
 
 function generateConditionsFactory (operator) {
@@ -34,6 +35,17 @@ export default opts => {
         identifier: 'properties',
         exported: arrayOfStrings(opts.properties),
     });
+    if (opts.candidates.length === 1 && opts.candidates[0].value === 'repeat-style') {
+        const identifier = 'isRepeatStyle';
+        return generateProgram([
+            requireModules({
+                identifier,
+                module: `${validatorPath}${identifier}`,
+            }),
+            template(`export default ${identifier};`)(),
+            properties,
+        ]);
+    }
     const settings = opts.candidates.reduce((config, candidate) => {
         if (candidate.type === 'keyword') {
             config.keywords.push(candidate.value);
@@ -45,7 +57,7 @@ export default opts => {
             }
             config.dependencies.push({
                 identifier: camel,
-                module: `../../validators/${camel}`,
+                module: `${validatorPath}${camel}`,
             });
             const type = validators[camel].type // eslint-disable-line
             if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
@@ -78,7 +90,7 @@ export default opts => {
         repeatingConditions: [],
         dependencies: [{
             identifier: 'isVar',
-            module: `../../validators/isVar`,
+            module: `${validatorPath}isVar`,
         }],
     });
 
