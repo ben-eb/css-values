@@ -6,6 +6,6 @@ export const genericFamilies = [
     'monospace',
 ];
 
-export default value => {
-    return ~genericFamilies.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~genericFamilies.indexOf(value);
 };

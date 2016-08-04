@@ -3,6 +3,6 @@ export const numericFractionValues = [
     'stacked-fractions',
 ];
 
-export default value => {
-    return ~numericFractionValues.indexOf(value);    
+export default ({type, value}) => {
+    return type === 'word' && ~numericFractionValues.indexOf(value);
 };

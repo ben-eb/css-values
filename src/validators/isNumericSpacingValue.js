@@ -3,6 +3,6 @@ export const numericSpacingValues = [
     'tabular-nums',
 ];
 
-export default value => {
-    return ~numericSpacingValues.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~numericSpacingValues.indexOf(value);
 };

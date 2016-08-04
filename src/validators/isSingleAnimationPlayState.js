@@ -3,6 +3,6 @@ export const singleAnimationPlayStates = [
     'paused',
 ];
 
-export default value => {
-    return ~singleAnimationPlayStates.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~singleAnimationPlayStates.indexOf(value);
 };

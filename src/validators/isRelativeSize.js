@@ -3,6 +3,6 @@ export const relativeSizes = [
     'smaller',
 ];
 
-export default value => {
-    return ~relativeSizes.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~relativeSizes.indexOf(value);
 };

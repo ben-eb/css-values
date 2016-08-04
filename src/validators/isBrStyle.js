@@ -11,6 +11,6 @@ export const brStyles = [
     'outset',
 ];
 
-export default value => {
-    return ~brStyles.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~brStyles.indexOf(value);
 };

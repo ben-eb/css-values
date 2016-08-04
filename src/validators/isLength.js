@@ -18,7 +18,7 @@ const lengths = [
     'pc',
 ];
 
-export default num => {
-    let int = isNumber(num);
+export default node => {
+    let int = isNumber(node);
     return int && (int.number === '0' || ~lengths.indexOf(int.unit));
 };

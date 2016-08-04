@@ -4,6 +4,6 @@ export const attachments = [
     'local',
 ];
 
-export default value => {
-    return ~attachments.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~attachments.indexOf(value);
 };

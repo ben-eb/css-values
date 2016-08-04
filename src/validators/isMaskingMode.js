@@ -4,6 +4,6 @@ export const maskingModes = [
     'match-source',
 ];
 
-export default value => {
-    return ~maskingModes.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~maskingModes.indexOf(value);
 };

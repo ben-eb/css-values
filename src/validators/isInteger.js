@@ -1,6 +1,9 @@
 import {unit} from 'postcss-value-parser';
 
-export default num => {
-    let int = unit(num);
-    return int && !~num.indexOf('.') && !int.unit;
+export default ({type, value}) => {
+    if (type !== 'word') {
+        return false;
+    }
+    let int = unit(value);
+    return int && !~value.indexOf('.') && !int.unit;
 };

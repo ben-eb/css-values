@@ -6,6 +6,6 @@ export const brWidths = [
     'thick',
 ];
 
-export default value => {
-    return isLength(value) || ~brWidths.indexOf(value);
+export default node => {
+    return isLength(node) || node.type === 'word' && ~brWidths.indexOf(node.value);
 };

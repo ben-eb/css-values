@@ -8,7 +8,7 @@ import exportConst from './exportConst';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
-const isCssVar = templateExpression(`type === 'function' && value === 'var'`);
+const isCssVar = templateExpression(`isVar(node)`);
 
 function generateConditionsFactory (operator) {
     return function generateConditions (...conditions) {
@@ -54,15 +54,9 @@ export default opts => {
                         cons: generateOrConditions(
                             generateConditions(
                                 templateExpression(`even`),
-                                generateOrConditions(
-                                    generateConditions(
-                                        templateExpression(`node.type === 'word'`),
-                                        templateExpression(`!${camel}(node.value)`),
-                                    ),
-                                    generateConditions(
-                                        templateExpression(`node.type === 'function'`),
-                                        templateExpression(`node.value !== 'var'`),
-                                    ),
+                                generateConditions(
+                                    templateExpression(`!${camel}(node)`),
+                                    templateExpression('!isVar(node)'),
                                 ),
                             ),
                             generateConditions(
@@ -75,10 +69,18 @@ export default opts => {
                 );
                 return config;
             }
-            config.conditions.push(templateExpression(`${camel}(value)`));
+            config.conditions.push(templateExpression(`${camel}(node)`));
         }
         return config;
-    }, {keywords: [], conditions: [], repeatingConditions: [], dependencies: []});
+    }, {
+        keywords: [],
+        conditions: [],
+        repeatingConditions: [],
+        dependencies: [{
+            identifier: 'isVar',
+            module: `../../validators/isVar`,
+        }],
+    });
 
     if (settings.repeatingConditions.length) {
         const tmpl = template(`
@@ -106,9 +108,9 @@ export default opts => {
 
     if (settings.keywords.length) {
         if (settings.keywords.length === 1) {
-            settings.conditions.push(templateExpression(`value === "${settings.keywords[0]}"`));
+            settings.conditions.push(templateExpression(`node.value === "${settings.keywords[0]}"`));
         } else {
-            settings.conditions.push(templateExpression(`~keywords.indexOf(value)`));
+            settings.conditions.push(templateExpression(`node.type === 'word' && ~keywords.indexOf(node.value)`));
             keywords.push(template(`const keywords = INJECT;`)({
                 INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
             }));
@@ -119,9 +121,7 @@ export default opts => {
 
     if (settings.conditions.length) {
         conditions = generateOrConditions(
-            templateExpression(`type === 'word' && CONDITIONS`, {
-                CONDITIONS: generateOrConditions(...settings.conditions),
-            }),
+            generateOrConditions(...settings.conditions),
             isCssVar,
         );
     } else {
@@ -131,7 +131,7 @@ export default opts => {
     const tmpl = template(`
     export default function (parsed) {
         if (parsed.nodes.length === 1) {
-            const {type, value} = parsed.nodes[0];
+            const node = parsed.nodes[0];
             return CONDITIONS
         }
         return false;

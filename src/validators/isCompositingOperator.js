@@ -5,6 +5,6 @@ export const compositingOperators = [
     'exclude',
 ];
 
-export default value => {
-    return ~compositingOperators.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~compositingOperators.indexOf(value);
 };

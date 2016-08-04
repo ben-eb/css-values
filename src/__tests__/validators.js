@@ -56,6 +56,13 @@ const validators = {
     time,
 };
 
+function toWord (value) {
+    return {
+        type: 'word',
+        value,
+    };
+}
+
 function validMacro (t, type, input) {
     t.truthy(validators[type](input));
 }
@@ -66,6 +73,11 @@ function invalidMacro (t, type, input) {
 
 Object.keys(fixtures).forEach(key => {
     const fixture = fixtures[key]; // eslint-disable-line
+    // All validation functions except isNegative take a node type
+    if (key !== 'negative') {
+        fixture.valid = fixture.valid.map(toWord);
+        fixture.invalid = fixture.invalid.map(toWord);
+    }
     fixture.valid.forEach(value => {
         test(`${value} (valid ${key})`, validMacro, key, value);
     });

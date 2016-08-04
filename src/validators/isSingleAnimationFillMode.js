@@ -5,6 +5,6 @@ export const singleAnimationFillModes = [
     'both',
 ];
 
-export default value => {
-    return ~singleAnimationFillModes.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~singleAnimationFillModes.indexOf(value);
 };

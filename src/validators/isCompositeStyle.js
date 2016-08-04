@@ -12,6 +12,6 @@ export const compositeStyles = [
     'xor',
 ];
 
-export default value => {
-    return ~compositeStyles.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~compositeStyles.indexOf(value);
 };

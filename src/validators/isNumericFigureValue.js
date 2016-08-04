@@ -3,6 +3,6 @@ export const numericFigureValues = [
     'oldstyle-nums',
 ];
 
-export default value => {
-    return ~numericFigureValues.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~numericFigureValues.indexOf(value);
 };

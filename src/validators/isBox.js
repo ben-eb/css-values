@@ -4,6 +4,6 @@ export const boxes = [
     'content-box',
 ];
 
-export default value => {
-    return ~boxes.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~boxes.indexOf(value);
 };

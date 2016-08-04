@@ -1,4 +1,7 @@
-export default value => {
+export default ({type, value}) => {
+    if (type !== 'word') {
+        return false;
+    }
     if (value[0] === '-') {
         if (/[0-9]/.test(value[1])) {
             return false;

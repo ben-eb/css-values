@@ -5,6 +5,6 @@ export const singleAnimationDirections = [
     'alternate-reverse',
 ];
 
-export default value => {
-    return ~singleAnimationDirections.indexOf(value);
+export default ({type, value}) => {
+    return type === 'word' && ~singleAnimationDirections.indexOf(value);
 };
