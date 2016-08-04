@@ -8,6 +8,7 @@ import brWidth from '../validators/isBrWidth';
 import compositeStyle from '../validators/isCompositeStyle';
 import compositingOperator from '../validators/isCompositingOperator';
 import customIdent from '../validators/isCustomIdent';
+import flex from '../validators/isFlex';
 import genericFamily from '../validators/isGenericFamily';
 import integer from '../validators/isInteger';
 import length from '../validators/isLength';
@@ -36,6 +37,7 @@ const validators = {
     compositeStyle,
     compositingOperator,
     customIdent,
+    flex,
     genericFamily,
     integer,
     length,

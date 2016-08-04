@@ -65,6 +65,11 @@ export const customIdent = {
     invalid: ['007-Bond', '0B', '--B', '-0'],
 };
 
+export const flex = {
+    valid: ['.25fr', '0.5fr', '1fr', '2fr'],
+    invalid: ['-0.5fr', '-2fr'],
+};
+
 export const genericFamily = {
     valid: genericFamilies,
     invalid: ['such-font', 'many-ligatures'],
