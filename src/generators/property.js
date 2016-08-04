@@ -1,7 +1,6 @@
 import * as t from 'babel-types';
-import camelCase from 'camelcase';
 import arrayOfStrings from '../util/arrayOfStrings';
-import capitalise from '../util/capitalise';
+import dataValidator from '../util/dataValidator';
 import template from '../util/moduleTemplate';
 import validators from '../validators';
 import exportConst from './exportConst';
@@ -40,7 +39,7 @@ export default opts => {
             config.keywords.push(candidate.value);
         }
         if (candidate.type === 'data') {
-            const camel = `is${capitalise(camelCase(candidate.value))}`;
+            const camel = dataValidator(candidate.value);
             if (!~validators.indexOf(camel)) {
                 return config;
             }
