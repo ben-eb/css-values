@@ -67,6 +67,10 @@ let exported = [];
 
 properties.forEach(property => {
     let parsed = new Parser(property.syntax);
+    if (parsed.length === 1 && parsed[0].type === 'property') {
+        const {syntax} = properties.filter(prop => prop.name === parsed[0].value)[0];
+        parsed = new Parser(syntax);
+    }
     let hasUnknown = !known(parsed);
     if (hasUnknown) {
         log.fail(property.name, property.syntax, parsed);

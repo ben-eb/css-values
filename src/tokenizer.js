@@ -110,8 +110,13 @@ export default function tokenize (input) {
 
             if (input[pos] === '<' && input[next] === '>') {
                 name = 'data';
+                content = content.slice(1, -1);
                 // Translate curly quotes to straight quotes
                 content = content.replace(/[\u2018\u2019]/g, "'");
+                if (content[0] === "'" && content[content.length - 1] === "'") {
+                    name = 'property';
+                    content = content.slice(1, -1);
+                }
             }
 
             tokens.push([name, content]);

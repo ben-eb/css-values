@@ -58,6 +58,9 @@ export default class Parser {
         case t.or:
             this.or();
             break;
+        case t.property:
+            this.property();
+            break;
         case t.range:
             this.range();
             break;
@@ -94,10 +97,9 @@ export default class Parser {
     }
 
     data () {
-        const value = this.tokens[this.pos][1].slice(1, -1);
         this.node = {
             type: 'data',
-            value,
+            value: this.tokens[this.pos][1],
         };
         this.pos ++;
     }
@@ -202,6 +204,14 @@ export default class Parser {
             this.parent.max = this.parent.values.length + 1;
             this.pos ++;
         }
+    }
+
+    property () {
+        this.node = {
+            type: 'property',
+            value: this.tokens[this.pos][1],
+        };
+        this.pos ++;
     }
 
     range () {
