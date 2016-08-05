@@ -7,6 +7,7 @@
     "acquire": "node ./dist/acquire.js > ./data/data.json",
     "generate": "node ./dist/run.js",
     "generate-es5": "npm run generate && cross-env BABEL_ENV=publish babel output --out-dir output",
+    "markdown": "remark *.md --quiet",
     "pretest": "eslint src",
     "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
     "report": "nyc report --reporter=html",
@@ -55,8 +56,11 @@
     "eslint-plugin-babel": "^3.3.0",
     "eslint-plugin-import": "^1.12.0",
     "got": "^6.2.0",
+    "mdast-util-heading-range": "^2.0.1",
     "nyc": "^6.0.0",
-    "postcss-value-parser": "^3.3.0"
+    "postcss-value-parser": "^3.3.0",
+    "remark-cli": "^1.0.0",
+    "remark-heading-gap": "^2.0.1"
   },
   "homepage": "https://github.com/ben-eb/css-values",
   "author": {
@@ -100,6 +104,18 @@
           "istanbul"
         ]
       }
+    }
+  },
+  "remarkConfig": {
+    "output": true,
+    "plugins": {
+      "dist/docs/completed.js": {},
+      "heading-gap": {}
+    },
+    "settings": {
+      "bullet": "*",
+      "fences": true,
+      "listItemIndent": "1"
     }
   }
 }
