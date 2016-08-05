@@ -1,5 +1,4 @@
-export default ({type, value}) => {
-    return type === 'function' && value === 'var';
-};
+import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
 
+export default node => isCaseInsensitiveFunction(node, 'var');
 export const type = 'node';

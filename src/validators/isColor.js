@@ -1,14 +1,11 @@
 import {walk} from 'postcss-value-parser';
 import colors from 'css-color-names';
+import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
 import isPercentage from './isPercentage';
 
 const namedColours = Object.keys(colors);
-
-export function isCaseInsensitiveFunction (node, value) {
-    return node.type === 'function' && node.value.toLowerCase() === value;
-}
 
 export function isRgb (node) {
     if (!isCaseInsensitiveFunction(node, 'rgb')) {
