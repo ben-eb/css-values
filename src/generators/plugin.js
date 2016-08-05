@@ -9,7 +9,7 @@ export default () => {
     export default function isValid (cssString) {
         const parts = cssString.split(':').map(value => value.trim());
         const parsed = valueParser(parts[1]);
-        if (parsed.nodes.length === 1 && ~cssGlobals.indexOf(parsed.nodes[0].value)) {
+        if (parsed.nodes.length === 1 && ~cssGlobals.indexOf(parsed.nodes[0].value.toLowerCase())) {
             return true;
         }
         return validators.some(validator => {

@@ -49,7 +49,7 @@ export default opts => {
             }
         }
         return list;
-    }, [...globals, 'var(--foo)'].map(ident => createTest(ident)));
+    }, [...globals, ...globals.map(val => val.toUpperCase()), 'var(--foo)'].map(ident => createTest(ident)));
     if (opts.properties.length === 1) {
         return generateProgram([
             template(`const property = PROPERTY;`)({
