@@ -1,4 +1,4 @@
-import valueParser from 'postcss-value-parser';
+import getFirstNode from '../util/getFirstNode';
 
 export const fixtures = {
     valid: ['var(--foo)'],
@@ -6,6 +6,6 @@ export const fixtures = {
 };
 
 export const nodes = {
-    valid: [valueParser(fixtures.valid[0]).nodes[0]],
-    invalid: [valueParser(fixtures.invalid[0]).nodes[0]],
+    valid: [getFirstNode(fixtures.valid[0])],
+    invalid: [getFirstNode(fixtures.invalid[0])],
 };

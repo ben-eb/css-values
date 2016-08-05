@@ -24,5 +24,6 @@ export * as isRepeatStyle from './isRepeatStyle';
 export * as isSingleAnimationDirection from './isSingleAnimationDirection';
 export * as isSingleAnimationFillMode from './isSingleAnimationFillMode';
 export * as isSingleAnimationPlayState from './isSingleAnimationPlayState';
+export * as isString from './isString';
 export * as isTime from './isTime';
 export * as isVariable from './isVariable';

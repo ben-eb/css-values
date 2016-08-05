@@ -24,5 +24,6 @@ export * as repeatStyle from './repeatStyle';
 export * as singleAnimationDirection from './singleAnimationDirection';
 export * as singleAnimationFillMode from './singleAnimationFillMode';
 export * as singleAnimationPlayState from './singleAnimationPlayState';
+export * as string from './string';
 export * as time from './time';
 export * as variable from './variable';
