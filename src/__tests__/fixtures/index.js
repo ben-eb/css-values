@@ -17,4 +17,5 @@ export textEmphasisPosition from './textEmphasisPosition';
 export textIndent from './textIndent';
 export touchAction from './touchAction';
 export transitionDelay from './transitionDelay';
+export webkitBorderBeforeColor from './webkitBorderBeforeColor';
 export webkitMaskRepeat from './webkitMaskRepeat';
