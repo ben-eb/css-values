@@ -6,10 +6,10 @@ export default ({type, value}) => {
         return false;
     }
     let int = unit(value);
-    if (int && !endsWith(int.number, '.') && !~int.unit.indexOf('.')) {
-        return int;
-    }
-    return false;
+    return int &&
+        !endsWith(int.number, '.') &&
+        !~int.unit.indexOf('.') &&
+        (!int.unit || /[0-9e\-]/i.test(int.unit));
 };
 
 export const type = 'node';

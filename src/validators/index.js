@@ -4,6 +4,7 @@ export * as isAttachment from './isAttachment';
 export * as isBox from './isBox';
 export * as isBrStyle from './isBrStyle';
 export * as isBrWidth from './isBrWidth';
+export * as isColor from './isColor';
 export * as isCompositeStyle from './isCompositeStyle';
 export * as isCompositingOperator from './isCompositingOperator';
 export * as isCustomIdent from './isCustomIdent';

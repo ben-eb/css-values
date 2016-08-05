@@ -47,3 +47,5 @@ export default parsed => {
     });
     return valid;
 };
+
+export const type = 'parsed';

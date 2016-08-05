@@ -26,6 +26,7 @@
     "babel-types": "^6.7.2",
     "camelcase": "^2.1.1",
     "chalk": "^1.1.1",
+    "css-color-names": "0.0.4",
     "ends-with": "^0.2.0",
     "flatten": "^1.0.2",
     "html-entities": "^1.2.0",

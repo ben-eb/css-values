@@ -4,6 +4,7 @@ export * as attachment from './attachment';
 export * as box from './box';
 export * as brStyle from './brStyle';
 export * as brWidth from './brWidth';
+export * as color from './color';
 export * as compositeStyle from './compositeStyle';
 export * as compositingOperator from './compositingOperator';
 export * as customIdent from './customIdent';

@@ -3,7 +3,8 @@
  * https://drafts.csswg.org/css-values-3/#angles
  */
 
-import isNumber from './isNumber';
+import {unit} from 'postcss-value-parser';
+import endsWith from 'ends-with';
 
 const angles = [
     'deg',
@@ -12,9 +13,12 @@ const angles = [
     'turn',
 ];
 
-export default (node) => {
-    let int = isNumber(node);
-    return int && (int.number === '0' || ~angles.indexOf(int.unit));
+export default ({value}) => {
+    let int = unit(value);
+    return int &&
+        !endsWith(int.number, '.') &&
+        !~int.unit.indexOf('.') &&
+        (int.number === '0' || ~angles.indexOf(int.unit));
 };
 
 export const type = 'node';
