@@ -1,4 +1,5 @@
 import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isComma from './isComma';
 import isVariable from './isVariable';
 
 const singleValues = [
@@ -35,12 +36,9 @@ export default parsed => {
                 return false;
             }
             group.push(node);
-        } else if (node.type === 'div') {
-            if (node.value === ',') {
-                group = [];
-                return false;
-            }
-            valid = false;
+        } else if (isComma(node)) {
+            group = [];
+            return false;
         } else if (node.type !== 'space') {
             valid = false;
         }

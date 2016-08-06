@@ -2,6 +2,7 @@ import {walk} from 'postcss-value-parser';
 import colors from 'css-color-names';
 import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
 import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isComma from './isComma';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
 import isPercentage from './isPercentage';
@@ -17,7 +18,7 @@ export function isRgb (node) {
         const even = index % 2 === 0;
         if (
             even && (!isInteger(child) && !isPercentage(child)) ||
-            !even && child.type === 'div' && child.value !== ','
+            !even && !isComma(child)
         ) {
             valid = false;
         }
@@ -38,7 +39,7 @@ export function isRgba (node) {
             even && (
                 (index < 6 && !isInteger(child) && !isPercentage(child)) ||
                 (index > 5 && !isNumber(child))
-            ) || !even && child.type === 'div' && child.value !== ','
+            ) || !even && !isComma(child)
         ) {
             valid = false;
         }
@@ -59,7 +60,7 @@ export function isHsl (node) {
             even && (
                 (index < 1 && !isNumber(child)) ||
                 (index > 1 && !isPercentage(child))
-            ) || !even && child.type === 'div' && child.value !== ','
+            ) || !even && !isComma(child)
         ) {
             valid = false;
         }
@@ -80,7 +81,7 @@ export function isHsla (node) {
             even && (
                 ((index === 0 || index === 6) && !isNumber(child)) ||
                 ((index === 2 || index === 4) && !isPercentage(child))
-            ) || !even && child.type === 'div' && child.value !== ','
+            ) || !even && !isComma(child)
         ) {
             valid = false;
         }

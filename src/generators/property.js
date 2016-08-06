@@ -61,6 +61,10 @@ export default opts => {
             });
             const type = validators[camel].type // eslint-disable-line
             if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
+                config.dependencies.push({
+                    identifier: 'isComma',
+                    module: `${validatorPath}isComma`,
+                });
                 config.repeatingConditions.push(
                     template(`if (cons) { valid = false; }`)({
                         cons: generateOrConditions(
@@ -73,8 +77,7 @@ export default opts => {
                             ),
                             generateConditions(
                                 templateExpression(`!even`),
-                                templateExpression(`node.type === 'div'`),
-                                templateExpression(`node.value !== ','`),
+                                templateExpression(`!isComma(node)`),
                             ),
                         ),
                     })

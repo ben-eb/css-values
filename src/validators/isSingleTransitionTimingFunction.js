@@ -1,6 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
 import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isComma from './isComma';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
 
@@ -29,7 +30,7 @@ export function isSteps (node) {
     }
     const one = node.nodes[1];
     const two = node.nodes[2];
-    if (one && one.type === 'div' && one.value !== ',') {
+    if (one && !isComma(one)) {
         return false;
     }
     if (two) {
@@ -53,7 +54,7 @@ export function isCubicBezier (node) {
             even && (
                 ((index === 0 || index === 4) && !isValidAbscissa(child)) ||
                 ((index === 2 || index === 6) && !isNumber(child))
-            ) || !even && child.type === 'div' && child.value !== ','
+            ) || !even && !isComma(child)
         ) {
             valid = false;
         }
