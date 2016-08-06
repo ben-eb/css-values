@@ -297,6 +297,8 @@ any kind welcome!
 
 MIT © [Ben Briggs](http://beneb.info)
 
+[all-contributors]: https://github.com/kentcdodds/all-contributors
+
 [ci]: https://travis-ci.org/ben-eb/css-values
 
 [npm]: http://badge.fury.io/js/css-values
