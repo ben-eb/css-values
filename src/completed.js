@@ -33,6 +33,7 @@ export default [
     'animation-direction',
     'animation-duration',
     'animation-fill-mode',
+    'animation-name',
     'animation-play-state',
     'animation-timing-function',
     'appearance',

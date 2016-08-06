@@ -17,7 +17,6 @@ const overrides = {
     'text-indent': '[ <length> | <percentage> ] && hanging? && each-line?',
     // syntaxes
     'feature-value-name': '<IDENT>',
-    'single-animation-name': 'none | <IDENT>',
     'single-transition-property': 'all | <IDENT>',
 };
 

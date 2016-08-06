@@ -24,6 +24,7 @@ export * as isRelativeSize from './isRelativeSize';
 export * as isRepeatStyle from './isRepeatStyle';
 export * as isSingleAnimationDirection from './isSingleAnimationDirection';
 export * as isSingleAnimationFillMode from './isSingleAnimationFillMode';
+export * as isSingleAnimationName from './isSingleAnimationName';
 export * as isSingleAnimationPlayState from './isSingleAnimationPlayState';
 export * as isSingleTransitionTimingFunction from './isSingleTransitionTimingFunction';
 export * as isString from './isString';

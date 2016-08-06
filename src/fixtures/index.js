@@ -24,6 +24,7 @@ export * as relativeSize from './relativeSize';
 export * as repeatStyle from './repeatStyle';
 export * as singleAnimationDirection from './singleAnimationDirection';
 export * as singleAnimationFillMode from './singleAnimationFillMode';
+export * as singleAnimationName from './singleAnimationName';
 export * as singleAnimationPlayState from './singleAnimationPlayState';
 export * as singleTransitionTimingFunction from './singleTransitionTimingFunction';
 export * as string from './string';
