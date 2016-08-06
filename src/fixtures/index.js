@@ -30,3 +30,4 @@ export * as singleTransitionTimingFunction from './singleTransitionTimingFunctio
 export * as string from './string';
 export * as time from './time';
 export * as variable from './variable';
+export * as blendMode from './blendMode';
