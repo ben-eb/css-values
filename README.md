@@ -274,10 +274,17 @@ npm install css-values --save-dev
 ```
 
 
-## Contributing
+## Contributors
 
-Pull requests are welcome. If you add functionality, then please add unit tests
-to cover it.
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars.githubusercontent.com/u/1282980?v=3" width="100px;"/><br /><sub>Ben Briggs</sub>](http://beneb.info)<br />[💻](https://github.com/ben-eb/css-values/commits?author=ben-eb) [📖](https://github.com/ben-eb/css-values/commits?author=ben-eb) 👀 [⚠️](https://github.com/ben-eb/css-values/commits?author=ben-eb) | [<img src="https://avatars.githubusercontent.com/u/13777538?v=3" width="100px;"/><br /><sub>Ivan Serniaev</sub>](https://github.com/delorge)<br />[💻](https://github.com/ben-eb/css-values/commits?author=delorge) [⚠️](https://github.com/ben-eb/css-values/commits?author=delorge) |
+| :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors] specification. Contributions of
+any kind welcome!
 
 
 ## License

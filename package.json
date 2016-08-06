@@ -5,6 +5,8 @@
   "main": "dist/run.js",
   "scripts": {
     "acquire": "node ./dist/acquire.js > ./data/data.json",
+    "contributorAdd": "all-contributors add",
+    "contributorGenerate": "all-contributors generate",
     "generate": "node ./dist/run.js",
     "generate-es5": "npm run generate && cross-env BABEL_ENV=publish babel output --out-dir output",
     "markdown": "remark *.md --quiet",
@@ -39,6 +41,7 @@
     "postcss": "^5.0.19"
   },
   "devDependencies": {
+    "all-contributors-cli": "^3.0.6",
     "ava": "^0.15.0",
     "babel-cli": "^6.5.1",
     "babel-core": "^6.5.1",
