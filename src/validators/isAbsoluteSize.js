@@ -1,3 +1,5 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const absoluteSizes = [
     'xx-small',
     'x-small',
@@ -8,8 +10,6 @@ export const absoluteSizes = [
     'xx-large',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~absoluteSizes.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, absoluteSizes);
 
 export const type = 'node';

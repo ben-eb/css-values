@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {singleAnimationDirections} from '../validators/isSingleAnimationDirection';
 
 export const fixtures = {
-    valid: singleAnimationDirections,
+    valid: [
+        ...singleAnimationDirections,
+        ...singleAnimationDirections.map(value => value.toUpperCase()),
+    ],
     invalid: ['alternate-normal-reverse'],
 };
 

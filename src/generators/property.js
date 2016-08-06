@@ -120,9 +120,14 @@ export default opts => {
 
     if (settings.keywords.length) {
         if (settings.keywords.length === 1) {
-            settings.conditions.push(templateExpression(`node.value === "${settings.keywords[0]}"`));
+            settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
         } else {
-            settings.conditions.push(templateExpression(`node.type === 'word' && ~keywords.indexOf(node.value)`));
+            const isKeyword = 'isCaseInsensitiveKeyword';
+            settings.dependencies.push({
+                identifier: isKeyword,
+                module: `${validatorPath}${isKeyword}`,
+            });
+            settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
             keywords.push(template(`const keywords = INJECT;`)({
                 INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
             }));

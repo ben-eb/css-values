@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {numericFractionValues} from '../validators/isNumericFractionValue';
 
 export const fixtures = {
-    valid: numericFractionValues,
+    valid: [
+        ...numericFractionValues,
+        ...numericFractionValues.map(value => value.toUpperCase()),
+    ],
     invalid: ['any-fractions'],
 };
 

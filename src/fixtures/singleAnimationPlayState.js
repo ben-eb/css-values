@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {singleAnimationPlayStates} from '../validators/isSingleAnimationPlayState';
 
 export const fixtures = {
-    valid: singleAnimationPlayStates,
+    valid: [
+        ...singleAnimationPlayStates,
+        ...singleAnimationPlayStates.map(value => value.toUpperCase()),
+    ],
     invalid: ['running-paused'],
 };
 

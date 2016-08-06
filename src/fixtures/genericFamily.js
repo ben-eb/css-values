@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {genericFamilies} from '../validators/isGenericFamily';
 
 export const fixtures = {
-    valid: genericFamilies,
+    valid: [
+        ...genericFamilies,
+        ...genericFamilies.map(value => value.toUpperCase()),
+    ],
     invalid: ['such-font', 'many-ligatures'],
 };
 

@@ -1,3 +1,5 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const compositingOperators = [
     'add',
     'subtract',
@@ -5,8 +7,6 @@ export const compositingOperators = [
     'exclude',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~compositingOperators.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, compositingOperators);
 
 export const type = 'node';

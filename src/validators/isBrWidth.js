@@ -1,3 +1,4 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
 import isLength from './isLength';
 
 export const brWidths = [
@@ -7,7 +8,7 @@ export const brWidths = [
 ];
 
 export default node => {
-    return isLength(node) || node.type === 'word' && ~brWidths.indexOf(node.value);
+    return isLength(node) || isCaseInsensitiveKeyword(node, brWidths);
 };
 
 export const type = 'node';

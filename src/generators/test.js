@@ -26,7 +26,10 @@ function createTest (fixture, valid = true) {
 export default opts => {
     const tests = opts.candidates.reduce((list, candidate) => {
         if (candidate.type === 'keyword') {
-            list.push(createTest(candidate.value));
+            list.push(
+                createTest(candidate.value),
+                createTest(candidate.value.toUpperCase()),
+            );
         }
         if (candidate.type === 'data') {
             const camel = camelCase(candidate.value);

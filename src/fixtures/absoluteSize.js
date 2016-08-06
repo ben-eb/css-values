@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {absoluteSizes} from '../validators/isAbsoluteSize';
 
 export const fixtures = {
-    valid: absoluteSizes,
+    valid: [
+        ...absoluteSizes,
+        ...absoluteSizes.map(value => value.toUpperCase()),
+    ],
     invalid: ['reallysmall', 'superduperlarge'],
 };
 

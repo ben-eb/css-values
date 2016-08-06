@@ -1,3 +1,5 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const genericFamilies = [
     'serif',
     'sans-serif',
@@ -6,8 +8,6 @@ export const genericFamilies = [
     'monospace',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~genericFamilies.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, genericFamilies);
 
 export const type = 'node';

@@ -1,3 +1,5 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const singleAnimationDirections = [
     'normal',
     'reverse',
@@ -5,8 +7,6 @@ export const singleAnimationDirections = [
     'alternate-reverse',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~singleAnimationDirections.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, singleAnimationDirections);
 
 export const type = 'node';

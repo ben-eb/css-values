@@ -1,3 +1,4 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
 import isVariable from './isVariable';
 
 const singleValues = [
@@ -19,21 +20,21 @@ export default parsed => {
         return false;
     }
     parsed.walk(node => {
-        if (node.type === 'word' && ~singleValues.indexOf(node.value)) {
+        if (isCaseInsensitiveKeyword(node, singleValues)) {
             if (group.length) {
                 valid = false;
                 return false;
             }
-            group.push(node.value);
-        } else if (~multipleValues.indexOf(node.value) || isVariable(node)) {
+            group.push(node);
+        } else if (isCaseInsensitiveKeyword(node, multipleValues) || isVariable(node)) {
             if (
-                group.some(val => ~singleValues.indexOf(val)) ||
+                group.some(n => isCaseInsensitiveKeyword(n, singleValues)) ||
                 group.length === 2
             ) {
                 valid = false;
                 return false;
             }
-            group.push(node.value);
+            group.push(node);
         } else if (node.type === 'div') {
             if (node.value === ',') {
                 group = [];

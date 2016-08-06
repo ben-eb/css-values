@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {brStyles} from '../validators/isBrStyle';
 
 export const fixtures = {
-    valid: brStyles,
+    valid: [
+        ...brStyles,
+        ...brStyles.map(value => value.toUpperCase()),
+    ],
     invalid: ['groovy'],
 };
 

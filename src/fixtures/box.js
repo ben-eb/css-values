@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {boxes} from '../validators/isBox';
 
 export const fixtures = {
-    valid: boxes,
+    valid: [
+        ...boxes,
+        ...boxes.map(value => value.toUpperCase()),
+    ],
     invalid: ['rock-box'],
 };
 

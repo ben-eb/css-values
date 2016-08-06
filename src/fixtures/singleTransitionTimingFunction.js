@@ -4,8 +4,12 @@ import {keywords, stepsKeywords} from '../validators/isSingleTransitionTimingFun
 export const fixtures = {
     valid: [
         ...keywords,
+        ...keywords.map(value => value.toUpperCase()),
         'STEPS(1)',
-        ...stepsKeywords.map(val => `steps(5, ${val})`),
+        ...[
+            ...stepsKeywords,
+            ...stepsKeywords.map(value => value.toUpperCase()),
+        ].map(val => `steps(5, ${val})`),
         'cubic-bezier(0.1, 0.7, 1.0, 0.1)',
         'CUBIC-BEZIER(0.1, 0.7, 1.0, 0.1)',
     ],

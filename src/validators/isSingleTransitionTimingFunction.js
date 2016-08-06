@@ -1,5 +1,6 @@
 import {walk} from 'postcss-value-parser';
 import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
 
@@ -19,7 +20,7 @@ export const stepsKeywords = [
 ];
 
 export function isKeyword (node) {
-    return node.type === 'word' && ~keywords.indexOf(node.value);
+    return isCaseInsensitiveKeyword(node, keywords);
 }
 
 export function isSteps (node) {
@@ -31,8 +32,8 @@ export function isSteps (node) {
     if (one && one.type === 'div' && one.value !== ',') {
         return false;
     }
-    if (two && two.type === 'word' && !~stepsKeywords.indexOf(two.value)) {
-        return false;
+    if (two) {
+        return isCaseInsensitiveKeyword(two, stepsKeywords);
     }
     return true;
 }

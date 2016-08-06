@@ -2,7 +2,10 @@ import toWord from '../util/toWord';
 import {compositingOperators} from '../validators/isCompositingOperator';
 
 export const fixtures = {
-    valid: compositingOperators,
+    valid: [
+        ...compositingOperators,
+        ...compositingOperators.map(value => value.toUpperCase()),
+    ],
     invalid: ['add-subtract'],
 };
 

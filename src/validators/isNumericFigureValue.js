@@ -1,10 +1,10 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const numericFigureValues = [
     'lining-nums',
     'oldstyle-nums',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~numericFigureValues.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, numericFigureValues);
 
 export const type = 'node';

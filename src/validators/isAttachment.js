@@ -1,11 +1,11 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const attachments = [
     'scroll',
     'fixed',
     'local',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~attachments.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, attachments);
 
 export const type = 'node';

@@ -1,11 +1,11 @@
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+
 export const maskingModes = [
     'alpha',
     'luminance',
     'match-source',
 ];
 
-export default ({type, value}) => {
-    return type === 'word' && ~maskingModes.indexOf(value);
-};
+export default node => isCaseInsensitiveKeyword(node, maskingModes);
 
 export const type = 'node';

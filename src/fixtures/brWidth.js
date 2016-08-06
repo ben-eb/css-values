@@ -5,6 +5,7 @@ import {fixtures as length} from './length';
 export const fixtures = {
     valid: [
         ...brWidths,
+        ...brWidths.map(value => value.toUpperCase()),
         ...length.valid,
     ],
     invalid: [

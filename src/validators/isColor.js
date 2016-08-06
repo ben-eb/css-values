@@ -1,6 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import colors from 'css-color-names';
 import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
+import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
 import isPercentage from './isPercentage';
@@ -98,7 +99,7 @@ export function isHex (node) {
 }
 
 export function isNamedColor (node) {
-    return node.type === 'word' && ~namedColours.indexOf(node.value.toLowerCase());
+    return isCaseInsensitiveKeyword(node, namedColours);
 }
 
 export function isCurrentColor (node) {

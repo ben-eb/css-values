@@ -5,6 +5,7 @@ export const fixtures = {
     valid: [
         ...ciFixtures.valid,
         'none',
+        'NONE',
     ],
     invalid: ciFixtures.invalid,
 };
@@ -13,6 +14,7 @@ export const nodes = {
     valid: [
         ...ciNodes.valid,
         toWord('none'),
+        toWord('NONE'),
     ],
     invalid: ciNodes.invalid,
 };

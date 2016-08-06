@@ -1,7 +1,12 @@
 import valueParser from 'postcss-value-parser';
 
+const valid = ['repeat-x', 'repeat-y', 'space round', 'no-repeat, no-repeat', 'var(--foo) var(--bar)'];
+
 export const fixtures = {
-    valid: ['repeat-x', 'repeat-y', 'space round', 'no-repeat, no-repeat', 'var(--foo) var(--bar)'],
+    valid: [
+        ...valid,
+        ...valid.map(value => value.toUpperCase()),
+    ],
     invalid: ['space repeat-x', 'repeat-y round', 'space round repeat', 'repeat-xy', 'space / repeat', 'space,'],
 };
 
