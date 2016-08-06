@@ -1,5 +1,3 @@
-// " | steps(&lt;integer&gt;[, [ start | end ] ]?) | cubic-bezier(&lt;number&gt;, &lt;number&gt;, &lt;number&gt;, &lt;number&gt;)",
-
 import {walk} from 'postcss-value-parser';
 import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
 import isInteger from './isInteger';
