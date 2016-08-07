@@ -1,5 +1,6 @@
 export * as absoluteSize from './absoluteSize';
 export * as angle from './angle';
+export * as animateableFeature from './animateableFeature';
 export * as attachment from './attachment';
 export * as box from './box';
 export * as brStyle from './brStyle';
