@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 218 of 361 CSS properties (60.39%).
+We support 219 of 361 CSS properties (60.66%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -257,6 +257,7 @@ We support 218 of 361 CSS properties (60.39%).
 * `visibility`
 * `white-space`
 * `widows`
+* `will-change`
 * `word-break`
 * `word-spacing`
 * `word-wrap`
@@ -279,8 +280,8 @@ npm install css-values --save-dev
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars.githubusercontent.com/u/1282980?v=3" width="100px;"/><br /><sub>Ben Briggs</sub>](http://beneb.info)<br />[💻](https://github.com/ben-eb/css-values/commits?author=ben-eb) [📖](https://github.com/ben-eb/css-values/commits?author=ben-eb) 👀 [⚠️](https://github.com/ben-eb/css-values/commits?author=ben-eb) | [<img src="https://avatars.githubusercontent.com/u/13777538?v=3" width="100px;"/><br /><sub>Ivan Serniaev</sub>](https://github.com/delorge)<br />[💻](https://github.com/ben-eb/css-values/commits?author=delorge) [⚠️](https://github.com/ben-eb/css-values/commits?author=delorge) |
-| :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/1282980?v=3" width="100px;"/><br /><sub>Ben Briggs</sub>](http://beneb.info)<br />[💻](https://github.com/ben-eb/css-values/commits?author=ben-eb) [📖](https://github.com/ben-eb/css-values/commits?author=ben-eb) 👀 [⚠️](https://github.com/ben-eb/css-values/commits?author=ben-eb) | [<img src="https://avatars.githubusercontent.com/u/13777538?v=3" width="100px;"/><br /><sub>Ivan Serniaev</sub>](https://github.com/delorge)<br />[💻](https://github.com/ben-eb/css-values/commits?author=delorge) [⚠️](https://github.com/ben-eb/css-values/commits?author=delorge) | [<img src="https://avatars.githubusercontent.com/u/11515852?v=3" width="100px;"/><br /><sub>Oleg-docent</sub>](https://github.com/Oleg-docent)<br />[💻](https://github.com/ben-eb/css-values/commits?author=Oleg-docent) [⚠️](https://github.com/ben-eb/css-values/commits?author=Oleg-docent) |
+| :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors] specification. Contributions of

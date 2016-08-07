@@ -216,6 +216,7 @@ export default [
     'visibility',
     'white-space',
     'widows',
+    'will-change',
     'word-break',
     'word-spacing',
     'word-wrap',
