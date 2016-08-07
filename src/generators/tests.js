@@ -4,10 +4,10 @@ import requireModules from './requireModules';
 
 export default () => {
     const tmpl = template(`
-    suites.forEach(function (suite) {
-        suite.forEach(function (test) {
-            ava(test.fixture, function (t) {
-                t.deepEqual(plugin(test.fixture), test.valid);
+    suites.forEach(suite => {
+        suite.forEach(({property, value, valid}) => {
+            test(property + ': ' + value, t => {
+                t.deepEqual(plugin(property, value), valid);
             });
         });
     });
@@ -15,7 +15,7 @@ export default () => {
 
     return generateProgram([
         requireModules({
-            identifier: 'ava',
+            identifier: 'test',
             module: `ava`,
         }, {
             identifier: 'plugin',

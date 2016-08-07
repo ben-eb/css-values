@@ -9,12 +9,12 @@ import generateProgram from './program';
 function createTest (fixture, valid = true) {
     return t.objectExpression([
         t.objectProperty(
-            t.identifier('fixture'),
-            t.binaryExpression(
-                '+',
-                t.identifier('property'),
-                t.stringLiteral(`: ${fixture}`)
-            )
+            t.identifier('property'),
+            t.identifier('property'),
+        ),
+        t.objectProperty(
+            t.identifier('value'),
+            t.stringLiteral(fixture)
         ),
         t.objectProperty(
             t.identifier('valid'),

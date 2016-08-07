@@ -6,14 +6,16 @@ import requireModules from './requireModules';
 
 export default () => {
     const tmpl = template(`
-    export default function isValid (cssString) {
-        const parts = cssString.split(':').map(value => value.trim());
-        const parsed = valueParser(parts[1]);
+    export default function cssValues (property, value) {
+        let parsed;
+        if (typeof value === 'string') {
+            parsed = valueParser(value);
+        }
         if (parsed.nodes.length === 1 && ~cssGlobals.indexOf(parsed.nodes[0].value.toLowerCase())) {
             return true;
         }
         return validators.some(validator => {
-            if (!~validator.properties.indexOf(parts[0])) {
+            if (!~validator.properties.indexOf(property)) {
                 return;
             }
             return validator.default(parsed);
