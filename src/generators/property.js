@@ -93,7 +93,7 @@ export default opts => {
         repeatingConditions: [],
         dependencies: [{
             identifier: 'isVar',
-            module: `${validatorPath}isVar`,
+            module: `${validatorPath}isVariable`,
         }],
     });
 
