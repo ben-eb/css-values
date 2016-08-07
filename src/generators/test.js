@@ -1,10 +1,10 @@
 import * as t from 'babel-types';
 import camelCase from 'camelcase';
 import arrayOfStrings from '../util/arrayOfStrings';
-import globals from '../util/globals';
 import template from '../util/moduleTemplate';
 import * as fixtures from '../fixtures/index';
 import generateProgram from './program';
+import requireModules from './requireModules';
 
 function createTest (fixture, valid = true) {
     return t.objectExpression([
@@ -26,10 +26,14 @@ function createTest (fixture, valid = true) {
 export default opts => {
     const tests = opts.candidates.reduce((list, candidate) => {
         if (candidate.type === 'keyword') {
-            list.push(
-                createTest(candidate.value),
-                createTest(candidate.value.toUpperCase()),
-            );
+            list.push(t.spreadElement(
+                t.callExpression(
+                    t.identifier('createCaseInsensitiveTest'), [
+                        t.identifier('property'),
+                        t.stringLiteral(candidate.value),
+                    ]
+                )
+            ));
         }
         if (candidate.type === 'data') {
             const camel = camelCase(candidate.value);
@@ -52,9 +56,23 @@ export default opts => {
             }
         }
         return list;
-    }, [...globals, ...globals.map(val => val.toUpperCase()), 'var(--foo)'].map(ident => createTest(ident)));
+    }, [t.spreadElement(
+        t.callExpression(
+            t.identifier('globalTests'), [
+                t.identifier('property'),
+            ]
+        )
+    )]);
+    const dependencies = requireModules({
+        identifier: 'globalTests',
+        module: `../../util/globalTests.js`,
+    }, {
+        identifier: 'createCaseInsensitiveTest',
+        module: `../../util/createCaseInsensitiveTest`,
+    });
     if (opts.properties.length === 1) {
         return generateProgram([
+            dependencies,
             template(`const property = PROPERTY;`)({
                 PROPERTY: t.stringLiteral(opts.properties[0]),
             }),
@@ -64,6 +82,7 @@ export default opts => {
         ]);
     }
     return generateProgram([
+        dependencies,
         template(`
             export default PROPERTIES.reduce((suite, property) => {
                 SUITE;

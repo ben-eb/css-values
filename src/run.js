@@ -140,6 +140,10 @@ function canMergeValidators (a, b) {
     });
 }
 
+function renamer (path) {
+    path.dirname = path.dirname.replace('src', 'output');
+}
+
 Promise.all(promises).then((configs) => {
     const fileSystem = [];
     const testFiles = [];
@@ -205,7 +209,7 @@ Promise.all(promises).then((configs) => {
     }));
 
     const stream = vfs.src('./src/validators/**/*.js', {base: process.cwd()})
-        .pipe(rename(path => (path.dirname = path.dirname.replace('src', 'output'))))
+        .pipe(rename(renamer))
         .pipe(map((file, cb) => {
             fileSystem.push(file);
             cb(null, file);
@@ -217,13 +221,22 @@ Promise.all(promises).then((configs) => {
             dest: './output/index.js',
             files: fileSystem,
         }).then(() => {
-            return writeBundle({
-                entry: './output/test.js',
-                dest: './output/test.js',
-                files: testFiles,
-                external: [
-                    resolve('./output/index.js'),
-                ],
+            const testStream = vfs.src('./src/util/**/*.js', {base: process.cwd()})
+                .pipe(rename(renamer))
+                .pipe(map((file, cb) => {
+                    testFiles.push(file);
+                    cb(null, file);
+                }));
+
+            testStream.on('close', () => {
+                return writeBundle({
+                    entry: './output/test.js',
+                    dest: './output/test.js',
+                    files: testFiles,
+                    external: [
+                        resolve('./output/index.js'),
+                    ],
+                }).catch(handleError);
             });
         }).catch(handleError);
     });
