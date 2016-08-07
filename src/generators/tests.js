@@ -7,7 +7,7 @@ export default () => {
     suites.forEach(suite => {
         suite.forEach(({property, value, valid}) => {
             test(property + ': ' + value, t => {
-                t.deepEqual(plugin(property, value), valid);
+                t.deepEqual(cssValues(property, value), valid);
             });
         });
     });
@@ -18,8 +18,8 @@ export default () => {
             identifier: 'test',
             module: `ava`,
         }, {
-            identifier: 'plugin',
-            module: `./plugin`,
+            identifier: 'cssValues',
+            module: `./index`,
         }, {
             identifier: 'suites',
             module: `./tests`,
