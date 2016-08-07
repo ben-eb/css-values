@@ -1,5 +1,6 @@
 export * as isAbsoluteSize from './isAbsoluteSize';
 export * as isAngle from './isAngle';
+export * as isAnimateableFeature from './isAnimateableFeature';
 export * as isAttachment from './isAttachment';
 export * as isBox from './isBox';
 export * as isBrStyle from './isBrStyle';
