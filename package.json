@@ -32,13 +32,16 @@
     "css-color-names": "0.0.4",
     "ends-with": "^0.2.0",
     "flatten": "^1.0.2",
+    "gulp-rename": "^1.2.2",
     "html-entities": "^1.2.0",
-    "mkdirp": "^0.5.1",
-    "mkdirp-promise": "^2.0.0",
+    "map-stream": "0.0.6",
     "nano-equal": "^1.0.1",
-    "ncp": "^2.0.0",
     "object-assign": "^4.0.1",
-    "postcss": "^5.0.19"
+    "postcss": "^5.0.19",
+    "rollup": "^0.34.7",
+    "rollup-plugin-vinyl": "^0.2.0",
+    "vinyl": "^1.2.0",
+    "vinyl-fs": "^2.4.3"
   },
   "devDependencies": {
     "all-contributors-cli": "^3.0.6",

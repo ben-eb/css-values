@@ -1,20 +1,20 @@
-import fs from 'fs';
-import {join} from 'path';
-import mkdirp from 'mkdirp-promise';
+import {resolve} from 'path';
 import camelCase from 'camelcase';
 import nanoEqual from 'nano-equal';
-import ncp from 'ncp';
+import rename from 'gulp-rename';
+import File from 'vinyl';
+import vfs from 'vinyl-fs';
+import map from 'map-stream';
 import * as generator from './generators/index';
 import * as log from './loggers/html';
 import dataValidator from './util/dataValidator';
 import formatGroup from './util/formatGroup';
 import handleError from './util/handleError';
+import writeBundle from './util/writeBundle';
 import {properties} from './data';
 import Parser from './parser';
 import prefixer from './prefixer';
 import * as validators from './validators/index';
-
-let files = 0;
 
 function mergeProperties (data) {
     return Object.keys(data).reduce((list, key) => {
@@ -82,15 +82,10 @@ properties.forEach(property => {
     }
     log.pass(property.name, property.syntax, parsed);
     let group = property.groups.map(formatGroup)[0];
-    let promise = mkdirp(`output/properties/${group}`)
-        .then(mkdirp(`output/tests/${group}`))
-        .then(() => {
-            return {
-                property: property.name,
-                values: getExclusives(parsed),
-            };
-        })
-        .then(prefixer)
+    let promise = prefixer({
+        property: property.name,
+        values: getExclusives(parsed),
+    })
         .then(results => {
             if (!Object.keys(results).length) {
                 results[property.name] = [];
@@ -146,6 +141,8 @@ function canMergeValidators (a, b) {
 }
 
 Promise.all(promises).then((configs) => {
+    const fileSystem = [];
+    const testFiles = [];
     const outputs = configs.reduce((list, configArray) => {
         configArray.forEach(config => {
             const canMerge = Object.keys(list).some(key => {
@@ -166,7 +163,6 @@ Promise.all(promises).then((configs) => {
         return list;
     }, {});
     Object.keys(outputs).forEach(output => {
-        files += 2;
         const config = outputs[output];
         imported.push({
             identifier: config.identifier,
@@ -175,41 +171,60 @@ Promise.all(promises).then((configs) => {
 
         exported.push(config.identifier);
 
-        let script = fs.createWriteStream(`output/properties/${config.group}/${config.identifier}.js`);
+        fileSystem.push(new File({
+            path: resolve(`output/properties/${config.group}/${config.identifier}.js`),
+            contents: new Buffer(generator.property(config)),
+        }));
 
-        script.write(generator.property(config));
-        script.end();
-
-        let test = fs.createWriteStream(`output/tests/${config.group}/${config.identifier}.js`);
-
-        test.write(generator.test(config));
-        test.end();
+        testFiles.push(new File({
+            path: resolve(`output/tests/${config.group}/${config.identifier}.js`),
+            contents: new Buffer(generator.test(config)),
+        }));
     });
-    let contents = generator.program([
-        generator.requireNamespacedModules(...imported),
-        generator.exportModules(exported),
-    ]);
-    let testContents = generator.program([
-        generator.requireModules(...imported),
-        generator.exportModules(exported),
-    ]);
-    let index = fs.createWriteStream(`output/properties/index.js`);
-    index.write(contents);
-    index.end();
-    let index2 = fs.createWriteStream(`output/tests/index.js`);
-    index2.write(testContents);
-    index2.end();
-    let plugin = fs.createWriteStream(`output/plugin.js`);
-    plugin.write(generator.plugin());
-    plugin.end();
-    let test = fs.createWriteStream(`output/test.js`);
-    test.write(generator.tests());
-    test.end();
-    log.total(files + 4);
-    ncp(join(__dirname, '../src/validators'), join(__dirname, '../output/validators'), err => {
-        if (err) {
-            return handleError(err);
-        }
-        console.log('\nDone.');
+
+    fileSystem.push(new File({
+        path: resolve(`output/properties/index.js`),
+        contents: new Buffer(generator.program([
+            generator.requireNamespacedModules(...imported),
+            generator.exportModules(exported),
+        ])),
+    }), new File({
+        path: resolve(`output/plugin.js`),
+        contents: new Buffer(generator.plugin()),
+    }));
+
+    testFiles.push(new File({
+        path: resolve(`output/tests/index.js`),
+        contents: new Buffer(generator.program([
+            generator.requireModules(...imported),
+            generator.exportModules(exported),
+        ])),
+    }), new File({
+        path: resolve(`output/test.js`),
+        contents: new Buffer(generator.tests()),
+    }));
+
+    const stream = vfs.src('./src/validators/**/*.js', {base: process.cwd()})
+        .pipe(rename(path => (path.dirname = path.dirname.replace('src', 'output'))))
+        .pipe(map((file, cb) => {
+            fileSystem.push(file);
+            cb(null, file);
+        }));
+
+    stream.on('close', () => {
+        return writeBundle({
+            entry: './output/plugin.js',
+            dest: './output/index.js',
+            files: fileSystem,
+        }).then(() => {
+            return writeBundle({
+                entry: './output/test.js',
+                dest: './output/test.js',
+                files: testFiles,
+                external: [
+                    resolve('./output/index.js'),
+                ],
+            });
+        }).catch(handleError);
     });
 }).catch(handleError);
