@@ -48,6 +48,7 @@ function mergeProperties (data) {
 function known (parsed) {
     return parsed.every(node => {
         return node.type === 'keyword' ||
+        node.type === 'group' && !node.order && !node.min && node.values.every(n => n.type === 'keyword') ||
         (node.type === 'data' && validators[dataValidator(node.value)]); // eslint-disable-line
     });
 }
@@ -56,6 +57,9 @@ function getExclusives (parsed) {
     return parsed.reduce((list, node) => {
         if (node.type === 'keyword') {
             list.push(node.value);
+        }
+        if (node.type === 'group') {
+            node.values.forEach(({value}) => list.push(value));
         }
         return list;
     }, []);
