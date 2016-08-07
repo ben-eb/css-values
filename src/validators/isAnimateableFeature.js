@@ -7,7 +7,7 @@ export const animateableFeatures = [
 ];
  
 export default node => {
-     return  isCaseInsensitiveKeyword(node, animateableFeatures) || isCustomIdent(node);
+    return  isCaseInsensitiveKeyword(node, animateableFeatures) || isCustomIdent(node);
 };
  
 export const type = 'node';
