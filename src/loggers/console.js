@@ -17,8 +17,7 @@ export function fail (property, syntax /* , parsed */) {
     console.log(`${chalk.red(property)}: ${syntax}`);
 }
 
-export function total (filesWritten) {
+export function total () {
     console.log(`\n  Parsed: ${chalk.green(stats.parsed)} (${percentage(stats.parsed, stats.count)}%)`);
     console.log(`  Total: ${stats.count}`);
-    console.log(`  Files written: ${filesWritten}`);
 }
