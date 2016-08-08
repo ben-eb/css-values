@@ -4,12 +4,16 @@ import requireModules from './requireModules';
 
 export default () => {
     const tmpl = template(`
+    function macro (t, property, value, valid) {
+        t.is(cssValues(property, value), valid);
+    }
+
+    macro.title = (title, property, value, valid) => {
+        return property + ': ' + value + ' (' + (valid ? 'valid' : 'invalid') + ')';
+    };
+
     suites.forEach(suite => {
-        suite.forEach(({property, value, valid}) => {
-            test(property + ': ' + value, t => {
-                t.deepEqual(cssValues(property, value), valid);
-            });
-        });
+        suite.forEach(({property, value, valid}) => test(macro, property, value, valid));
     });
     `);
 
