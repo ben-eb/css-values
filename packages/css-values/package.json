@@ -1,0 +1,25 @@
+{
+  "name": "css-values",
+  "version": "0.0.0",
+  "description": "Validate CSS property value pairs.",
+  "main": "index.js",
+  "keywords": [
+    "css"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "css-color-names": "0.0.4",
+    "ends-with": "^0.2.0",
+    "postcss-value-parser": "^3.3.0"
+  },
+  "homepage": "https://github.com/ben-eb/css-values",
+  "author": {
+    "name": "Ben Briggs",
+    "email": "beneb.info@gmail.com",
+    "url": "http://beneb.info"
+  },
+  "repository": "ben-eb/css-values",
+  "files": [
+    "index.js"
+  ]
+}

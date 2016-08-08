@@ -141,7 +141,7 @@ function canMergeValidators (a, b) {
 }
 
 function renamer (path) {
-    path.dirname = path.dirname.replace('src', 'output');
+    path.dirname = path.dirname.replace('src', 'packages/css-values');
 }
 
 Promise.all(promises).then((configs) => {
@@ -176,35 +176,35 @@ Promise.all(promises).then((configs) => {
         exported.push(config.identifier);
 
         fileSystem.push(new File({
-            path: resolve(`output/properties/${config.group}/${config.identifier}.js`),
+            path: resolve(`packages/css-values/properties/${config.group}/${config.identifier}.js`),
             contents: new Buffer(generator.property(config)),
         }));
 
         testFiles.push(new File({
-            path: resolve(`output/tests/${config.group}/${config.identifier}.js`),
+            path: resolve(`packages/css-values/tests/${config.group}/${config.identifier}.js`),
             contents: new Buffer(generator.test(config)),
         }));
     });
 
     fileSystem.push(new File({
-        path: resolve(`output/properties/index.js`),
+        path: resolve(`packages/css-values/properties/index.js`),
         contents: new Buffer(generator.program([
             generator.requireNamespacedModules(...imported),
             generator.exportModules(exported),
         ])),
     }), new File({
-        path: resolve(`output/plugin.js`),
+        path: resolve(`packages/css-values/plugin.js`),
         contents: new Buffer(generator.plugin()),
     }));
 
     testFiles.push(new File({
-        path: resolve(`output/tests/index.js`),
+        path: resolve(`packages/css-values/tests/index.js`),
         contents: new Buffer(generator.program([
             generator.requireModules(...imported),
             generator.exportModules(exported),
         ])),
     }), new File({
-        path: resolve(`output/test.js`),
+        path: resolve(`packages/css-values/test.js`),
         contents: new Buffer(generator.tests()),
     }));
 
@@ -217,8 +217,8 @@ Promise.all(promises).then((configs) => {
 
     stream.on('close', () => {
         return writeBundle({
-            entry: './output/plugin.js',
-            dest: './output/index.js',
+            entry: './packages/css-values/plugin.js',
+            dest: './packages/css-values/index.js',
             files: fileSystem,
         }).then(() => {
             const testStream = vfs.src('./src/util/**/*.js', {base: process.cwd()})
@@ -230,11 +230,11 @@ Promise.all(promises).then((configs) => {
 
             testStream.on('close', () => {
                 return writeBundle({
-                    entry: './output/test.js',
-                    dest: './output/test.js',
+                    entry: './packages/css-values/test.js',
+                    dest: './packages/css-values/test.js',
                     files: testFiles,
                     external: [
-                        resolve('./output/index.js'),
+                        resolve('./packages/css-values/index.js'),
                     ],
                 }).catch(handleError);
             });

@@ -1,8 +1,5 @@
 {
-  "name": "css-values",
-  "version": "0.0.1",
-  "description": "A work in progress CSS grammar parser & code generator.",
-  "main": "dist/run.js",
+  "private": true,
   "scripts": {
     "acquire": "node ./dist/acquire.js > ./data/data.json",
     "contributorAdd": "all-contributors add",
@@ -24,6 +21,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.3",
     "babel-generator": "^6.7.2",
+    "babel-preset-es2015-rollup": "^1.1.1",
     "babel-template": "^6.7.0",
     "babel-traverse": "^6.7.3",
     "babel-types": "^6.7.2",
@@ -39,6 +37,7 @@
     "object-assign": "^4.0.1",
     "postcss": "^5.0.19",
     "rollup": "^0.34.7",
+    "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-vinyl": "^0.2.0",
     "vinyl": "^1.2.0",
     "vinyl-fs": "^2.4.3"
@@ -69,18 +68,6 @@
     "remark-cli": "^1.0.0",
     "remark-heading-gap": "^2.0.1"
   },
-  "homepage": "https://github.com/ben-eb/css-values",
-  "author": {
-    "name": "Ben Briggs",
-    "email": "beneb.info@gmail.com",
-    "url": "http://beneb.info"
-  },
-  "repository": "ben-eb/css-values",
-  "files": [
-    "data/data.json",
-    "dist",
-    "LICENSE-MIT"
-  ],
   "nyc": {
     "exclude": [
       "**/__tests__"
