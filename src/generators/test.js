@@ -33,7 +33,7 @@ export default opts => {
                         t.stringLiteral(candidate.value),
                     ]
                 )
-            ));
+            ), createTest(`${candidate.value} ${candidate.value}`, false));
         }
         if (candidate.type === 'data') {
             const camel = camelCase(candidate.value);
