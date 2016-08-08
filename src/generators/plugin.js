@@ -11,7 +11,8 @@ export default () => {
         if (typeof value === 'string') {
             parsed = valueParser(value);
         }
-        if (parsed.nodes.length === 1 && ~cssGlobals.indexOf(parsed.nodes[0].value.toLowerCase())) {
+        const first = parsed.nodes[0];
+        if (parsed.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
             return true;
         }
         return validators.some(validator => {
@@ -25,6 +26,12 @@ export default () => {
 
     return generateProgram([
         requireModules({
+            identifier: 'isKeyword',
+            module: './validators/isCaseInsensitiveKeyword',
+        }, {
+            identifier: 'isVariable',
+            module: './validators/isVariable',
+        }, {
             identifier: 'validators',
             module: './properties/index',
         }, {

@@ -105,10 +105,10 @@ properties.forEach(property => {
                 }, parsed.slice(0));
 
                 // The all property is already covered by the global
-                // validator, but this is important to still generate
-                // a CSS custom property validator for it.
+                // validator, so it's not necessary to generate a validator
+                // or tests for it.
                 if (identifier === 'all') {
-                    candidates = [];
+                    return;
                 }
 
                 config.push({

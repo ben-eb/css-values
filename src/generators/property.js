@@ -8,7 +8,7 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 
 const validatorPath = '../../validators/';
-const isCssVar = templateExpression(`isVar(node)`);
+// const isCssVar = templateExpression(`isVar(node)`);
 
 function generateConditionsFactory (operator) {
     return function generateConditions (...conditions) {
@@ -140,12 +140,9 @@ export default opts => {
     let conditions;
 
     if (settings.conditions.length) {
-        conditions = generateOrConditions(
-            generateOrConditions(...settings.conditions),
-            isCssVar,
-        );
+        conditions = generateOrConditions(...settings.conditions);
     } else {
-        conditions = isCssVar;
+        conditions = t.booleanLiteral(true);
     }
 
     const tmpl = template(`
