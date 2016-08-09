@@ -19,7 +19,10 @@ const lengths = [
     'pc',
 ];
 
-export default ({value}) => {
+export default ({type, value}) => {
+    if (type !== 'word') {
+        return false;
+    }
     let int = unit(value);
     return int &&
         !endsWith(int.number, '.') &&

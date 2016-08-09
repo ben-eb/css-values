@@ -357,8 +357,12 @@ var webkitBorderBeforeStyle$1 = Object.freeze({
 var lengths = ['em', 'ex', 'ch', 'rem', 'vh', 'vw', 'vmin', 'vmax', 'px', 'q', 'mm', 'cm', 'in', 'pt', 'pc'];
 
 var isLength = (function (_ref) {
+    var type = _ref.type;
     var value = _ref.value;
 
+    if (type !== 'word') {
+        return false;
+    }
     var int = unit(value);
     return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (int.number === '0' || ~lengths.indexOf(int.unit));
 });

@@ -25,18 +25,19 @@ function createTest (fixture, valid = true) {
 
 export default opts => {
     const tests = opts.candidates.reduce((list, candidate) => {
-        if (candidate.type === 'keyword') {
+        const {type, value} = candidate;
+        if (type === 'keyword') {
             list.push(t.spreadElement(
                 t.callExpression(
                     t.identifier('createCaseInsensitiveTest'), [
                         t.identifier('property'),
-                        t.stringLiteral(candidate.value),
+                        t.stringLiteral(value),
                     ]
                 )
-            ), createTest(`${candidate.value} ${candidate.value}`, false));
+            ), createTest(`${value} ${value}`, false));
         }
-        if (candidate.type === 'data') {
-            const camel = camelCase(candidate.value);
+        if (type === 'data') {
+            const camel = camelCase(value);
             if (fixtures[camel]) { // eslint-disable-line
                 const values = fixtures[camel].fixtures; // eslint-disable-line
                 list.push.apply(list, values.valid.map(fixture => {
@@ -45,6 +46,7 @@ export default opts => {
                 list.push.apply(list, values.invalid.map(fixture => {
                     return createTest(fixture, false);
                 }));
+                list.push(createTest(`${values.valid[0]} ${values.valid[0]}`, false));
                 if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
                     list.push(
                         createTest(`${values.valid[0]}, ${values.valid[0]}`),

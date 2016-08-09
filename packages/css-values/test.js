@@ -570,6 +570,14 @@ var mozForceBrokenImageIcon = ["-moz-force-broken-image-icon", "box-flex-group",
     property: property,
     value: "_5",
     valid: false
+  }, {
+    property: property,
+    value: "\"100\"",
+    valid: false
+  }, {
+    property: property,
+    value: "10 10",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -840,6 +848,10 @@ var webkitBorderBeforeColor = ["-webkit-border-before-color", "-webkit-text-fill
     property: property,
     value: "blacklight",
     valid: false
+  }, {
+    property: property,
+    value: "RGB(1, 2, 3) RGB(1, 2, 3)",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -929,6 +941,10 @@ var webkitBorderBeforeStyle = ["-webkit-border-before-style", "border-block-end-
     property: property,
     value: "groovy",
     valid: false
+  }, {
+    property: property,
+    value: "none none",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -989,6 +1005,14 @@ var webkitBorderBeforeWidth = ["-webkit-border-before-width", "border-block-end-
   }, {
     property: property,
     value: "one rem",
+    valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "thin thin",
     valid: false
   }]));
   return suite;
@@ -1058,6 +1082,10 @@ var webkitMaskRepeat = ["-webkit-mask-repeat", "background-repeat", "mask-repeat
   }, {
     property: property,
     value: "space,",
+    valid: false
+  }, {
+    property: property,
+    value: "repeat-x repeat-x",
     valid: false
   }, {
     property: property,
@@ -1239,6 +1267,10 @@ var webkitTapHighlightColor = [].concat(toConsumableArray(globalTests(property$1
   valid: false
 }, {
   property: property$10,
+  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
+  valid: false
+}, {
+  property: property$10,
   value: "RGB(1, 2, 3), RGB(1, 2, 3)",
   valid: true
 }, {
@@ -1283,6 +1315,14 @@ var webkitTextStrokeWidth = ["-webkit-text-stroke-width", "outline-offset"].redu
   }, {
     property: property,
     value: "one rem",
+    valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
     valid: false
   }]));
   return suite;
@@ -1520,6 +1560,10 @@ var animationDelay = ["animation-delay", "animation-duration", "transition-delay
     valid: false
   }, {
     property: property,
+    value: "2s 2s",
+    valid: false
+  }, {
+    property: property,
     value: "2s, 2s",
     valid: true
   }, {
@@ -1577,6 +1621,10 @@ var animationDirection = [].concat(toConsumableArray(globalTests(property$14)), 
   valid: false
 }, {
   property: property$14,
+  value: "normal normal",
+  valid: false
+}, {
+  property: property$14,
   value: "normal, normal",
   valid: true
 }, {
@@ -1629,6 +1677,10 @@ var animationFillMode = [].concat(toConsumableArray(globalTests(property$15)), [
 }, {
   property: property$15,
   value: "forwards-backwards",
+  valid: false
+}, {
+  property: property$15,
+  value: "none none",
   valid: false
 }, {
   property: property$15,
@@ -1695,6 +1747,10 @@ var animationName = [].concat(toConsumableArray(globalTests(property$16)), [{
   valid: false
 }, {
   property: property$16,
+  value: "Bond-007 Bond-007",
+  valid: false
+}, {
+  property: property$16,
   value: "Bond-007, Bond-007",
   valid: true
 }, {
@@ -1731,6 +1787,10 @@ var animationPlayState = [].concat(toConsumableArray(globalTests(property$17)), 
 }, {
   property: property$17,
   value: "running-paused",
+  valid: false
+}, {
+  property: property$17,
+  value: "running running",
   valid: false
 }, {
   property: property$17,
@@ -1873,6 +1933,10 @@ var animationTimingFunction = ["animation-timing-function", "transition-timing-f
     valid: false
   }, {
     property: property,
+    value: "ease ease",
+    valid: false
+  }, {
+    property: property,
     value: "ease, ease",
     valid: true
   }, {
@@ -1945,6 +2009,10 @@ var backgroundAttachment = [].concat(toConsumableArray(globalTests(property$18))
 }, {
   property: property$18,
   value: "local-scroll",
+  valid: false
+}, {
+  property: property$18,
+  value: "scroll scroll",
   valid: false
 }, {
   property: property$18,
@@ -2103,6 +2171,10 @@ var backgroundBlendMode = [].concat(toConsumableArray(globalTests(property$19)),
   valid: false
 }, {
   property: property$19,
+  value: "normal normal",
+  valid: false
+}, {
+  property: property$19,
   value: "normal, normal",
   valid: true
 }, {
@@ -2147,6 +2219,10 @@ var backgroundClip = ["background-clip", "background-origin"].reduce(function (s
   }, {
     property: property,
     value: "rock-box",
+    valid: false
+  }, {
+    property: property,
+    value: "border-box border-box",
     valid: false
   }, {
     property: property,
@@ -2215,11 +2291,19 @@ var borderBottomLeftRadius = ["border-bottom-left-radius", "border-bottom-right-
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
     value: "12.%",
     valid: false
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
     valid: false
   }]));
   return suite;
@@ -2310,6 +2394,10 @@ var borderBottomStyle = ["border-bottom-style", "border-left-style", "border-rig
     property: property,
     value: "groovy",
     valid: false
+  }, {
+    property: property,
+    value: "none none",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -2370,6 +2458,14 @@ var borderBottomWidth = ["border-bottom-width", "border-left-width", "border-rig
   }, {
     property: property,
     value: "one rem",
+    valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "thin thin",
     valid: false
   }]));
   return suite;
@@ -2523,6 +2619,10 @@ var borderColor = [].concat(toConsumableArray(globalTests(property$21)), [{
   property: property$21,
   value: "blacklight",
   valid: false
+}, {
+  property: property$21,
+  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
+  valid: false
 }]);
 
 var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"].reduce(function (suite, property) {
@@ -2556,6 +2656,14 @@ var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-we
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
+    valid: false
+  }, {
+    property: property,
     value: "1%",
     valid: true
   }, {
@@ -2577,6 +2685,10 @@ var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-we
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "1% 1%",
     valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
     property: property,
@@ -2685,6 +2797,14 @@ var boxFlex = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-t
   }, {
     property: property,
     value: "12.1.1",
+    valid: false
+  }, {
+    property: property,
+    value: "\"10px\"",
+    valid: false
+  }, {
+    property: property,
+    value: "12 12",
     valid: false
   }]));
   return suite;
@@ -2924,6 +3044,14 @@ var columnCount = ["-webkit-column-count", "-moz-column-count", "column-count"].
     property: property,
     value: "12.1.1",
     valid: false
+  }, {
+    property: property,
+    value: "\"10px\"",
+    valid: false
+  }, {
+    property: property,
+    value: "12 12",
+    valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
     property: property,
     value: "auto auto",
@@ -2974,6 +3102,14 @@ var columnGap = ["-webkit-column-gap", "-moz-column-gap", "column-gap"].reduce(f
     property: property,
     value: "one rem",
     valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
+    valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
     property: property,
     value: "normal normal",
@@ -3023,6 +3159,14 @@ var columnWidth = ["-webkit-column-width", "-moz-column-width", "column-width", 
   }, {
     property: property,
     value: "one rem",
+    valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
     valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
     property: property,
@@ -3467,6 +3611,10 @@ var fontLanguageOverride = ["-webkit-font-language-override", "-moz-font-languag
     property: property,
     value: "`quux`",
     valid: false
+  }, {
+    property: property,
+    value: "\"foo\" \"foo\"",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -3538,6 +3686,10 @@ var fontSize = [].concat(toConsumableArray(globalTests(property$37)), [{
   valid: false
 }, {
   property: property$37,
+  value: "xx-small xx-small",
+  valid: false
+}, {
+  property: property$37,
   value: "larger",
   valid: true
 }, {
@@ -3559,6 +3711,10 @@ var fontSize = [].concat(toConsumableArray(globalTests(property$37)), [{
 }, {
   property: property$37,
   value: "smaller-still",
+  valid: false
+}, {
+  property: property$37,
+  value: "larger larger",
   valid: false
 }, {
   property: property$37,
@@ -3606,11 +3762,19 @@ var fontSize = [].concat(toConsumableArray(globalTests(property$37)), [{
   valid: false
 }, {
   property: property$37,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$37,
   value: "12.%",
   valid: false
 }, {
   property: property$37,
   value: "42.2.3.4.7.8.1.2%",
+  valid: false
+}, {
+  property: property$37,
+  value: "0 0",
   valid: false
 }]);
 
@@ -3666,6 +3830,14 @@ var fontSizeAdjust = [].concat(toConsumableArray(globalTests(property$38)), toCo
 }, {
   property: property$38,
   value: "12.1.1",
+  valid: false
+}, {
+  property: property$38,
+  value: "\"10px\"",
+  valid: false
+}, {
+  property: property$38,
+  value: "12 12",
   valid: false
 }]);
 
@@ -3871,11 +4043,19 @@ var gridColumnGap = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
     value: "12.%",
     valid: false
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
     valid: false
   }]));
   return suite;
@@ -3901,6 +4081,10 @@ var gridTemplateAreas = [].concat(toConsumableArray(globalTests(property$44)), t
 }, {
   property: property$44,
   value: "`quux`",
+  valid: false
+}, {
+  property: property$44,
+  value: "\"foo\" \"foo\"",
   valid: false
 }]);
 
@@ -4150,6 +4334,14 @@ var letterSpacing = [].concat(toConsumableArray(globalTests(property$51)), toCon
   property: property$51,
   value: "one rem",
   valid: false
+}, {
+  property: property$51,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$51,
+  value: "0 0",
+  valid: false
 }]);
 
 var property$52 = "line-break";
@@ -4226,6 +4418,14 @@ var lineHeight = [].concat(toConsumableArray(globalTests(property$53)), toConsum
   valid: false
 }, {
   property: property$53,
+  value: "\"10px\"",
+  valid: false
+}, {
+  property: property$53,
+  value: "12 12",
+  valid: false
+}, {
+  property: property$53,
   value: "0",
   valid: true
 }, {
@@ -4254,6 +4454,14 @@ var lineHeight = [].concat(toConsumableArray(globalTests(property$53)), toConsum
   valid: false
 }, {
   property: property$53,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$53,
+  value: "0 0",
+  valid: false
+}, {
+  property: property$53,
   value: "1%",
   valid: true
 }, {
@@ -4275,6 +4483,10 @@ var lineHeight = [].concat(toConsumableArray(globalTests(property$53)), toConsum
 }, {
   property: property$53,
   value: "42.2.3.4.7.8.1.2%",
+  valid: false
+}, {
+  property: property$53,
+  value: "1% 1%",
   valid: false
 }]);
 
@@ -4328,6 +4540,10 @@ var maskComposite = [].concat(toConsumableArray(globalTests(property$55)), [{
   valid: false
 }, {
   property: property$55,
+  value: "add add",
+  valid: false
+}, {
+  property: property$55,
   value: "add, add",
   valid: true
 }, {
@@ -4372,6 +4588,10 @@ var maskMode = [].concat(toConsumableArray(globalTests(property$56)), [{
 }, {
   property: property$56,
   value: "jim-carrey",
+  valid: false
+}, {
+  property: property$56,
+  value: "alpha alpha",
   valid: false
 }, {
   property: property$56,
@@ -4433,6 +4653,14 @@ var maxBlockSize = ["max-block-size", "max-height", "max-inline-size", "max-widt
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
+    valid: false
+  }, {
+    property: property,
     value: "1%",
     valid: true
   }, {
@@ -4454,6 +4682,10 @@ var maxBlockSize = ["max-block-size", "max-height", "max-inline-size", "max-widt
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "1% 1%",
     valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
     property: property,
@@ -4542,6 +4774,14 @@ var minBlockSize = ["min-block-size", "min-height", "min-inline-size", "min-widt
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
+    valid: false
+  }, {
+    property: property,
     value: "1%",
     valid: true
   }, {
@@ -4563,6 +4803,10 @@ var minBlockSize = ["min-block-size", "min-height", "min-inline-size", "min-widt
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "1% 1%",
     valid: false
   }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
     property: property,
@@ -4757,6 +5001,10 @@ var mixBlendMode = [].concat(toConsumableArray(globalTests(property$58)), [{
   property: property$58,
   value: "blend-man",
   valid: false
+}, {
+  property: property$58,
+  value: "normal normal",
+  valid: false
 }]);
 
 var objectFit = ["-o-object-fit", "object-fit"].reduce(function (suite, property) {
@@ -4921,6 +5169,10 @@ var outlineColor = [].concat(toConsumableArray(globalTests(property$59)), [{
   property: property$59,
   value: "blacklight",
   valid: false
+}, {
+  property: property$59,
+  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
+  valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$59, "invert")), [{
   property: property$59,
   value: "invert invert",
@@ -5016,6 +5268,10 @@ var outlineStyle = [].concat(toConsumableArray(globalTests(property$60)), toCons
   property: property$60,
   value: "groovy",
   valid: false
+}, {
+  property: property$60,
+  value: "none none",
+  valid: false
 }]);
 
 var overflow = ["overflow", "overflow-x", "overflow-y"].reduce(function (suite, property) {
@@ -5094,6 +5350,14 @@ var paddingBlockEnd = ["padding-block-end", "padding-block-start", "padding-bott
     valid: false
   }, {
     property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
+    valid: false
+  }, {
+    property: property,
     value: "1%",
     valid: true
   }, {
@@ -5115,6 +5379,10 @@ var paddingBlockEnd = ["padding-block-end", "padding-block-start", "padding-bott
   }, {
     property: property,
     value: "42.2.3.4.7.8.1.2%",
+    valid: false
+  }, {
+    property: property,
+    value: "1% 1%",
     valid: false
   }]));
   return suite;
@@ -5163,6 +5431,14 @@ var perspective = ["-webkit-perspective", "-moz-perspective", "perspective"].red
   }, {
     property: property,
     value: "one rem",
+    valid: false
+  }, {
+    property: property,
+    value: "\"1rem\"",
+    valid: false
+  }, {
+    property: property,
+    value: "0 0",
     valid: false
   }]));
   return suite;
@@ -5385,6 +5661,14 @@ var tabSize = [].concat(toConsumableArray(globalTests(property$70)), [{
   valid: false
 }, {
   property: property$70,
+  value: "\"100\"",
+  valid: false
+}, {
+  property: property$70,
+  value: "10 10",
+  valid: false
+}, {
+  property: property$70,
   value: "0",
   valid: true
 }, {
@@ -5410,6 +5694,14 @@ var tabSize = [].concat(toConsumableArray(globalTests(property$70)), [{
 }, {
   property: property$70,
   value: "one rem",
+  valid: false
+}, {
+  property: property$70,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$70,
+  value: "0 0",
   valid: false
 }]);
 
@@ -5580,6 +5872,10 @@ var textSizeAdjust = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-
     property: property,
     value: "42.2.3.4.7.8.1.2%",
     valid: false
+  }, {
+    property: property,
+    value: "1% 1%",
+    valid: false
   }]));
   return suite;
 }, []);
@@ -5746,6 +6042,10 @@ var verticalAlign = [].concat(toConsumableArray(globalTests(property$78)), toCon
   valid: false
 }, {
   property: property$78,
+  value: "1% 1%",
+  valid: false
+}, {
+  property: property$78,
   value: "0",
   valid: true
 }, {
@@ -5771,6 +6071,14 @@ var verticalAlign = [].concat(toConsumableArray(globalTests(property$78)), toCon
 }, {
   property: property$78,
   value: "one rem",
+  valid: false
+}, {
+  property: property$78,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$78,
+  value: "0 0",
   valid: false
 }]);
 
@@ -5859,6 +6167,10 @@ var willChange = [].concat(toConsumableArray(globalTests(property$81)), toConsum
   valid: false
 }, {
   property: property$81,
+  value: "Bond-007 Bond-007",
+  valid: false
+}, {
+  property: property$81,
   value: "Bond-007, Bond-007",
   valid: true
 }, {
@@ -5941,11 +6253,19 @@ var wordSpacing = [].concat(toConsumableArray(globalTests(property$83)), toConsu
   valid: false
 }, {
   property: property$83,
+  value: "\"1rem\"",
+  valid: false
+}, {
+  property: property$83,
   value: "12.%",
   valid: false
 }, {
   property: property$83,
   value: "42.2.3.4.7.8.1.2%",
+  valid: false
+}, {
+  property: property$83,
+  value: "0 0",
   valid: false
 }]);
 
@@ -6057,6 +6377,14 @@ var zIndex = [].concat(toConsumableArray(globalTests(property$85)), toConsumable
 }, {
   property: property$85,
   value: "_5",
+  valid: false
+}, {
+  property: property$85,
+  value: "\"100\"",
+  valid: false
+}, {
+  property: property$85,
+  value: "10 10",
   valid: false
 }]);
 
