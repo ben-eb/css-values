@@ -128,15 +128,9 @@ properties.forEach(property => {
 
 function canMergeValidators (a, b) {
     return nanoEqual({
-        ...a,
-        properties: null,
-        identifier: null,
-        group: null,
+        candidates: a.candidates,
     }, {
-        ...b,
-        properties: null,
-        identifier: null,
-        group: null,
+        candidates: b.candidates,
     });
 }
 
