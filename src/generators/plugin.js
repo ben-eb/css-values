@@ -7,19 +7,18 @@ import requireModules from './requireModules';
 export default () => {
     const tmpl = template(`
     export default function cssValues (property, value) {
-        let parsed;
         if (typeof value === 'string') {
-            parsed = valueParser(value);
+            value = valueParser(value);
         }
-        const first = parsed.nodes[0];
-        if (parsed.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
+        const first = value.nodes[0];
+        if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
             return true;
         }
         return validators.some(validator => {
             if (!~validator.properties.indexOf(property)) {
                 return;
             }
-            return validator.default(parsed);
+            return validator.default(value);
         });
     }
     `);
