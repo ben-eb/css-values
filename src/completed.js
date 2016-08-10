@@ -36,6 +36,7 @@ export default [
     'animation-name',
     'animation-play-state',
     'animation-timing-function',
+    'animation-iteration-count',
     'appearance',
     'background-blend-mode',
     'backface-visibility',

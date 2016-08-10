@@ -540,6 +540,32 @@ var animationFillMode$1 = Object.freeze({
   properties: properties$27
 });
 
+var value = ['infinite'];
+
+var isSingleAnimationIterationCount = (function (node) {
+    return isCaseInsensitiveKeyword(node, value) || isNumber(node);
+});
+
+function animationIterationCount (parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationIterationCount(node) && !isVar(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+}
+var properties$28 = ["animation-iteration-count"];
+
+var animationIterationCount$1 = Object.freeze({
+  default: animationIterationCount,
+  properties: properties$28
+});
+
 var isCustomIdent = (function (_ref) {
     var type = _ref.type;
     var value = _ref.value;
@@ -576,11 +602,11 @@ function animationName (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$28 = ["animation-name"];
+var properties$29 = ["animation-name"];
 
 var animationName$1 = Object.freeze({
   default: animationName,
-  properties: properties$28
+  properties: properties$29
 });
 
 var singleAnimationPlayStates = ['running', 'paused'];
@@ -602,11 +628,11 @@ function animationPlayState (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$29 = ["animation-play-state"];
+var properties$30 = ["animation-play-state"];
 
 var animationPlayState$1 = Object.freeze({
   default: animationPlayState,
-  properties: properties$29
+  properties: properties$30
 });
 
 var keywords = ['ease', 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-end'];
@@ -672,27 +698,27 @@ function animationTimingFunction (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$30 = ["animation-timing-function", "transition-timing-function"];
+var properties$31 = ["animation-timing-function", "transition-timing-function"];
 
 var animationTimingFunction$1 = Object.freeze({
   default: animationTimingFunction,
-  properties: properties$30
+  properties: properties$31
 });
 
 var appearance = isCaseInsensitiveKeywordFactory(["auto", "none"]);
-var properties$31 = ["-webkit-appearance", "-moz-appearance", "appearance"];
+var properties$32 = ["-webkit-appearance", "-moz-appearance", "appearance"];
 
 var appearance$1 = Object.freeze({
 	default: appearance,
-	properties: properties$31
+	properties: properties$32
 });
 
 var backfaceVisibility = isCaseInsensitiveKeywordFactory(["visible", "hidden"]);
-var properties$32 = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"];
+var properties$33 = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"];
 
 var backfaceVisibility$1 = Object.freeze({
 	default: backfaceVisibility,
-	properties: properties$32
+	properties: properties$33
 });
 
 var attachments = ['scroll', 'fixed', 'local'];
@@ -714,11 +740,11 @@ function backgroundAttachment (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$33 = ["background-attachment"];
+var properties$34 = ["background-attachment"];
 
 var backgroundAttachment$1 = Object.freeze({
   default: backgroundAttachment,
-  properties: properties$33
+  properties: properties$34
 });
 
 var blendValues = ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
@@ -740,11 +766,11 @@ function backgroundBlendMode (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$34 = ["background-blend-mode"];
+var properties$35 = ["background-blend-mode"];
 
 var backgroundBlendMode$1 = Object.freeze({
   default: backgroundBlendMode,
-  properties: properties$34
+  properties: properties$35
 });
 
 var boxes = ['border-box', 'padding-box', 'content-box'];
@@ -766,11 +792,11 @@ function backgroundClip (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$35 = ["background-clip", "background-origin"];
+var properties$36 = ["background-clip", "background-origin"];
 
 var backgroundClip$1 = Object.freeze({
   default: backgroundClip,
-  properties: properties$35
+  properties: properties$36
 });
 
 var isLengthPercentage = (function (node) {
@@ -785,11 +811,11 @@ function borderBottomLeftRadius (parsed) {
 
   return false;
 }
-var properties$36 = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"];
+var properties$37 = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"];
 
 var borderBottomLeftRadius$1 = Object.freeze({
   default: borderBottomLeftRadius,
-  properties: properties$36
+  properties: properties$37
 });
 
 function borderBottomStyle (parsed) {
@@ -800,11 +826,11 @@ function borderBottomStyle (parsed) {
 
   return false;
 }
-var properties$37 = ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"];
+var properties$38 = ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"];
 
 var borderBottomStyle$1 = Object.freeze({
   default: borderBottomStyle,
-  properties: properties$37
+  properties: properties$38
 });
 
 function borderBottomWidth (parsed) {
@@ -815,19 +841,19 @@ function borderBottomWidth (parsed) {
 
   return false;
 }
-var properties$38 = ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"];
+var properties$39 = ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"];
 
 var borderBottomWidth$1 = Object.freeze({
   default: borderBottomWidth,
-  properties: properties$38
+  properties: properties$39
 });
 
 var borderCollapse = isCaseInsensitiveKeywordFactory(["collapse", "separate"]);
-var properties$39 = ["border-collapse"];
+var properties$40 = ["border-collapse"];
 
 var borderCollapse$1 = Object.freeze({
 	default: borderCollapse,
-	properties: properties$39
+	properties: properties$40
 });
 
 function borderColor (parsed) {
@@ -838,11 +864,11 @@ function borderColor (parsed) {
 
   return false;
 }
-var properties$40 = ["border-color"];
+var properties$41 = ["border-color"];
 
 var borderColor$1 = Object.freeze({
   default: borderColor,
-  properties: properties$40
+  properties: properties$41
 });
 
 function bottom (parsed) {
@@ -853,35 +879,35 @@ function bottom (parsed) {
 
   return false;
 }
-var properties$41 = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"];
+var properties$42 = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"];
 
 var bottom$1 = Object.freeze({
   default: bottom,
-  properties: properties$41
+  properties: properties$42
 });
 
 var boxAlign = isCaseInsensitiveKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
-var properties$42 = ["box-align"];
+var properties$43 = ["box-align"];
 
 var boxAlign$1 = Object.freeze({
 	default: boxAlign,
-	properties: properties$42
-});
-
-var boxDecorationBreak = isCaseInsensitiveKeywordFactory(["slice", "clone"]);
-var properties$43 = ["-webkit-box-decoration-break", "box-decoration-break"];
-
-var boxDecorationBreak$1 = Object.freeze({
-	default: boxDecorationBreak,
 	properties: properties$43
 });
 
+var boxDecorationBreak = isCaseInsensitiveKeywordFactory(["slice", "clone"]);
+var properties$44 = ["-webkit-box-decoration-break", "box-decoration-break"];
+
+var boxDecorationBreak$1 = Object.freeze({
+	default: boxDecorationBreak,
+	properties: properties$44
+});
+
 var boxDirection = isCaseInsensitiveKeywordFactory(["normal", "reverse", "inherit"]);
-var properties$44 = ["box-direction"];
+var properties$45 = ["box-direction"];
 
 var boxDirection$1 = Object.freeze({
 	default: boxDirection,
-	properties: properties$44
+	properties: properties$45
 });
 
 function boxFlex (parsed) {
@@ -892,83 +918,83 @@ function boxFlex (parsed) {
 
   return false;
 }
-var properties$45 = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"];
+var properties$46 = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"];
 
 var boxFlex$1 = Object.freeze({
   default: boxFlex,
-  properties: properties$45
+  properties: properties$46
 });
 
 var boxLines = isCaseInsensitiveKeywordFactory(["single", "multiple"]);
-var properties$46 = ["box-lines"];
+var properties$47 = ["box-lines"];
 
 var boxLines$1 = Object.freeze({
 	default: boxLines,
-	properties: properties$46
-});
-
-var boxOrient = isCaseInsensitiveKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"]);
-var properties$47 = ["box-orient"];
-
-var boxOrient$1 = Object.freeze({
-	default: boxOrient,
 	properties: properties$47
 });
 
-var boxPack = isCaseInsensitiveKeywordFactory(["start", "center", "end", "justify"]);
-var properties$48 = ["box-pack"];
+var boxOrient = isCaseInsensitiveKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"]);
+var properties$48 = ["box-orient"];
 
-var boxPack$1 = Object.freeze({
-	default: boxPack,
+var boxOrient$1 = Object.freeze({
+	default: boxOrient,
 	properties: properties$48
 });
 
-var boxSizing = isCaseInsensitiveKeywordFactory(["content-box", "border-box"]);
-var properties$49 = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"];
+var boxPack = isCaseInsensitiveKeywordFactory(["start", "center", "end", "justify"]);
+var properties$49 = ["box-pack"];
 
-var boxSizing$1 = Object.freeze({
-	default: boxSizing,
+var boxPack$1 = Object.freeze({
+	default: boxPack,
 	properties: properties$49
 });
 
-var boxSuppress = isCaseInsensitiveKeywordFactory(["show", "discard", "hide"]);
-var properties$50 = ["box-suppress"];
+var boxSizing = isCaseInsensitiveKeywordFactory(["content-box", "border-box"]);
+var properties$50 = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"];
 
-var boxSuppress$1 = Object.freeze({
-	default: boxSuppress,
+var boxSizing$1 = Object.freeze({
+	default: boxSizing,
 	properties: properties$50
 });
 
-var pageBreakAfter = isCaseInsensitiveKeywordFactory(["auto", "always", "avoid", "left", "right"]);
-var properties$51 = ["page-break-after", "page-break-before"];
+var boxSuppress = isCaseInsensitiveKeywordFactory(["show", "discard", "hide"]);
+var properties$51 = ["box-suppress"];
 
-var pageBreakAfter$1 = Object.freeze({
-	default: pageBreakAfter,
+var boxSuppress$1 = Object.freeze({
+	default: boxSuppress,
 	properties: properties$51
 });
 
-var webkitColumnBreakInside = isCaseInsensitiveKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"]);
-var properties$52 = ["-webkit-column-break-inside", "page-break-inside", "break-inside"];
+var pageBreakAfter = isCaseInsensitiveKeywordFactory(["auto", "always", "avoid", "left", "right"]);
+var properties$52 = ["page-break-after", "page-break-before"];
 
-var webkitColumnBreakInside$1 = Object.freeze({
-	default: webkitColumnBreakInside,
+var pageBreakAfter$1 = Object.freeze({
+	default: pageBreakAfter,
 	properties: properties$52
 });
 
-var captionSide = isCaseInsensitiveKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"]);
-var properties$53 = ["caption-side"];
+var webkitColumnBreakInside = isCaseInsensitiveKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"]);
+var properties$53 = ["-webkit-column-break-inside", "page-break-inside", "break-inside"];
 
-var captionSide$1 = Object.freeze({
-	default: captionSide,
+var webkitColumnBreakInside$1 = Object.freeze({
+	default: webkitColumnBreakInside,
 	properties: properties$53
 });
 
+var captionSide = isCaseInsensitiveKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"]);
+var properties$54 = ["caption-side"];
+
+var captionSide$1 = Object.freeze({
+	default: captionSide,
+	properties: properties$54
+});
+
 var clear = isCaseInsensitiveKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"]);
-var properties$54 = ["clear"];
+var properties$55 = ["clear"];
 
 var clear$1 = Object.freeze({
 	default: clear,
-	properties: properties$54
+	properties: properties$55
 });
 
 function columnCount (parsed) {
@@ -979,19 +1005,19 @@ function columnCount (parsed) {
 
   return false;
 }
-var properties$55 = ["-webkit-column-count", "-moz-column-count", "column-count"];
+var properties$56 = ["-webkit-column-count", "-moz-column-count", "column-count"];
 
 var columnCount$1 = Object.freeze({
   default: columnCount,
-  properties: properties$55
+  properties: properties$56
 });
 
 var columnFill = isCaseInsensitiveKeywordFactory(["auto", "balance"]);
-var properties$56 = ["-webkit-column-fill", "-moz-column-fill", "column-fill"];
+var properties$57 = ["-webkit-column-fill", "-moz-column-fill", "column-fill"];
 
 var columnFill$1 = Object.freeze({
 	default: columnFill,
-	properties: properties$56
+	properties: properties$57
 });
 
 function columnGap (parsed) {
@@ -1002,19 +1028,19 @@ function columnGap (parsed) {
 
   return false;
 }
-var properties$57 = ["-webkit-column-gap", "-moz-column-gap", "column-gap"];
+var properties$58 = ["-webkit-column-gap", "-moz-column-gap", "column-gap"];
 
 var columnGap$1 = Object.freeze({
   default: columnGap,
-  properties: properties$57
+  properties: properties$58
 });
 
 var columnSpan = isCaseInsensitiveKeywordFactory(["none", "all"]);
-var properties$58 = ["-webkit-column-span", "-moz-column-span", "column-span"];
+var properties$59 = ["-webkit-column-span", "-moz-column-span", "column-span"];
 
 var columnSpan$1 = Object.freeze({
 	default: columnSpan,
-	properties: properties$58
+	properties: properties$59
 });
 
 function columnWidth (parsed) {
@@ -1025,107 +1051,107 @@ function columnWidth (parsed) {
 
   return false;
 }
-var properties$59 = ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"];
+var properties$60 = ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"];
 
 var columnWidth$1 = Object.freeze({
   default: columnWidth,
-  properties: properties$59
+  properties: properties$60
 });
 
 var direction = isCaseInsensitiveKeywordFactory(["ltr", "rtl"]);
-var properties$60 = ["direction"];
+var properties$61 = ["direction"];
 
 var direction$1 = Object.freeze({
 	default: direction,
-	properties: properties$60
-});
-
-var display = isCaseInsensitiveKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"]);
-var properties$61 = ["display"];
-
-var display$1 = Object.freeze({
-	default: display,
 	properties: properties$61
 });
 
-var displayInside = isCaseInsensitiveKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"]);
-var properties$62 = ["display-inside"];
+var display = isCaseInsensitiveKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"]);
+var properties$62 = ["display"];
 
-var displayInside$1 = Object.freeze({
-	default: displayInside,
+var display$1 = Object.freeze({
+	default: display,
 	properties: properties$62
 });
 
-var displayList = isCaseInsensitiveKeywordFactory(["none", "list-item"]);
-var properties$63 = ["display-list"];
+var displayInside = isCaseInsensitiveKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"]);
+var properties$63 = ["display-inside"];
 
-var displayList$1 = Object.freeze({
-	default: displayList,
+var displayInside$1 = Object.freeze({
+	default: displayInside,
 	properties: properties$63
 });
 
-var displayOutside = isCaseInsensitiveKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"]);
-var properties$64 = ["display-outside"];
+var displayList = isCaseInsensitiveKeywordFactory(["none", "list-item"]);
+var properties$64 = ["display-list"];
 
-var displayOutside$1 = Object.freeze({
-	default: displayOutside,
+var displayList$1 = Object.freeze({
+	default: displayList,
 	properties: properties$64
 });
 
-var emptyCells = isCaseInsensitiveKeywordFactory(["show", "hide"]);
-var properties$65 = ["empty-cells"];
+var displayOutside = isCaseInsensitiveKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"]);
+var properties$65 = ["display-outside"];
 
-var emptyCells$1 = Object.freeze({
-	default: emptyCells,
+var displayOutside$1 = Object.freeze({
+	default: displayOutside,
 	properties: properties$65
 });
 
-var mozBoxOrient = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"]);
-var properties$66 = ["-webkit-box-orient", "-moz-box-orient"];
+var emptyCells = isCaseInsensitiveKeywordFactory(["show", "hide"]);
+var properties$66 = ["empty-cells"];
 
-var mozBoxOrient$1 = Object.freeze({
-	default: mozBoxOrient,
+var emptyCells$1 = Object.freeze({
+	default: emptyCells,
 	properties: properties$66
 });
 
-var mozBoxDirection = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"]);
-var properties$67 = ["-webkit-box-direction", "-moz-box-direction"];
+var mozBoxOrient = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"]);
+var properties$67 = ["-webkit-box-orient", "-moz-box-orient"];
 
-var mozBoxDirection$1 = Object.freeze({
-	default: mozBoxDirection,
+var mozBoxOrient$1 = Object.freeze({
+	default: mozBoxOrient,
 	properties: properties$67
 });
 
-var flexDirection = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse"]);
-var properties$68 = ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"];
+var mozBoxDirection = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"]);
+var properties$68 = ["-webkit-box-direction", "-moz-box-direction"];
 
-var flexDirection$1 = Object.freeze({
-	default: flexDirection,
+var mozBoxDirection$1 = Object.freeze({
+	default: mozBoxDirection,
 	properties: properties$68
 });
 
-var flexWrap = isCaseInsensitiveKeywordFactory(["nowrap", "wrap", "wrap-reverse"]);
-var properties$69 = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"];
+var flexDirection = isCaseInsensitiveKeywordFactory(["row", "row-reverse", "column", "column-reverse"]);
+var properties$69 = ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"];
 
-var flexWrap$1 = Object.freeze({
-	default: flexWrap,
+var flexDirection$1 = Object.freeze({
+	default: flexDirection,
 	properties: properties$69
 });
 
-var float = isCaseInsensitiveKeywordFactory(["left", "right", "none", "inline-start", "inline-end"]);
-var properties$70 = ["float"];
+var flexWrap = isCaseInsensitiveKeywordFactory(["nowrap", "wrap", "wrap-reverse"]);
+var properties$70 = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"];
 
-var float$1 = Object.freeze({
-	default: float,
+var flexWrap$1 = Object.freeze({
+	default: flexWrap,
 	properties: properties$70
 });
 
+var float = isCaseInsensitiveKeywordFactory(["left", "right", "none", "inline-start", "inline-end"]);
+var properties$71 = ["float"];
+
+var float$1 = Object.freeze({
+	default: float,
+	properties: properties$71
+});
+
 var fontKerning = isCaseInsensitiveKeywordFactory(["auto", "normal", "none"]);
-var properties$71 = ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"];
+var properties$72 = ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"];
 
 var fontKerning$1 = Object.freeze({
 	default: fontKerning,
-	properties: properties$71
+	properties: properties$72
 });
 
 var isString = (function (_ref) {
@@ -1141,11 +1167,11 @@ function fontLanguageOverride (parsed) {
 
   return false;
 }
-var properties$72 = ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"];
+var properties$73 = ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"];
 
 var fontLanguageOverride$1 = Object.freeze({
   default: fontLanguageOverride,
-  properties: properties$72
+  properties: properties$73
 });
 
 var absoluteSizes = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
@@ -1168,11 +1194,11 @@ function fontSize (parsed) {
 
   return false;
 }
-var properties$73 = ["font-size"];
+var properties$74 = ["font-size"];
 
 var fontSize$1 = Object.freeze({
   default: fontSize,
-  properties: properties$73
+  properties: properties$74
 });
 
 function fontSizeAdjust (parsed) {
@@ -1183,51 +1209,51 @@ function fontSizeAdjust (parsed) {
 
   return false;
 }
-var properties$74 = ["font-size-adjust"];
+var properties$75 = ["font-size-adjust"];
 
 var fontSizeAdjust$1 = Object.freeze({
   default: fontSizeAdjust,
-  properties: properties$74
+  properties: properties$75
 });
 
 var fontStretch = isCaseInsensitiveKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
-var properties$75 = ["font-stretch"];
+var properties$76 = ["font-stretch"];
 
 var fontStretch$1 = Object.freeze({
 	default: fontStretch,
-	properties: properties$75
-});
-
-var fontStyle = isCaseInsensitiveKeywordFactory(["normal", "italic", "oblique"]);
-var properties$76 = ["font-style"];
-
-var fontStyle$1 = Object.freeze({
-	default: fontStyle,
 	properties: properties$76
 });
 
-var fontVariantCaps = isCaseInsensitiveKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"]);
-var properties$77 = ["font-variant-caps"];
+var fontStyle = isCaseInsensitiveKeywordFactory(["normal", "italic", "oblique"]);
+var properties$77 = ["font-style"];
 
-var fontVariantCaps$1 = Object.freeze({
-	default: fontVariantCaps,
+var fontStyle$1 = Object.freeze({
+	default: fontStyle,
 	properties: properties$77
 });
 
-var fontVariantPosition = isCaseInsensitiveKeywordFactory(["normal", "sub", "super"]);
-var properties$78 = ["font-variant-position"];
+var fontVariantCaps = isCaseInsensitiveKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"]);
+var properties$78 = ["font-variant-caps"];
 
-var fontVariantPosition$1 = Object.freeze({
-	default: fontVariantPosition,
+var fontVariantCaps$1 = Object.freeze({
+	default: fontVariantCaps,
 	properties: properties$78
 });
 
+var fontVariantPosition = isCaseInsensitiveKeywordFactory(["normal", "sub", "super"]);
+var properties$79 = ["font-variant-position"];
+
+var fontVariantPosition$1 = Object.freeze({
+	default: fontVariantPosition,
+	properties: properties$79
+});
+
 var fontWeight = isCaseInsensitiveKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
-var properties$79 = ["font-weight"];
+var properties$80 = ["font-weight"];
 
 var fontWeight$1 = Object.freeze({
 	default: fontWeight,
-	properties: properties$79
+	properties: properties$80
 });
 
 function gridColumnGap (parsed) {
@@ -1238,11 +1264,11 @@ function gridColumnGap (parsed) {
 
   return false;
 }
-var properties$80 = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"];
+var properties$81 = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"];
 
 var gridColumnGap$1 = Object.freeze({
   default: gridColumnGap,
-  properties: properties$80
+  properties: properties$81
 });
 
 function gridTemplateAreas (parsed) {
@@ -1253,83 +1279,83 @@ function gridTemplateAreas (parsed) {
 
   return false;
 }
-var properties$81 = ["grid-template-areas"];
+var properties$82 = ["grid-template-areas"];
 
 var gridTemplateAreas$1 = Object.freeze({
   default: gridTemplateAreas,
-  properties: properties$81
+  properties: properties$82
 });
 
 var hyphens = isCaseInsensitiveKeywordFactory(["none", "manual", "auto"]);
-var properties$82 = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"];
+var properties$83 = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"];
 
 var hyphens$1 = Object.freeze({
 	default: hyphens,
-	properties: properties$82
-});
-
-var imageRendering = isCaseInsensitiveKeywordFactory(["auto", "crisp-edges", "pixelated", "-moz-crisp-edges", "-o-pixelated"]);
-var properties$83 = ["image-rendering"];
-
-var imageRendering$1 = Object.freeze({
-	default: imageRendering,
 	properties: properties$83
 });
 
-var msInterpolationMode = isCaseInsensitiveKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"]);
-var properties$84 = ["-ms-interpolation-mode"];
+var imageRendering = isCaseInsensitiveKeywordFactory(["auto", "crisp-edges", "pixelated", "-webkit-optimize-contrast", "-moz-crisp-edges", "-o-pixelated"]);
+var properties$84 = ["image-rendering"];
 
-var msInterpolationMode$1 = Object.freeze({
-	default: msInterpolationMode,
+var imageRendering$1 = Object.freeze({
+	default: imageRendering,
 	properties: properties$84
 });
 
-var imeMode = isCaseInsensitiveKeywordFactory(["auto", "normal", "active", "inactive", "disabled"]);
-var properties$85 = ["ime-mode"];
+var msInterpolationMode = isCaseInsensitiveKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"]);
+var properties$85 = ["-ms-interpolation-mode"];
 
-var imeMode$1 = Object.freeze({
-	default: imeMode,
+var msInterpolationMode$1 = Object.freeze({
+	default: msInterpolationMode,
 	properties: properties$85
 });
 
-var initialLetterAlign = isCaseInsensitiveKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"]);
-var properties$86 = ["initial-letter-align"];
+var imeMode = isCaseInsensitiveKeywordFactory(["auto", "normal", "active", "inactive", "disabled"]);
+var properties$86 = ["ime-mode"];
 
-var initialLetterAlign$1 = Object.freeze({
-	default: initialLetterAlign,
+var imeMode$1 = Object.freeze({
+	default: imeMode,
 	properties: properties$86
 });
 
-var isolation = isCaseInsensitiveKeywordFactory(["auto", "isolate"]);
-var properties$87 = ["isolation"];
+var initialLetterAlign = isCaseInsensitiveKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"]);
+var properties$87 = ["initial-letter-align"];
 
-var isolation$1 = Object.freeze({
-	default: isolation,
+var initialLetterAlign$1 = Object.freeze({
+	default: initialLetterAlign,
 	properties: properties$87
 });
 
-var mozBoxPack = isCaseInsensitiveKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"]);
-var properties$88 = ["-webkit-box-pack", "-moz-box-pack"];
+var isolation = isCaseInsensitiveKeywordFactory(["auto", "isolate"]);
+var properties$88 = ["isolation"];
 
-var mozBoxPack$1 = Object.freeze({
-	default: mozBoxPack,
+var isolation$1 = Object.freeze({
+	default: isolation,
 	properties: properties$88
 });
 
-var justifyContent = isCaseInsensitiveKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"]);
-var properties$89 = ["-webkit-justify-content", "justify-content"];
+var mozBoxPack = isCaseInsensitiveKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"]);
+var properties$89 = ["-webkit-box-pack", "-moz-box-pack"];
 
-var justifyContent$1 = Object.freeze({
-	default: justifyContent,
+var mozBoxPack$1 = Object.freeze({
+	default: mozBoxPack,
 	properties: properties$89
 });
 
+var justifyContent = isCaseInsensitiveKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"]);
+var properties$90 = ["-webkit-justify-content", "justify-content"];
+
+var justifyContent$1 = Object.freeze({
+	default: justifyContent,
+	properties: properties$90
+});
+
 var msFlexPack = isCaseInsensitiveKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"]);
-var properties$90 = ["-ms-flex-pack"];
+var properties$91 = ["-ms-flex-pack"];
 
 var msFlexPack$1 = Object.freeze({
 	default: msFlexPack,
-	properties: properties$90
+	properties: properties$91
 });
 
 function letterSpacing (parsed) {
@@ -1340,19 +1366,19 @@ function letterSpacing (parsed) {
 
   return false;
 }
-var properties$91 = ["letter-spacing"];
+var properties$92 = ["letter-spacing"];
 
 var letterSpacing$1 = Object.freeze({
   default: letterSpacing,
-  properties: properties$91
+  properties: properties$92
 });
 
 var lineBreak = isCaseInsensitiveKeywordFactory(["auto", "loose", "normal", "strict"]);
-var properties$92 = ["line-break"];
+var properties$93 = ["line-break"];
 
 var lineBreak$1 = Object.freeze({
 	default: lineBreak,
-	properties: properties$92
+	properties: properties$93
 });
 
 function lineHeight (parsed) {
@@ -1363,19 +1389,19 @@ function lineHeight (parsed) {
 
   return false;
 }
-var properties$93 = ["line-height"];
+var properties$94 = ["line-height"];
 
 var lineHeight$1 = Object.freeze({
   default: lineHeight,
-  properties: properties$93
+  properties: properties$94
 });
 
 var listStylePosition = isCaseInsensitiveKeywordFactory(["inside", "outside"]);
-var properties$94 = ["list-style-position"];
+var properties$95 = ["list-style-position"];
 
 var listStylePosition$1 = Object.freeze({
 	default: listStylePosition,
-	properties: properties$94
+	properties: properties$95
 });
 
 var compositingOperators = ['add', 'subtract', 'intersect', 'exclude'];
@@ -1397,11 +1423,11 @@ function maskComposite (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$95 = ["mask-composite"];
+var properties$96 = ["mask-composite"];
 
 var maskComposite$1 = Object.freeze({
   default: maskComposite,
-  properties: properties$95
+  properties: properties$96
 });
 
 var maskingModes = ['alpha', 'luminance', 'match-source'];
@@ -1423,19 +1449,19 @@ function maskMode (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$96 = ["mask-mode"];
+var properties$97 = ["mask-mode"];
 
 var maskMode$1 = Object.freeze({
   default: maskMode,
-  properties: properties$96
+  properties: properties$97
 });
 
 var maskType = isCaseInsensitiveKeywordFactory(["luminance", "alpha"]);
-var properties$97 = ["mask-type"];
+var properties$98 = ["mask-type"];
 
 var maskType$1 = Object.freeze({
 	default: maskType,
-	properties: properties$97
+	properties: properties$98
 });
 
 var keywords$1 = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
@@ -1447,11 +1473,11 @@ function maxBlockSize (parsed) {
 
   return false;
 }
-var properties$98 = ["max-block-size", "max-height", "max-inline-size", "max-width"];
+var properties$99 = ["max-block-size", "max-height", "max-inline-size", "max-width"];
 
 var maxBlockSize$1 = Object.freeze({
   default: maxBlockSize,
-  properties: properties$98
+  properties: properties$99
 });
 
 var keywords$2 = ["auto", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
@@ -1463,11 +1489,11 @@ function minBlockSize (parsed) {
 
   return false;
 }
-var properties$99 = ["min-block-size", "min-height", "min-inline-size", "min-width"];
+var properties$100 = ["min-block-size", "min-height", "min-inline-size", "min-width"];
 
 var minBlockSize$1 = Object.freeze({
   default: minBlockSize,
-  properties: properties$99
+  properties: properties$100
 });
 
 function mixBlendMode (parsed) {
@@ -1478,19 +1504,19 @@ function mixBlendMode (parsed) {
 
   return false;
 }
-var properties$100 = ["mix-blend-mode"];
+var properties$101 = ["mix-blend-mode"];
 
 var mixBlendMode$1 = Object.freeze({
   default: mixBlendMode,
-  properties: properties$100
+  properties: properties$101
 });
 
 var objectFit = isCaseInsensitiveKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
-var properties$101 = ["-o-object-fit", "object-fit"];
+var properties$102 = ["-o-object-fit", "object-fit"];
 
 var objectFit$1 = Object.freeze({
 	default: objectFit,
-	properties: properties$101
+	properties: properties$102
 });
 
 function outlineColor (parsed) {
@@ -1501,11 +1527,11 @@ function outlineColor (parsed) {
 
   return false;
 }
-var properties$102 = ["outline-color"];
+var properties$103 = ["outline-color"];
 
 var outlineColor$1 = Object.freeze({
   default: outlineColor,
-  properties: properties$102
+  properties: properties$103
 });
 
 function outlineStyle (parsed) {
@@ -1516,35 +1542,35 @@ function outlineStyle (parsed) {
 
   return false;
 }
-var properties$103 = ["outline-style"];
+var properties$104 = ["outline-style"];
 
 var outlineStyle$1 = Object.freeze({
   default: outlineStyle,
-  properties: properties$103
+  properties: properties$104
 });
 
 var overflow = isCaseInsensitiveKeywordFactory(["visible", "hidden", "scroll", "auto"]);
-var properties$104 = ["overflow", "overflow-x", "overflow-y"];
+var properties$105 = ["overflow", "overflow-x", "overflow-y"];
 
 var overflow$1 = Object.freeze({
 	default: overflow,
-	properties: properties$104
-});
-
-var overflowClipBox = isCaseInsensitiveKeywordFactory(["padding-box", "content-box"]);
-var properties$105 = ["overflow-clip-box"];
-
-var overflowClipBox$1 = Object.freeze({
-	default: overflowClipBox,
 	properties: properties$105
 });
 
+var overflowClipBox = isCaseInsensitiveKeywordFactory(["padding-box", "content-box"]);
+var properties$106 = ["overflow-clip-box"];
+
+var overflowClipBox$1 = Object.freeze({
+	default: overflowClipBox,
+	properties: properties$106
+});
+
 var overflowWrap = isCaseInsensitiveKeywordFactory(["normal", "break-word"]);
-var properties$106 = ["overflow-wrap", "word-wrap"];
+var properties$107 = ["overflow-wrap", "word-wrap"];
 
 var overflowWrap$1 = Object.freeze({
 	default: overflowWrap,
-	properties: properties$106
+	properties: properties$107
 });
 
 function paddingBlockEnd (parsed) {
@@ -1555,19 +1581,19 @@ function paddingBlockEnd (parsed) {
 
   return false;
 }
-var properties$107 = ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"];
+var properties$108 = ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"];
 
 var paddingBlockEnd$1 = Object.freeze({
   default: paddingBlockEnd,
-  properties: properties$107
+  properties: properties$108
 });
 
 var pageBreakInside = isCaseInsensitiveKeywordFactory(["auto", "avoid"]);
-var properties$108 = ["page-break-inside"];
+var properties$109 = ["page-break-inside"];
 
 var pageBreakInside$1 = Object.freeze({
 	default: pageBreakInside,
-	properties: properties$108
+	properties: properties$109
 });
 
 function perspective (parsed) {
@@ -1578,75 +1604,75 @@ function perspective (parsed) {
 
   return false;
 }
-var properties$109 = ["-webkit-perspective", "-moz-perspective", "perspective"];
+var properties$110 = ["-webkit-perspective", "-moz-perspective", "perspective"];
 
 var perspective$1 = Object.freeze({
   default: perspective,
-  properties: properties$109
+  properties: properties$110
 });
 
 var pointerEvents = isCaseInsensitiveKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
-var properties$110 = ["pointer-events"];
+var properties$111 = ["pointer-events"];
 
 var pointerEvents$1 = Object.freeze({
 	default: pointerEvents,
-	properties: properties$110
-});
-
-var position = isCaseInsensitiveKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"]);
-var properties$111 = ["position"];
-
-var position$1 = Object.freeze({
-	default: position,
 	properties: properties$111
 });
 
-var resize = isCaseInsensitiveKeywordFactory(["none", "both", "horizontal", "vertical"]);
-var properties$112 = ["resize"];
+var position = isCaseInsensitiveKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"]);
+var properties$112 = ["position"];
 
-var resize$1 = Object.freeze({
-	default: resize,
+var position$1 = Object.freeze({
+	default: position,
 	properties: properties$112
 });
 
-var rubyAlign = isCaseInsensitiveKeywordFactory(["start", "center", "space-between", "space-around"]);
-var properties$113 = ["ruby-align"];
+var resize = isCaseInsensitiveKeywordFactory(["none", "both", "horizontal", "vertical"]);
+var properties$113 = ["resize"];
 
-var rubyAlign$1 = Object.freeze({
-	default: rubyAlign,
+var resize$1 = Object.freeze({
+	default: resize,
 	properties: properties$113
 });
 
-var rubyMerge = isCaseInsensitiveKeywordFactory(["separate", "collapse", "auto"]);
-var properties$114 = ["ruby-merge"];
+var rubyAlign = isCaseInsensitiveKeywordFactory(["start", "center", "space-between", "space-around"]);
+var properties$114 = ["ruby-align"];
 
-var rubyMerge$1 = Object.freeze({
-	default: rubyMerge,
+var rubyAlign$1 = Object.freeze({
+	default: rubyAlign,
 	properties: properties$114
 });
 
-var rubyPosition = isCaseInsensitiveKeywordFactory(["over", "under", "inter-character"]);
-var properties$115 = ["ruby-position"];
+var rubyMerge = isCaseInsensitiveKeywordFactory(["separate", "collapse", "auto"]);
+var properties$115 = ["ruby-merge"];
 
-var rubyPosition$1 = Object.freeze({
-	default: rubyPosition,
+var rubyMerge$1 = Object.freeze({
+	default: rubyMerge,
 	properties: properties$115
 });
 
-var scrollBehavior = isCaseInsensitiveKeywordFactory(["auto", "smooth"]);
-var properties$116 = ["scroll-behavior"];
+var rubyPosition = isCaseInsensitiveKeywordFactory(["over", "under", "inter-character"]);
+var properties$116 = ["ruby-position"];
 
-var scrollBehavior$1 = Object.freeze({
-	default: scrollBehavior,
+var rubyPosition$1 = Object.freeze({
+	default: rubyPosition,
 	properties: properties$116
 });
 
+var scrollBehavior = isCaseInsensitiveKeywordFactory(["auto", "smooth"]);
+var properties$117 = ["scroll-behavior"];
+
+var scrollBehavior$1 = Object.freeze({
+	default: scrollBehavior,
+	properties: properties$117
+});
+
 var scrollSnapType = isCaseInsensitiveKeywordFactory(["none", "mandatory", "proximity"]);
-var properties$117 = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"];
+var properties$118 = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"];
 
 var scrollSnapType$1 = Object.freeze({
 	default: scrollSnapType,
-	properties: properties$117
+	properties: properties$118
 });
 
 function tabSize (parsed) {
@@ -1657,59 +1683,59 @@ function tabSize (parsed) {
 
   return false;
 }
-var properties$118 = ["tab-size"];
+var properties$119 = ["tab-size"];
 
 var tabSize$1 = Object.freeze({
   default: tabSize,
-  properties: properties$118
+  properties: properties$119
 });
 
 var tableLayout = isCaseInsensitiveKeywordFactory(["auto", "fixed"]);
-var properties$119 = ["table-layout"];
+var properties$120 = ["table-layout"];
 
 var tableLayout$1 = Object.freeze({
 	default: tableLayout,
-	properties: properties$119
-});
-
-var textAlign = isCaseInsensitiveKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"]);
-var properties$120 = ["text-align"];
-
-var textAlign$1 = Object.freeze({
-	default: textAlign,
 	properties: properties$120
 });
 
-var textAlignLast = isCaseInsensitiveKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"]);
-var properties$121 = ["-moz-text-align-last", "text-align-last"];
+var textAlign = isCaseInsensitiveKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"]);
+var properties$121 = ["text-align"];
 
-var textAlignLast$1 = Object.freeze({
-	default: textAlignLast,
+var textAlign$1 = Object.freeze({
+	default: textAlign,
 	properties: properties$121
 });
 
-var textDecorationStyle = isCaseInsensitiveKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"]);
-var properties$122 = ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"];
+var textAlignLast = isCaseInsensitiveKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"]);
+var properties$122 = ["-moz-text-align-last", "text-align-last"];
 
-var textDecorationStyle$1 = Object.freeze({
-	default: textDecorationStyle,
+var textAlignLast$1 = Object.freeze({
+	default: textAlignLast,
 	properties: properties$122
 });
 
-var textOrientation = isCaseInsensitiveKeywordFactory(["mixed", "upright", "sideways"]);
-var properties$123 = ["text-orientation"];
+var textDecorationStyle = isCaseInsensitiveKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"]);
+var properties$123 = ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"];
 
-var textOrientation$1 = Object.freeze({
-	default: textOrientation,
+var textDecorationStyle$1 = Object.freeze({
+	default: textDecorationStyle,
 	properties: properties$123
 });
 
+var textOrientation = isCaseInsensitiveKeywordFactory(["mixed", "upright", "sideways"]);
+var properties$124 = ["text-orientation"];
+
+var textOrientation$1 = Object.freeze({
+	default: textOrientation,
+	properties: properties$124
+});
+
 var textRendering = isCaseInsensitiveKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"]);
-var properties$124 = ["text-rendering"];
+var properties$125 = ["text-rendering"];
 
 var textRendering$1 = Object.freeze({
 	default: textRendering,
-	properties: properties$124
+	properties: properties$125
 });
 
 var keywords$3 = ["none", "auto"];
@@ -1721,51 +1747,51 @@ function textSizeAdjust (parsed) {
 
   return false;
 }
-var properties$125 = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"];
+var properties$126 = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"];
 
 var textSizeAdjust$1 = Object.freeze({
   default: textSizeAdjust,
-  properties: properties$125
+  properties: properties$126
 });
 
 var textTransform = isCaseInsensitiveKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
-var properties$126 = ["text-transform"];
+var properties$127 = ["text-transform"];
 
 var textTransform$1 = Object.freeze({
 	default: textTransform,
-	properties: properties$126
-});
-
-var transformBox = isCaseInsensitiveKeywordFactory(["border-box", "fill-box", "view-box"]);
-var properties$127 = ["transform-box"];
-
-var transformBox$1 = Object.freeze({
-	default: transformBox,
 	properties: properties$127
 });
 
-var transformStyle = isCaseInsensitiveKeywordFactory(["flat", "preserve-3d"]);
-var properties$128 = ["-webkit-transform-style", "-moz-transform-style", "transform-style"];
+var transformBox = isCaseInsensitiveKeywordFactory(["border-box", "fill-box", "view-box"]);
+var properties$128 = ["transform-box"];
 
-var transformStyle$1 = Object.freeze({
-	default: transformStyle,
+var transformBox$1 = Object.freeze({
+	default: transformBox,
 	properties: properties$128
 });
 
-var unicodeBidi = isCaseInsensitiveKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"]);
-var properties$129 = ["unicode-bidi"];
+var transformStyle = isCaseInsensitiveKeywordFactory(["flat", "preserve-3d"]);
+var properties$129 = ["-webkit-transform-style", "-moz-transform-style", "transform-style"];
 
-var unicodeBidi$1 = Object.freeze({
-	default: unicodeBidi,
+var transformStyle$1 = Object.freeze({
+	default: transformStyle,
 	properties: properties$129
 });
 
+var unicodeBidi = isCaseInsensitiveKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"]);
+var properties$130 = ["unicode-bidi"];
+
+var unicodeBidi$1 = Object.freeze({
+	default: unicodeBidi,
+	properties: properties$130
+});
+
 var userSelect = isCaseInsensitiveKeywordFactory(["auto", "text", "none", "contain", "all"]);
-var properties$130 = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"];
+var properties$131 = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"];
 
 var userSelect$1 = Object.freeze({
 	default: userSelect,
-	properties: properties$130
+	properties: properties$131
 });
 
 var keywords$4 = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
@@ -1777,27 +1803,27 @@ function verticalAlign (parsed) {
 
   return false;
 }
-var properties$131 = ["vertical-align"];
+var properties$132 = ["vertical-align"];
 
 var verticalAlign$1 = Object.freeze({
   default: verticalAlign,
-  properties: properties$131
+  properties: properties$132
 });
 
 var visibility = isCaseInsensitiveKeywordFactory(["visible", "hidden", "collapse"]);
-var properties$132 = ["visibility"];
+var properties$133 = ["visibility"];
 
 var visibility$1 = Object.freeze({
 	default: visibility,
-	properties: properties$132
+	properties: properties$133
 });
 
 var whiteSpace = isCaseInsensitiveKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"]);
-var properties$133 = ["white-space"];
+var properties$134 = ["white-space"];
 
 var whiteSpace$1 = Object.freeze({
 	default: whiteSpace,
-	properties: properties$133
+	properties: properties$134
 });
 
 var animateableFeatures = ['scroll-position', 'contents'];
@@ -1819,19 +1845,19 @@ function willChange (parsed) {
   });
   return valid && parsed.nodes.length % 2 !== 0;
 }
-var properties$134 = ["will-change"];
+var properties$135 = ["will-change"];
 
 var willChange$1 = Object.freeze({
   default: willChange,
-  properties: properties$134
+  properties: properties$135
 });
 
 var wordBreak = isCaseInsensitiveKeywordFactory(["normal", "break-all", "keep-all"]);
-var properties$135 = ["word-break"];
+var properties$136 = ["word-break"];
 
 var wordBreak$1 = Object.freeze({
 	default: wordBreak,
-	properties: properties$135
+	properties: properties$136
 });
 
 function wordSpacing (parsed) {
@@ -1842,27 +1868,27 @@ function wordSpacing (parsed) {
 
   return false;
 }
-var properties$136 = ["word-spacing"];
+var properties$137 = ["word-spacing"];
 
 var wordSpacing$1 = Object.freeze({
   default: wordSpacing,
-  properties: properties$136
+  properties: properties$137
 });
 
 var writingMode = isCaseInsensitiveKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
-var properties$137 = ["-webkit-writing-mode", "writing-mode"];
+var properties$138 = ["-webkit-writing-mode", "writing-mode"];
 
 var writingMode$1 = Object.freeze({
 	default: writingMode,
-	properties: properties$137
+	properties: properties$138
 });
 
 var msWritingMode = isCaseInsensitiveKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"]);
-var properties$138 = ["-ms-writing-mode"];
+var properties$139 = ["-ms-writing-mode"];
 
 var msWritingMode$1 = Object.freeze({
 	default: msWritingMode,
-	properties: properties$138
+	properties: properties$139
 });
 
 function zIndex (parsed) {
@@ -1873,14 +1899,14 @@ function zIndex (parsed) {
 
   return false;
 }
-var properties$139 = ["z-index"];
+var properties$140 = ["z-index"];
 
 var zIndex$1 = Object.freeze({
   default: zIndex,
-  properties: properties$139
+  properties: properties$140
 });
 
-var validators = [msOverflowStyle$1, mozAppearance$1, mozFloatEdge$1, mozForceBrokenImageIcon$1, mozOrient$1, mozStackSizing$1, mozTextBlink$1, mozUserFocus$1, mozUserInput$1, mozUserModify$1, mozWindowShadow$1, webkitBorderBeforeColor$1, webkitBorderBeforeStyle$1, webkitBorderBeforeWidth$1, webkitMaskRepeat, webkitMaskRepeatX$1, webkitTapHighlightColor$1, webkitTextStrokeWidth$1, webkitTouchCallout$1, alignContent$1, msFlexLinePack$1, msFlexAlign$1, alignItems$1, alignSelf$1, msFlexItemAlign$1, animationDelay$1, animationDirection$1, animationFillMode$1, animationName$1, animationPlayState$1, animationTimingFunction$1, appearance$1, backfaceVisibility$1, backgroundAttachment$1, backgroundBlendMode$1, backgroundClip$1, borderBottomLeftRadius$1, borderBottomStyle$1, borderBottomWidth$1, borderCollapse$1, borderColor$1, bottom$1, boxAlign$1, boxDecorationBreak$1, boxDirection$1, boxFlex$1, boxLines$1, boxOrient$1, boxPack$1, boxSizing$1, boxSuppress$1, pageBreakAfter$1, webkitColumnBreakInside$1, captionSide$1, clear$1, columnCount$1, columnFill$1, columnGap$1, columnSpan$1, columnWidth$1, direction$1, display$1, displayInside$1, displayList$1, displayOutside$1, emptyCells$1, mozBoxOrient$1, mozBoxDirection$1, flexDirection$1, flexWrap$1, float$1, fontKerning$1, fontLanguageOverride$1, fontSize$1, fontSizeAdjust$1, fontStretch$1, fontStyle$1, fontVariantCaps$1, fontVariantPosition$1, fontWeight$1, gridColumnGap$1, gridTemplateAreas$1, hyphens$1, imageRendering$1, msInterpolationMode$1, imeMode$1, initialLetterAlign$1, isolation$1, mozBoxPack$1, justifyContent$1, msFlexPack$1, letterSpacing$1, lineBreak$1, lineHeight$1, listStylePosition$1, maskComposite$1, maskMode$1, maskType$1, maxBlockSize$1, minBlockSize$1, mixBlendMode$1, objectFit$1, outlineColor$1, outlineStyle$1, overflow$1, overflowClipBox$1, overflowWrap$1, paddingBlockEnd$1, pageBreakInside$1, perspective$1, pointerEvents$1, position$1, resize$1, rubyAlign$1, rubyMerge$1, rubyPosition$1, scrollBehavior$1, scrollSnapType$1, tabSize$1, tableLayout$1, textAlign$1, textAlignLast$1, textDecorationStyle$1, textOrientation$1, textRendering$1, textSizeAdjust$1, textTransform$1, transformBox$1, transformStyle$1, unicodeBidi$1, userSelect$1, verticalAlign$1, visibility$1, whiteSpace$1, willChange$1, wordBreak$1, wordSpacing$1, writingMode$1, msWritingMode$1, zIndex$1];
+var validators = [msOverflowStyle$1, mozAppearance$1, mozFloatEdge$1, mozForceBrokenImageIcon$1, mozOrient$1, mozStackSizing$1, mozTextBlink$1, mozUserFocus$1, mozUserInput$1, mozUserModify$1, mozWindowShadow$1, webkitBorderBeforeColor$1, webkitBorderBeforeStyle$1, webkitBorderBeforeWidth$1, webkitMaskRepeat, webkitMaskRepeatX$1, webkitTapHighlightColor$1, webkitTextStrokeWidth$1, webkitTouchCallout$1, alignContent$1, msFlexLinePack$1, msFlexAlign$1, alignItems$1, alignSelf$1, msFlexItemAlign$1, animationDelay$1, animationDirection$1, animationFillMode$1, animationIterationCount$1, animationName$1, animationPlayState$1, animationTimingFunction$1, appearance$1, backfaceVisibility$1, backgroundAttachment$1, backgroundBlendMode$1, backgroundClip$1, borderBottomLeftRadius$1, borderBottomStyle$1, borderBottomWidth$1, borderCollapse$1, borderColor$1, bottom$1, boxAlign$1, boxDecorationBreak$1, boxDirection$1, boxFlex$1, boxLines$1, boxOrient$1, boxPack$1, boxSizing$1, boxSuppress$1, pageBreakAfter$1, webkitColumnBreakInside$1, captionSide$1, clear$1, columnCount$1, columnFill$1, columnGap$1, columnSpan$1, columnWidth$1, direction$1, display$1, displayInside$1, displayList$1, displayOutside$1, emptyCells$1, mozBoxOrient$1, mozBoxDirection$1, flexDirection$1, flexWrap$1, float$1, fontKerning$1, fontLanguageOverride$1, fontSize$1, fontSizeAdjust$1, fontStretch$1, fontStyle$1, fontVariantCaps$1, fontVariantPosition$1, fontWeight$1, gridColumnGap$1, gridTemplateAreas$1, hyphens$1, imageRendering$1, msInterpolationMode$1, imeMode$1, initialLetterAlign$1, isolation$1, mozBoxPack$1, justifyContent$1, msFlexPack$1, letterSpacing$1, lineBreak$1, lineHeight$1, listStylePosition$1, maskComposite$1, maskMode$1, maskType$1, maxBlockSize$1, minBlockSize$1, mixBlendMode$1, objectFit$1, outlineColor$1, outlineStyle$1, overflow$1, overflowClipBox$1, overflowWrap$1, paddingBlockEnd$1, pageBreakInside$1, perspective$1, pointerEvents$1, position$1, resize$1, rubyAlign$1, rubyMerge$1, rubyPosition$1, scrollBehavior$1, scrollSnapType$1, tabSize$1, tableLayout$1, textAlign$1, textAlignLast$1, textDecorationStyle$1, textOrientation$1, textRendering$1, textSizeAdjust$1, textTransform$1, transformBox$1, transformStyle$1, unicodeBidi$1, userSelect$1, verticalAlign$1, visibility$1, whiteSpace$1, willChange$1, wordBreak$1, wordSpacing$1, writingMode$1, msWritingMode$1, zIndex$1];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {
