@@ -1,4 +1,5 @@
 import test from 'ava';
+import valueParser from 'postcss-value-parser';
 import cssValues from './index.js';
 
 function createCaseInsensitiveTest(property, value) {
@@ -6395,7 +6396,13 @@ function macro(t, property, value, valid) {
 }
 
 macro.title = function (title, property, value, valid) {
-  return property + ': ' + value + ' (' + (valid ? 'valid' : 'invalid') + ')';
+  var validStr = ' (' + (valid ? 'valid' : 'invalid') + ')';
+
+  if (typeof value === 'string') {
+    return property + ': ' + value + validStr;
+  }
+
+  return '[parsed nodes]' + validStr;
 };
 
 suites.forEach(function (suite) {
@@ -6406,3 +6413,4 @@ suites.forEach(function (suite) {
     return test(macro, property, value, valid);
   });
 });
+test('should accept an ast', macro, 'color', valueParser('blue'), true);

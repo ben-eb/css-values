@@ -122,6 +122,20 @@ export default opts => {
     let keywords = [];
 
     if (settings.keywords.length) {
+        if (!settings.conditions.length) {
+            const identifier = 'isCaseInsensitiveKeywordFactory';
+            settings.dependencies.push({
+                identifier,
+                module: `${validatorPath}${identifier}`,
+            });
+            return generateProgram([
+                requireModules(...settings.dependencies),
+                template(`export default ${identifier}(keywords);`)({
+                    keywords: arrayOfStrings(settings.keywords.filter(Boolean)),
+                }),
+                properties,
+            ]);
+        }
         if (settings.keywords.length === 1) {
             settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
         } else {
