@@ -39,7 +39,7 @@ export default opts => {
         if (type === 'data') {
             const camel = camelCase(value);
             if (fixtures[camel]) { // eslint-disable-line
-                const values = fixtures[camel].fixtures; // eslint-disable-line
+                const values = fixtures[camel]; // eslint-disable-line
                 list.push.apply(list, values.valid.map(fixture => {
                     return createTest(fixture);
                 }));
