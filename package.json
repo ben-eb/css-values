@@ -10,9 +10,8 @@
     "pretest": "eslint src",
     "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
     "report": "nyc report --reporter=html",
-    "test": "cross-env BABEL_ENV=test nyc ava",
-    "test-012": "cross-env BABEL_ENV=test nyc ava",
-    "test-module": "cross-env BABEL_ENV=test ava packages/css-values/test.js"
+    "test": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc ava",
+    "test-012": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc ava"
   },
   "keywords": [
     "css"
@@ -63,19 +62,29 @@
     "got": "^6.2.0",
     "lerna": "2.0.0-beta.24",
     "mdast-util-heading-range": "^2.0.1",
-    "nyc": "^6.0.0",
+    "nyc": "^7.1.0-candidate2",
     "postcss-value-parser": "^3.3.0",
     "remark-cli": "^1.0.0",
     "remark-heading-gap": "^2.0.1"
   },
   "nyc": {
+    "include": [
+      "src/**/*.js",
+      "packages/css-values/index.js"
+    ],
     "exclude": [
+      "packages/css-values/test.js",
       "**/__tests__"
     ],
     "sourceMap": false,
     "instrument": false
   },
   "ava": {
+    "files": [
+      "packages/css-values/test.js",
+      "src/__tests__/**/*.js"
+    ],
+    "babel": "inherit",
     "require": "babel-register"
   },
   "eslintConfig": {
