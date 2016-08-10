@@ -1,8 +1,7 @@
-import toWord from '../util/toWord';
 import {brWidths} from '../validators/isBrWidth';
-import {fixtures as length} from './length';
+import length from './length';
 
-export const fixtures = {
+export default {
     valid: [
         ...brWidths,
         ...brWidths.map(value => value.toUpperCase()),
@@ -12,9 +11,4 @@ export const fixtures = {
         'huuuuge',
         ...length.invalid,
     ],
-};
-
-export const nodes = {
-    valid: fixtures.valid.map(toWord),
-    invalid: fixtures.invalid.map(toWord),
 };

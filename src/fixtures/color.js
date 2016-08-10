@@ -1,6 +1,4 @@
-import getFirstNode from '../util/getFirstNode';
-
-export const fixtures = {
+export default {
     valid: [
         'RGB(1, 2, 3)',
         'rgb(10%, 20%, 30%)',
@@ -39,9 +37,4 @@ export const fixtures = {
         '#ggg',
         'blacklight',
     ],
-};
-
-export const nodes = {
-    valid: fixtures.valid.map(getFirstNode),
-    invalid: fixtures.invalid.map(getFirstNode),
 };

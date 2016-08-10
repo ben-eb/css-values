@@ -1748,6 +1748,10 @@ var animationName = [].concat(toConsumableArray(globalTests(property$16)), [{
   valid: false
 }, {
   property: property$16,
+  value: "\"foobar\"",
+  valid: false
+}, {
+  property: property$16,
   value: "Bond-007 Bond-007",
   valid: false
 }, {
@@ -6165,6 +6169,10 @@ var willChange = [].concat(toConsumableArray(globalTests(property$81)), toConsum
 }, {
   property: property$81,
   value: "-0",
+  valid: false
+}, {
+  property: property$81,
+  value: "\"foobar\"",
   valid: false
 }, {
   property: property$81,

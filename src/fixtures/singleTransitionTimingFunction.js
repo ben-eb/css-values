@@ -1,7 +1,6 @@
-import getFirstNode from '../util/getFirstNode';
 import {keywords, stepsKeywords} from '../validators/isSingleTransitionTimingFunction';
 
-export const fixtures = {
+export default {
     valid: [
         ...keywords,
         ...keywords.map(value => value.toUpperCase()),
@@ -24,9 +23,4 @@ export const fixtures = {
         'cubic-bezier(0.3, 2.1)',
         'cubic-bezier(-1.9, 0.3, -0.2, 2.1)',
     ],
-};
-
-export const nodes = {
-    valid: fixtures.valid.map(getFirstNode),
-    invalid: fixtures.invalid.map(getFirstNode),
 };

@@ -1,20 +1,10 @@
-import toWord from '../util/toWord';
-import {fixtures as ciFixtures, nodes as ciNodes} from './customIdent';
+import customIdent from './customIdent';
 
-export const fixtures = {
+export default {
     valid: [
-        ...ciFixtures.valid,
+        ...customIdent.valid,
         'none',
         'NONE',
     ],
-    invalid: ciFixtures.invalid,
-};
-
-export const nodes = {
-    valid: [
-        ...ciNodes.valid,
-        toWord('none'),
-        toWord('NONE'),
-    ],
-    invalid: ciNodes.invalid,
+    invalid: customIdent.invalid,
 };
