@@ -2328,6 +2328,171 @@ var backgroundClip = ["background-clip", "background-origin"].reduce(function (s
   return suite;
 }, []);
 
+var backgroundPosition = ["background-position", "mask-position"].reduce(function (suite, property) {
+  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
+    property: property,
+    value: "left",
+    valid: true
+  }, {
+    property: property,
+    value: "center",
+    valid: true
+  }, {
+    property: property,
+    value: "right",
+    valid: true
+  }, {
+    property: property,
+    value: "top",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "10px",
+    valid: true
+  }, {
+    property: property,
+    value: "50%",
+    valid: true
+  }, {
+    property: property,
+    value: "left top",
+    valid: true
+  }, {
+    property: property,
+    value: "left center",
+    valid: true
+  }, {
+    property: property,
+    value: "left bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "right 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "10px top",
+    valid: true
+  }, {
+    property: property,
+    value: "50% 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom right",
+    valid: true
+  }, {
+    property: property,
+    value: "center center",
+    valid: true
+  }, {
+    property: property,
+    value: "50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "top 50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom 25%",
+    valid: true
+  }, {
+    property: property,
+    value: "top 10px right 50px",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
+    valid: true
+  }, {
+    property: property,
+    value: "left right",
+    valid: false
+  }, {
+    property: property,
+    value: "right left",
+    valid: false
+  }, {
+    property: property,
+    value: "top bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "bottom top",
+    valid: false
+  }, {
+    property: property,
+    value: "left/top",
+    valid: false
+  }, {
+    property: property,
+    value: "50% left",
+    valid: false
+  }, {
+    property: property,
+    value: "left 50% 50%",
+    valid: false
+  }, {
+    property: property,
+    value: "left 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "top 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "center center center center",
+    valid: false
+  }, {
+    property: property,
+    value: "left/25%/bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "top/10px/right/50px",
+    valid: false
+  }, {
+    property: property,
+    value: "left left",
+    valid: false
+  }, {
+    property: property,
+    value: "left, left",
+    valid: true
+  }, {
+    property: property,
+    value: "left, left,",
+    valid: false
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar),",
+    valid: false
+  }]));
+  return suite;
+}, []);
+
 var borderBottomLeftRadius = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"].reduce(function (suite, property) {
   suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
     property: property,
@@ -4202,10 +4367,6 @@ var imageRendering = [].concat(toConsumableArray(globalTests(property$46)), toCo
   property: property$46,
   value: "pixelated pixelated",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "-webkit-optimize-contrast")), [{
-  property: property$46,
-  value: "-webkit-optimize-contrast -webkit-optimize-contrast",
-  valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$46, "-moz-crisp-edges")), [{
   property: property$46,
   value: "-moz-crisp-edges -moz-crisp-edges",
@@ -5120,6 +5281,155 @@ var objectFit = ["-o-object-fit", "object-fit"].reduce(function (suite, property
   return suite;
 }, []);
 
+var objectPosition = ["object-position", "perspective-origin", "scroll-snap-destination"].reduce(function (suite, property) {
+  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
+    property: property,
+    value: "left",
+    valid: true
+  }, {
+    property: property,
+    value: "center",
+    valid: true
+  }, {
+    property: property,
+    value: "right",
+    valid: true
+  }, {
+    property: property,
+    value: "top",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "10px",
+    valid: true
+  }, {
+    property: property,
+    value: "50%",
+    valid: true
+  }, {
+    property: property,
+    value: "left top",
+    valid: true
+  }, {
+    property: property,
+    value: "left center",
+    valid: true
+  }, {
+    property: property,
+    value: "left bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "right 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "10px top",
+    valid: true
+  }, {
+    property: property,
+    value: "50% 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom right",
+    valid: true
+  }, {
+    property: property,
+    value: "center center",
+    valid: true
+  }, {
+    property: property,
+    value: "50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "top 50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom 25%",
+    valid: true
+  }, {
+    property: property,
+    value: "top 10px right 50px",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
+    valid: true
+  }, {
+    property: property,
+    value: "left right",
+    valid: false
+  }, {
+    property: property,
+    value: "right left",
+    valid: false
+  }, {
+    property: property,
+    value: "top bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "bottom top",
+    valid: false
+  }, {
+    property: property,
+    value: "left/top",
+    valid: false
+  }, {
+    property: property,
+    value: "50% left",
+    valid: false
+  }, {
+    property: property,
+    value: "left 50% 50%",
+    valid: false
+  }, {
+    property: property,
+    value: "left 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "top 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "center center center center",
+    valid: false
+  }, {
+    property: property,
+    value: "left/25%/bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "top/10px/right/50px",
+    valid: false
+  }, {
+    property: property,
+    value: "left left",
+    valid: false
+  }]));
+  return suite;
+}, []);
+
 var property$60 = "outline-color";
 var outlineColor = [].concat(toConsumableArray(globalTests(property$60)), [{
   property: property$60,
@@ -5684,6 +5994,175 @@ var scrollBehavior = [].concat(toConsumableArray(globalTests(property$70)), toCo
   value: "smooth smooth",
   valid: false
 }]);
+
+var scrollSnapCoordinate = ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"].reduce(function (suite, property) {
+  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
+    property: property,
+    value: "none none",
+    valid: false
+  }, {
+    property: property,
+    value: "left",
+    valid: true
+  }, {
+    property: property,
+    value: "center",
+    valid: true
+  }, {
+    property: property,
+    value: "right",
+    valid: true
+  }, {
+    property: property,
+    value: "top",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "10px",
+    valid: true
+  }, {
+    property: property,
+    value: "50%",
+    valid: true
+  }, {
+    property: property,
+    value: "left top",
+    valid: true
+  }, {
+    property: property,
+    value: "left center",
+    valid: true
+  }, {
+    property: property,
+    value: "left bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "right 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "10px top",
+    valid: true
+  }, {
+    property: property,
+    value: "50% 50%",
+    valid: true
+  }, {
+    property: property,
+    value: "bottom right",
+    valid: true
+  }, {
+    property: property,
+    value: "center center",
+    valid: true
+  }, {
+    property: property,
+    value: "50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom",
+    valid: true
+  }, {
+    property: property,
+    value: "top 50% center",
+    valid: true
+  }, {
+    property: property,
+    value: "left 25% bottom 25%",
+    valid: true
+  }, {
+    property: property,
+    value: "top 10px right 50px",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
+    valid: true
+  }, {
+    property: property,
+    value: "left right",
+    valid: false
+  }, {
+    property: property,
+    value: "right left",
+    valid: false
+  }, {
+    property: property,
+    value: "top bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "bottom top",
+    valid: false
+  }, {
+    property: property,
+    value: "left/top",
+    valid: false
+  }, {
+    property: property,
+    value: "50% left",
+    valid: false
+  }, {
+    property: property,
+    value: "left 50% 50%",
+    valid: false
+  }, {
+    property: property,
+    value: "left 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "top 75% center 75%",
+    valid: false
+  }, {
+    property: property,
+    value: "center center center center",
+    valid: false
+  }, {
+    property: property,
+    value: "left/25%/bottom",
+    valid: false
+  }, {
+    property: property,
+    value: "top/10px/right/50px",
+    valid: false
+  }, {
+    property: property,
+    value: "left left",
+    valid: false
+  }, {
+    property: property,
+    value: "left, left",
+    valid: true
+  }, {
+    property: property,
+    value: "left, left,",
+    valid: false
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar),",
+    valid: false
+  }]));
+  return suite;
+}, []);
 
 var scrollSnapType = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"].reduce(function (suite, property) {
   suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
@@ -6480,7 +6959,7 @@ var zIndex = [].concat(toConsumableArray(globalTests(property$86)), toConsumable
   valid: false
 }]);
 
-var suites = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var suites = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 function macro(t, property, value, valid) {
   t.is(cssValues(property, value), valid);

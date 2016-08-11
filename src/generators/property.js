@@ -35,6 +35,21 @@ export default opts => {
         identifier: 'properties',
         exported: arrayOfStrings(opts.properties),
     });
+    if (opts.candidates.length === 1 && opts.candidates[0].value === 'position') {
+        const identifier = 'isPosition';
+        let main = template(`export default isPosition();`)();
+        if (opts.candidates[0].separator === ',') {
+            main = template(`export default isPosition(true);`)();
+        }
+        return generateProgram([
+            requireModules({
+                identifier,
+                module: `${validatorPath}${identifier}`,
+            }),
+            main,
+            properties,
+        ]);
+    }
     if (opts.candidates.length === 1 && opts.candidates[0].value === 'repeat-style') {
         const identifier = 'isRepeatStyle';
         return generateProgram([
@@ -59,6 +74,12 @@ export default opts => {
                 identifier: camel,
                 module: `${validatorPath}${camel}`,
             });
+            if (candidate.value === 'position') {
+                config.preConditions.push(
+                    template(`if (isPosition(true)(parsed)) { return true; }`)()
+                );
+                return config;
+            }
             const type = validators[camel].type // eslint-disable-line
             if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
                 config.dependencies.push({
@@ -90,6 +111,7 @@ export default opts => {
     }, {
         keywords: [],
         conditions: [],
+        preConditions: [],
         repeatingConditions: [],
         dependencies: [{
             identifier: 'isVar',
@@ -101,6 +123,7 @@ export default opts => {
         const tmpl = template(`
         export default function (parsed) {
             let valid = true;
+            PRECONDITIONS
             parsed.walk((node, index) => {
                 const even = index % 2 === 0;
                 CONDITIONS
@@ -109,6 +132,7 @@ export default opts => {
             return valid && parsed.nodes.length % 2 !== 0;
         }
         `)({
+            PRECONDITIONS: settings.preConditions,
             CONDITIONS: settings.repeatingConditions,
         });
 
@@ -122,7 +146,7 @@ export default opts => {
     let keywords = [];
 
     if (settings.keywords.length) {
-        if (!settings.conditions.length) {
+        if (!settings.conditions.length && !settings.preConditions.length) {
             const identifier = 'isCaseInsensitiveKeywordFactory';
             settings.dependencies.push({
                 identifier,
@@ -161,6 +185,7 @@ export default opts => {
 
     const tmpl = template(`
     export default function (parsed) {
+        PRECONDITIONS
         if (parsed.nodes.length === 1) {
             const node = parsed.nodes[0];
             return CONDITIONS
@@ -168,6 +193,7 @@ export default opts => {
         return false;
     }
     `)({
+        PRECONDITIONS: settings.preConditions,
         CONDITIONS: conditions,
     });
 

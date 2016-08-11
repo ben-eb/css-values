@@ -21,6 +21,7 @@ export numericFigureValue from './numericFigureValue';
 export numericFractionValue from './numericFractionValue';
 export numericSpacingValue from './numericSpacingValue';
 export percentage from './percentage';
+export position from './position';
 export relativeSize from './relativeSize';
 export repeatStyle from './repeatStyle';
 export singleAnimationDirection from './singleAnimationDirection';

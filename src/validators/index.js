@@ -21,6 +21,7 @@ export * as isNumericFigureValue from './isNumericFigureValue';
 export * as isNumericFractionValue from './isNumericFractionValue';
 export * as isNumericSpacingValue from './isNumericSpacingValue';
 export * as isPercentage from './isPercentage';
+export * as isPosition from './isPosition';
 export * as isRelativeSize from './isRelativeSize';
 export * as isRepeatStyle from './isRepeatStyle';
 export * as isSingleAnimationDirection from './isSingleAnimationDirection';

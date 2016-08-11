@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 219 of 361 CSS properties (60.66%).
+We support 226 of 361 CSS properties (62.60%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -77,6 +77,7 @@ We support 219 of 361 CSS properties (60.66%).
 * `animation-name`
 * `animation-play-state`
 * `animation-timing-function`
+* `animation-iteration-count`
 * `appearance`
 * `background-blend-mode`
 * `backface-visibility`
@@ -84,6 +85,7 @@ We support 219 of 361 CSS properties (60.66%).
 * `background-color`
 * `background-clip`
 * `background-origin`
+* `background-position`
 * `background-repeat`
 * `border-block-end-color`
 * `border-block-end-style`
@@ -180,6 +182,7 @@ We support 219 of 361 CSS properties (60.66%).
 * `marker-offset`
 * `mask-composite`
 * `mask-mode`
+* `mask-position`
 * `mask-repeat`
 * `mask-type`
 * `max-block-size`
@@ -193,6 +196,7 @@ We support 219 of 361 CSS properties (60.66%).
 * `mix-blend-mode`
 * `motion-offset`
 * `object-fit`
+* `object-position`
 * `offset-block-end`
 * `offset-block-start`
 * `offset-inline-end`
@@ -221,6 +225,7 @@ We support 219 of 361 CSS properties (60.66%).
 * `page-break-before`
 * `page-break-inside`
 * `perspective`
+* `perspective-origin`
 * `pointer-events`
 * `position`
 * `resize`
@@ -229,6 +234,8 @@ We support 219 of 361 CSS properties (60.66%).
 * `ruby-merge`
 * `ruby-position`
 * `scroll-behavior`
+* `scroll-snap-coordinate`
+* `scroll-snap-destination`
 * `scroll-snap-type`
 * `scroll-snap-type-x`
 * `scroll-snap-type-y`

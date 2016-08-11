@@ -1,11 +1,7 @@
 import HtmlEntities from 'html-entities';
 import data from '../data/data.json';
 
-const decode = new HtmlEntities.AllHtmlEntities().decode;
-
-function positionGrammar (what) {
-    return what.replace('<position>', '[ [ left | center | right | top | bottom | <percentage> | <length> ] | [ left | center | right | <percentage> | <length> ] [ top | center | bottom | <percentage> | <length> ] | [ center | [ left | right ] [ <percentage> | <length> ]? ] && [ center | [ top | bottom ] [ <percentage> | <length> ]? ] ]');
-}
+const {decode} = new HtmlEntities.AllHtmlEntities();
 
 const overrides = {
     // properties
@@ -20,25 +16,25 @@ const overrides = {
     'single-transition-property': 'all | <IDENT>',
 };
 
-export const properties = Object.keys(data.properties).map(key => {
-    let syntax = positionGrammar(decode(data.properties[key].syntax));
-    if (overrides[key]) {
-        syntax = overrides[key];
+export const properties = Object.keys(data.properties).map(name => {
+    let syntax = decode(data.properties[name].syntax);
+    if (overrides[name]) {
+        syntax = overrides[name];
     }
     return {
-        ...data.properties[key],
-        name: key,
+        ...data.properties[name],
+        name,
         syntax: syntax.trim(),
     };
 });
 
-export const syntaxes = Object.keys(data.syntaxes).map(key => {
-    let syntax = positionGrammar(decode(data.syntaxes[key]));
-    if (overrides[key]) {
-        syntax = overrides[key];
+export const syntaxes = Object.keys(data.syntaxes).map(name => {
+    let syntax = decode(data.syntaxes[name]);
+    if (overrides[name]) {
+        syntax = overrides[name];
     }
     return {
-        name: key,
-        syntax: syntax,
+        name,
+        syntax,
     };
 });
