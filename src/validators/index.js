@@ -32,3 +32,4 @@ export * as isString from './isString';
 export * as isTime from './isTime';
 export * as isVariable from './isVariable';
 export * as isBlendMode from './isBlendMode';
+export * as isSingleAnimationIterationCount from './isSingleAnimationIterationCount';

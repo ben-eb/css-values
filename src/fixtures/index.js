@@ -32,3 +32,4 @@ export string from './string';
 export time from './time';
 export variable from './variable';
 export blendMode from './blendMode';
+export singleAnimationIterationCount from './singleAnimationIterationCount';

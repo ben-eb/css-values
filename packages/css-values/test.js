@@ -1701,66 +1701,74 @@ var animationFillMode = [].concat(toConsumableArray(globalTests(property$15)), [
   valid: false
 }]);
 
-var property$16 = "animation-name";
-var animationName = [].concat(toConsumableArray(globalTests(property$16)), [{
+var property$16 = "animation-iteration-count";
+var animationIterationCount = [].concat(toConsumableArray(globalTests(property$16)), [{
   property: property$16,
-  value: "Bond-007",
+  value: "12",
   valid: true
 }, {
   property: property$16,
-  value: "alpha",
+  value: "4.01",
   valid: true
 }, {
   property: property$16,
-  value: "_-_",
+  value: "-456.8",
   valid: true
 }, {
   property: property$16,
-  value: "\\1F638",
+  value: "0.0",
   valid: true
 }, {
   property: property$16,
-  value: "-B",
+  value: "+0.0",
   valid: true
 }, {
   property: property$16,
-  value: "none",
+  value: "-0.0",
   valid: true
 }, {
   property: property$16,
-  value: "NONE",
+  value: ".60",
   valid: true
 }, {
   property: property$16,
-  value: "007-Bond",
+  value: "10e3",
+  valid: true
+}, {
+  property: property$16,
+  value: "-3.4e-2",
+  valid: true
+}, {
+  property: property$16,
+  value: "infinite",
+  valid: true
+}, {
+  property: property$16,
+  value: "12.",
   valid: false
 }, {
   property: property$16,
-  value: "0B",
+  value: "+-12.2",
   valid: false
 }, {
   property: property$16,
-  value: "--B",
+  value: "12.1.1",
   valid: false
 }, {
   property: property$16,
-  value: "-0",
+  value: "\"10px\"",
   valid: false
 }, {
   property: property$16,
-  value: "\"foobar\"",
+  value: "12 12",
   valid: false
 }, {
   property: property$16,
-  value: "Bond-007 Bond-007",
-  valid: false
-}, {
-  property: property$16,
-  value: "Bond-007, Bond-007",
+  value: "12, 12",
   valid: true
 }, {
   property: property$16,
-  value: "Bond-007, Bond-007,",
+  value: "12, 12,",
   valid: false
 }, {
   property: property$16,
@@ -1772,38 +1780,66 @@ var animationName = [].concat(toConsumableArray(globalTests(property$16)), [{
   valid: false
 }]);
 
-var property$17 = "animation-play-state";
-var animationPlayState = [].concat(toConsumableArray(globalTests(property$17)), [{
+var property$17 = "animation-name";
+var animationName = [].concat(toConsumableArray(globalTests(property$17)), [{
   property: property$17,
-  value: "running",
+  value: "Bond-007",
   valid: true
 }, {
   property: property$17,
-  value: "paused",
+  value: "alpha",
   valid: true
 }, {
   property: property$17,
-  value: "RUNNING",
+  value: "_-_",
   valid: true
 }, {
   property: property$17,
-  value: "PAUSED",
+  value: "\\1F638",
   valid: true
 }, {
   property: property$17,
-  value: "running-paused",
+  value: "-B",
+  valid: true
+}, {
+  property: property$17,
+  value: "none",
+  valid: true
+}, {
+  property: property$17,
+  value: "NONE",
+  valid: true
+}, {
+  property: property$17,
+  value: "007-Bond",
   valid: false
 }, {
   property: property$17,
-  value: "running running",
+  value: "0B",
   valid: false
 }, {
   property: property$17,
-  value: "running, running",
+  value: "--B",
+  valid: false
+}, {
+  property: property$17,
+  value: "-0",
+  valid: false
+}, {
+  property: property$17,
+  value: "\"foobar\"",
+  valid: false
+}, {
+  property: property$17,
+  value: "Bond-007 Bond-007",
+  valid: false
+}, {
+  property: property$17,
+  value: "Bond-007, Bond-007",
   valid: true
 }, {
   property: property$17,
-  value: "running, running,",
+  value: "Bond-007, Bond-007,",
   valid: false
 }, {
   property: property$17,
@@ -1811,6 +1847,49 @@ var animationPlayState = [].concat(toConsumableArray(globalTests(property$17)), 
   valid: true
 }, {
   property: property$17,
+  value: "var(--foo), var(--bar),",
+  valid: false
+}]);
+
+var property$18 = "animation-play-state";
+var animationPlayState = [].concat(toConsumableArray(globalTests(property$18)), [{
+  property: property$18,
+  value: "running",
+  valid: true
+}, {
+  property: property$18,
+  value: "paused",
+  valid: true
+}, {
+  property: property$18,
+  value: "RUNNING",
+  valid: true
+}, {
+  property: property$18,
+  value: "PAUSED",
+  valid: true
+}, {
+  property: property$18,
+  value: "running-paused",
+  valid: false
+}, {
+  property: property$18,
+  value: "running running",
+  valid: false
+}, {
+  property: property$18,
+  value: "running, running",
+  valid: true
+}, {
+  property: property$18,
+  value: "running, running,",
+  valid: false
+}, {
+  property: property$18,
+  value: "var(--foo), var(--bar)",
+  valid: true
+}, {
+  property: property$18,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
@@ -1986,212 +2065,212 @@ var backfaceVisibility = ["-webkit-backface-visibility", "-moz-backface-visibili
   return suite;
 }, []);
 
-var property$18 = "background-attachment";
-var backgroundAttachment = [].concat(toConsumableArray(globalTests(property$18)), [{
-  property: property$18,
+var property$19 = "background-attachment";
+var backgroundAttachment = [].concat(toConsumableArray(globalTests(property$19)), [{
+  property: property$19,
   value: "scroll",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "fixed",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "local",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "SCROLL",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "FIXED",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "LOCAL",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "local-scroll",
   valid: false
 }, {
-  property: property$18,
+  property: property$19,
   value: "scroll scroll",
   valid: false
 }, {
-  property: property$18,
+  property: property$19,
   value: "scroll, scroll",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "scroll, scroll,",
   valid: false
 }, {
-  property: property$18,
+  property: property$19,
   value: "var(--foo), var(--bar)",
   valid: true
 }, {
-  property: property$18,
+  property: property$19,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
 
-var property$19 = "background-blend-mode";
-var backgroundBlendMode = [].concat(toConsumableArray(globalTests(property$19)), [{
-  property: property$19,
+var property$20 = "background-blend-mode";
+var backgroundBlendMode = [].concat(toConsumableArray(globalTests(property$20)), [{
+  property: property$20,
   value: "normal",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "multiply",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "screen",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "overlay",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "darken",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "lighten",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "color-dodge",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "color-burn",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "hard-light",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "soft-light",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "difference",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "exclusion",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "hue",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "saturation",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "color",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "luminosity",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "NORMAL",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "MULTIPLY",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "SCREEN",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "OVERLAY",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "DARKEN",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "LIGHTEN",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "COLOR-DODGE",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "COLOR-BURN",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "HARD-LIGHT",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "SOFT-LIGHT",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "DIFFERENCE",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "EXCLUSION",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "HUE",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "SATURATION",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "COLOR",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "LUMINOSITY",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "superblend",
   valid: false
 }, {
-  property: property$19,
+  property: property$20,
   value: "blend-man",
   valid: false
 }, {
-  property: property$19,
+  property: property$20,
   value: "normal normal",
   valid: false
 }, {
-  property: property$19,
+  property: property$20,
   value: "normal, normal",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "normal, normal,",
   valid: false
 }, {
-  property: property$19,
+  property: property$20,
   value: "var(--foo), var(--bar)",
   valid: true
 }, {
-  property: property$19,
+  property: property$20,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
@@ -2476,156 +2555,156 @@ var borderBottomWidth = ["border-bottom-width", "border-left-width", "border-rig
   return suite;
 }, []);
 
-var property$20 = "border-collapse";
-var borderCollapse = [].concat(toConsumableArray(globalTests(property$20)), toConsumableArray(createCaseInsensitiveTest(property$20, "collapse")), [{
-  property: property$20,
+var property$21 = "border-collapse";
+var borderCollapse = [].concat(toConsumableArray(globalTests(property$21)), toConsumableArray(createCaseInsensitiveTest(property$21, "collapse")), [{
+  property: property$21,
   value: "collapse collapse",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$20, "separate")), [{
-  property: property$20,
+}], toConsumableArray(createCaseInsensitiveTest(property$21, "separate")), [{
+  property: property$21,
   value: "separate separate",
   valid: false
 }]);
 
-var property$21 = "border-color";
-var borderColor = [].concat(toConsumableArray(globalTests(property$21)), [{
-  property: property$21,
+var property$22 = "border-color";
+var borderColor = [].concat(toConsumableArray(globalTests(property$22)), [{
+  property: property$22,
   value: "RGB(1, 2, 3)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgb(10%, 20%, 30%)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgb(400, 400, 400)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgbA(1, 2, 3, .5)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgba(10%, 20%, 30%, 0.5)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgba(400, 400, 400, 1)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsl(90, 50%, 50%)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "HSL(90, 50%, 50%)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsla(90, 50%, 50%, .5)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsla(90, 50%, 50%, 0.5)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "hslA(90, 50%, 50%, 0)",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "#000",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "#000F",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "#000000",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "#000000FF",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "RED",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "black",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "currentcolor",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "CURRENTCOLOR",
   valid: true
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgb(1, 2, 3, 4, 5)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgb(1:2:3)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgb(a, b, c)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgba(10%, 20%, 30%, transparent)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgba(400: 400)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "rgba(400, 400, 400, 50%)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsl(50%, 50%, 50%)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsl(90, 50, 50)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsla(90, 50%, 50%)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsla(90, 50%, 50%, 50%)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "hsla(90%, 50%, 50%, 0.5)",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "#ee",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "#eeeeeee",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "#ggg",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "blacklight",
   valid: false
 }, {
-  property: property$21,
+  property: property$22,
   value: "RGB(1, 2, 3) RGB(1, 2, 3)",
   valid: false
 }]);
@@ -2703,25 +2782,25 @@ var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-we
   return suite;
 }, []);
 
-var property$22 = "box-align";
-var boxAlign = [].concat(toConsumableArray(globalTests(property$22)), toConsumableArray(createCaseInsensitiveTest(property$22, "start")), [{
-  property: property$22,
+var property$23 = "box-align";
+var boxAlign = [].concat(toConsumableArray(globalTests(property$23)), toConsumableArray(createCaseInsensitiveTest(property$23, "start")), [{
+  property: property$23,
   value: "start start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$22, "center")), [{
-  property: property$22,
+}], toConsumableArray(createCaseInsensitiveTest(property$23, "center")), [{
+  property: property$23,
   value: "center center",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$22, "end")), [{
-  property: property$22,
+}], toConsumableArray(createCaseInsensitiveTest(property$23, "end")), [{
+  property: property$23,
   value: "end end",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$22, "baseline")), [{
-  property: property$22,
+}], toConsumableArray(createCaseInsensitiveTest(property$23, "baseline")), [{
+  property: property$23,
   value: "baseline baseline",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$22, "stretch")), [{
-  property: property$22,
+}], toConsumableArray(createCaseInsensitiveTest(property$23, "stretch")), [{
+  property: property$23,
   value: "stretch stretch",
   valid: false
 }]);
@@ -2739,17 +2818,17 @@ var boxDecorationBreak = ["-webkit-box-decoration-break", "box-decoration-break"
   return suite;
 }, []);
 
-var property$23 = "box-direction";
-var boxDirection = [].concat(toConsumableArray(globalTests(property$23)), toConsumableArray(createCaseInsensitiveTest(property$23, "normal")), [{
-  property: property$23,
+var property$24 = "box-direction";
+var boxDirection = [].concat(toConsumableArray(globalTests(property$24)), toConsumableArray(createCaseInsensitiveTest(property$24, "normal")), [{
+  property: property$24,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "reverse")), [{
-  property: property$23,
+}], toConsumableArray(createCaseInsensitiveTest(property$24, "reverse")), [{
+  property: property$24,
   value: "reverse reverse",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "inherit")), [{
-  property: property$23,
+}], toConsumableArray(createCaseInsensitiveTest(property$24, "inherit")), [{
+  property: property$24,
   value: "inherit inherit",
   valid: false
 }]);
@@ -2815,55 +2894,55 @@ var boxFlex = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-t
   return suite;
 }, []);
 
-var property$24 = "box-lines";
-var boxLines = [].concat(toConsumableArray(globalTests(property$24)), toConsumableArray(createCaseInsensitiveTest(property$24, "single")), [{
-  property: property$24,
+var property$25 = "box-lines";
+var boxLines = [].concat(toConsumableArray(globalTests(property$25)), toConsumableArray(createCaseInsensitiveTest(property$25, "single")), [{
+  property: property$25,
   value: "single single",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$24, "multiple")), [{
-  property: property$24,
+}], toConsumableArray(createCaseInsensitiveTest(property$25, "multiple")), [{
+  property: property$25,
   value: "multiple multiple",
   valid: false
 }]);
 
-var property$25 = "box-orient";
-var boxOrient = [].concat(toConsumableArray(globalTests(property$25)), toConsumableArray(createCaseInsensitiveTest(property$25, "horizontal")), [{
-  property: property$25,
+var property$26 = "box-orient";
+var boxOrient = [].concat(toConsumableArray(globalTests(property$26)), toConsumableArray(createCaseInsensitiveTest(property$26, "horizontal")), [{
+  property: property$26,
   value: "horizontal horizontal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$25, "vertical")), [{
-  property: property$25,
+}], toConsumableArray(createCaseInsensitiveTest(property$26, "vertical")), [{
+  property: property$26,
   value: "vertical vertical",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$25, "inline-axis")), [{
-  property: property$25,
+}], toConsumableArray(createCaseInsensitiveTest(property$26, "inline-axis")), [{
+  property: property$26,
   value: "inline-axis inline-axis",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$25, "block-axis")), [{
-  property: property$25,
+}], toConsumableArray(createCaseInsensitiveTest(property$26, "block-axis")), [{
+  property: property$26,
   value: "block-axis block-axis",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$25, "inherit")), [{
-  property: property$25,
+}], toConsumableArray(createCaseInsensitiveTest(property$26, "inherit")), [{
+  property: property$26,
   value: "inherit inherit",
   valid: false
 }]);
 
-var property$26 = "box-pack";
-var boxPack = [].concat(toConsumableArray(globalTests(property$26)), toConsumableArray(createCaseInsensitiveTest(property$26, "start")), [{
-  property: property$26,
+var property$27 = "box-pack";
+var boxPack = [].concat(toConsumableArray(globalTests(property$27)), toConsumableArray(createCaseInsensitiveTest(property$27, "start")), [{
+  property: property$27,
   value: "start start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "center")), [{
-  property: property$26,
+}], toConsumableArray(createCaseInsensitiveTest(property$27, "center")), [{
+  property: property$27,
   value: "center center",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "end")), [{
-  property: property$26,
+}], toConsumableArray(createCaseInsensitiveTest(property$27, "end")), [{
+  property: property$27,
   value: "end end",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "justify")), [{
-  property: property$26,
+}], toConsumableArray(createCaseInsensitiveTest(property$27, "justify")), [{
+  property: property$27,
   value: "justify justify",
   valid: false
 }]);
@@ -2881,17 +2960,17 @@ var boxSizing = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"].reduce(f
   return suite;
 }, []);
 
-var property$27 = "box-suppress";
-var boxSuppress = [].concat(toConsumableArray(globalTests(property$27)), toConsumableArray(createCaseInsensitiveTest(property$27, "show")), [{
-  property: property$27,
+var property$28 = "box-suppress";
+var boxSuppress = [].concat(toConsumableArray(globalTests(property$28)), toConsumableArray(createCaseInsensitiveTest(property$28, "show")), [{
+  property: property$28,
   value: "show show",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$27, "discard")), [{
-  property: property$27,
+}], toConsumableArray(createCaseInsensitiveTest(property$28, "discard")), [{
+  property: property$28,
   value: "discard discard",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$27, "hide")), [{
-  property: property$27,
+}], toConsumableArray(createCaseInsensitiveTest(property$28, "hide")), [{
+  property: property$28,
   value: "hide hide",
   valid: false
 }]);
@@ -2946,49 +3025,22 @@ var webkitColumnBreakInside = ["-webkit-column-break-inside", "page-break-inside
   return suite;
 }, []);
 
-var property$28 = "caption-side";
-var captionSide = [].concat(toConsumableArray(globalTests(property$28)), toConsumableArray(createCaseInsensitiveTest(property$28, "top")), [{
-  property: property$28,
+var property$29 = "caption-side";
+var captionSide = [].concat(toConsumableArray(globalTests(property$29)), toConsumableArray(createCaseInsensitiveTest(property$29, "top")), [{
+  property: property$29,
   value: "top top",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "bottom")), [{
-  property: property$28,
+}], toConsumableArray(createCaseInsensitiveTest(property$29, "bottom")), [{
+  property: property$29,
   value: "bottom bottom",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "block-start")), [{
-  property: property$28,
+}], toConsumableArray(createCaseInsensitiveTest(property$29, "block-start")), [{
+  property: property$29,
   value: "block-start block-start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "block-end")), [{
-  property: property$28,
+}], toConsumableArray(createCaseInsensitiveTest(property$29, "block-end")), [{
+  property: property$29,
   value: "block-end block-end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "inline-start")), [{
-  property: property$28,
-  value: "inline-start inline-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "inline-end")), [{
-  property: property$28,
-  value: "inline-end inline-end",
-  valid: false
-}]);
-
-var property$29 = "clear";
-var clear = [].concat(toConsumableArray(globalTests(property$29)), toConsumableArray(createCaseInsensitiveTest(property$29, "none")), [{
-  property: property$29,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "left")), [{
-  property: property$29,
-  value: "left left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "right")), [{
-  property: property$29,
-  value: "right right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "both")), [{
-  property: property$29,
-  value: "both both",
   valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$29, "inline-start")), [{
   property: property$29,
@@ -2996,6 +3048,33 @@ var clear = [].concat(toConsumableArray(globalTests(property$29)), toConsumableA
   valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$29, "inline-end")), [{
   property: property$29,
+  value: "inline-end inline-end",
+  valid: false
+}]);
+
+var property$30 = "clear";
+var clear = [].concat(toConsumableArray(globalTests(property$30)), toConsumableArray(createCaseInsensitiveTest(property$30, "none")), [{
+  property: property$30,
+  value: "none none",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$30, "left")), [{
+  property: property$30,
+  value: "left left",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$30, "right")), [{
+  property: property$30,
+  value: "right right",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$30, "both")), [{
+  property: property$30,
+  value: "both both",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$30, "inline-start")), [{
+  property: property$30,
+  value: "inline-start inline-start",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$30, "inline-end")), [{
+  property: property$30,
   value: "inline-end inline-end",
   valid: false
 }]);
@@ -3181,280 +3260,280 @@ var columnWidth = ["-webkit-column-width", "-moz-column-width", "column-width", 
   return suite;
 }, []);
 
-var property$30 = "direction";
-var direction = [].concat(toConsumableArray(globalTests(property$30)), toConsumableArray(createCaseInsensitiveTest(property$30, "ltr")), [{
-  property: property$30,
+var property$31 = "direction";
+var direction = [].concat(toConsumableArray(globalTests(property$31)), toConsumableArray(createCaseInsensitiveTest(property$31, "ltr")), [{
+  property: property$31,
   value: "ltr ltr",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "rtl")), [{
-  property: property$30,
+}], toConsumableArray(createCaseInsensitiveTest(property$31, "rtl")), [{
+  property: property$31,
   value: "rtl rtl",
   valid: false
 }]);
 
-var property$31 = "display";
-var display = [].concat(toConsumableArray(globalTests(property$31)), toConsumableArray(createCaseInsensitiveTest(property$31, "none")), [{
-  property: property$31,
+var property$32 = "display";
+var display = [].concat(toConsumableArray(globalTests(property$32)), toConsumableArray(createCaseInsensitiveTest(property$32, "none")), [{
+  property: property$32,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline")), [{
-  property: property$31,
-  value: "inline inline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "block")), [{
-  property: property$31,
-  value: "block block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "list-item")), [{
-  property: property$31,
-  value: "list-item list-item",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline-list-item")), [{
-  property: property$31,
-  value: "inline-list-item inline-list-item",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline-block")), [{
-  property: property$31,
-  value: "inline-block inline-block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline-table")), [{
-  property: property$31,
-  value: "inline-table inline-table",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table")), [{
-  property: property$31,
-  value: "table table",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-cell")), [{
-  property: property$31,
-  value: "table-cell table-cell",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-column")), [{
-  property: property$31,
-  value: "table-column table-column",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-column-group")), [{
-  property: property$31,
-  value: "table-column-group table-column-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-footer-group")), [{
-  property: property$31,
-  value: "table-footer-group table-footer-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-header-group")), [{
-  property: property$31,
-  value: "table-header-group table-header-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-row")), [{
-  property: property$31,
-  value: "table-row table-row",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "table-row-group")), [{
-  property: property$31,
-  value: "table-row-group table-row-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "flex")), [{
-  property: property$31,
-  value: "flex flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline-flex")), [{
-  property: property$31,
-  value: "inline-flex inline-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "grid")), [{
-  property: property$31,
-  value: "grid grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "inline-grid")), [{
-  property: property$31,
-  value: "inline-grid inline-grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "run-in")), [{
-  property: property$31,
-  value: "run-in run-in",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "ruby")), [{
-  property: property$31,
-  value: "ruby ruby",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "ruby-base")), [{
-  property: property$31,
-  value: "ruby-base ruby-base",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "ruby-text")), [{
-  property: property$31,
-  value: "ruby-text ruby-text",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "ruby-base-container")), [{
-  property: property$31,
-  value: "ruby-base-container ruby-base-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "ruby-text-container")), [{
-  property: property$31,
-  value: "ruby-text-container ruby-text-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "contents")), [{
-  property: property$31,
-  value: "contents contents",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-webkit-box")), [{
-  property: property$31,
-  value: "-webkit-box -webkit-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-webkit-flex")), [{
-  property: property$31,
-  value: "-webkit-flex -webkit-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-moz-box")), [{
-  property: property$31,
-  value: "-moz-box -moz-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-ms-flexbox")), [{
-  property: property$31,
-  value: "-ms-flexbox -ms-flexbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-webkit-inline-box")), [{
-  property: property$31,
-  value: "-webkit-inline-box -webkit-inline-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-webkit-inline-flex")), [{
-  property: property$31,
-  value: "-webkit-inline-flex -webkit-inline-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-moz-inline-box")), [{
-  property: property$31,
-  value: "-moz-inline-box -moz-inline-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-ms-inline-flexbox")), [{
-  property: property$31,
-  value: "-ms-inline-flexbox -ms-inline-flexbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-ms-grid")), [{
-  property: property$31,
-  value: "-ms-grid -ms-grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "-ms-inline-grid")), [{
-  property: property$31,
-  value: "-ms-inline-grid -ms-inline-grid",
-  valid: false
-}]);
-
-var property$32 = "display-inside";
-var displayInside = [].concat(toConsumableArray(globalTests(property$32)), toConsumableArray(createCaseInsensitiveTest(property$32, "auto")), [{
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline")), [{
   property: property$32,
-  value: "auto auto",
+  value: "inline inline",
   valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$32, "block")), [{
   property: property$32,
   value: "block block",
   valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "list-item")), [{
+  property: property$32,
+  value: "list-item list-item",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-list-item")), [{
+  property: property$32,
+  value: "inline-list-item inline-list-item",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-block")), [{
+  property: property$32,
+  value: "inline-block inline-block",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-table")), [{
+  property: property$32,
+  value: "inline-table inline-table",
+  valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$32, "table")), [{
   property: property$32,
   value: "table table",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-cell")), [{
+  property: property$32,
+  value: "table-cell table-cell",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-column")), [{
+  property: property$32,
+  value: "table-column table-column",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-column-group")), [{
+  property: property$32,
+  value: "table-column-group table-column-group",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-footer-group")), [{
+  property: property$32,
+  value: "table-footer-group table-footer-group",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-header-group")), [{
+  property: property$32,
+  value: "table-header-group table-header-group",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-row")), [{
+  property: property$32,
+  value: "table-row table-row",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-row-group")), [{
+  property: property$32,
+  value: "table-row-group table-row-group",
   valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$32, "flex")), [{
   property: property$32,
   value: "flex flex",
   valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-flex")), [{
+  property: property$32,
+  value: "inline-flex inline-flex",
+  valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$32, "grid")), [{
   property: property$32,
   value: "grid grid",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-grid")), [{
+  property: property$32,
+  value: "inline-grid inline-grid",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "run-in")), [{
+  property: property$32,
+  value: "run-in run-in",
   valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby")), [{
   property: property$32,
   value: "ruby ruby",
   valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-base")), [{
+  property: property$32,
+  value: "ruby-base ruby-base",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-text")), [{
+  property: property$32,
+  value: "ruby-text ruby-text",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-base-container")), [{
+  property: property$32,
+  value: "ruby-base-container ruby-base-container",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-text-container")), [{
+  property: property$32,
+  value: "ruby-text-container ruby-text-container",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "contents")), [{
+  property: property$32,
+  value: "contents contents",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-box")), [{
+  property: property$32,
+  value: "-webkit-box -webkit-box",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-flex")), [{
+  property: property$32,
+  value: "-webkit-flex -webkit-flex",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-moz-box")), [{
+  property: property$32,
+  value: "-moz-box -moz-box",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-flexbox")), [{
+  property: property$32,
+  value: "-ms-flexbox -ms-flexbox",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-inline-box")), [{
+  property: property$32,
+  value: "-webkit-inline-box -webkit-inline-box",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-inline-flex")), [{
+  property: property$32,
+  value: "-webkit-inline-flex -webkit-inline-flex",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-moz-inline-box")), [{
+  property: property$32,
+  value: "-moz-inline-box -moz-inline-box",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-inline-flexbox")), [{
+  property: property$32,
+  value: "-ms-inline-flexbox -ms-inline-flexbox",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-grid")), [{
+  property: property$32,
+  value: "-ms-grid -ms-grid",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-inline-grid")), [{
+  property: property$32,
+  value: "-ms-inline-grid -ms-inline-grid",
+  valid: false
 }]);
 
-var property$33 = "display-list";
-var displayList = [].concat(toConsumableArray(globalTests(property$33)), toConsumableArray(createCaseInsensitiveTest(property$33, "none")), [{
+var property$33 = "display-inside";
+var displayInside = [].concat(toConsumableArray(globalTests(property$33)), toConsumableArray(createCaseInsensitiveTest(property$33, "auto")), [{
   property: property$33,
+  value: "auto auto",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$33, "block")), [{
+  property: property$33,
+  value: "block block",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$33, "table")), [{
+  property: property$33,
+  value: "table table",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$33, "flex")), [{
+  property: property$33,
+  value: "flex flex",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$33, "grid")), [{
+  property: property$33,
+  value: "grid grid",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$33, "ruby")), [{
+  property: property$33,
+  value: "ruby ruby",
+  valid: false
+}]);
+
+var property$34 = "display-list";
+var displayList = [].concat(toConsumableArray(globalTests(property$34)), toConsumableArray(createCaseInsensitiveTest(property$34, "none")), [{
+  property: property$34,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "list-item")), [{
-  property: property$33,
+}], toConsumableArray(createCaseInsensitiveTest(property$34, "list-item")), [{
+  property: property$34,
   value: "list-item list-item",
   valid: false
 }]);
 
-var property$34 = "display-outside";
-var displayOutside = [].concat(toConsumableArray(globalTests(property$34)), toConsumableArray(createCaseInsensitiveTest(property$34, "block-level")), [{
-  property: property$34,
+var property$35 = "display-outside";
+var displayOutside = [].concat(toConsumableArray(globalTests(property$35)), toConsumableArray(createCaseInsensitiveTest(property$35, "block-level")), [{
+  property: property$35,
   value: "block-level block-level",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "inline-level")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "inline-level")), [{
+  property: property$35,
   value: "inline-level inline-level",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "run-in")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "run-in")), [{
+  property: property$35,
   value: "run-in run-in",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "contents")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "contents")), [{
+  property: property$35,
   value: "contents contents",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "none")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "none")), [{
+  property: property$35,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-row-group")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-row-group")), [{
+  property: property$35,
   value: "table-row-group table-row-group",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-header-group")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-header-group")), [{
+  property: property$35,
   value: "table-header-group table-header-group",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-footer-group")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-footer-group")), [{
+  property: property$35,
   value: "table-footer-group table-footer-group",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-row")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-row")), [{
+  property: property$35,
   value: "table-row table-row",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-cell")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-cell")), [{
+  property: property$35,
   value: "table-cell table-cell",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-column-group")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-column-group")), [{
+  property: property$35,
   value: "table-column-group table-column-group",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-column")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-column")), [{
+  property: property$35,
   value: "table-column table-column",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "table-caption")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-caption")), [{
+  property: property$35,
   value: "table-caption table-caption",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "ruby-base")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-base")), [{
+  property: property$35,
   value: "ruby-base ruby-base",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "ruby-text")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-text")), [{
+  property: property$35,
   value: "ruby-text ruby-text",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "ruby-base-container")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-base-container")), [{
+  property: property$35,
   value: "ruby-base-container ruby-base-container",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "ruby-text-container")), [{
-  property: property$34,
+}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-text-container")), [{
+  property: property$35,
   value: "ruby-text-container ruby-text-container",
   valid: false
 }]);
 
-var property$35 = "empty-cells";
-var emptyCells = [].concat(toConsumableArray(globalTests(property$35)), toConsumableArray(createCaseInsensitiveTest(property$35, "show")), [{
-  property: property$35,
+var property$36 = "empty-cells";
+var emptyCells = [].concat(toConsumableArray(globalTests(property$36)), toConsumableArray(createCaseInsensitiveTest(property$36, "show")), [{
+  property: property$36,
   value: "show show",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "hide")), [{
-  property: property$35,
+}], toConsumableArray(createCaseInsensitiveTest(property$36, "hide")), [{
+  property: property$36,
   value: "hide hide",
   valid: false
 }]);
@@ -3555,25 +3634,25 @@ var flexWrap = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"].reduce(functi
   return suite;
 }, []);
 
-var property$36 = "float";
-var float = [].concat(toConsumableArray(globalTests(property$36)), toConsumableArray(createCaseInsensitiveTest(property$36, "left")), [{
-  property: property$36,
+var property$37 = "float";
+var float = [].concat(toConsumableArray(globalTests(property$37)), toConsumableArray(createCaseInsensitiveTest(property$37, "left")), [{
+  property: property$37,
   value: "left left",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$36, "right")), [{
-  property: property$36,
+}], toConsumableArray(createCaseInsensitiveTest(property$37, "right")), [{
+  property: property$37,
   value: "right right",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$36, "none")), [{
-  property: property$36,
+}], toConsumableArray(createCaseInsensitiveTest(property$37, "none")), [{
+  property: property$37,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$36, "inline-start")), [{
-  property: property$36,
+}], toConsumableArray(createCaseInsensitiveTest(property$37, "inline-start")), [{
+  property: property$37,
   value: "inline-start inline-start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$36, "inline-end")), [{
-  property: property$36,
+}], toConsumableArray(createCaseInsensitiveTest(property$37, "inline-end")), [{
+  property: property$37,
   value: "inline-end inline-end",
   valid: false
 }]);
@@ -3624,379 +3703,379 @@ var fontLanguageOverride = ["-webkit-font-language-override", "-moz-font-languag
   return suite;
 }, []);
 
-var property$37 = "font-size";
-var fontSize = [].concat(toConsumableArray(globalTests(property$37)), [{
-  property: property$37,
+var property$38 = "font-size";
+var fontSize = [].concat(toConsumableArray(globalTests(property$38)), [{
+  property: property$38,
   value: "xx-small",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "x-small",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "small",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "medium",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "large",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "x-large",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "xx-large",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "XX-SMALL",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "X-SMALL",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "SMALL",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "MEDIUM",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "LARGE",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "X-LARGE",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "XX-LARGE",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "reallysmall",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "superduperlarge",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "xx-small xx-small",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "larger",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "smaller",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "LARGER",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "SMALLER",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "larger-really-larger",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "smaller-still",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "larger larger",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "0",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "16px",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "1pc",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "1%",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "88%",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "99.99%",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "+100%",
   valid: true
 }, {
-  property: property$37,
+  property: property$38,
   value: "16.px",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "px16",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "one rem",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "12.%",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "42.2.3.4.7.8.1.2%",
   valid: false
 }, {
-  property: property$37,
+  property: property$38,
   value: "0 0",
   valid: false
 }]);
 
-var property$38 = "font-size-adjust";
-var fontSizeAdjust = [].concat(toConsumableArray(globalTests(property$38)), toConsumableArray(createCaseInsensitiveTest(property$38, "none")), [{
-  property: property$38,
+var property$39 = "font-size-adjust";
+var fontSizeAdjust = [].concat(toConsumableArray(globalTests(property$39)), toConsumableArray(createCaseInsensitiveTest(property$39, "none")), [{
+  property: property$39,
   value: "none none",
   valid: false
 }, {
-  property: property$38,
+  property: property$39,
   value: "12",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "4.01",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "-456.8",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "0.0",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "+0.0",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "-0.0",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: ".60",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "10e3",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "-3.4e-2",
   valid: true
 }, {
-  property: property$38,
+  property: property$39,
   value: "12.",
   valid: false
 }, {
-  property: property$38,
+  property: property$39,
   value: "+-12.2",
   valid: false
 }, {
-  property: property$38,
+  property: property$39,
   value: "12.1.1",
   valid: false
 }, {
-  property: property$38,
+  property: property$39,
   value: "\"10px\"",
   valid: false
 }, {
-  property: property$38,
+  property: property$39,
   value: "12 12",
   valid: false
 }]);
 
-var property$39 = "font-stretch";
-var fontStretch = [].concat(toConsumableArray(globalTests(property$39)), toConsumableArray(createCaseInsensitiveTest(property$39, "normal")), [{
-  property: property$39,
+var property$40 = "font-stretch";
+var fontStretch = [].concat(toConsumableArray(globalTests(property$40)), toConsumableArray(createCaseInsensitiveTest(property$40, "normal")), [{
+  property: property$40,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "ultra-condensed")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "ultra-condensed")), [{
+  property: property$40,
   value: "ultra-condensed ultra-condensed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "extra-condensed")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "extra-condensed")), [{
+  property: property$40,
   value: "extra-condensed extra-condensed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "condensed")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "condensed")), [{
+  property: property$40,
   value: "condensed condensed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "semi-condensed")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "semi-condensed")), [{
+  property: property$40,
   value: "semi-condensed semi-condensed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "semi-expanded")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "semi-expanded")), [{
+  property: property$40,
   value: "semi-expanded semi-expanded",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "expanded")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "expanded")), [{
+  property: property$40,
   value: "expanded expanded",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "extra-expanded")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "extra-expanded")), [{
+  property: property$40,
   value: "extra-expanded extra-expanded",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$39, "ultra-expanded")), [{
-  property: property$39,
+}], toConsumableArray(createCaseInsensitiveTest(property$40, "ultra-expanded")), [{
+  property: property$40,
   value: "ultra-expanded ultra-expanded",
   valid: false
 }]);
 
-var property$40 = "font-style";
-var fontStyle = [].concat(toConsumableArray(globalTests(property$40)), toConsumableArray(createCaseInsensitiveTest(property$40, "normal")), [{
-  property: property$40,
+var property$41 = "font-style";
+var fontStyle = [].concat(toConsumableArray(globalTests(property$41)), toConsumableArray(createCaseInsensitiveTest(property$41, "normal")), [{
+  property: property$41,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "italic")), [{
-  property: property$40,
+}], toConsumableArray(createCaseInsensitiveTest(property$41, "italic")), [{
+  property: property$41,
   value: "italic italic",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "oblique")), [{
-  property: property$40,
+}], toConsumableArray(createCaseInsensitiveTest(property$41, "oblique")), [{
+  property: property$41,
   value: "oblique oblique",
   valid: false
 }]);
 
-var property$41 = "font-variant-caps";
-var fontVariantCaps = [].concat(toConsumableArray(globalTests(property$41)), toConsumableArray(createCaseInsensitiveTest(property$41, "normal")), [{
-  property: property$41,
+var property$42 = "font-variant-caps";
+var fontVariantCaps = [].concat(toConsumableArray(globalTests(property$42)), toConsumableArray(createCaseInsensitiveTest(property$42, "normal")), [{
+  property: property$42,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "small-caps")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "small-caps")), [{
+  property: property$42,
   value: "small-caps small-caps",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "all-small-caps")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "all-small-caps")), [{
+  property: property$42,
   value: "all-small-caps all-small-caps",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "petite-caps")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "petite-caps")), [{
+  property: property$42,
   value: "petite-caps petite-caps",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "all-petite-caps")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "all-petite-caps")), [{
+  property: property$42,
   value: "all-petite-caps all-petite-caps",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "unicase")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "unicase")), [{
+  property: property$42,
   value: "unicase unicase",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "titling-caps")), [{
-  property: property$41,
+}], toConsumableArray(createCaseInsensitiveTest(property$42, "titling-caps")), [{
+  property: property$42,
   value: "titling-caps titling-caps",
   valid: false
 }]);
 
-var property$42 = "font-variant-position";
-var fontVariantPosition = [].concat(toConsumableArray(globalTests(property$42)), toConsumableArray(createCaseInsensitiveTest(property$42, "normal")), [{
-  property: property$42,
+var property$43 = "font-variant-position";
+var fontVariantPosition = [].concat(toConsumableArray(globalTests(property$43)), toConsumableArray(createCaseInsensitiveTest(property$43, "normal")), [{
+  property: property$43,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "sub")), [{
-  property: property$42,
+}], toConsumableArray(createCaseInsensitiveTest(property$43, "sub")), [{
+  property: property$43,
   value: "sub sub",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "super")), [{
-  property: property$42,
+}], toConsumableArray(createCaseInsensitiveTest(property$43, "super")), [{
+  property: property$43,
   value: "super super",
   valid: false
 }]);
 
-var property$43 = "font-weight";
-var fontWeight = [].concat(toConsumableArray(globalTests(property$43)), toConsumableArray(createCaseInsensitiveTest(property$43, "normal")), [{
-  property: property$43,
+var property$44 = "font-weight";
+var fontWeight = [].concat(toConsumableArray(globalTests(property$44)), toConsumableArray(createCaseInsensitiveTest(property$44, "normal")), [{
+  property: property$44,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "bold")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "bold")), [{
+  property: property$44,
   value: "bold bold",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "bolder")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "bolder")), [{
+  property: property$44,
   value: "bolder bolder",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "lighter")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "lighter")), [{
+  property: property$44,
   value: "lighter lighter",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "100")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "100")), [{
+  property: property$44,
   value: "100 100",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "200")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "200")), [{
+  property: property$44,
   value: "200 200",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "300")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "300")), [{
+  property: property$44,
   value: "300 300",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "400")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "400")), [{
+  property: property$44,
   value: "400 400",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "500")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "500")), [{
+  property: property$44,
   value: "500 500",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "600")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "600")), [{
+  property: property$44,
   value: "600 600",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "700")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "700")), [{
+  property: property$44,
   value: "700 700",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "800")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "800")), [{
+  property: property$44,
   value: "800 800",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "900")), [{
-  property: property$43,
+}], toConsumableArray(createCaseInsensitiveTest(property$44, "900")), [{
+  property: property$44,
   value: "900 900",
   valid: false
 }]);
@@ -4066,29 +4145,29 @@ var gridColumnGap = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-
   return suite;
 }, []);
 
-var property$44 = "grid-template-areas";
-var gridTemplateAreas = [].concat(toConsumableArray(globalTests(property$44)), toConsumableArray(createCaseInsensitiveTest(property$44, "none")), [{
-  property: property$44,
+var property$45 = "grid-template-areas";
+var gridTemplateAreas = [].concat(toConsumableArray(globalTests(property$45)), toConsumableArray(createCaseInsensitiveTest(property$45, "none")), [{
+  property: property$45,
   value: "none none",
   valid: false
 }, {
-  property: property$44,
+  property: property$45,
   value: "\"foo\"",
   valid: true
 }, {
-  property: property$44,
+  property: property$45,
   value: "'bar'",
   valid: true
 }, {
-  property: property$44,
+  property: property$45,
   value: "baz",
   valid: false
 }, {
-  property: property$44,
+  property: property$45,
   value: "`quux`",
   valid: false
 }, {
-  property: property$44,
+  property: property$45,
   value: "\"foo\" \"foo\"",
   valid: false
 }]);
@@ -4110,31 +4189,8 @@ var hyphens = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"].redu
   return suite;
 }, []);
 
-var property$45 = "image-rendering";
-var imageRendering = [].concat(toConsumableArray(globalTests(property$45)), toConsumableArray(createCaseInsensitiveTest(property$45, "auto")), [{
-  property: property$45,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$45, "crisp-edges")), [{
-  property: property$45,
-  value: "crisp-edges crisp-edges",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$45, "pixelated")), [{
-  property: property$45,
-  value: "pixelated pixelated",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$45, "-moz-crisp-edges")), [{
-  property: property$45,
-  value: "-moz-crisp-edges -moz-crisp-edges",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$45, "-o-pixelated")), [{
-  property: property$45,
-  value: "-o-pixelated -o-pixelated",
-  valid: false
-}]);
-
-var property$46 = "-ms-interpolation-mode";
-var msInterpolationMode = [].concat(toConsumableArray(globalTests(property$46)), toConsumableArray(createCaseInsensitiveTest(property$46, "auto")), [{
+var property$46 = "image-rendering";
+var imageRendering = [].concat(toConsumableArray(globalTests(property$46)), toConsumableArray(createCaseInsensitiveTest(property$46, "auto")), [{
   property: property$46,
   value: "auto auto",
   valid: false
@@ -4146,61 +4202,88 @@ var msInterpolationMode = [].concat(toConsumableArray(globalTests(property$46)),
   property: property$46,
   value: "pixelated pixelated",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "nearest-neighbor")), [{
+}], toConsumableArray(createCaseInsensitiveTest(property$46, "-webkit-optimize-contrast")), [{
   property: property$46,
+  value: "-webkit-optimize-contrast -webkit-optimize-contrast",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$46, "-moz-crisp-edges")), [{
+  property: property$46,
+  value: "-moz-crisp-edges -moz-crisp-edges",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$46, "-o-pixelated")), [{
+  property: property$46,
+  value: "-o-pixelated -o-pixelated",
+  valid: false
+}]);
+
+var property$47 = "-ms-interpolation-mode";
+var msInterpolationMode = [].concat(toConsumableArray(globalTests(property$47)), toConsumableArray(createCaseInsensitiveTest(property$47, "auto")), [{
+  property: property$47,
+  value: "auto auto",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$47, "crisp-edges")), [{
+  property: property$47,
+  value: "crisp-edges crisp-edges",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$47, "pixelated")), [{
+  property: property$47,
+  value: "pixelated pixelated",
+  valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$47, "nearest-neighbor")), [{
+  property: property$47,
   value: "nearest-neighbor nearest-neighbor",
   valid: false
 }]);
 
-var property$47 = "ime-mode";
-var imeMode = [].concat(toConsumableArray(globalTests(property$47)), toConsumableArray(createCaseInsensitiveTest(property$47, "auto")), [{
-  property: property$47,
+var property$48 = "ime-mode";
+var imeMode = [].concat(toConsumableArray(globalTests(property$48)), toConsumableArray(createCaseInsensitiveTest(property$48, "auto")), [{
+  property: property$48,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "normal")), [{
-  property: property$47,
+}], toConsumableArray(createCaseInsensitiveTest(property$48, "normal")), [{
+  property: property$48,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "active")), [{
-  property: property$47,
+}], toConsumableArray(createCaseInsensitiveTest(property$48, "active")), [{
+  property: property$48,
   value: "active active",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "inactive")), [{
-  property: property$47,
+}], toConsumableArray(createCaseInsensitiveTest(property$48, "inactive")), [{
+  property: property$48,
   value: "inactive inactive",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "disabled")), [{
-  property: property$47,
+}], toConsumableArray(createCaseInsensitiveTest(property$48, "disabled")), [{
+  property: property$48,
   value: "disabled disabled",
   valid: false
 }]);
 
-var property$48 = "initial-letter-align";
-var initialLetterAlign = [].concat(toConsumableArray(globalTests(property$48)), toConsumableArray(createCaseInsensitiveTest(property$48, "auto")), [{
-  property: property$48,
+var property$49 = "initial-letter-align";
+var initialLetterAlign = [].concat(toConsumableArray(globalTests(property$49)), toConsumableArray(createCaseInsensitiveTest(property$49, "auto")), [{
+  property: property$49,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "alphabetic")), [{
-  property: property$48,
+}], toConsumableArray(createCaseInsensitiveTest(property$49, "alphabetic")), [{
+  property: property$49,
   value: "alphabetic alphabetic",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "hanging")), [{
-  property: property$48,
+}], toConsumableArray(createCaseInsensitiveTest(property$49, "hanging")), [{
+  property: property$49,
   value: "hanging hanging",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "ideographic")), [{
-  property: property$48,
+}], toConsumableArray(createCaseInsensitiveTest(property$49, "ideographic")), [{
+  property: property$49,
   value: "ideographic ideographic",
   valid: false
 }]);
 
-var property$49 = "isolation";
-var isolation = [].concat(toConsumableArray(globalTests(property$49)), toConsumableArray(createCaseInsensitiveTest(property$49, "auto")), [{
-  property: property$49,
+var property$50 = "isolation";
+var isolation = [].concat(toConsumableArray(globalTests(property$50)), toConsumableArray(createCaseInsensitiveTest(property$50, "auto")), [{
+  property: property$50,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$49, "isolate")), [{
-  property: property$49,
+}], toConsumableArray(createCaseInsensitiveTest(property$50, "isolate")), [{
+  property: property$50,
   value: "isolate isolate",
   valid: false
 }]);
@@ -4267,362 +4350,362 @@ var justifyContent = ["-webkit-justify-content", "justify-content"].reduce(funct
   return suite;
 }, []);
 
-var property$50 = "-ms-flex-pack";
-var msFlexPack = [].concat(toConsumableArray(globalTests(property$50)), toConsumableArray(createCaseInsensitiveTest(property$50, "flex-start")), [{
-  property: property$50,
+var property$51 = "-ms-flex-pack";
+var msFlexPack = [].concat(toConsumableArray(globalTests(property$51)), toConsumableArray(createCaseInsensitiveTest(property$51, "flex-start")), [{
+  property: property$51,
   value: "flex-start flex-start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "flex-end")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "flex-end")), [{
+  property: property$51,
   value: "flex-end flex-end",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "center")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "center")), [{
+  property: property$51,
   value: "center center",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "space-between")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "space-between")), [{
+  property: property$51,
   value: "space-between space-between",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "space-around")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "space-around")), [{
+  property: property$51,
   value: "space-around space-around",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "start")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "start")), [{
+  property: property$51,
   value: "start start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "end")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "end")), [{
+  property: property$51,
   value: "end end",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "justify")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "justify")), [{
+  property: property$51,
   value: "justify justify",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "distribute")), [{
-  property: property$50,
+}], toConsumableArray(createCaseInsensitiveTest(property$51, "distribute")), [{
+  property: property$51,
   value: "distribute distribute",
   valid: false
 }]);
 
-var property$51 = "letter-spacing";
-var letterSpacing = [].concat(toConsumableArray(globalTests(property$51)), toConsumableArray(createCaseInsensitiveTest(property$51, "normal")), [{
-  property: property$51,
+var property$52 = "letter-spacing";
+var letterSpacing = [].concat(toConsumableArray(globalTests(property$52)), toConsumableArray(createCaseInsensitiveTest(property$52, "normal")), [{
+  property: property$52,
   value: "normal normal",
   valid: false
 }, {
-  property: property$51,
+  property: property$52,
   value: "0",
   valid: true
 }, {
-  property: property$51,
+  property: property$52,
   value: "16px",
   valid: true
 }, {
-  property: property$51,
+  property: property$52,
   value: "1pc",
   valid: true
 }, {
-  property: property$51,
+  property: property$52,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$51,
+  property: property$52,
   value: "16.px",
   valid: false
 }, {
-  property: property$51,
+  property: property$52,
   value: "px16",
   valid: false
 }, {
-  property: property$51,
+  property: property$52,
   value: "one rem",
   valid: false
 }, {
-  property: property$51,
+  property: property$52,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$51,
+  property: property$52,
   value: "0 0",
   valid: false
 }]);
 
-var property$52 = "line-break";
-var lineBreak = [].concat(toConsumableArray(globalTests(property$52)), toConsumableArray(createCaseInsensitiveTest(property$52, "auto")), [{
-  property: property$52,
+var property$53 = "line-break";
+var lineBreak = [].concat(toConsumableArray(globalTests(property$53)), toConsumableArray(createCaseInsensitiveTest(property$53, "auto")), [{
+  property: property$53,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$52, "loose")), [{
-  property: property$52,
+}], toConsumableArray(createCaseInsensitiveTest(property$53, "loose")), [{
+  property: property$53,
   value: "loose loose",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$52, "normal")), [{
-  property: property$52,
+}], toConsumableArray(createCaseInsensitiveTest(property$53, "normal")), [{
+  property: property$53,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$52, "strict")), [{
-  property: property$52,
+}], toConsumableArray(createCaseInsensitiveTest(property$53, "strict")), [{
+  property: property$53,
   value: "strict strict",
   valid: false
 }]);
 
-var property$53 = "line-height";
-var lineHeight = [].concat(toConsumableArray(globalTests(property$53)), toConsumableArray(createCaseInsensitiveTest(property$53, "normal")), [{
-  property: property$53,
+var property$54 = "line-height";
+var lineHeight = [].concat(toConsumableArray(globalTests(property$54)), toConsumableArray(createCaseInsensitiveTest(property$54, "normal")), [{
+  property: property$54,
   value: "normal normal",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "12",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "4.01",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "-456.8",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "0.0",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "+0.0",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "-0.0",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: ".60",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "10e3",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "-3.4e-2",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "12.",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "+-12.2",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "12.1.1",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "\"10px\"",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "12 12",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "0",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "16px",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "1pc",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "16.px",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "px16",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "one rem",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "0 0",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "1%",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "88%",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "99.99%",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "+100%",
   valid: true
 }, {
-  property: property$53,
+  property: property$54,
   value: "12.%",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "42.2.3.4.7.8.1.2%",
   valid: false
 }, {
-  property: property$53,
+  property: property$54,
   value: "1% 1%",
   valid: false
 }]);
 
-var property$54 = "list-style-position";
-var listStylePosition = [].concat(toConsumableArray(globalTests(property$54)), toConsumableArray(createCaseInsensitiveTest(property$54, "inside")), [{
-  property: property$54,
+var property$55 = "list-style-position";
+var listStylePosition = [].concat(toConsumableArray(globalTests(property$55)), toConsumableArray(createCaseInsensitiveTest(property$55, "inside")), [{
+  property: property$55,
   value: "inside inside",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$54, "outside")), [{
-  property: property$54,
+}], toConsumableArray(createCaseInsensitiveTest(property$55, "outside")), [{
+  property: property$55,
   value: "outside outside",
   valid: false
 }]);
 
-var property$55 = "mask-composite";
-var maskComposite = [].concat(toConsumableArray(globalTests(property$55)), [{
-  property: property$55,
+var property$56 = "mask-composite";
+var maskComposite = [].concat(toConsumableArray(globalTests(property$56)), [{
+  property: property$56,
   value: "add",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "subtract",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "intersect",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "exclude",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "ADD",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "SUBTRACT",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "INTERSECT",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "EXCLUDE",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "add-subtract",
   valid: false
 }, {
-  property: property$55,
+  property: property$56,
   value: "add add",
   valid: false
 }, {
-  property: property$55,
+  property: property$56,
   value: "add, add",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "add, add,",
   valid: false
 }, {
-  property: property$55,
+  property: property$56,
   value: "var(--foo), var(--bar)",
   valid: true
 }, {
-  property: property$55,
+  property: property$56,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
 
-var property$56 = "mask-mode";
-var maskMode = [].concat(toConsumableArray(globalTests(property$56)), [{
-  property: property$56,
+var property$57 = "mask-mode";
+var maskMode = [].concat(toConsumableArray(globalTests(property$57)), [{
+  property: property$57,
   value: "alpha",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "luminance",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "match-source",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "ALPHA",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "LUMINANCE",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "MATCH-SOURCE",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "jim-carrey",
   valid: false
 }, {
-  property: property$56,
+  property: property$57,
   value: "alpha alpha",
   valid: false
 }, {
-  property: property$56,
+  property: property$57,
   value: "alpha, alpha",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "alpha, alpha,",
   valid: false
 }, {
-  property: property$56,
+  property: property$57,
   value: "var(--foo), var(--bar)",
   valid: true
 }, {
-  property: property$56,
+  property: property$57,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
 
-var property$57 = "mask-type";
-var maskType = [].concat(toConsumableArray(globalTests(property$57)), toConsumableArray(createCaseInsensitiveTest(property$57, "luminance")), [{
-  property: property$57,
+var property$58 = "mask-type";
+var maskType = [].concat(toConsumableArray(globalTests(property$58)), toConsumableArray(createCaseInsensitiveTest(property$58, "luminance")), [{
+  property: property$58,
   value: "luminance luminance",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$57, "alpha")), [{
-  property: property$57,
+}], toConsumableArray(createCaseInsensitiveTest(property$58, "alpha")), [{
+  property: property$58,
   value: "alpha alpha",
   valid: false
 }]);
@@ -4869,145 +4952,145 @@ var minBlockSize = ["min-block-size", "min-height", "min-inline-size", "min-widt
   return suite;
 }, []);
 
-var property$58 = "mix-blend-mode";
-var mixBlendMode = [].concat(toConsumableArray(globalTests(property$58)), [{
-  property: property$58,
+var property$59 = "mix-blend-mode";
+var mixBlendMode = [].concat(toConsumableArray(globalTests(property$59)), [{
+  property: property$59,
   value: "normal",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "multiply",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "screen",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "overlay",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "darken",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "lighten",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "color-dodge",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "color-burn",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "hard-light",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "soft-light",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "difference",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "exclusion",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "hue",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "saturation",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "color",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "luminosity",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "NORMAL",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "MULTIPLY",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "SCREEN",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "OVERLAY",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "DARKEN",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "LIGHTEN",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "COLOR-DODGE",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "COLOR-BURN",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "HARD-LIGHT",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "SOFT-LIGHT",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "DIFFERENCE",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "EXCLUSION",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "HUE",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "SATURATION",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "COLOR",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "LUMINOSITY",
   valid: true
 }, {
-  property: property$58,
+  property: property$59,
   value: "superblend",
   valid: false
 }, {
-  property: property$58,
+  property: property$59,
   value: "blend-man",
   valid: false
 }, {
-  property: property$58,
+  property: property$59,
   value: "normal normal",
   valid: false
 }]);
@@ -5037,244 +5120,244 @@ var objectFit = ["-o-object-fit", "object-fit"].reduce(function (suite, property
   return suite;
 }, []);
 
-var property$59 = "outline-color";
-var outlineColor = [].concat(toConsumableArray(globalTests(property$59)), [{
-  property: property$59,
+var property$60 = "outline-color";
+var outlineColor = [].concat(toConsumableArray(globalTests(property$60)), [{
+  property: property$60,
   value: "RGB(1, 2, 3)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgb(10%, 20%, 30%)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgb(400, 400, 400)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgbA(1, 2, 3, .5)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgba(10%, 20%, 30%, 0.5)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgba(400, 400, 400, 1)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsl(90, 50%, 50%)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "HSL(90, 50%, 50%)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsla(90, 50%, 50%, .5)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsla(90, 50%, 50%, 0.5)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "hslA(90, 50%, 50%, 0)",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "#000",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "#000F",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "#000000",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "#000000FF",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "RED",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "black",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "currentcolor",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "CURRENTCOLOR",
   valid: true
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgb(1, 2, 3, 4, 5)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgb(1:2:3)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgb(a, b, c)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgba(10%, 20%, 30%, transparent)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgba(400: 400)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "rgba(400, 400, 400, 50%)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsl(50%, 50%, 50%)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsl(90, 50, 50)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsla(90, 50%, 50%)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsla(90, 50%, 50%, 50%)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "hsla(90%, 50%, 50%, 0.5)",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "#ee",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "#eeeeeee",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "#ggg",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "blacklight",
   valid: false
 }, {
-  property: property$59,
+  property: property$60,
   value: "RGB(1, 2, 3) RGB(1, 2, 3)",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$59, "invert")), [{
-  property: property$59,
+}], toConsumableArray(createCaseInsensitiveTest(property$60, "invert")), [{
+  property: property$60,
   value: "invert invert",
   valid: false
 }]);
 
-var property$60 = "outline-style";
-var outlineStyle = [].concat(toConsumableArray(globalTests(property$60)), toConsumableArray(createCaseInsensitiveTest(property$60, "auto")), [{
-  property: property$60,
+var property$61 = "outline-style";
+var outlineStyle = [].concat(toConsumableArray(globalTests(property$61)), toConsumableArray(createCaseInsensitiveTest(property$61, "auto")), [{
+  property: property$61,
   value: "auto auto",
   valid: false
 }, {
-  property: property$60,
+  property: property$61,
   value: "none",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "hidden",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "dotted",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "dashed",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "solid",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "double",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "groove",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "ridge",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "inset",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "outset",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "NONE",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "HIDDEN",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "DOTTED",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "DASHED",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "SOLID",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "DOUBLE",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "GROOVE",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "RIDGE",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "INSET",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "OUTSET",
   valid: true
 }, {
-  property: property$60,
+  property: property$61,
   value: "groovy",
   valid: false
 }, {
-  property: property$60,
+  property: property$61,
   value: "none none",
   valid: false
 }]);
@@ -5300,13 +5383,13 @@ var overflow = ["overflow", "overflow-x", "overflow-y"].reduce(function (suite, 
   return suite;
 }, []);
 
-var property$61 = "overflow-clip-box";
-var overflowClipBox = [].concat(toConsumableArray(globalTests(property$61)), toConsumableArray(createCaseInsensitiveTest(property$61, "padding-box")), [{
-  property: property$61,
+var property$62 = "overflow-clip-box";
+var overflowClipBox = [].concat(toConsumableArray(globalTests(property$62)), toConsumableArray(createCaseInsensitiveTest(property$62, "padding-box")), [{
+  property: property$62,
   value: "padding-box padding-box",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$61, "content-box")), [{
-  property: property$61,
+}], toConsumableArray(createCaseInsensitiveTest(property$62, "content-box")), [{
+  property: property$62,
   value: "content-box content-box",
   valid: false
 }]);
@@ -5393,13 +5476,13 @@ var paddingBlockEnd = ["padding-block-end", "padding-block-start", "padding-bott
   return suite;
 }, []);
 
-var property$62 = "page-break-inside";
-var pageBreakInside = [].concat(toConsumableArray(globalTests(property$62)), toConsumableArray(createCaseInsensitiveTest(property$62, "auto")), [{
-  property: property$62,
+var property$63 = "page-break-inside";
+var pageBreakInside = [].concat(toConsumableArray(globalTests(property$63)), toConsumableArray(createCaseInsensitiveTest(property$63, "auto")), [{
+  property: property$63,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$62, "avoid")), [{
-  property: property$62,
+}], toConsumableArray(createCaseInsensitiveTest(property$63, "avoid")), [{
+  property: property$63,
   value: "avoid avoid",
   valid: false
 }]);
@@ -5449,155 +5532,155 @@ var perspective = ["-webkit-perspective", "-moz-perspective", "perspective"].red
   return suite;
 }, []);
 
-var property$63 = "pointer-events";
-var pointerEvents = [].concat(toConsumableArray(globalTests(property$63)), toConsumableArray(createCaseInsensitiveTest(property$63, "auto")), [{
-  property: property$63,
+var property$64 = "pointer-events";
+var pointerEvents = [].concat(toConsumableArray(globalTests(property$64)), toConsumableArray(createCaseInsensitiveTest(property$64, "auto")), [{
+  property: property$64,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "none")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "none")), [{
+  property: property$64,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "visiblePainted")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "visiblePainted")), [{
+  property: property$64,
   value: "visiblePainted visiblePainted",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "visibleFill")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "visibleFill")), [{
+  property: property$64,
   value: "visibleFill visibleFill",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "visibleStroke")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "visibleStroke")), [{
+  property: property$64,
   value: "visibleStroke visibleStroke",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "visible")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "visible")), [{
+  property: property$64,
   value: "visible visible",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "painted")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "painted")), [{
+  property: property$64,
   value: "painted painted",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "fill")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "fill")), [{
+  property: property$64,
   value: "fill fill",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "stroke")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "stroke")), [{
+  property: property$64,
   value: "stroke stroke",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "all")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "all")), [{
+  property: property$64,
   value: "all all",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "inherit")), [{
-  property: property$63,
+}], toConsumableArray(createCaseInsensitiveTest(property$64, "inherit")), [{
+  property: property$64,
   value: "inherit inherit",
   valid: false
 }]);
 
-var property$64 = "position";
-var position = [].concat(toConsumableArray(globalTests(property$64)), toConsumableArray(createCaseInsensitiveTest(property$64, "static")), [{
-  property: property$64,
+var property$65 = "position";
+var position = [].concat(toConsumableArray(globalTests(property$65)), toConsumableArray(createCaseInsensitiveTest(property$65, "static")), [{
+  property: property$65,
   value: "static static",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "relative")), [{
-  property: property$64,
+}], toConsumableArray(createCaseInsensitiveTest(property$65, "relative")), [{
+  property: property$65,
   value: "relative relative",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "absolute")), [{
-  property: property$64,
+}], toConsumableArray(createCaseInsensitiveTest(property$65, "absolute")), [{
+  property: property$65,
   value: "absolute absolute",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "sticky")), [{
-  property: property$64,
+}], toConsumableArray(createCaseInsensitiveTest(property$65, "sticky")), [{
+  property: property$65,
   value: "sticky sticky",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "fixed")), [{
-  property: property$64,
+}], toConsumableArray(createCaseInsensitiveTest(property$65, "fixed")), [{
+  property: property$65,
   value: "fixed fixed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "-webkit-sticky")), [{
-  property: property$64,
+}], toConsumableArray(createCaseInsensitiveTest(property$65, "-webkit-sticky")), [{
+  property: property$65,
   value: "-webkit-sticky -webkit-sticky",
   valid: false
 }]);
 
-var property$65 = "resize";
-var resize = [].concat(toConsumableArray(globalTests(property$65)), toConsumableArray(createCaseInsensitiveTest(property$65, "none")), [{
-  property: property$65,
+var property$66 = "resize";
+var resize = [].concat(toConsumableArray(globalTests(property$66)), toConsumableArray(createCaseInsensitiveTest(property$66, "none")), [{
+  property: property$66,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "both")), [{
-  property: property$65,
+}], toConsumableArray(createCaseInsensitiveTest(property$66, "both")), [{
+  property: property$66,
   value: "both both",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "horizontal")), [{
-  property: property$65,
+}], toConsumableArray(createCaseInsensitiveTest(property$66, "horizontal")), [{
+  property: property$66,
   value: "horizontal horizontal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "vertical")), [{
-  property: property$65,
+}], toConsumableArray(createCaseInsensitiveTest(property$66, "vertical")), [{
+  property: property$66,
   value: "vertical vertical",
   valid: false
 }]);
 
-var property$66 = "ruby-align";
-var rubyAlign = [].concat(toConsumableArray(globalTests(property$66)), toConsumableArray(createCaseInsensitiveTest(property$66, "start")), [{
-  property: property$66,
+var property$67 = "ruby-align";
+var rubyAlign = [].concat(toConsumableArray(globalTests(property$67)), toConsumableArray(createCaseInsensitiveTest(property$67, "start")), [{
+  property: property$67,
   value: "start start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "center")), [{
-  property: property$66,
+}], toConsumableArray(createCaseInsensitiveTest(property$67, "center")), [{
+  property: property$67,
   value: "center center",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "space-between")), [{
-  property: property$66,
+}], toConsumableArray(createCaseInsensitiveTest(property$67, "space-between")), [{
+  property: property$67,
   value: "space-between space-between",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "space-around")), [{
-  property: property$66,
+}], toConsumableArray(createCaseInsensitiveTest(property$67, "space-around")), [{
+  property: property$67,
   value: "space-around space-around",
   valid: false
 }]);
 
-var property$67 = "ruby-merge";
-var rubyMerge = [].concat(toConsumableArray(globalTests(property$67)), toConsumableArray(createCaseInsensitiveTest(property$67, "separate")), [{
-  property: property$67,
+var property$68 = "ruby-merge";
+var rubyMerge = [].concat(toConsumableArray(globalTests(property$68)), toConsumableArray(createCaseInsensitiveTest(property$68, "separate")), [{
+  property: property$68,
   value: "separate separate",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$67, "collapse")), [{
-  property: property$67,
+}], toConsumableArray(createCaseInsensitiveTest(property$68, "collapse")), [{
+  property: property$68,
   value: "collapse collapse",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$67, "auto")), [{
-  property: property$67,
+}], toConsumableArray(createCaseInsensitiveTest(property$68, "auto")), [{
+  property: property$68,
   value: "auto auto",
   valid: false
 }]);
 
-var property$68 = "ruby-position";
-var rubyPosition = [].concat(toConsumableArray(globalTests(property$68)), toConsumableArray(createCaseInsensitiveTest(property$68, "over")), [{
-  property: property$68,
+var property$69 = "ruby-position";
+var rubyPosition = [].concat(toConsumableArray(globalTests(property$69)), toConsumableArray(createCaseInsensitiveTest(property$69, "over")), [{
+  property: property$69,
   value: "over over",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$68, "under")), [{
-  property: property$68,
+}], toConsumableArray(createCaseInsensitiveTest(property$69, "under")), [{
+  property: property$69,
   value: "under under",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$68, "inter-character")), [{
-  property: property$68,
+}], toConsumableArray(createCaseInsensitiveTest(property$69, "inter-character")), [{
+  property: property$69,
   value: "inter-character inter-character",
   valid: false
 }]);
 
-var property$69 = "scroll-behavior";
-var scrollBehavior = [].concat(toConsumableArray(globalTests(property$69)), toConsumableArray(createCaseInsensitiveTest(property$69, "auto")), [{
-  property: property$69,
+var property$70 = "scroll-behavior";
+var scrollBehavior = [].concat(toConsumableArray(globalTests(property$70)), toConsumableArray(createCaseInsensitiveTest(property$70, "auto")), [{
+  property: property$70,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$69, "smooth")), [{
-  property: property$69,
+}], toConsumableArray(createCaseInsensitiveTest(property$70, "smooth")), [{
+  property: property$70,
   value: "smooth smooth",
   valid: false
 }]);
@@ -5619,135 +5702,135 @@ var scrollSnapType = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scrol
   return suite;
 }, []);
 
-var property$70 = "tab-size";
-var tabSize = [].concat(toConsumableArray(globalTests(property$70)), [{
-  property: property$70,
+var property$71 = "tab-size";
+var tabSize = [].concat(toConsumableArray(globalTests(property$71)), [{
+  property: property$71,
   value: "10",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "+10",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "-10",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "0",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "+0",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "-0",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "12.0",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "+---12",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "3e4",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "\\4E94",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "_5",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "\"100\"",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "10 10",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "0",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "16px",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "1pc",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$70,
+  property: property$71,
   value: "16.px",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "px16",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "one rem",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$70,
+  property: property$71,
   value: "0 0",
   valid: false
 }]);
 
-var property$71 = "table-layout";
-var tableLayout = [].concat(toConsumableArray(globalTests(property$71)), toConsumableArray(createCaseInsensitiveTest(property$71, "auto")), [{
-  property: property$71,
+var property$72 = "table-layout";
+var tableLayout = [].concat(toConsumableArray(globalTests(property$72)), toConsumableArray(createCaseInsensitiveTest(property$72, "auto")), [{
+  property: property$72,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$71, "fixed")), [{
-  property: property$71,
+}], toConsumableArray(createCaseInsensitiveTest(property$72, "fixed")), [{
+  property: property$72,
   value: "fixed fixed",
   valid: false
 }]);
 
-var property$72 = "text-align";
-var textAlign = [].concat(toConsumableArray(globalTests(property$72)), toConsumableArray(createCaseInsensitiveTest(property$72, "start")), [{
-  property: property$72,
+var property$73 = "text-align";
+var textAlign = [].concat(toConsumableArray(globalTests(property$73)), toConsumableArray(createCaseInsensitiveTest(property$73, "start")), [{
+  property: property$73,
   value: "start start",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "end")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "end")), [{
+  property: property$73,
   value: "end end",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "left")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "left")), [{
+  property: property$73,
   value: "left left",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "right")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "right")), [{
+  property: property$73,
   value: "right right",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "center")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "center")), [{
+  property: property$73,
   value: "center center",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "justify")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "justify")), [{
+  property: property$73,
   value: "justify justify",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "match-parent")), [{
-  property: property$72,
+}], toConsumableArray(createCaseInsensitiveTest(property$73, "match-parent")), [{
+  property: property$73,
   value: "match-parent match-parent",
   valid: false
 }]);
@@ -5810,36 +5893,36 @@ var textDecorationStyle = ["-webkit-text-decoration-style", "-moz-text-decoratio
   return suite;
 }, []);
 
-var property$73 = "text-orientation";
-var textOrientation = [].concat(toConsumableArray(globalTests(property$73)), toConsumableArray(createCaseInsensitiveTest(property$73, "mixed")), [{
-  property: property$73,
+var property$74 = "text-orientation";
+var textOrientation = [].concat(toConsumableArray(globalTests(property$74)), toConsumableArray(createCaseInsensitiveTest(property$74, "mixed")), [{
+  property: property$74,
   value: "mixed mixed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "upright")), [{
-  property: property$73,
+}], toConsumableArray(createCaseInsensitiveTest(property$74, "upright")), [{
+  property: property$74,
   value: "upright upright",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "sideways")), [{
-  property: property$73,
+}], toConsumableArray(createCaseInsensitiveTest(property$74, "sideways")), [{
+  property: property$74,
   value: "sideways sideways",
   valid: false
 }]);
 
-var property$74 = "text-rendering";
-var textRendering = [].concat(toConsumableArray(globalTests(property$74)), toConsumableArray(createCaseInsensitiveTest(property$74, "auto")), [{
-  property: property$74,
+var property$75 = "text-rendering";
+var textRendering = [].concat(toConsumableArray(globalTests(property$75)), toConsumableArray(createCaseInsensitiveTest(property$75, "auto")), [{
+  property: property$75,
   value: "auto auto",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$74, "optimizeSpeed")), [{
-  property: property$74,
+}], toConsumableArray(createCaseInsensitiveTest(property$75, "optimizeSpeed")), [{
+  property: property$75,
   value: "optimizeSpeed optimizeSpeed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$74, "optimizeLegibility")), [{
-  property: property$74,
+}], toConsumableArray(createCaseInsensitiveTest(property$75, "optimizeLegibility")), [{
+  property: property$75,
   value: "optimizeLegibility optimizeLegibility",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$74, "geometricPrecision")), [{
-  property: property$74,
+}], toConsumableArray(createCaseInsensitiveTest(property$75, "geometricPrecision")), [{
+  property: property$75,
   value: "geometricPrecision geometricPrecision",
   valid: false
 }]);
@@ -5885,40 +5968,40 @@ var textSizeAdjust = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-
   return suite;
 }, []);
 
-var property$75 = "text-transform";
-var textTransform = [].concat(toConsumableArray(globalTests(property$75)), toConsumableArray(createCaseInsensitiveTest(property$75, "none")), [{
-  property: property$75,
+var property$76 = "text-transform";
+var textTransform = [].concat(toConsumableArray(globalTests(property$76)), toConsumableArray(createCaseInsensitiveTest(property$76, "none")), [{
+  property: property$76,
   value: "none none",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "capitalize")), [{
-  property: property$75,
+}], toConsumableArray(createCaseInsensitiveTest(property$76, "capitalize")), [{
+  property: property$76,
   value: "capitalize capitalize",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "uppercase")), [{
-  property: property$75,
+}], toConsumableArray(createCaseInsensitiveTest(property$76, "uppercase")), [{
+  property: property$76,
   value: "uppercase uppercase",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "lowercase")), [{
-  property: property$75,
+}], toConsumableArray(createCaseInsensitiveTest(property$76, "lowercase")), [{
+  property: property$76,
   value: "lowercase lowercase",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "full-width")), [{
-  property: property$75,
+}], toConsumableArray(createCaseInsensitiveTest(property$76, "full-width")), [{
+  property: property$76,
   value: "full-width full-width",
   valid: false
 }]);
 
-var property$76 = "transform-box";
-var transformBox = [].concat(toConsumableArray(globalTests(property$76)), toConsumableArray(createCaseInsensitiveTest(property$76, "border-box")), [{
-  property: property$76,
+var property$77 = "transform-box";
+var transformBox = [].concat(toConsumableArray(globalTests(property$77)), toConsumableArray(createCaseInsensitiveTest(property$77, "border-box")), [{
+  property: property$77,
   value: "border-box border-box",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "fill-box")), [{
-  property: property$76,
+}], toConsumableArray(createCaseInsensitiveTest(property$77, "fill-box")), [{
+  property: property$77,
   value: "fill-box fill-box",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "view-box")), [{
-  property: property$76,
+}], toConsumableArray(createCaseInsensitiveTest(property$77, "view-box")), [{
+  property: property$77,
   value: "view-box view-box",
   valid: false
 }]);
@@ -5936,29 +6019,29 @@ var transformStyle = ["-webkit-transform-style", "-moz-transform-style", "transf
   return suite;
 }, []);
 
-var property$77 = "unicode-bidi";
-var unicodeBidi = [].concat(toConsumableArray(globalTests(property$77)), toConsumableArray(createCaseInsensitiveTest(property$77, "normal")), [{
-  property: property$77,
+var property$78 = "unicode-bidi";
+var unicodeBidi = [].concat(toConsumableArray(globalTests(property$78)), toConsumableArray(createCaseInsensitiveTest(property$78, "normal")), [{
+  property: property$78,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "embed")), [{
-  property: property$77,
+}], toConsumableArray(createCaseInsensitiveTest(property$78, "embed")), [{
+  property: property$78,
   value: "embed embed",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "isolate")), [{
-  property: property$77,
+}], toConsumableArray(createCaseInsensitiveTest(property$78, "isolate")), [{
+  property: property$78,
   value: "isolate isolate",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "bidi-override")), [{
-  property: property$77,
+}], toConsumableArray(createCaseInsensitiveTest(property$78, "bidi-override")), [{
+  property: property$78,
   value: "bidi-override bidi-override",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "isolate-override")), [{
-  property: property$77,
+}], toConsumableArray(createCaseInsensitiveTest(property$78, "isolate-override")), [{
+  property: property$78,
   value: "isolate-override isolate-override",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "plaintext")), [{
-  property: property$77,
+}], toConsumableArray(createCaseInsensitiveTest(property$78, "plaintext")), [{
+  property: property$78,
   value: "plaintext plaintext",
   valid: false
 }]);
@@ -5988,292 +6071,292 @@ var userSelect = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", 
   return suite;
 }, []);
 
-var property$78 = "vertical-align";
-var verticalAlign = [].concat(toConsumableArray(globalTests(property$78)), toConsumableArray(createCaseInsensitiveTest(property$78, "baseline")), [{
-  property: property$78,
+var property$79 = "vertical-align";
+var verticalAlign = [].concat(toConsumableArray(globalTests(property$79)), toConsumableArray(createCaseInsensitiveTest(property$79, "baseline")), [{
+  property: property$79,
   value: "baseline baseline",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "sub")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "sub")), [{
+  property: property$79,
   value: "sub sub",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "super")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "super")), [{
+  property: property$79,
   value: "super super",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "text-top")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "text-top")), [{
+  property: property$79,
   value: "text-top text-top",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "text-bottom")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "text-bottom")), [{
+  property: property$79,
   value: "text-bottom text-bottom",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "middle")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "middle")), [{
+  property: property$79,
   value: "middle middle",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "top")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "top")), [{
+  property: property$79,
   value: "top top",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "bottom")), [{
-  property: property$78,
+}], toConsumableArray(createCaseInsensitiveTest(property$79, "bottom")), [{
+  property: property$79,
   value: "bottom bottom",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "1%",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "88%",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "99.99%",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "+100%",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "12.%",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "42.2.3.4.7.8.1.2%",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "1% 1%",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "0",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "16px",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "1pc",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$78,
+  property: property$79,
   value: "16.px",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "px16",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "one rem",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$78,
+  property: property$79,
   value: "0 0",
   valid: false
 }]);
 
-var property$79 = "visibility";
-var visibility = [].concat(toConsumableArray(globalTests(property$79)), toConsumableArray(createCaseInsensitiveTest(property$79, "visible")), [{
-  property: property$79,
+var property$80 = "visibility";
+var visibility = [].concat(toConsumableArray(globalTests(property$80)), toConsumableArray(createCaseInsensitiveTest(property$80, "visible")), [{
+  property: property$80,
   value: "visible visible",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "hidden")), [{
-  property: property$79,
+}], toConsumableArray(createCaseInsensitiveTest(property$80, "hidden")), [{
+  property: property$80,
   value: "hidden hidden",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "collapse")), [{
-  property: property$79,
+}], toConsumableArray(createCaseInsensitiveTest(property$80, "collapse")), [{
+  property: property$80,
   value: "collapse collapse",
   valid: false
 }]);
 
-var property$80 = "white-space";
-var whiteSpace = [].concat(toConsumableArray(globalTests(property$80)), toConsumableArray(createCaseInsensitiveTest(property$80, "normal")), [{
-  property: property$80,
+var property$81 = "white-space";
+var whiteSpace = [].concat(toConsumableArray(globalTests(property$81)), toConsumableArray(createCaseInsensitiveTest(property$81, "normal")), [{
+  property: property$81,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "pre")), [{
-  property: property$80,
+}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre")), [{
+  property: property$81,
   value: "pre pre",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "nowrap")), [{
-  property: property$80,
+}], toConsumableArray(createCaseInsensitiveTest(property$81, "nowrap")), [{
+  property: property$81,
   value: "nowrap nowrap",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "pre-wrap")), [{
-  property: property$80,
+}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre-wrap")), [{
+  property: property$81,
   value: "pre-wrap pre-wrap",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "pre-line")), [{
-  property: property$80,
+}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre-line")), [{
+  property: property$81,
   value: "pre-line pre-line",
   valid: false
 }]);
 
-var property$81 = "will-change";
-var willChange = [].concat(toConsumableArray(globalTests(property$81)), toConsumableArray(createCaseInsensitiveTest(property$81, "auto")), [{
-  property: property$81,
+var property$82 = "will-change";
+var willChange = [].concat(toConsumableArray(globalTests(property$82)), toConsumableArray(createCaseInsensitiveTest(property$82, "auto")), [{
+  property: property$82,
   value: "auto auto",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "Bond-007",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "alpha",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "_-_",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "\\1F638",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "-B",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "NONE",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "007-Bond",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "0B",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "--B",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "-0",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "\"foobar\"",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "Bond-007 Bond-007",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "Bond-007, Bond-007",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "Bond-007, Bond-007,",
   valid: false
 }, {
-  property: property$81,
+  property: property$82,
   value: "var(--foo), var(--bar)",
   valid: true
 }, {
-  property: property$81,
+  property: property$82,
   value: "var(--foo), var(--bar),",
   valid: false
 }]);
 
-var property$82 = "word-break";
-var wordBreak = [].concat(toConsumableArray(globalTests(property$82)), toConsumableArray(createCaseInsensitiveTest(property$82, "normal")), [{
-  property: property$82,
+var property$83 = "word-break";
+var wordBreak = [].concat(toConsumableArray(globalTests(property$83)), toConsumableArray(createCaseInsensitiveTest(property$83, "normal")), [{
+  property: property$83,
   value: "normal normal",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$82, "break-all")), [{
-  property: property$82,
+}], toConsumableArray(createCaseInsensitiveTest(property$83, "break-all")), [{
+  property: property$83,
   value: "break-all break-all",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$82, "keep-all")), [{
-  property: property$82,
+}], toConsumableArray(createCaseInsensitiveTest(property$83, "keep-all")), [{
+  property: property$83,
   value: "keep-all keep-all",
   valid: false
 }]);
 
-var property$83 = "word-spacing";
-var wordSpacing = [].concat(toConsumableArray(globalTests(property$83)), toConsumableArray(createCaseInsensitiveTest(property$83, "normal")), [{
-  property: property$83,
+var property$84 = "word-spacing";
+var wordSpacing = [].concat(toConsumableArray(globalTests(property$84)), toConsumableArray(createCaseInsensitiveTest(property$84, "normal")), [{
+  property: property$84,
   value: "normal normal",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "0",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "16px",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "1pc",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "2.34254645654324rem",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "1%",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "88%",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "99.99%",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "+100%",
   valid: true
 }, {
-  property: property$83,
+  property: property$84,
   value: "16.px",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "px16",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "one rem",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "\"1rem\"",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "12.%",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "42.2.3.4.7.8.1.2%",
   valid: false
 }, {
-  property: property$83,
+  property: property$84,
   value: "0 0",
   valid: false
 }]);
@@ -6303,101 +6386,101 @@ var writingMode = ["-webkit-writing-mode", "writing-mode"].reduce(function (suit
   return suite;
 }, []);
 
-var property$84 = "-ms-writing-mode";
-var msWritingMode = [].concat(toConsumableArray(globalTests(property$84)), toConsumableArray(createCaseInsensitiveTest(property$84, "horizontal-tb")), [{
-  property: property$84,
+var property$85 = "-ms-writing-mode";
+var msWritingMode = [].concat(toConsumableArray(globalTests(property$85)), toConsumableArray(createCaseInsensitiveTest(property$85, "horizontal-tb")), [{
+  property: property$85,
   value: "horizontal-tb horizontal-tb",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "vertical-rl")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "vertical-rl")), [{
+  property: property$85,
   value: "vertical-rl vertical-rl",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "vertical-lr")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "vertical-lr")), [{
+  property: property$85,
   value: "vertical-lr vertical-lr",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "sideways-rl")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "sideways-rl")), [{
+  property: property$85,
   value: "sideways-rl sideways-rl",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "sideways-lr")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "sideways-lr")), [{
+  property: property$85,
   value: "sideways-lr sideways-lr",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "lr-tb")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "lr-tb")), [{
+  property: property$85,
   value: "lr-tb lr-tb",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "tb-rl")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "tb-rl")), [{
+  property: property$85,
   value: "tb-rl tb-rl",
   valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$84, "tb-lr")), [{
-  property: property$84,
+}], toConsumableArray(createCaseInsensitiveTest(property$85, "tb-lr")), [{
+  property: property$85,
   value: "tb-lr tb-lr",
   valid: false
 }]);
 
-var property$85 = "z-index";
-var zIndex = [].concat(toConsumableArray(globalTests(property$85)), toConsumableArray(createCaseInsensitiveTest(property$85, "auto")), [{
-  property: property$85,
+var property$86 = "z-index";
+var zIndex = [].concat(toConsumableArray(globalTests(property$86)), toConsumableArray(createCaseInsensitiveTest(property$86, "auto")), [{
+  property: property$86,
   value: "auto auto",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "10",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "+10",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "-10",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "0",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "+0",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "-0",
   valid: true
 }, {
-  property: property$85,
+  property: property$86,
   value: "12.0",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "+---12",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "3e4",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "\\4E94",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "_5",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "\"100\"",
   valid: false
 }, {
-  property: property$85,
+  property: property$86,
   value: "10 10",
   valid: false
 }]);
 
-var suites = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var suites = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 function macro(t, property, value, valid) {
   t.is(cssValues(property, value), valid);
