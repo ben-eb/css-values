@@ -8,7 +8,13 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 
 const validatorPath = '../../validators/';
-// const isCssVar = templateExpression(`isVar(node)`);
+
+function getValidator (identifier) {
+    return {
+        identifier,
+        module: `${validatorPath}${identifier}`,
+    };
+}
 
 function generateConditionsFactory (operator) {
     return function generateConditions (...conditions) {
@@ -42,10 +48,7 @@ export default opts => {
             main = template(`export default isPosition(true);`)();
         }
         return generateProgram([
-            requireModules({
-                identifier,
-                module: `${validatorPath}${identifier}`,
-            }),
+            requireModules(getValidator(identifier)),
             main,
             properties,
         ]);
@@ -53,10 +56,7 @@ export default opts => {
     if (opts.candidates.length === 1 && opts.candidates[0].value === 'repeat-style') {
         const identifier = 'isRepeatStyle';
         return generateProgram([
-            requireModules({
-                identifier,
-                module: `${validatorPath}${identifier}`,
-            }),
+            requireModules(getValidator(identifier)),
             template(`export default ${identifier};`)(),
             properties,
         ]);
@@ -70,10 +70,7 @@ export default opts => {
             if (!validators[camel]) { // eslint-disable-line
                 return config;
             }
-            config.dependencies.push({
-                identifier: camel,
-                module: `${validatorPath}${camel}`,
-            });
+            config.dependencies.push(getValidator(camel));
             if (candidate.value === 'position') {
                 config.preConditions.push(
                     template(`if (isPosition(true)(parsed)) { return true; }`)()
@@ -82,10 +79,7 @@ export default opts => {
             }
             const type = validators[camel].type // eslint-disable-line
             if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
-                config.dependencies.push({
-                    identifier: 'isComma',
-                    module: `${validatorPath}isComma`,
-                });
+                config.dependencies.push(getValidator('isComma'));
                 config.repeatingConditions.push(
                     template(`if (cons) { valid = false; }`)({
                         cons: generateOrConditions(
@@ -148,10 +142,7 @@ export default opts => {
     if (settings.keywords.length) {
         if (!settings.conditions.length && !settings.preConditions.length) {
             const identifier = 'isCaseInsensitiveKeywordFactory';
-            settings.dependencies.push({
-                identifier,
-                module: `${validatorPath}${identifier}`,
-            });
+            settings.dependencies.push(getValidator(identifier));
             return generateProgram([
                 requireModules(...settings.dependencies),
                 template(`export default ${identifier}(keywords);`)({
@@ -164,10 +155,7 @@ export default opts => {
             settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
         } else {
             const isKeyword = 'isCaseInsensitiveKeyword';
-            settings.dependencies.push({
-                identifier: isKeyword,
-                module: `${validatorPath}${isKeyword}`,
-            });
+            settings.dependencies.push(getValidator(isKeyword));
             settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
             keywords.push(template(`const keywords = INJECT;`)({
                 INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
