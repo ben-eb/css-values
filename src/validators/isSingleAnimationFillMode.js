@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const singleAnimationFillModes = [
     'none',
@@ -7,6 +7,6 @@ export const singleAnimationFillModes = [
     'both',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, singleAnimationFillModes);
+export default node => isKeyword(node, singleAnimationFillModes);
 
 export const type = 'node';

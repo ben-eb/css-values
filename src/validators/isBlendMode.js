@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const blendValues = [
     'normal',
@@ -19,6 +19,6 @@ export const blendValues = [
     'luminosity',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, blendValues);
+export default node => isKeyword(node, blendValues);
 
 export const type = 'node';

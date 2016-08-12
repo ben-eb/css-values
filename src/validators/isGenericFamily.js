@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const genericFamilies = [
     'serif',
@@ -8,6 +8,6 @@ export const genericFamilies = [
     'monospace',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, genericFamilies);
+export default node => isKeyword(node, genericFamilies);
 
 export const type = 'node';

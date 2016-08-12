@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const brStyles = [
     'none',
@@ -13,6 +13,6 @@ export const brStyles = [
     'outset',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, brStyles);
+export default node => isKeyword(node, brStyles);
 
 export const type = 'node';

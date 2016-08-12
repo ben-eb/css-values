@@ -141,7 +141,7 @@ export default opts => {
 
     if (settings.keywords.length) {
         if (!settings.conditions.length && !settings.preConditions.length) {
-            const identifier = 'isCaseInsensitiveKeywordFactory';
+            const identifier = 'isKeywordFactory';
             settings.dependencies.push(getValidator(identifier));
             return generateProgram([
                 requireModules(...settings.dependencies),
@@ -154,7 +154,7 @@ export default opts => {
         if (settings.keywords.length === 1) {
             settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
         } else {
-            const isKeyword = 'isCaseInsensitiveKeyword';
+            const isKeyword = 'isKeyword';
             settings.dependencies.push(getValidator(isKeyword));
             settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
             keywords.push(template(`const keywords = INJECT;`)({

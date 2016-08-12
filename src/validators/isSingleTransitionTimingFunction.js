@@ -1,6 +1,6 @@
 import {walk} from 'postcss-value-parser';
-import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isFunction from './isFunction';
+import isKeyword from './isKeyword';
 import isComma from './isComma';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
@@ -20,12 +20,12 @@ export const stepsKeywords = [
     'end',
 ];
 
-export function isKeyword (node) {
-    return isCaseInsensitiveKeyword(node, keywords);
+export function isTimingKeyword (node) {
+    return isKeyword(node, keywords);
 }
 
 export function isSteps (node) {
-    if (!isCaseInsensitiveFunction(node, 'steps') || !isInteger(node.nodes[0])) {
+    if (!isFunction(node, 'steps') || !isInteger(node.nodes[0])) {
         return false;
     }
     const one = node.nodes[1];
@@ -34,7 +34,7 @@ export function isSteps (node) {
         return false;
     }
     if (two) {
-        return isCaseInsensitiveKeyword(two, stepsKeywords);
+        return isKeyword(two, stepsKeywords);
     }
     return true;
 }
@@ -44,7 +44,7 @@ export function isValidAbscissa ({type, value}) {
 }
 
 export function isCubicBezier (node) {
-    if (!isCaseInsensitiveFunction(node, 'cubic-bezier')) {
+    if (!isFunction(node, 'cubic-bezier')) {
         return false;
     }
     let valid = true;
@@ -65,7 +65,7 @@ export function isCubicBezier (node) {
 }
 
 export default node => {
-    return isKeyword(node) || isSteps(node) || isCubicBezier(node);
+    return isTimingKeyword(node) || isSteps(node) || isCubicBezier(node);
 };
 
 export const type = 'node';

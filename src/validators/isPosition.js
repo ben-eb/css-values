@@ -1,5 +1,5 @@
 import isComma from './isComma';
-import isKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 import isLengthPercentage from './isLengthPercentage';
 import isVariable from './isVariable';
 

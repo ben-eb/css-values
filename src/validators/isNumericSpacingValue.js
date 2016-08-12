@@ -1,10 +1,10 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const numericSpacingValues = [
     'proportional-nums',
     'tabular-nums',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, numericSpacingValues);
+export default node => isKeyword(node, numericSpacingValues);
 
 export const type = 'node';

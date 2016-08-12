@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const compositeStyles = [
     'clear',
@@ -14,6 +14,6 @@ export const compositeStyles = [
     'xor',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, compositeStyles);
+export default node => isKeyword(node, compositeStyles);
 
 export const type = 'node';

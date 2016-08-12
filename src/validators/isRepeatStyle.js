@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 import isComma from './isComma';
 import isVariable from './isVariable';
 
@@ -21,15 +21,15 @@ export default parsed => {
         return false;
     }
     parsed.walk(node => {
-        if (isCaseInsensitiveKeyword(node, singleValues)) {
+        if (isKeyword(node, singleValues)) {
             if (group.length) {
                 valid = false;
                 return false;
             }
             group.push(node);
-        } else if (isCaseInsensitiveKeyword(node, multipleValues) || isVariable(node)) {
+        } else if (isKeyword(node, multipleValues) || isVariable(node)) {
             if (
-                group.some(n => isCaseInsensitiveKeyword(n, singleValues)) ||
+                group.some(n => isKeyword(n, singleValues)) ||
                 group.length === 2
             ) {
                 valid = false;

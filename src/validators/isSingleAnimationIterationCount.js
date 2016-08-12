@@ -1,10 +1,10 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 import isNumber from './isNumber';
 
 export const value = ['infinite'];
 
 export default node => {
-    return  isCaseInsensitiveKeyword(node, value) || isNumber(node);
+    return  isKeyword(node, value) || isNumber(node);
 };
 
 export const type = 'node';

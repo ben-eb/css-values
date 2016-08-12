@@ -26,7 +26,7 @@ export default () => {
     return generateProgram([
         requireModules({
             identifier: 'isKeyword',
-            module: './validators/isCaseInsensitiveKeyword',
+            module: './validators/isKeyword',
         }, {
             identifier: 'isVariable',
             module: './validators/isVariable',

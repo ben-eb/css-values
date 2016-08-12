@@ -1,10 +1,10 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const relativeSizes = [
     'larger',
     'smaller',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, relativeSizes);
+export default node => isKeyword(node, relativeSizes);
 
 export const type = 'node';

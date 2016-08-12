@@ -1,10 +1,10 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const numericFractionValues = [
     'diagonal-fractions',
     'stacked-fractions',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, numericFractionValues);
+export default node => isKeyword(node, numericFractionValues);
 
 export const type = 'node';

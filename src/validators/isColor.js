@@ -1,7 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import colors from 'css-color-names';
-import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isFunction from './isFunction';
+import isKeyword from './isKeyword';
 import isComma from './isComma';
 import isInteger from './isInteger';
 import isNumber from './isNumber';
@@ -10,7 +10,7 @@ import isPercentage from './isPercentage';
 const namedColours = Object.keys(colors);
 
 export function isRgb (node) {
-    if (!isCaseInsensitiveFunction(node, 'rgb')) {
+    if (!isFunction(node, 'rgb')) {
         return;
     }
     let valid = true;
@@ -29,7 +29,7 @@ export function isRgb (node) {
 }
 
 export function isRgba (node) {
-    if (!isCaseInsensitiveFunction(node, 'rgba')) {
+    if (!isFunction(node, 'rgba')) {
         return;
     }
     let valid = true;
@@ -50,7 +50,7 @@ export function isRgba (node) {
 }
 
 export function isHsl (node) {
-    if (!isCaseInsensitiveFunction(node, 'hsl')) {
+    if (!isFunction(node, 'hsl')) {
         return;
     }
     let valid = true;
@@ -71,7 +71,7 @@ export function isHsl (node) {
 }
 
 export function isHsla (node) {
-    if (!isCaseInsensitiveFunction(node, 'hsla')) {
+    if (!isFunction(node, 'hsla')) {
         return;
     }
     let valid = true;
@@ -100,7 +100,7 @@ export function isHex (node) {
 }
 
 export function isNamedColor (node) {
-    return isCaseInsensitiveKeyword(node, namedColours);
+    return isKeyword(node, namedColours);
 }
 
 export function isCurrentColor (node) {

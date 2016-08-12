@@ -1,13 +1,13 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 import isCustomIdent from './isCustomIdent';
- 
+
 export const animateableFeatures = [
     'scroll-position',
     'contents',
 ];
- 
+
 export default node => {
-    return  isCaseInsensitiveKeyword(node, animateableFeatures) || isCustomIdent(node);
+    return  isKeyword(node, animateableFeatures) || isCustomIdent(node);
 };
- 
+
 export const type = 'node';

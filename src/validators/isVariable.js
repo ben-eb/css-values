@@ -1,4 +1,4 @@
-import isCaseInsensitiveFunction from './isCaseInsensitiveFunction';
+import isFunction from './isFunction';
 
-export default node => isCaseInsensitiveFunction(node, 'var');
+export default node => isFunction(node, 'var');
 export const type = 'node';

@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const maskingModes = [
     'alpha',
@@ -6,6 +6,6 @@ export const maskingModes = [
     'match-source',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, maskingModes);
+export default node => isKeyword(node, maskingModes);
 
 export const type = 'node';

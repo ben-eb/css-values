@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const attachments = [
     'scroll',
@@ -6,6 +6,6 @@ export const attachments = [
     'local',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, attachments);
+export default node => isKeyword(node, attachments);
 
 export const type = 'node';

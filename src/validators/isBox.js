@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const boxes = [
     'border-box',
@@ -6,6 +6,6 @@ export const boxes = [
     'content-box',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, boxes);
+export default node => isKeyword(node, boxes);
 
 export const type = 'node';

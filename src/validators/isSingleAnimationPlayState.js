@@ -1,10 +1,10 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const singleAnimationPlayStates = [
     'running',
     'paused',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, singleAnimationPlayStates);
+export default node => isKeyword(node, singleAnimationPlayStates);
 
 export const type = 'node';

@@ -1,4 +1,4 @@
-import isCaseInsensitiveKeyword from './isCaseInsensitiveKeyword';
+import isKeyword from './isKeyword';
 
 export const compositingOperators = [
     'add',
@@ -7,6 +7,6 @@ export const compositingOperators = [
     'exclude',
 ];
 
-export default node => isCaseInsensitiveKeyword(node, compositingOperators);
+export default node => isKeyword(node, compositingOperators);
 
 export const type = 'node';
