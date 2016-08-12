@@ -46,14 +46,24 @@ export default opts => {
                 list.push.apply(list, values.invalid.map(fixture => {
                     return createTest(fixture, false);
                 }));
-                list.push(createTest(`${values.valid[0]} ${values.valid[0]}`, false));
-                if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
-                    list.push(
-                        createTest(`${values.valid[0]}, ${values.valid[0]}`),
-                        createTest(`${values.valid[0]}, ${values.valid[0]},`, false),
-                        createTest(`var(--foo), var(--bar)`),
-                        createTest(`var(--foo), var(--bar),`, false)
-                    );
+                if (candidate.min === 1) {
+                    if (candidate.max === false && candidate.separator === ',') {
+                        list.push(
+                            createTest(`${values.valid[0]}, ${values.valid[0]}`),
+                            createTest(`${values.valid[0]}, ${values.valid[0]},`, false),
+                            createTest(`var(--foo), var(--bar)`),
+                            createTest(`var(--foo), var(--bar),`, false)
+                        );
+                    } else if (candidate.separator === ' ') {
+                        list.push(
+                            createTest(`${values.valid[0]} ${values.valid[0]}`),
+                            createTest(`${values.valid[0]}, ${values.valid[0]}`, false),
+                            createTest(`var(--foo) var(--bar)`),
+                            createTest(`var(--foo), var(--bar)`, false)
+                        );
+                    }
+                } else {
+                    list.push(createTest(`${values.valid[0]} ${values.valid[0]}`, false));
                 }
             }
         }

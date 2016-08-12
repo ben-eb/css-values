@@ -1,5 +1,6 @@
 import isKeyword from './isKeyword';
 import isComma from './isComma';
+import isSpace from './isSpace';
 import isVariable from './isVariable';
 
 const singleValues = [
@@ -39,7 +40,7 @@ export default parsed => {
         } else if (isComma(node)) {
             group = [];
             return false;
-        } else if (node.type !== 'space') {
+        } else if (!isSpace(node)) {
             valid = false;
         }
         return false;

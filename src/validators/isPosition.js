@@ -1,6 +1,7 @@
 import isComma from './isComma';
 import isKeyword from './isKeyword';
 import isLengthPercentage from './isLengthPercentage';
+import isSpace from './isSpace';
 import isVariable from './isVariable';
 
 const left = 'left';
@@ -42,7 +43,7 @@ function validateGroup (group) {
         }
     }
     if (length === 3) {
-        if (group[1].type !== 'space') {
+        if (!isSpace(group[1])) {
             return false;
         }
         if (
@@ -61,24 +62,24 @@ function validateGroup (group) {
     if (length >= 5 && length <= 7) {
         if (
             isKeywordOrVar(group[0], [left, right]) &&
-            group[1].type === 'space' &&
+            isSpace(group[1]) &&
             isLengthPercentageOrVar(group[2]) &&
-            group[3].type === 'space' &&
+            isSpace(group[3]) &&
             isKeywordOrVar(group[4], verticals)
         ) {
-            if (group[6] && group[5].type === 'space' && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
             return true;
         }
         if (
             isKeywordOrVar(group[0], [top, bottom]) &&
-            group[1].type === 'space' &&
+            isSpace(group[1]) &&
             isLengthPercentageOrVar(group[2]) &&
-            group[3].type === 'space' &&
+            isSpace(group[3]) &&
             isKeywordOrVar(group[4], horizontals)
         ) {
-            if (group[6] && group[5].type === 'space' && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
             return true;

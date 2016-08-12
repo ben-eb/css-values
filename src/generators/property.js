@@ -36,6 +36,22 @@ function templateExpression (tmpl, opts = {}) {
     return template(tmpl)(opts).expression;
 }
 
+function handleKeywords (keywords, settings) {
+    if (!settings.keywords.length) {
+        return;
+    }
+    if (settings.keywords.length === 1) {
+        settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
+    } else {
+        const isKeyword = 'isKeyword';
+        settings.dependencies.push(getValidator(isKeyword));
+        settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
+        keywords.push(template(`const keywords = INJECT;`)({
+            INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
+        }));
+    }
+}
+
 export default opts => {
     const properties = exportConst({
         identifier: 'properties',
@@ -65,8 +81,8 @@ export default opts => {
         if (candidate.type === 'keyword') {
             config.keywords.push(candidate.value);
         }
-        if (candidate.type === 'data') {
-            const camel = dataValidator(candidate.value);
+        if (candidate.type === 'data' || candidate.type === 'string') {
+            const camel = candidate.type === 'string' ? 'isString' : dataValidator(candidate.value);
             if (!validators[camel]) { // eslint-disable-line
                 return config;
             }
@@ -78,8 +94,16 @@ export default opts => {
                 return config;
             }
             const type = validators[camel].type // eslint-disable-line
-            if (candidate.min === 1 && candidate.max === false && candidate.separator === ',') {
-                config.dependencies.push(getValidator('isComma'));
+            if (candidate.min === 1) {
+                let separator;
+                if (candidate.separator === ',') {
+                    separator = `!isComma(node)`;
+                    config.dependencies.push(getValidator('isComma'));
+                } else {
+                    separator = `!isSpace(node)`;
+                    config.dependencies.push(getValidator('isSpace'));
+                }
+
                 config.repeatingConditions.push(
                     template(`if (cons) { valid = false; }`)({
                         cons: generateOrConditions(
@@ -92,11 +116,18 @@ export default opts => {
                             ),
                             generateConditions(
                                 templateExpression(`!even`),
-                                templateExpression(`!isComma(node)`),
+                                templateExpression(separator),
                             ),
                         ),
                     })
                 );
+                const tmpl = `return valid && parsed.nodes.length % 2 !== 0`;
+                if (candidate.max !== false) {
+                    config.repeatingReturn = template(`${tmpl} && parsed.nodes.length <= ${(candidate.max * 2) - 1};`)();
+                } else {
+                    config.repeatingReturn = template(`${tmpl};`)();
+                }
+
                 return config;
             }
             config.conditions.push(templateExpression(`${camel}(${type})`));
@@ -111,11 +142,17 @@ export default opts => {
             identifier: 'isVar',
             module: `${validatorPath}isVariable`,
         }],
+        repeatingReturn: false,
     });
 
+    let keywords = [];
+
     if (settings.repeatingConditions.length) {
+        handleKeywords(keywords, settings);
+
         const tmpl = template(`
         export default function (parsed) {
+            PREVALID
             let valid = true;
             PRECONDITIONS
             parsed.walk((node, index) => {
@@ -123,21 +160,26 @@ export default opts => {
                 CONDITIONS
                 return false;
             });
-            return valid && parsed.nodes.length % 2 !== 0;
+            POSTCONDITIONS
         }
         `)({
             PRECONDITIONS: settings.preConditions,
             CONDITIONS: settings.repeatingConditions,
+            POSTCONDITIONS: settings.repeatingReturn,
+            PREVALID: settings.conditions.length ?
+                template(`const node = parsed.nodes[0]; if (parsed.nodes.length === 1 && CONDITIONS) { return true; }`)({
+                    CONDITIONS: settings.conditions,
+                }) :
+                t.emptyStatement(),
         });
 
         return generateProgram([
             requireModules(...settings.dependencies),
+            ...keywords,
             tmpl,
             properties,
         ]);
     }
-
-    let keywords = [];
 
     if (settings.keywords.length) {
         if (!settings.conditions.length && !settings.preConditions.length) {
@@ -151,16 +193,7 @@ export default opts => {
                 properties,
             ]);
         }
-        if (settings.keywords.length === 1) {
-            settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
-        } else {
-            const isKeyword = 'isKeyword';
-            settings.dependencies.push(getValidator(isKeyword));
-            settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
-            keywords.push(template(`const keywords = INJECT;`)({
-                INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
-            }));
-        }
+        handleKeywords(keywords, settings);
     }
 
     let conditions;

@@ -945,6 +945,18 @@ var webkitBorderBeforeStyle = ["-webkit-border-before-style", "border-block-end-
   }, {
     property: property,
     value: "none none",
+    valid: true
+  }, {
+    property: property,
+    value: "none, none",
+    valid: false
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar)",
     valid: false
   }]));
   return suite;
@@ -1014,6 +1026,18 @@ var webkitBorderBeforeWidth = ["-webkit-border-before-width", "border-block-end-
   }, {
     property: property,
     value: "thin thin",
+    valid: true
+  }, {
+    property: property,
+    value: "thin, thin",
+    valid: false
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar)",
     valid: false
   }]));
   return suite;
@@ -1083,10 +1107,6 @@ var webkitMaskRepeat = ["-webkit-mask-repeat", "background-repeat", "mask-repeat
   }, {
     property: property,
     value: "space,",
-    valid: false
-  }, {
-    property: property,
-    value: "repeat-x repeat-x",
     valid: false
   }, {
     property: property,
@@ -1265,10 +1285,6 @@ var webkitTapHighlightColor = [].concat(toConsumableArray(globalTests(property$1
 }, {
   property: property$10,
   value: "blacklight",
-  valid: false
-}, {
-  property: property$10,
-  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
   valid: false
 }, {
   property: property$10,
@@ -1561,10 +1577,6 @@ var animationDelay = ["animation-delay", "animation-duration", "transition-delay
     valid: false
   }, {
     property: property,
-    value: "2s 2s",
-    valid: false
-  }, {
-    property: property,
     value: "2s, 2s",
     valid: true
   }, {
@@ -1622,10 +1634,6 @@ var animationDirection = [].concat(toConsumableArray(globalTests(property$14)), 
   valid: false
 }, {
   property: property$14,
-  value: "normal normal",
-  valid: false
-}, {
-  property: property$14,
   value: "normal, normal",
   valid: true
 }, {
@@ -1678,10 +1686,6 @@ var animationFillMode = [].concat(toConsumableArray(globalTests(property$15)), [
 }, {
   property: property$15,
   value: "forwards-backwards",
-  valid: false
-}, {
-  property: property$15,
-  value: "none none",
   valid: false
 }, {
   property: property$15,
@@ -1760,10 +1764,6 @@ var animationIterationCount = [].concat(toConsumableArray(globalTests(property$1
   valid: false
 }, {
   property: property$16,
-  value: "12 12",
-  valid: false
-}, {
-  property: property$16,
   value: "12, 12",
   valid: true
 }, {
@@ -1831,10 +1831,6 @@ var animationName = [].concat(toConsumableArray(globalTests(property$17)), [{
   valid: false
 }, {
   property: property$17,
-  value: "Bond-007 Bond-007",
-  valid: false
-}, {
-  property: property$17,
   value: "Bond-007, Bond-007",
   valid: true
 }, {
@@ -1871,10 +1867,6 @@ var animationPlayState = [].concat(toConsumableArray(globalTests(property$18)), 
 }, {
   property: property$18,
   value: "running-paused",
-  valid: false
-}, {
-  property: property$18,
-  value: "running running",
   valid: false
 }, {
   property: property$18,
@@ -2017,10 +2009,6 @@ var animationTimingFunction = ["animation-timing-function", "transition-timing-f
     valid: false
   }, {
     property: property,
-    value: "ease ease",
-    valid: false
-  }, {
-    property: property,
     value: "ease, ease",
     valid: true
   }, {
@@ -2093,10 +2081,6 @@ var backgroundAttachment = [].concat(toConsumableArray(globalTests(property$19))
 }, {
   property: property$19,
   value: "local-scroll",
-  valid: false
-}, {
-  property: property$19,
-  value: "scroll scroll",
   valid: false
 }, {
   property: property$19,
@@ -2255,10 +2239,6 @@ var backgroundBlendMode = [].concat(toConsumableArray(globalTests(property$20)),
   valid: false
 }, {
   property: property$20,
-  value: "normal normal",
-  valid: false
-}, {
-  property: property$20,
   value: "normal, normal",
   valid: true
 }, {
@@ -2303,10 +2283,6 @@ var backgroundClip = ["background-clip", "background-origin"].reduce(function (s
   }, {
     property: property,
     value: "rock-box",
-    valid: false
-  }, {
-    property: property,
-    value: "border-box border-box",
     valid: false
   }, {
     property: property,
@@ -2471,10 +2447,6 @@ var backgroundPosition = ["background-position", "mask-position"].reduce(functio
     valid: false
   }, {
     property: property,
-    value: "left left",
-    valid: false
-  }, {
-    property: property,
     value: "left, left",
     valid: true
   }, {
@@ -2553,6 +2525,18 @@ var borderBottomLeftRadius = ["border-bottom-left-radius", "border-bottom-right-
   }, {
     property: property,
     value: "0 0",
+    valid: true
+  }, {
+    property: property,
+    value: "0, 0",
+    valid: false
+  }, {
+    property: property,
+    value: "var(--foo) var(--bar)",
+    valid: true
+  }, {
+    property: property,
+    value: "var(--foo), var(--bar)",
     valid: false
   }]));
   return suite;
@@ -2871,6 +2855,18 @@ var borderColor = [].concat(toConsumableArray(globalTests(property$22)), [{
 }, {
   property: property$22,
   value: "RGB(1, 2, 3) RGB(1, 2, 3)",
+  valid: true
+}, {
+  property: property$22,
+  value: "RGB(1, 2, 3), RGB(1, 2, 3)",
+  valid: false
+}, {
+  property: property$22,
+  value: "var(--foo) var(--bar)",
+  valid: true
+}, {
+  property: property$22,
+  value: "var(--foo), var(--bar)",
   valid: false
 }]);
 
@@ -4334,6 +4330,18 @@ var gridTemplateAreas = [].concat(toConsumableArray(globalTests(property$45)), t
 }, {
   property: property$45,
   value: "\"foo\" \"foo\"",
+  valid: true
+}, {
+  property: property$45,
+  value: "\"foo\", \"foo\"",
+  valid: false
+}, {
+  property: property$45,
+  value: "var(--foo) var(--bar)",
+  valid: true
+}, {
+  property: property$45,
+  value: "var(--foo), var(--bar)",
   valid: false
 }]);
 
@@ -4789,10 +4797,6 @@ var maskComposite = [].concat(toConsumableArray(globalTests(property$56)), [{
   valid: false
 }, {
   property: property$56,
-  value: "add add",
-  valid: false
-}, {
-  property: property$56,
   value: "add, add",
   valid: true
 }, {
@@ -4837,10 +4841,6 @@ var maskMode = [].concat(toConsumableArray(globalTests(property$57)), [{
 }, {
   property: property$57,
   value: "jim-carrey",
-  valid: false
-}, {
-  property: property$57,
-  value: "alpha alpha",
   valid: false
 }, {
   property: property$57,
@@ -6142,10 +6142,6 @@ var scrollSnapCoordinate = ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-c
     valid: false
   }, {
     property: property,
-    value: "left left",
-    valid: false
-  }, {
-    property: property,
     value: "left, left",
     valid: true
   }, {
@@ -6735,10 +6731,6 @@ var willChange = [].concat(toConsumableArray(globalTests(property$82)), toConsum
 }, {
   property: property$82,
   value: "\"foobar\"",
-  valid: false
-}, {
-  property: property$82,
-  value: "Bond-007 Bond-007",
   valid: false
 }, {
   property: property$82,

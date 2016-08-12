@@ -268,13 +268,24 @@ var isBrStyle = (function (node) {
     return isKeyword(node, brStyles);
 });
 
-function webkitBorderBeforeStyle (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBrStyle(node);
-  }
+var isSpace = (function (_ref) {
+    var type = _ref.type;
 
-  return false;
+    return type === 'space';
+});
+
+function webkitBorderBeforeStyle (parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBrStyle(node) && !isVar(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
 }
 var properties$12 = ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"];
 
@@ -303,12 +314,17 @@ var isBrWidth = (function (node) {
 });
 
 function webkitBorderBeforeWidth (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBrWidth(node);
-  }
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
 
-  return false;
+    if (even && !isBrWidth(node) && !isVar(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
 }
 var properties$13 = ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"];
 
@@ -345,7 +361,7 @@ var isRepeatStyle = (function (parsed) {
         } else if (isComma(node)) {
             group = [];
             return false;
-        } else if (node.type !== 'space') {
+        } else if (!isSpace(node)) {
             valid = false;
         }
         return false;
@@ -840,7 +856,7 @@ function validateGroup(group) {
         }
     }
     if (length === 3) {
-        if (group[1].type !== 'space') {
+        if (!isSpace(group[1])) {
             return false;
         }
         if (isKeywordOrVar(group[0], horizontals) && isKeywordOrVar(group[2], verticals) || isKeywordOrVar(group[0], verticals) && isKeywordOrVar(group[2], horizontals)) {
@@ -854,14 +870,14 @@ function validateGroup(group) {
         }
     }
     if (length >= 5 && length <= 7) {
-        if (isKeywordOrVar(group[0], [left, right]) && group[1].type === 'space' && isLengthPercentageOrVar(group[2]) && group[3].type === 'space' && isKeywordOrVar(group[4], verticals)) {
-            if (group[6] && group[5].type === 'space' && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+        if (isKeywordOrVar(group[0], [left, right]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
             return true;
         }
-        if (isKeywordOrVar(group[0], [top, bottom]) && group[1].type === 'space' && isLengthPercentageOrVar(group[2]) && group[3].type === 'space' && isKeywordOrVar(group[4], horizontals)) {
-            if (group[6] && group[5].type === 'space' && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+        if (isKeywordOrVar(group[0], [top, bottom]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
             return true;
@@ -892,12 +908,17 @@ var backgroundPosition$1 = Object.freeze({
 });
 
 function borderBottomLeftRadius (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLengthPercentage(node);
-  }
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
 
-  return false;
+    if (even && !isLengthPercentage(node) && !isVar(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
 }
 var properties$38 = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"];
 
@@ -945,12 +966,17 @@ var borderCollapse$1 = Object.freeze({
 });
 
 function borderColor (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isColor(node);
-  }
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
 
-  return false;
+    if (even && !isColor(node) && !isVar(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
 }
 var properties$42 = ["border-color"];
 
@@ -1360,12 +1386,23 @@ var gridColumnGap$1 = Object.freeze({
 });
 
 function gridTemplateAreas (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isString(node) || node.value.toLowerCase() === "none";
+  var node = parsed.nodes[0];
+
+  if (parsed.nodes.length === 1 && node.value.toLowerCase() === "none") {
+    return true;
   }
 
-  return false;
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isString(node) && !isVar(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
 }
 var properties$83 = ["grid-template-areas"];
 
@@ -1948,6 +1985,12 @@ var isAnimateableFeature = (function (node) {
 });
 
 function willChange (parsed) {
+  var node = parsed.nodes[0];
+
+  if (parsed.nodes.length === 1 && node.value.toLowerCase() === "auto") {
+    return true;
+  }
+
   var valid = true;
   parsed.walk(function (node, index) {
     var even = index % 2 === 0;
