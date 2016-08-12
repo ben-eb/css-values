@@ -48,6 +48,7 @@ function mergeProperties (data) {
 function known (parsed) {
     return parsed.every(node => {
         return node.type === 'keyword' ||
+        node.type === 'string' ||
         node.type === 'group' && !node.order && !node.min && node.values.every(n => n.type === 'keyword') ||
         (node.type === 'data' && validators[dataValidator(node.value)]); // eslint-disable-line
     });
