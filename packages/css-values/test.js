@@ -507,6 +507,31 @@ var mozAppearance = [].concat(toConsumableArray(globalTests(property$1)), toCons
   valid: false
 }]);
 
+var mozBinding = ["-moz-binding", "list-style-image"].reduce(function (suite, property) {
+  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
+    property: property,
+    value: "url(https://ru.wikipedia.org/wiki/URI)",
+    valid: true
+  }, {
+    property: property,
+    value: "url(data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAAAAAMAAw)",
+    valid: true
+  }, {
+    property: property,
+    value: "ur(https://ru.wikipedia.org/wiki/URI)",
+    valid: false
+  }, {
+    property: property,
+    value: "url(https://ru.wikipedia.org/wiki/URI) url(https://ru.wikipedia.org/wiki/URI)",
+    valid: false
+  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
+    property: property,
+    value: "none none",
+    valid: false
+  }]));
+  return suite;
+}, []);
+
 var property$2 = "-moz-float-edge";
 var mozFloatEdge = [].concat(toConsumableArray(globalTests(property$2)), toConsumableArray(createCaseInsensitiveTest(property$2, "border-box")), [{
   property: property$2,
@@ -4375,6 +4400,10 @@ var imageRendering = [].concat(toConsumableArray(globalTests(property$46)), toCo
   property: property$46,
   value: "pixelated pixelated",
   valid: false
+}], toConsumableArray(createCaseInsensitiveTest(property$46, "-webkit-optimize-contrast")), [{
+  property: property$46,
+  value: "-webkit-optimize-contrast -webkit-optimize-contrast",
+  valid: false
 }], toConsumableArray(createCaseInsensitiveTest(property$46, "-moz-crisp-edges")), [{
   property: property$46,
   value: "-moz-crisp-edges -moz-crisp-edges",
@@ -6951,7 +6980,7 @@ var zIndex = [].concat(toConsumableArray(globalTests(property$86)), toConsumable
   valid: false
 }]);
 
-var suites = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var suites = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 function macro(t, property, value, valid) {
     t.is(cssValues(property, value), valid);

@@ -34,3 +34,5 @@ export * as isTime from './isTime';
 export * as isVariable from './isVariable';
 export * as isBlendMode from './isBlendMode';
 export * as isSingleAnimationIterationCount from './isSingleAnimationIterationCount';
+export * as isUrl from './isUrl';
+export * as isUri from './isUri';
