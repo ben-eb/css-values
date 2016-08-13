@@ -42,10 +42,11 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 234 of 361 CSS properties (64.82%).
+We support 236 of 361 CSS properties (65.37%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
+* `-moz-binding`
 * `-moz-float-edge`
 * `-moz-force-broken-image-icon`
 * `-moz-orient`
@@ -178,6 +179,7 @@ We support 234 of 361 CSS properties (64.82%).
 * `letter-spacing`
 * `line-break`
 * `line-height`
+* `list-style-image`
 * `list-style-position`
 * `margin-block-end`
 * `margin-block-start`

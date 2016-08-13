@@ -5,6 +5,7 @@
 export default [
     '-ms-overflow-style',
     '-moz-appearance',
+    '-moz-binding',
     '-moz-float-edge',
     '-moz-force-broken-image-icon',
     '-moz-orient',
@@ -137,6 +138,7 @@ export default [
     'letter-spacing',
     'line-break',
     'line-height',
+    'list-style-image',
     'list-style-position',
     'margin-block-end',
     'margin-block-start',
