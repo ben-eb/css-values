@@ -89,7 +89,7 @@ function validateGroup (group) {
     return length < 8;
 }
 
-export default function isPositionFactory (repeating = false) {
+export default function isPositionFactory (repeating) {
     return function isPosition (parsed) {
         if (repeating && parsed.nodes[parsed.nodes.length - 1].type === 'div') {
             return false;

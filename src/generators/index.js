@@ -6,3 +6,4 @@ export requireModules from './requireModules';
 export requireNamespacedModules from './requireNamespacedModules';
 export test from './test';
 export tests from './tests';
+export validator from './validator';

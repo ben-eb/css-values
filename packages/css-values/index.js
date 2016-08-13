@@ -30,29 +30,20 @@ function isKeywordFactory(keywords) {
     };
 }
 
-var msOverflowStyle = isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"]);
-var properties = ["-ms-overflow-style"];
+var msOverflowStyle = {
+  properties: ["-ms-overflow-style"],
+  fn: isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"])
+};
 
-var msOverflowStyle$1 = Object.freeze({
-	default: msOverflowStyle,
-	properties: properties
-});
+var mozAppearance = {
+  properties: ["-moz-appearance"],
+  fn: isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"])
+};
 
-var mozAppearance = isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"]);
-var properties$1 = ["-moz-appearance"];
-
-var mozAppearance$1 = Object.freeze({
-	default: mozAppearance,
-	properties: properties$1
-});
-
-var mozFloatEdge = isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"]);
-var properties$2 = ["-moz-float-edge"];
-
-var mozFloatEdge$1 = Object.freeze({
-	default: mozFloatEdge,
-	properties: properties$2
-});
+var mozFloatEdge = {
+  properties: ["-moz-float-edge"],
+  fn: isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"])
+};
 
 var isInteger = (function (_ref) {
     var type = _ref.type;
@@ -65,76 +56,52 @@ var isInteger = (function (_ref) {
     return int && !~value.indexOf('.') && !int.unit;
 });
 
-function mozForceBrokenImageIcon (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isInteger(node);
+var mozForceBrokenImageIcon = {
+  properties: ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"],
+  fn: function mozForceBrokenImageIcon(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isInteger(node);
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$3 = ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"];
+var mozOrient = {
+  properties: ["-moz-orient"],
+  fn: isKeywordFactory(["inline", "block", "horizontal", "vertical"])
+};
 
-var mozForceBrokenImageIcon$1 = Object.freeze({
-  default: mozForceBrokenImageIcon,
-  properties: properties$3
-});
+var mozStackSizing = {
+  properties: ["-moz-stack-sizing"],
+  fn: isKeywordFactory(["ignore", "stretch-to-fit"])
+};
 
-var mozOrient = isKeywordFactory(["inline", "block", "horizontal", "vertical"]);
-var properties$4 = ["-moz-orient"];
+var mozTextBlink = {
+  properties: ["-moz-text-blink"],
+  fn: isKeywordFactory(["none", "blink"])
+};
 
-var mozOrient$1 = Object.freeze({
-	default: mozOrient,
-	properties: properties$4
-});
+var mozUserFocus = {
+  properties: ["-moz-user-focus"],
+  fn: isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"])
+};
 
-var mozStackSizing = isKeywordFactory(["ignore", "stretch-to-fit"]);
-var properties$5 = ["-moz-stack-sizing"];
+var mozUserInput = {
+  properties: ["-moz-user-input"],
+  fn: isKeywordFactory(["none", "enabled", "disabled"])
+};
 
-var mozStackSizing$1 = Object.freeze({
-	default: mozStackSizing,
-	properties: properties$5
-});
+var mozUserModify = {
+  properties: ["-moz-user-modify"],
+  fn: isKeywordFactory(["read-only", "read-write", "write-only"])
+};
 
-var mozTextBlink = isKeywordFactory(["none", "blink"]);
-var properties$6 = ["-moz-text-blink"];
-
-var mozTextBlink$1 = Object.freeze({
-	default: mozTextBlink,
-	properties: properties$6
-});
-
-var mozUserFocus = isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"]);
-var properties$7 = ["-moz-user-focus"];
-
-var mozUserFocus$1 = Object.freeze({
-	default: mozUserFocus,
-	properties: properties$7
-});
-
-var mozUserInput = isKeywordFactory(["none", "enabled", "disabled"]);
-var properties$8 = ["-moz-user-input"];
-
-var mozUserInput$1 = Object.freeze({
-	default: mozUserInput,
-	properties: properties$8
-});
-
-var mozUserModify = isKeywordFactory(["read-only", "read-write", "write-only"]);
-var properties$9 = ["-moz-user-modify"];
-
-var mozUserModify$1 = Object.freeze({
-	default: mozUserModify,
-	properties: properties$9
-});
-
-var mozWindowShadow = isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"]);
-var properties$10 = ["-moz-window-shadow"];
-
-var mozWindowShadow$1 = Object.freeze({
-	default: mozWindowShadow,
-	properties: properties$10
-});
+var mozWindowShadow = {
+  properties: ["-moz-window-shadow"],
+  fn: isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"])
+};
 
 var isComma = (function (_ref) {
     var type = _ref.type;
@@ -247,20 +214,17 @@ function isColor(node) {
     return isRgb(node) || isRgba(node) || isHsl(node) || isHsla(node) || isHex(node) || isNamedColor(node) || isCurrentColor(node);
 }
 
-function webkitBorderBeforeColor (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isColor(node);
+var webkitBorderBeforeColor = {
+  properties: ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"],
+  fn: function webkitBorderBeforeColor(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isColor(node);
+    }
+
+    return false;
   }
-
-  return false;
-}
-var properties$11 = ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"];
-
-var webkitBorderBeforeColor$1 = Object.freeze({
-  default: webkitBorderBeforeColor,
-  properties: properties$11
-});
+};
 
 var brStyles = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 
@@ -274,25 +238,22 @@ var isSpace = (function (_ref) {
     return type === 'space';
 });
 
-function webkitBorderBeforeStyle (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var webkitBorderBeforeStyle = {
+  properties: ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"],
+  fn: function webkitBorderBeforeStyle(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isBrStyle(node) && !isVar(node) || !even && !isSpace(node)) {
-      valid = false;
-    }
+      if (even && !isBrStyle(node) && !isVar(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-}
-var properties$12 = ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"];
-
-var webkitBorderBeforeStyle$1 = Object.freeze({
-  default: webkitBorderBeforeStyle,
-  properties: properties$12
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
 
 var lengths = ['em', 'ex', 'ch', 'rem', 'vh', 'vw', 'vmin', 'vmax', 'px', 'q', 'mm', 'cm', 'in', 'pt', 'pc'];
 
@@ -313,25 +274,22 @@ var isBrWidth = (function (node) {
     return isLength(node) || isKeyword(node, brWidths);
 });
 
-function webkitBorderBeforeWidth (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var webkitBorderBeforeWidth = {
+  properties: ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"],
+  fn: function webkitBorderBeforeWidth(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isBrWidth(node) && !isVar(node) || !even && !isSpace(node)) {
-      valid = false;
-    }
+      if (even && !isBrWidth(node) && !isVar(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-}
-var properties$13 = ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"];
-
-var webkitBorderBeforeWidth$1 = Object.freeze({
-  default: webkitBorderBeforeWidth,
-  properties: properties$13
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
 
 var singleValues = ['repeat-x', 'repeat-y'];
 
@@ -369,111 +327,79 @@ var isRepeatStyle = (function (parsed) {
     return valid;
 });
 
-var properties$14 = ["-webkit-mask-repeat", "background-repeat", "mask-repeat"];
+var webkitMaskRepeat = {
+  properties: ["-webkit-mask-repeat", "background-repeat", "mask-repeat"],
+  fn: isRepeatStyle
+};
 
-var webkitMaskRepeat = Object.freeze({
-	default: isRepeatStyle,
-	properties: properties$14
-});
+var webkitMaskRepeatX = {
+  properties: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
+  fn: isKeywordFactory(["repeat", "no-repeat", "space", "round"])
+};
 
-var webkitMaskRepeatX = isKeywordFactory(["repeat", "no-repeat", "space", "round"]);
-var properties$15 = ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"];
+var webkitTapHighlightColor = {
+  properties: ["-webkit-tap-highlight-color"],
+  fn: function webkitTapHighlightColor(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-var webkitMaskRepeatX$1 = Object.freeze({
-	default: webkitMaskRepeatX,
-	properties: properties$15
-});
+      if (even && !isColor(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-function webkitTapHighlightColor (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
-    if (even && !isColor(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
+var webkitTextStrokeWidth = {
+  properties: ["-webkit-text-stroke-width", "outline-offset"],
+  fn: function webkitTextStrokeWidth(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node);
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$16 = ["-webkit-tap-highlight-color"];
-
-var webkitTapHighlightColor$1 = Object.freeze({
-  default: webkitTapHighlightColor,
-  properties: properties$16
-});
-
-function webkitTextStrokeWidth (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node);
   }
+};
 
-  return false;
-}
-var properties$17 = ["-webkit-text-stroke-width", "outline-offset"];
+var webkitTouchCallout = {
+  properties: ["-webkit-touch-callout"],
+  fn: isKeywordFactory(["default", "none"])
+};
 
-var webkitTextStrokeWidth$1 = Object.freeze({
-  default: webkitTextStrokeWidth,
-  properties: properties$17
-});
+var alignContent = {
+  properties: ["-webkit-align-content", "align-content"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"])
+};
 
-var webkitTouchCallout = isKeywordFactory(["default", "none"]);
-var properties$18 = ["-webkit-touch-callout"];
+var msFlexLinePack = {
+  properties: ["-ms-flex-line-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"])
+};
 
-var webkitTouchCallout$1 = Object.freeze({
-	default: webkitTouchCallout,
-	properties: properties$18
-});
+var msFlexAlign = {
+  properties: ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
+};
 
-var alignContent = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"]);
-var properties$19 = ["-webkit-align-content", "align-content"];
+var alignItems = {
+  properties: ["-webkit-align-items", "-ms-grid-row-align", "align-items"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"])
+};
 
-var alignContent$1 = Object.freeze({
-	default: alignContent,
-	properties: properties$19
-});
+var alignSelf = {
+  properties: ["-webkit-align-self", "align-self"],
+  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"])
+};
 
-var msFlexLinePack = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"]);
-var properties$20 = ["-ms-flex-line-pack"];
-
-var msFlexLinePack$1 = Object.freeze({
-	default: msFlexLinePack,
-	properties: properties$20
-});
-
-var msFlexAlign = isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"]);
-var properties$21 = ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"];
-
-var msFlexAlign$1 = Object.freeze({
-	default: msFlexAlign,
-	properties: properties$21
-});
-
-var alignItems = isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"]);
-var properties$22 = ["-webkit-align-items", "-ms-grid-row-align", "align-items"];
-
-var alignItems$1 = Object.freeze({
-	default: alignItems,
-	properties: properties$22
-});
-
-var alignSelf = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"]);
-var properties$23 = ["-webkit-align-self", "align-self"];
-
-var alignSelf$1 = Object.freeze({
-	default: alignSelf,
-	properties: properties$23
-});
-
-var msFlexItemAlign = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"]);
-var properties$24 = ["-ms-flex-item-align"];
-
-var msFlexItemAlign$1 = Object.freeze({
-	default: msFlexItemAlign,
-	properties: properties$24
-});
+var msFlexItemAlign = {
+  properties: ["-ms-flex-item-align"],
+  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
+};
 
 var units = ['s', 'ms'];
 
@@ -484,25 +410,22 @@ var isTime = (function (_ref) {
     return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~units.indexOf(int.unit);
 });
 
-function animationDelay (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationDelay = {
+  properties: ["animation-delay", "animation-duration", "transition-delay", "transition-duration"],
+  fn: function animationDelay(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isTime(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isTime(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$25 = ["animation-delay", "animation-duration", "transition-delay", "transition-duration"];
-
-var animationDelay$1 = Object.freeze({
-  default: animationDelay,
-  properties: properties$25
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var singleAnimationDirections = ['normal', 'reverse', 'alternate', 'alternate-reverse'];
 
@@ -510,25 +433,22 @@ var isSingleAnimationDirection = (function (node) {
     return isKeyword(node, singleAnimationDirections);
 });
 
-function animationDirection (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationDirection = {
+  properties: ["animation-direction"],
+  fn: function animationDirection(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleAnimationDirection(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleAnimationDirection(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$26 = ["animation-direction"];
-
-var animationDirection$1 = Object.freeze({
-  default: animationDirection,
-  properties: properties$26
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var singleAnimationFillModes = ['none', 'forwards', 'backwards', 'both'];
 
@@ -536,25 +456,22 @@ var isSingleAnimationFillMode = (function (node) {
     return isKeyword(node, singleAnimationFillModes);
 });
 
-function animationFillMode (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationFillMode = {
+  properties: ["animation-fill-mode"],
+  fn: function animationFillMode(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleAnimationFillMode(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleAnimationFillMode(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$27 = ["animation-fill-mode"];
-
-var animationFillMode$1 = Object.freeze({
-  default: animationFillMode,
-  properties: properties$27
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var value = ['infinite'];
 
@@ -562,25 +479,22 @@ var isSingleAnimationIterationCount = (function (node) {
     return isKeyword(node, value) || isNumber(node);
 });
 
-function animationIterationCount (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationIterationCount = {
+  properties: ["animation-iteration-count"],
+  fn: function animationIterationCount(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleAnimationIterationCount(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleAnimationIterationCount(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$28 = ["animation-iteration-count"];
-
-var animationIterationCount$1 = Object.freeze({
-  default: animationIterationCount,
-  properties: properties$28
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var isCustomIdent = (function (_ref) {
     var type = _ref.type;
@@ -605,25 +519,22 @@ var isSingleAnimationName = (function (node) {
     return node.type === 'word' && (node.value.toLowerCase() === 'none' || isCustomIdent(node));
 });
 
-function animationName (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationName = {
+  properties: ["animation-name"],
+  fn: function animationName(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleAnimationName(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleAnimationName(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$29 = ["animation-name"];
-
-var animationName$1 = Object.freeze({
-  default: animationName,
-  properties: properties$29
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var singleAnimationPlayStates = ['running', 'paused'];
 
@@ -631,25 +542,22 @@ var isSingleAnimationPlayState = (function (node) {
     return isKeyword(node, singleAnimationPlayStates);
 });
 
-function animationPlayState (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationPlayState = {
+  properties: ["animation-play-state"],
+  fn: function animationPlayState(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleAnimationPlayState(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleAnimationPlayState(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$30 = ["animation-play-state"];
-
-var animationPlayState$1 = Object.freeze({
-  default: animationPlayState,
-  properties: properties$30
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var keywords = ['ease', 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-end'];
 
@@ -701,41 +609,32 @@ var isSingleTransitionTimingFunction = (function (node) {
     return isTimingKeyword(node) || isSteps(node) || isCubicBezier(node);
 });
 
-function animationTimingFunction (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var animationTimingFunction = {
+  properties: ["animation-timing-function", "transition-timing-function"],
+  fn: function animationTimingFunction(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isSingleTransitionTimingFunction(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isSingleTransitionTimingFunction(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$31 = ["animation-timing-function", "transition-timing-function"];
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
-var animationTimingFunction$1 = Object.freeze({
-  default: animationTimingFunction,
-  properties: properties$31
-});
+var appearance = {
+  properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
+  fn: isKeywordFactory(["auto", "none"])
+};
 
-var appearance = isKeywordFactory(["auto", "none"]);
-var properties$32 = ["-webkit-appearance", "-moz-appearance", "appearance"];
-
-var appearance$1 = Object.freeze({
-	default: appearance,
-	properties: properties$32
-});
-
-var backfaceVisibility = isKeywordFactory(["visible", "hidden"]);
-var properties$33 = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"];
-
-var backfaceVisibility$1 = Object.freeze({
-	default: backfaceVisibility,
-	properties: properties$33
-});
+var backfaceVisibility = {
+  properties: ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"],
+  fn: isKeywordFactory(["visible", "hidden"])
+};
 
 var attachments = ['scroll', 'fixed', 'local'];
 
@@ -743,25 +642,22 @@ var isAttachment = (function (node) {
     return isKeyword(node, attachments);
 });
 
-function backgroundAttachment (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var backgroundAttachment = {
+  properties: ["background-attachment"],
+  fn: function backgroundAttachment(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isAttachment(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isAttachment(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$34 = ["background-attachment"];
-
-var backgroundAttachment$1 = Object.freeze({
-  default: backgroundAttachment,
-  properties: properties$34
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var blendValues = ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
 
@@ -769,25 +665,22 @@ var isBlendMode = (function (node) {
     return isKeyword(node, blendValues);
 });
 
-function backgroundBlendMode (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var backgroundBlendMode = {
+  properties: ["background-blend-mode"],
+  fn: function backgroundBlendMode(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isBlendMode(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isBlendMode(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$35 = ["background-blend-mode"];
-
-var backgroundBlendMode$1 = Object.freeze({
-  default: backgroundBlendMode,
-  properties: properties$35
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var boxes = ['border-box', 'padding-box', 'content-box'];
 
@@ -795,25 +688,22 @@ var isBox = (function (node) {
     return isKeyword(node, boxes);
 });
 
-function backgroundClip (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var backgroundClip = {
+  properties: ["background-clip", "background-origin"],
+  fn: function backgroundClip(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isBox(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isBox(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$36 = ["background-clip", "background-origin"];
-
-var backgroundClip$1 = Object.freeze({
-  default: backgroundClip,
-  properties: properties$36
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var isLengthPercentage = (function (node) {
     return isLength(node) || isPercentage(node);
@@ -887,9 +777,7 @@ function validateGroup(group) {
     return length < 8;
 }
 
-function isPositionFactory() {
-    var repeating = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-
+function isPositionFactory(repeating) {
     return function isPosition(parsed) {
         if (repeating && parsed.nodes[parsed.nodes.length - 1].type === 'div') {
             return false;
@@ -899,394 +787,280 @@ function isPositionFactory() {
     };
 }
 
-var backgroundPosition = isPositionFactory(true);
-var properties$37 = ["background-position", "mask-position"];
+var backgroundPosition = {
+  properties: ["background-position", "mask-position"],
+  fn: isPositionFactory(true)
+};
 
-var backgroundPosition$1 = Object.freeze({
-	default: backgroundPosition,
-	properties: properties$37
-});
+var borderBottomLeftRadius = {
+  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
+  fn: function borderBottomLeftRadius(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-function borderBottomLeftRadius (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+      if (even && !isLengthPercentage(node) && !isVar(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
 
-    if (even && !isLengthPercentage(node) && !isVar(node) || !even && !isSpace(node)) {
-      valid = false;
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
+  }
+};
+
+var borderBottomStyle = {
+  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
+  fn: function borderBottomStyle(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrStyle(node);
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
-}
-var properties$38 = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"];
-
-var borderBottomLeftRadius$1 = Object.freeze({
-  default: borderBottomLeftRadius,
-  properties: properties$38
-});
-
-function borderBottomStyle (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBrStyle(node);
   }
+};
 
-  return false;
-}
-var properties$39 = ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"];
-
-var borderBottomStyle$1 = Object.freeze({
-  default: borderBottomStyle,
-  properties: properties$39
-});
-
-function borderBottomWidth (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBrWidth(node);
-  }
-
-  return false;
-}
-var properties$40 = ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"];
-
-var borderBottomWidth$1 = Object.freeze({
-  default: borderBottomWidth,
-  properties: properties$40
-});
-
-var borderCollapse = isKeywordFactory(["collapse", "separate"]);
-var properties$41 = ["border-collapse"];
-
-var borderCollapse$1 = Object.freeze({
-	default: borderCollapse,
-	properties: properties$41
-});
-
-function borderColor (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
-
-    if (even && !isColor(node) && !isVar(node) || !even && !isSpace(node)) {
-      valid = false;
+var borderBottomWidth = {
+  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
+  fn: function borderBottomWidth(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrWidth(node);
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-}
-var properties$42 = ["border-color"];
-
-var borderColor$1 = Object.freeze({
-  default: borderColor,
-  properties: properties$42
-});
-
-function bottom$1 (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || isPercentage(node) || node.value.toLowerCase() === "auto";
   }
+};
 
-  return false;
-}
-var properties$43 = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"];
+var borderCollapse = {
+  properties: ["border-collapse"],
+  fn: isKeywordFactory(["collapse", "separate"])
+};
 
-var bottom$2 = Object.freeze({
-  default: bottom$1,
-  properties: properties$43
-});
+var borderColor = {
+  properties: ["border-color"],
+  fn: function borderColor(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-var boxAlign = isKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
-var properties$44 = ["box-align"];
+      if (even && !isColor(node) && !isVar(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
 
-var boxAlign$1 = Object.freeze({
-	default: boxAlign,
-	properties: properties$44
-});
-
-var boxDecorationBreak = isKeywordFactory(["slice", "clone"]);
-var properties$45 = ["-webkit-box-decoration-break", "box-decoration-break"];
-
-var boxDecorationBreak$1 = Object.freeze({
-	default: boxDecorationBreak,
-	properties: properties$45
-});
-
-var boxDirection = isKeywordFactory(["normal", "reverse", "inherit"]);
-var properties$46 = ["box-direction"];
-
-var boxDirection$1 = Object.freeze({
-	default: boxDirection,
-	properties: properties$46
-});
-
-function boxFlex (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isNumber(node);
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
   }
+};
 
-  return false;
-}
-var properties$47 = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"];
+var bottom$1 = {
+  properties: ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"],
+  fn: function bottom(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isPercentage(node) || node.value.toLowerCase() === "auto";
+    }
 
-var boxFlex$1 = Object.freeze({
-  default: boxFlex,
-  properties: properties$47
-});
-
-var boxLines = isKeywordFactory(["single", "multiple"]);
-var properties$48 = ["box-lines"];
-
-var boxLines$1 = Object.freeze({
-	default: boxLines,
-	properties: properties$48
-});
-
-var boxOrient = isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"]);
-var properties$49 = ["box-orient"];
-
-var boxOrient$1 = Object.freeze({
-	default: boxOrient,
-	properties: properties$49
-});
-
-var boxPack = isKeywordFactory(["start", "center", "end", "justify"]);
-var properties$50 = ["box-pack"];
-
-var boxPack$1 = Object.freeze({
-	default: boxPack,
-	properties: properties$50
-});
-
-var boxSizing = isKeywordFactory(["content-box", "border-box"]);
-var properties$51 = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"];
-
-var boxSizing$1 = Object.freeze({
-	default: boxSizing,
-	properties: properties$51
-});
-
-var boxSuppress = isKeywordFactory(["show", "discard", "hide"]);
-var properties$52 = ["box-suppress"];
-
-var boxSuppress$1 = Object.freeze({
-	default: boxSuppress,
-	properties: properties$52
-});
-
-var pageBreakAfter = isKeywordFactory(["auto", "always", "avoid", "left", "right"]);
-var properties$53 = ["page-break-after", "page-break-before"];
-
-var pageBreakAfter$1 = Object.freeze({
-	default: pageBreakAfter,
-	properties: properties$53
-});
-
-var webkitColumnBreakInside = isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"]);
-var properties$54 = ["-webkit-column-break-inside", "page-break-inside", "break-inside"];
-
-var webkitColumnBreakInside$1 = Object.freeze({
-	default: webkitColumnBreakInside,
-	properties: properties$54
-});
-
-var captionSide = isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"]);
-var properties$55 = ["caption-side"];
-
-var captionSide$1 = Object.freeze({
-	default: captionSide,
-	properties: properties$55
-});
-
-var clear = isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"]);
-var properties$56 = ["clear"];
-
-var clear$1 = Object.freeze({
-	default: clear,
-	properties: properties$56
-});
-
-function columnCount (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isNumber(node) || node.value.toLowerCase() === "auto";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$57 = ["-webkit-column-count", "-moz-column-count", "column-count"];
+var boxAlign = {
+  properties: ["box-align"],
+  fn: isKeywordFactory(["start", "center", "end", "baseline", "stretch"])
+};
 
-var columnCount$1 = Object.freeze({
-  default: columnCount,
-  properties: properties$57
-});
+var boxDecorationBreak = {
+  properties: ["-webkit-box-decoration-break", "box-decoration-break"],
+  fn: isKeywordFactory(["slice", "clone"])
+};
 
-var columnFill = isKeywordFactory(["auto", "balance"]);
-var properties$58 = ["-webkit-column-fill", "-moz-column-fill", "column-fill"];
+var boxDirection = {
+  properties: ["box-direction"],
+  fn: isKeywordFactory(["normal", "reverse", "inherit"])
+};
 
-var columnFill$1 = Object.freeze({
-	default: columnFill,
-	properties: properties$58
-});
+var boxFlex = {
+  properties: ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"],
+  fn: function boxFlex(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node);
+    }
 
-function columnGap (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || node.value.toLowerCase() === "normal";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$59 = ["-webkit-column-gap", "-moz-column-gap", "column-gap"];
+var boxLines = {
+  properties: ["box-lines"],
+  fn: isKeywordFactory(["single", "multiple"])
+};
 
-var columnGap$1 = Object.freeze({
-  default: columnGap,
-  properties: properties$59
-});
+var boxOrient = {
+  properties: ["box-orient"],
+  fn: isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"])
+};
 
-var columnSpan = isKeywordFactory(["none", "all"]);
-var properties$60 = ["-webkit-column-span", "-moz-column-span", "column-span"];
+var boxPack = {
+  properties: ["box-pack"],
+  fn: isKeywordFactory(["start", "center", "end", "justify"])
+};
 
-var columnSpan$1 = Object.freeze({
-	default: columnSpan,
-	properties: properties$60
-});
+var boxSizing = {
+  properties: ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"],
+  fn: isKeywordFactory(["content-box", "border-box"])
+};
 
-function columnWidth (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || node.value.toLowerCase() === "auto";
+var boxSuppress = {
+  properties: ["box-suppress"],
+  fn: isKeywordFactory(["show", "discard", "hide"])
+};
+
+var pageBreakAfter = {
+  properties: ["page-break-after", "page-break-before"],
+  fn: isKeywordFactory(["auto", "always", "avoid", "left", "right"])
+};
+
+var webkitColumnBreakInside = {
+  properties: ["-webkit-column-break-inside", "page-break-inside", "break-inside"],
+  fn: isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"])
+};
+
+var captionSide = {
+  properties: ["caption-side"],
+  fn: isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"])
+};
+
+var clear = {
+  properties: ["clear"],
+  fn: isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"])
+};
+
+var columnCount = {
+  properties: ["-webkit-column-count", "-moz-column-count", "column-count"],
+  fn: function columnCount(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || node.value.toLowerCase() === "auto";
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$61 = ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"];
+var columnFill = {
+  properties: ["-webkit-column-fill", "-moz-column-fill", "column-fill"],
+  fn: isKeywordFactory(["auto", "balance"])
+};
 
-var columnWidth$1 = Object.freeze({
-  default: columnWidth,
-  properties: properties$61
-});
+var columnGap = {
+  properties: ["-webkit-column-gap", "-moz-column-gap", "column-gap"],
+  fn: function columnGap(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || node.value.toLowerCase() === "normal";
+    }
 
-var direction = isKeywordFactory(["ltr", "rtl"]);
-var properties$62 = ["direction"];
+    return false;
+  }
+};
 
-var direction$1 = Object.freeze({
-	default: direction,
-	properties: properties$62
-});
+var columnSpan = {
+  properties: ["-webkit-column-span", "-moz-column-span", "column-span"],
+  fn: isKeywordFactory(["none", "all"])
+};
 
-var display = isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"]);
-var properties$63 = ["display"];
+var columnWidth = {
+  properties: ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"],
+  fn: function columnWidth(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || node.value.toLowerCase() === "auto";
+    }
 
-var display$1 = Object.freeze({
-	default: display,
-	properties: properties$63
-});
+    return false;
+  }
+};
 
-var displayInside = isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"]);
-var properties$64 = ["display-inside"];
+var direction = {
+  properties: ["direction"],
+  fn: isKeywordFactory(["ltr", "rtl"])
+};
 
-var displayInside$1 = Object.freeze({
-	default: displayInside,
-	properties: properties$64
-});
+var display = {
+  properties: ["display"],
+  fn: isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"])
+};
 
-var displayList = isKeywordFactory(["none", "list-item"]);
-var properties$65 = ["display-list"];
+var displayInside = {
+  properties: ["display-inside"],
+  fn: isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"])
+};
 
-var displayList$1 = Object.freeze({
-	default: displayList,
-	properties: properties$65
-});
+var displayList = {
+  properties: ["display-list"],
+  fn: isKeywordFactory(["none", "list-item"])
+};
 
-var displayOutside = isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"]);
-var properties$66 = ["display-outside"];
+var displayOutside = {
+  properties: ["display-outside"],
+  fn: isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"])
+};
 
-var displayOutside$1 = Object.freeze({
-	default: displayOutside,
-	properties: properties$66
-});
+var emptyCells = {
+  properties: ["empty-cells"],
+  fn: isKeywordFactory(["show", "hide"])
+};
 
-var emptyCells = isKeywordFactory(["show", "hide"]);
-var properties$67 = ["empty-cells"];
+var mozBoxOrient = {
+  properties: ["-webkit-box-orient", "-moz-box-orient"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"])
+};
 
-var emptyCells$1 = Object.freeze({
-	default: emptyCells,
-	properties: properties$67
-});
+var mozBoxDirection = {
+  properties: ["-webkit-box-direction", "-moz-box-direction"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"])
+};
 
-var mozBoxOrient = isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"]);
-var properties$68 = ["-webkit-box-orient", "-moz-box-orient"];
+var flexDirection = {
+  properties: ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse"])
+};
 
-var mozBoxOrient$1 = Object.freeze({
-	default: mozBoxOrient,
-	properties: properties$68
-});
+var flexWrap = {
+  properties: ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"],
+  fn: isKeywordFactory(["nowrap", "wrap", "wrap-reverse"])
+};
 
-var mozBoxDirection = isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"]);
-var properties$69 = ["-webkit-box-direction", "-moz-box-direction"];
+var float = {
+  properties: ["float"],
+  fn: isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"])
+};
 
-var mozBoxDirection$1 = Object.freeze({
-	default: mozBoxDirection,
-	properties: properties$69
-});
-
-var flexDirection = isKeywordFactory(["row", "row-reverse", "column", "column-reverse"]);
-var properties$70 = ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"];
-
-var flexDirection$1 = Object.freeze({
-	default: flexDirection,
-	properties: properties$70
-});
-
-var flexWrap = isKeywordFactory(["nowrap", "wrap", "wrap-reverse"]);
-var properties$71 = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"];
-
-var flexWrap$1 = Object.freeze({
-	default: flexWrap,
-	properties: properties$71
-});
-
-var float = isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"]);
-var properties$72 = ["float"];
-
-var float$1 = Object.freeze({
-	default: float,
-	properties: properties$72
-});
-
-var fontKerning = isKeywordFactory(["auto", "normal", "none"]);
-var properties$73 = ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"];
-
-var fontKerning$1 = Object.freeze({
-	default: fontKerning,
-	properties: properties$73
-});
+var fontKerning = {
+  properties: ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"],
+  fn: isKeywordFactory(["auto", "normal", "none"])
+};
 
 var isString = (function (_ref) {
   var type = _ref.type;
   return type === 'string';
 });
 
-function fontLanguageOverride (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isString(node) || node.value.toLowerCase() === "normal";
+var fontLanguageOverride = {
+  properties: ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"],
+  fn: function fontLanguageOverride(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isString(node) || node.value.toLowerCase() === "normal";
+    }
+
+    return false;
   }
-
-  return false;
-}
-var properties$74 = ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"];
-
-var fontLanguageOverride$1 = Object.freeze({
-  default: fontLanguageOverride,
-  properties: properties$74
-});
+};
 
 var absoluteSizes = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
 
@@ -1300,234 +1074,168 @@ var isRelativeSize = (function (node) {
     return isKeyword(node, relativeSizes);
 });
 
-function fontSize (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
-  }
-
-  return false;
-}
-var properties$75 = ["font-size"];
-
-var fontSize$1 = Object.freeze({
-  default: fontSize,
-  properties: properties$75
-});
-
-function fontSizeAdjust (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isNumber(node) || node.value.toLowerCase() === "none";
-  }
-
-  return false;
-}
-var properties$76 = ["font-size-adjust"];
-
-var fontSizeAdjust$1 = Object.freeze({
-  default: fontSizeAdjust,
-  properties: properties$76
-});
-
-var fontStretch = isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
-var properties$77 = ["font-stretch"];
-
-var fontStretch$1 = Object.freeze({
-	default: fontStretch,
-	properties: properties$77
-});
-
-var fontStyle = isKeywordFactory(["normal", "italic", "oblique"]);
-var properties$78 = ["font-style"];
-
-var fontStyle$1 = Object.freeze({
-	default: fontStyle,
-	properties: properties$78
-});
-
-var fontVariantCaps = isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"]);
-var properties$79 = ["font-variant-caps"];
-
-var fontVariantCaps$1 = Object.freeze({
-	default: fontVariantCaps,
-	properties: properties$79
-});
-
-var fontVariantPosition = isKeywordFactory(["normal", "sub", "super"]);
-var properties$80 = ["font-variant-position"];
-
-var fontVariantPosition$1 = Object.freeze({
-	default: fontVariantPosition,
-	properties: properties$80
-});
-
-var fontWeight = isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
-var properties$81 = ["font-weight"];
-
-var fontWeight$1 = Object.freeze({
-	default: fontWeight,
-	properties: properties$81
-});
-
-function gridColumnGap (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLengthPercentage(node);
-  }
-
-  return false;
-}
-var properties$82 = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"];
-
-var gridColumnGap$1 = Object.freeze({
-  default: gridColumnGap,
-  properties: properties$82
-});
-
-function gridTemplateAreas (parsed) {
-  var node = parsed.nodes[0];
-
-  if (parsed.nodes.length === 1 && node.value.toLowerCase() === "none") {
-    return true;
-  }
-
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
-
-    if (even && !isString(node) && !isVar(node) || !even && !isSpace(node)) {
-      valid = false;
+var fontSize = {
+  properties: ["font-size"],
+  fn: function fontSize(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$83 = ["grid-template-areas"];
-
-var gridTemplateAreas$1 = Object.freeze({
-  default: gridTemplateAreas,
-  properties: properties$83
-});
-
-var hyphens = isKeywordFactory(["none", "manual", "auto"]);
-var properties$84 = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"];
-
-var hyphens$1 = Object.freeze({
-	default: hyphens,
-	properties: properties$84
-});
-
-var imageRendering = isKeywordFactory(["auto", "crisp-edges", "pixelated", "-moz-crisp-edges", "-o-pixelated"]);
-var properties$85 = ["image-rendering"];
-
-var imageRendering$1 = Object.freeze({
-	default: imageRendering,
-	properties: properties$85
-});
-
-var msInterpolationMode = isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"]);
-var properties$86 = ["-ms-interpolation-mode"];
-
-var msInterpolationMode$1 = Object.freeze({
-	default: msInterpolationMode,
-	properties: properties$86
-});
-
-var imeMode = isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"]);
-var properties$87 = ["ime-mode"];
-
-var imeMode$1 = Object.freeze({
-	default: imeMode,
-	properties: properties$87
-});
-
-var initialLetterAlign = isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"]);
-var properties$88 = ["initial-letter-align"];
-
-var initialLetterAlign$1 = Object.freeze({
-	default: initialLetterAlign,
-	properties: properties$88
-});
-
-var isolation = isKeywordFactory(["auto", "isolate"]);
-var properties$89 = ["isolation"];
-
-var isolation$1 = Object.freeze({
-	default: isolation,
-	properties: properties$89
-});
-
-var mozBoxPack = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"]);
-var properties$90 = ["-webkit-box-pack", "-moz-box-pack"];
-
-var mozBoxPack$1 = Object.freeze({
-	default: mozBoxPack,
-	properties: properties$90
-});
-
-var justifyContent = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"]);
-var properties$91 = ["-webkit-justify-content", "justify-content"];
-
-var justifyContent$1 = Object.freeze({
-	default: justifyContent,
-	properties: properties$91
-});
-
-var msFlexPack = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"]);
-var properties$92 = ["-ms-flex-pack"];
-
-var msFlexPack$1 = Object.freeze({
-	default: msFlexPack,
-	properties: properties$92
-});
-
-function letterSpacing (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || node.value.toLowerCase() === "normal";
   }
+};
 
-  return false;
-}
-var properties$93 = ["letter-spacing"];
+var fontSizeAdjust = {
+  properties: ["font-size-adjust"],
+  fn: function fontSizeAdjust(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || node.value.toLowerCase() === "none";
+    }
 
-var letterSpacing$1 = Object.freeze({
-  default: letterSpacing,
-  properties: properties$93
-});
-
-var lineBreak = isKeywordFactory(["auto", "loose", "normal", "strict"]);
-var properties$94 = ["line-break"];
-
-var lineBreak$1 = Object.freeze({
-	default: lineBreak,
-	properties: properties$94
-});
-
-function lineHeight (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isNumber(node) || isLength(node) || isPercentage(node) || node.value.toLowerCase() === "normal";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$95 = ["line-height"];
+var fontStretch = {
+  properties: ["font-stretch"],
+  fn: isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"])
+};
 
-var lineHeight$1 = Object.freeze({
-  default: lineHeight,
-  properties: properties$95
-});
+var fontStyle = {
+  properties: ["font-style"],
+  fn: isKeywordFactory(["normal", "italic", "oblique"])
+};
 
-var listStylePosition = isKeywordFactory(["inside", "outside"]);
-var properties$96 = ["list-style-position"];
+var fontVariantCaps = {
+  properties: ["font-variant-caps"],
+  fn: isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"])
+};
 
-var listStylePosition$1 = Object.freeze({
-	default: listStylePosition,
-	properties: properties$96
-});
+var fontVariantPosition = {
+  properties: ["font-variant-position"],
+  fn: isKeywordFactory(["normal", "sub", "super"])
+};
+
+var fontWeight = {
+  properties: ["font-weight"],
+  fn: isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"])
+};
+
+var gridColumnGap = {
+  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"],
+  fn: function gridColumnGap(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLengthPercentage(node);
+    }
+
+    return false;
+  }
+};
+
+var gridTemplateAreas = {
+  properties: ["grid-template-areas"],
+  fn: function gridTemplateAreas(parsed) {
+    var node = parsed.nodes[0];
+
+    if (parsed.nodes.length === 1 && node.value.toLowerCase() === "none") {
+      return true;
+    }
+
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isString(node) && !isVar(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+
+var hyphens = {
+  properties: ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"],
+  fn: isKeywordFactory(["none", "manual", "auto"])
+};
+
+var imageRendering = {
+  properties: ["image-rendering"],
+  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "-moz-crisp-edges", "-o-pixelated"])
+};
+
+var msInterpolationMode = {
+  properties: ["-ms-interpolation-mode"],
+  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"])
+};
+
+var imeMode = {
+  properties: ["ime-mode"],
+  fn: isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"])
+};
+
+var initialLetterAlign = {
+  properties: ["initial-letter-align"],
+  fn: isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"])
+};
+
+var isolation = {
+  properties: ["isolation"],
+  fn: isKeywordFactory(["auto", "isolate"])
+};
+
+var mozBoxPack = {
+  properties: ["-webkit-box-pack", "-moz-box-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"])
+};
+
+var justifyContent = {
+  properties: ["-webkit-justify-content", "justify-content"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"])
+};
+
+var msFlexPack = {
+  properties: ["-ms-flex-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"])
+};
+
+var letterSpacing = {
+  properties: ["letter-spacing"],
+  fn: function letterSpacing(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || node.value.toLowerCase() === "normal";
+    }
+
+    return false;
+  }
+};
+
+var lineBreak = {
+  properties: ["line-break"],
+  fn: isKeywordFactory(["auto", "loose", "normal", "strict"])
+};
+
+var lineHeight = {
+  properties: ["line-height"],
+  fn: function lineHeight(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || isLength(node) || isPercentage(node) || node.value.toLowerCase() === "normal";
+    }
+
+    return false;
+  }
+};
+
+var listStylePosition = {
+  properties: ["list-style-position"],
+  fn: isKeywordFactory(["inside", "outside"])
+};
 
 var compositingOperators = ['add', 'subtract', 'intersect', 'exclude'];
 
@@ -1535,25 +1243,22 @@ var isCompositingOperator = (function (node) {
     return isKeyword(node, compositingOperators);
 });
 
-function maskComposite (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var maskComposite = {
+  properties: ["mask-composite"],
+  fn: function maskComposite(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isCompositingOperator(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
-    }
+      if (even && !isCompositingOperator(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
 
-    return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$97 = ["mask-composite"];
-
-var maskComposite$1 = Object.freeze({
-  default: maskComposite,
-  properties: properties$97
-});
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
 
 var maskingModes = ['alpha', 'luminance', 'match-source'];
 
@@ -1561,422 +1266,302 @@ var isMaskingMode = (function (node) {
     return isKeyword(node, maskingModes);
 });
 
-function maskMode (parsed) {
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var maskMode = {
+  properties: ["mask-mode"],
+  fn: function maskMode(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
 
-    if (even && !isMaskingMode(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
+      if (even && !isMaskingMode(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+
+var maskType = {
+  properties: ["mask-type"],
+  fn: isKeywordFactory(["luminance", "alpha"])
+};
+
+var keywords$1 = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
+var maxBlockSize = {
+  properties: ["max-block-size", "max-height", "max-inline-size", "max-width"],
+  fn: function maxBlockSize(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isPercentage(node) || isKeyword(node, keywords$1);
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$98 = ["mask-mode"];
-
-var maskMode$1 = Object.freeze({
-  default: maskMode,
-  properties: properties$98
-});
-
-var maskType = isKeywordFactory(["luminance", "alpha"]);
-var properties$99 = ["mask-type"];
-
-var maskType$1 = Object.freeze({
-	default: maskType,
-	properties: properties$99
-});
-
-var keywords$1 = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
-function maxBlockSize (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || isPercentage(node) || isKeyword(node, keywords$1);
   }
-
-  return false;
-}
-var properties$100 = ["max-block-size", "max-height", "max-inline-size", "max-width"];
-
-var maxBlockSize$1 = Object.freeze({
-  default: maxBlockSize,
-  properties: properties$100
-});
+};
 
 var keywords$2 = ["auto", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
-function minBlockSize (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || isPercentage(node) || isKeyword(node, keywords$2);
+var minBlockSize = {
+  properties: ["min-block-size", "min-height", "min-inline-size", "min-width"],
+  fn: function minBlockSize(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isPercentage(node) || isKeyword(node, keywords$2);
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$101 = ["min-block-size", "min-height", "min-inline-size", "min-width"];
+var mixBlendMode = {
+  properties: ["mix-blend-mode"],
+  fn: function mixBlendMode(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBlendMode(node);
+    }
 
-var minBlockSize$1 = Object.freeze({
-  default: minBlockSize,
-  properties: properties$101
-});
-
-function mixBlendMode (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBlendMode(node);
+    return false;
   }
+};
 
-  return false;
-}
-var properties$102 = ["mix-blend-mode"];
+var objectFit = {
+  properties: ["-o-object-fit", "object-fit"],
+  fn: isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"])
+};
 
-var mixBlendMode$1 = Object.freeze({
-  default: mixBlendMode,
-  properties: properties$102
-});
+var objectPosition = {
+  properties: ["object-position", "perspective-origin", "scroll-snap-destination"],
+  fn: isPositionFactory(false)
+};
 
-var objectFit = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
-var properties$103 = ["-o-object-fit", "object-fit"];
+var outlineColor = {
+  properties: ["outline-color"],
+  fn: function outlineColor(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isColor(node) || node.value.toLowerCase() === "invert";
+    }
 
-var objectFit$1 = Object.freeze({
-	default: objectFit,
-	properties: properties$103
-});
-
-var objectPosition = isPositionFactory();
-var properties$104 = ["object-position", "perspective-origin", "scroll-snap-destination"];
-
-var objectPosition$1 = Object.freeze({
-	default: objectPosition,
-	properties: properties$104
-});
-
-function outlineColor (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isColor(node) || node.value.toLowerCase() === "invert";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$105 = ["outline-color"];
+var outlineStyle = {
+  properties: ["outline-style"],
+  fn: function outlineStyle(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrStyle(node) || node.value.toLowerCase() === "auto";
+    }
 
-var outlineColor$1 = Object.freeze({
-  default: outlineColor,
-  properties: properties$105
-});
-
-function outlineStyle (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isBrStyle(node) || node.value.toLowerCase() === "auto";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$106 = ["outline-style"];
+var overflow = {
+  properties: ["overflow", "overflow-x", "overflow-y"],
+  fn: isKeywordFactory(["visible", "hidden", "scroll", "auto"])
+};
 
-var outlineStyle$1 = Object.freeze({
-  default: outlineStyle,
-  properties: properties$106
-});
+var overflowClipBox = {
+  properties: ["overflow-clip-box"],
+  fn: isKeywordFactory(["padding-box", "content-box"])
+};
 
-var overflow = isKeywordFactory(["visible", "hidden", "scroll", "auto"]);
-var properties$107 = ["overflow", "overflow-x", "overflow-y"];
+var overflowWrap = {
+  properties: ["overflow-wrap", "word-wrap"],
+  fn: isKeywordFactory(["normal", "break-word"])
+};
 
-var overflow$1 = Object.freeze({
-	default: overflow,
-	properties: properties$107
-});
+var paddingBlockEnd = {
+  properties: ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"],
+  fn: function paddingBlockEnd(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isPercentage(node);
+    }
 
-var overflowClipBox = isKeywordFactory(["padding-box", "content-box"]);
-var properties$108 = ["overflow-clip-box"];
-
-var overflowClipBox$1 = Object.freeze({
-	default: overflowClipBox,
-	properties: properties$108
-});
-
-var overflowWrap = isKeywordFactory(["normal", "break-word"]);
-var properties$109 = ["overflow-wrap", "word-wrap"];
-
-var overflowWrap$1 = Object.freeze({
-	default: overflowWrap,
-	properties: properties$109
-});
-
-function paddingBlockEnd (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || isPercentage(node);
+    return false;
   }
+};
 
-  return false;
-}
-var properties$110 = ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"];
+var pageBreakInside = {
+  properties: ["page-break-inside"],
+  fn: isKeywordFactory(["auto", "avoid"])
+};
 
-var paddingBlockEnd$1 = Object.freeze({
-  default: paddingBlockEnd,
-  properties: properties$110
-});
+var perspective = {
+  properties: ["-webkit-perspective", "-moz-perspective", "perspective"],
+  fn: function perspective(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || node.value.toLowerCase() === "none";
+    }
 
-var pageBreakInside = isKeywordFactory(["auto", "avoid"]);
-var properties$111 = ["page-break-inside"];
-
-var pageBreakInside$1 = Object.freeze({
-	default: pageBreakInside,
-	properties: properties$111
-});
-
-function perspective (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLength(node) || node.value.toLowerCase() === "none";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$112 = ["-webkit-perspective", "-moz-perspective", "perspective"];
+var pointerEvents = {
+  properties: ["pointer-events"],
+  fn: isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"])
+};
 
-var perspective$1 = Object.freeze({
-  default: perspective,
-  properties: properties$112
-});
+var position = {
+  properties: ["position"],
+  fn: isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"])
+};
 
-var pointerEvents = isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
-var properties$113 = ["pointer-events"];
+var resize = {
+  properties: ["resize"],
+  fn: isKeywordFactory(["none", "both", "horizontal", "vertical"])
+};
 
-var pointerEvents$1 = Object.freeze({
-	default: pointerEvents,
-	properties: properties$113
-});
+var rubyAlign = {
+  properties: ["ruby-align"],
+  fn: isKeywordFactory(["start", "center", "space-between", "space-around"])
+};
 
-var position = isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"]);
-var properties$114 = ["position"];
+var rubyMerge = {
+  properties: ["ruby-merge"],
+  fn: isKeywordFactory(["separate", "collapse", "auto"])
+};
 
-var position$1 = Object.freeze({
-	default: position,
-	properties: properties$114
-});
+var rubyPosition = {
+  properties: ["ruby-position"],
+  fn: isKeywordFactory(["over", "under", "inter-character"])
+};
 
-var resize = isKeywordFactory(["none", "both", "horizontal", "vertical"]);
-var properties$115 = ["resize"];
+var scrollBehavior = {
+  properties: ["scroll-behavior"],
+  fn: isKeywordFactory(["auto", "smooth"])
+};
 
-var resize$1 = Object.freeze({
-	default: resize,
-	properties: properties$115
-});
+var scrollSnapCoordinate = {
+  properties: ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"],
+  fn: function scrollSnapCoordinate(parsed) {
+    if (isPositionFactory(true)(parsed)) {
+      return true;
+    }
 
-var rubyAlign = isKeywordFactory(["start", "center", "space-between", "space-around"]);
-var properties$116 = ["ruby-align"];
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return node.value.toLowerCase() === "none";
+    }
 
-var rubyAlign$1 = Object.freeze({
-	default: rubyAlign,
-	properties: properties$116
-});
-
-var rubyMerge = isKeywordFactory(["separate", "collapse", "auto"]);
-var properties$117 = ["ruby-merge"];
-
-var rubyMerge$1 = Object.freeze({
-	default: rubyMerge,
-	properties: properties$117
-});
-
-var rubyPosition = isKeywordFactory(["over", "under", "inter-character"]);
-var properties$118 = ["ruby-position"];
-
-var rubyPosition$1 = Object.freeze({
-	default: rubyPosition,
-	properties: properties$118
-});
-
-var scrollBehavior = isKeywordFactory(["auto", "smooth"]);
-var properties$119 = ["scroll-behavior"];
-
-var scrollBehavior$1 = Object.freeze({
-	default: scrollBehavior,
-	properties: properties$119
-});
-
-function scrollSnapCoordinate (parsed) {
-  if (isPositionFactory(true)(parsed)) {
-    return true;
+    return false;
   }
+};
 
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return node.value.toLowerCase() === "none";
+var scrollSnapType = {
+  properties: ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"],
+  fn: isKeywordFactory(["none", "mandatory", "proximity"])
+};
+
+var tabSize = {
+  properties: ["tab-size"],
+  fn: function tabSize(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isInteger(node) || isLength(node);
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$120 = ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"];
+var tableLayout = {
+  properties: ["table-layout"],
+  fn: isKeywordFactory(["auto", "fixed"])
+};
 
-var scrollSnapCoordinate$1 = Object.freeze({
-  default: scrollSnapCoordinate,
-  properties: properties$120
-});
+var textAlign = {
+  properties: ["text-align"],
+  fn: isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"])
+};
 
-var scrollSnapType = isKeywordFactory(["none", "mandatory", "proximity"]);
-var properties$121 = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"];
+var textAlignLast = {
+  properties: ["-moz-text-align-last", "text-align-last"],
+  fn: isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"])
+};
 
-var scrollSnapType$1 = Object.freeze({
-	default: scrollSnapType,
-	properties: properties$121
-});
+var textDecorationStyle = {
+  properties: ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"],
+  fn: isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"])
+};
 
-function tabSize (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isInteger(node) || isLength(node);
-  }
+var textOrientation = {
+  properties: ["text-orientation"],
+  fn: isKeywordFactory(["mixed", "upright", "sideways"])
+};
 
-  return false;
-}
-var properties$122 = ["tab-size"];
-
-var tabSize$1 = Object.freeze({
-  default: tabSize,
-  properties: properties$122
-});
-
-var tableLayout = isKeywordFactory(["auto", "fixed"]);
-var properties$123 = ["table-layout"];
-
-var tableLayout$1 = Object.freeze({
-	default: tableLayout,
-	properties: properties$123
-});
-
-var textAlign = isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"]);
-var properties$124 = ["text-align"];
-
-var textAlign$1 = Object.freeze({
-	default: textAlign,
-	properties: properties$124
-});
-
-var textAlignLast = isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"]);
-var properties$125 = ["-moz-text-align-last", "text-align-last"];
-
-var textAlignLast$1 = Object.freeze({
-	default: textAlignLast,
-	properties: properties$125
-});
-
-var textDecorationStyle = isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"]);
-var properties$126 = ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"];
-
-var textDecorationStyle$1 = Object.freeze({
-	default: textDecorationStyle,
-	properties: properties$126
-});
-
-var textOrientation = isKeywordFactory(["mixed", "upright", "sideways"]);
-var properties$127 = ["text-orientation"];
-
-var textOrientation$1 = Object.freeze({
-	default: textOrientation,
-	properties: properties$127
-});
-
-var textRendering = isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"]);
-var properties$128 = ["text-rendering"];
-
-var textRendering$1 = Object.freeze({
-	default: textRendering,
-	properties: properties$128
-});
+var textRendering = {
+  properties: ["text-rendering"],
+  fn: isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"])
+};
 
 var keywords$3 = ["none", "auto"];
-function textSizeAdjust (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isPercentage(node) || isKeyword(node, keywords$3);
+var textSizeAdjust = {
+  properties: ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"],
+  fn: function textSizeAdjust(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isPercentage(node) || isKeyword(node, keywords$3);
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$129 = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"];
+var textTransform = {
+  properties: ["text-transform"],
+  fn: isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"])
+};
 
-var textSizeAdjust$1 = Object.freeze({
-  default: textSizeAdjust,
-  properties: properties$129
-});
+var transformBox = {
+  properties: ["transform-box"],
+  fn: isKeywordFactory(["border-box", "fill-box", "view-box"])
+};
 
-var textTransform = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
-var properties$130 = ["text-transform"];
+var transformStyle = {
+  properties: ["-webkit-transform-style", "-moz-transform-style", "transform-style"],
+  fn: isKeywordFactory(["flat", "preserve-3d"])
+};
 
-var textTransform$1 = Object.freeze({
-	default: textTransform,
-	properties: properties$130
-});
+var unicodeBidi = {
+  properties: ["unicode-bidi"],
+  fn: isKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"])
+};
 
-var transformBox = isKeywordFactory(["border-box", "fill-box", "view-box"]);
-var properties$131 = ["transform-box"];
-
-var transformBox$1 = Object.freeze({
-	default: transformBox,
-	properties: properties$131
-});
-
-var transformStyle = isKeywordFactory(["flat", "preserve-3d"]);
-var properties$132 = ["-webkit-transform-style", "-moz-transform-style", "transform-style"];
-
-var transformStyle$1 = Object.freeze({
-	default: transformStyle,
-	properties: properties$132
-});
-
-var unicodeBidi = isKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"]);
-var properties$133 = ["unicode-bidi"];
-
-var unicodeBidi$1 = Object.freeze({
-	default: unicodeBidi,
-	properties: properties$133
-});
-
-var userSelect = isKeywordFactory(["auto", "text", "none", "contain", "all"]);
-var properties$134 = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"];
-
-var userSelect$1 = Object.freeze({
-	default: userSelect,
-	properties: properties$134
-});
+var userSelect = {
+  properties: ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"],
+  fn: isKeywordFactory(["auto", "text", "none", "contain", "all"])
+};
 
 var keywords$4 = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
-function verticalAlign (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isPercentage(node) || isLength(node) || isKeyword(node, keywords$4);
+var verticalAlign = {
+  properties: ["vertical-align"],
+  fn: function verticalAlign(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isPercentage(node) || isLength(node) || isKeyword(node, keywords$4);
+    }
+
+    return false;
   }
+};
 
-  return false;
-}
-var properties$135 = ["vertical-align"];
+var visibility = {
+  properties: ["visibility"],
+  fn: isKeywordFactory(["visible", "hidden", "collapse"])
+};
 
-var verticalAlign$1 = Object.freeze({
-  default: verticalAlign,
-  properties: properties$135
-});
-
-var visibility = isKeywordFactory(["visible", "hidden", "collapse"]);
-var properties$136 = ["visibility"];
-
-var visibility$1 = Object.freeze({
-	default: visibility,
-	properties: properties$136
-});
-
-var whiteSpace = isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"]);
-var properties$137 = ["white-space"];
-
-var whiteSpace$1 = Object.freeze({
-	default: whiteSpace,
-	properties: properties$137
-});
+var whiteSpace = {
+  properties: ["white-space"],
+  fn: isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"])
+};
 
 var animateableFeatures = ['scroll-position', 'contents'];
 
@@ -1984,87 +1569,69 @@ var isAnimateableFeature = (function (node) {
     return isKeyword(node, animateableFeatures) || isCustomIdent(node);
 });
 
-function willChange (parsed) {
-  var node = parsed.nodes[0];
+var willChange = {
+  properties: ["will-change"],
+  fn: function willChange(parsed) {
+    var node = parsed.nodes[0];
 
-  if (parsed.nodes.length === 1 && node.value.toLowerCase() === "auto") {
-    return true;
+    if (parsed.nodes.length === 1 && node.value.toLowerCase() === "auto") {
+      return true;
+    }
+
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isAnimateableFeature(node) && !isVar(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
   }
+};
 
-  var valid = true;
-  parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+var wordBreak = {
+  properties: ["word-break"],
+  fn: isKeywordFactory(["normal", "break-all", "keep-all"])
+};
 
-    if (even && !isAnimateableFeature(node) && !isVar(node) || !even && !isComma(node)) {
-      valid = false;
+var wordSpacing = {
+  properties: ["word-spacing"],
+  fn: function wordSpacing(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLengthPercentage(node) || node.value.toLowerCase() === "normal";
     }
 
     return false;
-  });
-  return valid && parsed.nodes.length % 2 !== 0;
-}
-var properties$138 = ["will-change"];
-
-var willChange$1 = Object.freeze({
-  default: willChange,
-  properties: properties$138
-});
-
-var wordBreak = isKeywordFactory(["normal", "break-all", "keep-all"]);
-var properties$139 = ["word-break"];
-
-var wordBreak$1 = Object.freeze({
-	default: wordBreak,
-	properties: properties$139
-});
-
-function wordSpacing (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isLengthPercentage(node) || node.value.toLowerCase() === "normal";
   }
+};
 
-  return false;
-}
-var properties$140 = ["word-spacing"];
+var writingMode = {
+  properties: ["-webkit-writing-mode", "writing-mode"],
+  fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"])
+};
 
-var wordSpacing$1 = Object.freeze({
-  default: wordSpacing,
-  properties: properties$140
-});
+var msWritingMode = {
+  properties: ["-ms-writing-mode"],
+  fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"])
+};
 
-var writingMode = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
-var properties$141 = ["-webkit-writing-mode", "writing-mode"];
+var zIndex = {
+  properties: ["z-index"],
+  fn: function zIndex(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isInteger(node) || node.value.toLowerCase() === "auto";
+    }
 
-var writingMode$1 = Object.freeze({
-	default: writingMode,
-	properties: properties$141
-});
-
-var msWritingMode = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"]);
-var properties$142 = ["-ms-writing-mode"];
-
-var msWritingMode$1 = Object.freeze({
-	default: msWritingMode,
-	properties: properties$142
-});
-
-function zIndex (parsed) {
-  if (parsed.nodes.length === 1) {
-    var node = parsed.nodes[0];
-    return isInteger(node) || node.value.toLowerCase() === "auto";
+    return false;
   }
+};
 
-  return false;
-}
-var properties$143 = ["z-index"];
-
-var zIndex$1 = Object.freeze({
-  default: zIndex,
-  properties: properties$143
-});
-
-var validators = [msOverflowStyle$1, mozAppearance$1, mozFloatEdge$1, mozForceBrokenImageIcon$1, mozOrient$1, mozStackSizing$1, mozTextBlink$1, mozUserFocus$1, mozUserInput$1, mozUserModify$1, mozWindowShadow$1, webkitBorderBeforeColor$1, webkitBorderBeforeStyle$1, webkitBorderBeforeWidth$1, webkitMaskRepeat, webkitMaskRepeatX$1, webkitTapHighlightColor$1, webkitTextStrokeWidth$1, webkitTouchCallout$1, alignContent$1, msFlexLinePack$1, msFlexAlign$1, alignItems$1, alignSelf$1, msFlexItemAlign$1, animationDelay$1, animationDirection$1, animationFillMode$1, animationIterationCount$1, animationName$1, animationPlayState$1, animationTimingFunction$1, appearance$1, backfaceVisibility$1, backgroundAttachment$1, backgroundBlendMode$1, backgroundClip$1, backgroundPosition$1, borderBottomLeftRadius$1, borderBottomStyle$1, borderBottomWidth$1, borderCollapse$1, borderColor$1, bottom$2, boxAlign$1, boxDecorationBreak$1, boxDirection$1, boxFlex$1, boxLines$1, boxOrient$1, boxPack$1, boxSizing$1, boxSuppress$1, pageBreakAfter$1, webkitColumnBreakInside$1, captionSide$1, clear$1, columnCount$1, columnFill$1, columnGap$1, columnSpan$1, columnWidth$1, direction$1, display$1, displayInside$1, displayList$1, displayOutside$1, emptyCells$1, mozBoxOrient$1, mozBoxDirection$1, flexDirection$1, flexWrap$1, float$1, fontKerning$1, fontLanguageOverride$1, fontSize$1, fontSizeAdjust$1, fontStretch$1, fontStyle$1, fontVariantCaps$1, fontVariantPosition$1, fontWeight$1, gridColumnGap$1, gridTemplateAreas$1, hyphens$1, imageRendering$1, msInterpolationMode$1, imeMode$1, initialLetterAlign$1, isolation$1, mozBoxPack$1, justifyContent$1, msFlexPack$1, letterSpacing$1, lineBreak$1, lineHeight$1, listStylePosition$1, maskComposite$1, maskMode$1, maskType$1, maxBlockSize$1, minBlockSize$1, mixBlendMode$1, objectFit$1, objectPosition$1, outlineColor$1, outlineStyle$1, overflow$1, overflowClipBox$1, overflowWrap$1, paddingBlockEnd$1, pageBreakInside$1, perspective$1, pointerEvents$1, position$1, resize$1, rubyAlign$1, rubyMerge$1, rubyPosition$1, scrollBehavior$1, scrollSnapCoordinate$1, scrollSnapType$1, tabSize$1, tableLayout$1, textAlign$1, textAlignLast$1, textDecorationStyle$1, textOrientation$1, textRendering$1, textSizeAdjust$1, textTransform$1, transformBox$1, transformStyle$1, unicodeBidi$1, userSelect$1, verticalAlign$1, visibility$1, whiteSpace$1, willChange$1, wordBreak$1, wordSpacing$1, writingMode$1, msWritingMode$1, zIndex$1];
+var validators = [msOverflowStyle, mozAppearance, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom$1, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {
@@ -2083,7 +1650,7 @@ function cssValues(property, value) {
       return;
     }
 
-    return validator.default(value);
+    return validator.fn(value);
   });
 }
 

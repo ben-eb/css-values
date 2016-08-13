@@ -184,7 +184,7 @@ Promise.all(promises).then((configs) => {
     fileSystem.push(new File({
         path: resolve(`packages/css-values/properties/index.js`),
         contents: new Buffer(generator.program([
-            generator.requireNamespacedModules(...imported),
+            generator.requireModules(...imported),
             generator.exportModules(exported),
         ])),
     }), new File({

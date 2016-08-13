@@ -3,9 +3,9 @@ import arrayOfStrings from '../util/arrayOfStrings';
 import dataValidator from '../util/dataValidator';
 import template from '../util/moduleTemplate';
 import * as validators from '../validators';
-import exportConst from './exportConst';
 import generateProgram from './program';
 import requireModules from './requireModules';
+import validator, {generateValidatorStub} from './validator';
 
 const validatorPath = '../../validators/';
 
@@ -53,28 +53,21 @@ function handleKeywords (keywords, settings) {
 }
 
 export default opts => {
-    const properties = exportConst({
-        identifier: 'properties',
-        exported: arrayOfStrings(opts.properties),
-    });
     if (opts.candidates.length === 1 && opts.candidates[0].value === 'position') {
         const identifier = 'isPosition';
-        let main = template(`export default isPosition();`)();
-        if (opts.candidates[0].separator === ',') {
-            main = template(`export default isPosition(true);`)();
-        }
         return generateProgram([
             requireModules(getValidator(identifier)),
-            main,
-            properties,
+            generateValidatorStub(opts.identifier, opts.properties, t.callExpression(
+                t.identifier(identifier),
+                [t.booleanLiteral(opts.candidates[0].separator === ',')]
+            )),
         ]);
     }
     if (opts.candidates.length === 1 && opts.candidates[0].value === 'repeat-style') {
         const identifier = 'isRepeatStyle';
         return generateProgram([
             requireModules(getValidator(identifier)),
-            template(`export default ${identifier};`)(),
-            properties,
+            generateValidatorStub(opts.identifier, opts.properties, t.identifier(identifier)),
         ]);
     }
     const settings = opts.candidates.reduce((config, candidate) => {
@@ -150,34 +143,29 @@ export default opts => {
     if (settings.repeatingConditions.length) {
         handleKeywords(keywords, settings);
 
-        const tmpl = template(`
-        export default function (parsed) {
-            PREVALID
-            let valid = true;
-            PRECONDITIONS
-            parsed.walk((node, index) => {
-                const even = index % 2 === 0;
-                CONDITIONS
-                return false;
-            });
-            POSTCONDITIONS
-        }
-        `)({
-            PRECONDITIONS: settings.preConditions,
-            CONDITIONS: settings.repeatingConditions,
-            POSTCONDITIONS: settings.repeatingReturn,
-            PREVALID: settings.conditions.length ?
-                template(`const node = parsed.nodes[0]; if (parsed.nodes.length === 1 && CONDITIONS) { return true; }`)({
-                    CONDITIONS: settings.conditions,
-                }) :
-                t.emptyStatement(),
-        });
+        const prevalid = settings.conditions.length ? [
+            template('const node = parsed.nodes[0];')(),
+            template('if (parsed.nodes.length === 1 && CONDITIONS) { return true; }')({
+                CONDITIONS: settings.conditions,
+            }),
+        ] : [t.emptyStatement()];
 
         return generateProgram([
             requireModules(...settings.dependencies),
             ...keywords,
-            tmpl,
-            properties,
+            validator(opts.identifier, opts.properties, [
+                ...prevalid,
+                template('let valid = true;')(),
+                template('PRECONDITIONS')({
+                    PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
+                }),
+                template('parsed.walk((node, index) => { const even = index % 2 === 0; CONDITIONS; return false; });')({
+                    CONDITIONS: settings.repeatingConditions.length ? settings.repeatingConditions : t.emptyStatement(),
+                }),
+                template('POSTCONDITIONS')({
+                    POSTCONDITIONS: settings.repeatingReturn ? settings.repeatingReturn : t.emptyStatement(),
+                }),
+            ]),
         ]);
     }
 
@@ -187,10 +175,10 @@ export default opts => {
             settings.dependencies.push(getValidator(identifier));
             return generateProgram([
                 requireModules(...settings.dependencies),
-                template(`export default ${identifier}(keywords);`)({
-                    keywords: arrayOfStrings(settings.keywords.filter(Boolean)),
-                }),
-                properties,
+                generateValidatorStub(opts.identifier, opts.properties, t.callExpression(
+                    t.identifier(identifier),
+                    [arrayOfStrings(settings.keywords.filter(Boolean))]
+                )),
             ]);
         }
         handleKeywords(keywords, settings);
@@ -204,24 +192,17 @@ export default opts => {
         conditions = t.booleanLiteral(true);
     }
 
-    const tmpl = template(`
-    export default function (parsed) {
-        PRECONDITIONS
-        if (parsed.nodes.length === 1) {
-            const node = parsed.nodes[0];
-            return CONDITIONS
-        }
-        return false;
-    }
-    `)({
-        PRECONDITIONS: settings.preConditions,
-        CONDITIONS: conditions,
-    });
-
     return generateProgram([
         requireModules(...settings.dependencies),
         ...keywords,
-        tmpl,
-        properties,
+        validator(opts.identifier, opts.properties, [
+            template('PRECONDITIONS')({
+                PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
+            }),
+            template('if (parsed.nodes.length === 1) { const node = parsed.nodes[0]; return CONDITIONS; }')({
+                CONDITIONS: conditions,
+            }),
+            template('return false;')(),
+        ]),
     ]);
 };

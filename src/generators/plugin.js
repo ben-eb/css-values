@@ -18,7 +18,7 @@ export default () => {
             if (!~validator.properties.indexOf(property)) {
                 return;
             }
-            return validator.default(value);
+            return validator.fn(value);
         });
     }
     `);
