@@ -29,6 +29,18 @@ function createGenericTest (property, value, valid = true, message = false) {
     );
 }
 
+function createCaseInsensitiveTest (property, value) {
+    return t.expressionStatement(
+        t.callExpression(
+            t.identifier('test'), [
+                t.identifier('validCI'),
+                t.identifier(property),
+                t.stringLiteral(value),
+            ]
+        )
+    );
+}
+
 function createTest (property, value, valid = true, message = false) {
     return createGenericTest(
         t.identifier(property),
@@ -52,8 +64,7 @@ function createTests ({properties, candidates, identifier}) {
         if (type === 'keyword') {
             return [
                 ...list,
-                createTest(identifier, value),
-                createTest(identifier, value.toUpperCase()),
+                createCaseInsensitiveTest(identifier, value),
                 createTest(identifier, `${value} ${value}`, false),
             ];
         }
@@ -115,6 +126,7 @@ export default config => {
         t.importDeclaration([
             importMethod(t.identifier('invalid')),
             importMethod(t.identifier('valid')),
+            importMethod(t.identifier('validCI')),
             importMethod(t.identifier('globals')),
         ], t.stringLiteral('./util/testMacro')),
         ...config.reduce((list, descriptor) => {

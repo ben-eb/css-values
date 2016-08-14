@@ -1,16 +1,23 @@
 import cssGlobals from './globals';
 import cssValues from '../index'; // eslint-disable-line
 
-export default function macro (t, property, value, valid) {
-    t.is(cssValues(property, value), valid);
-}
-
-macro.title = (title, property, value, valid) => {
-    const validStr = ` (${valid ? 'valid' : 'invalid'})`;
-    if (typeof value === 'string') {
-        return `${property}: ${value}${validStr}`;
+export const validCI = (t, property, value) => {
+    if (Array.isArray(property)) {
+        property.forEach(prop => {
+            t.is(cssValues(prop, value), true);
+            t.is(cssValues(prop, value.toUpperCase()), true);
+        });
+        return;
     }
-    return `[parsed nodes]${validStr}`;
+    t.is(cssValues(property, value), true);
+    t.is(cssValues(property, value.toUpperCase()), true);
+};
+
+validCI.title = (title, property, value) => {
+    if (typeof value === 'string') {
+        return `${property}: ${value} (valid, case-insensitive)`;
+    }
+    return `[parsed nodes] (valid, case-insensitive)`;
 };
 
 export const valid = (t, property, value) => {
