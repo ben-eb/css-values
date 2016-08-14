@@ -142,6 +142,7 @@ function renamer (path) {
 Promise.all(promises).then((configs) => {
     const fileSystem = [];
     const testFiles = [];
+    const testConfig = [];
     const outputs = configs.reduce((list, configArray) => {
         configArray.forEach(config => {
             const canMerge = Object.keys(list).some(key => {
@@ -175,10 +176,7 @@ Promise.all(promises).then((configs) => {
             contents: new Buffer(generator.property(config)),
         }));
 
-        testFiles.push(new File({
-            path: resolve(`packages/css-values/tests/${config.group}/${config.identifier}.js`),
-            contents: new Buffer(generator.test(config)),
-        }));
+        testConfig.push(config);
     });
 
     fileSystem.push(new File({
@@ -193,14 +191,8 @@ Promise.all(promises).then((configs) => {
     }));
 
     testFiles.push(new File({
-        path: resolve(`packages/css-values/tests/index.js`),
-        contents: new Buffer(generator.program([
-            generator.requireModules(...imported),
-            generator.exportModules(exported),
-        ])),
-    }), new File({
         path: resolve(`packages/css-values/test.js`),
-        contents: new Buffer(generator.tests()),
+        contents: new Buffer(generator.test(testConfig)),
     }));
 
     const stream = vfs.src('./src/validators/**/*.js', {base: process.cwd()})

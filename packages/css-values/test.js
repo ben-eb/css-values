@@ -2,7004 +2,3161 @@ import test from 'ava';
 import valueParser from 'postcss-value-parser';
 import cssValues from './index.js';
 
-function createCaseInsensitiveTest(property, value) {
-    return [{
-        property: property,
-        value: value,
-        valid: true
-    }, {
-        property: property,
-        value: value.toUpperCase(),
-        valid: true
-    }];
-}
-
 /**
  * CSS4 specification link;
  * https://drafts.csswg.org/css-cascade/#defaulting-keywords
  */
 
-var globalKeywords = ['inherit', 'initial', 'revert', 'unset'];
-
-var toConsumableArray = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  } else {
-    return Array.from(arr);
-  }
-};
-
-function globalTests(property) {
-    return globalKeywords.reduce(function (list, value) {
-        return [].concat(toConsumableArray(list), toConsumableArray(createCaseInsensitiveTest(property, value)));
-    }, [{
-        property: property,
-        value: "var(--foo)",
-        valid: true
-    }, {
-        property: property,
-        value: "VAR(--foo)",
-        valid: true
-    }]);
-}
-
-var property = "-ms-overflow-style";
-var msOverflowStyle = [].concat(toConsumableArray(globalTests(property)), toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-  property: property,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-  property: property,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property, "scrollbar")), [{
-  property: property,
-  value: "scrollbar scrollbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property, "-ms-autohiding-scrollbar")), [{
-  property: property,
-  value: "-ms-autohiding-scrollbar -ms-autohiding-scrollbar",
-  valid: false
-}]);
-
-var property$1 = "-moz-appearance";
-var mozAppearance = [].concat(toConsumableArray(globalTests(property$1)), toConsumableArray(createCaseInsensitiveTest(property$1, "none")), [{
-  property: property$1,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button")), [{
-  property: property$1,
-  value: "button button",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-arrow-down")), [{
-  property: property$1,
-  value: "button-arrow-down button-arrow-down",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-arrow-next")), [{
-  property: property$1,
-  value: "button-arrow-next button-arrow-next",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-arrow-previous")), [{
-  property: property$1,
-  value: "button-arrow-previous button-arrow-previous",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-arrow-up")), [{
-  property: property$1,
-  value: "button-arrow-up button-arrow-up",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-bevel")), [{
-  property: property$1,
-  value: "button-bevel button-bevel",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "button-focus")), [{
-  property: property$1,
-  value: "button-focus button-focus",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "caret")), [{
-  property: property$1,
-  value: "caret caret",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "checkbox")), [{
-  property: property$1,
-  value: "checkbox checkbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "checkbox-container")), [{
-  property: property$1,
-  value: "checkbox-container checkbox-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "checkbox-label")), [{
-  property: property$1,
-  value: "checkbox-label checkbox-label",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "checkmenuitem")), [{
-  property: property$1,
-  value: "checkmenuitem checkmenuitem",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "dualbutton")), [{
-  property: property$1,
-  value: "dualbutton dualbutton",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "groupbox")), [{
-  property: property$1,
-  value: "groupbox groupbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "listbox")), [{
-  property: property$1,
-  value: "listbox listbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "listitem")), [{
-  property: property$1,
-  value: "listitem listitem",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuarrow")), [{
-  property: property$1,
-  value: "menuarrow menuarrow",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menubar")), [{
-  property: property$1,
-  value: "menubar menubar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menucheckbox")), [{
-  property: property$1,
-  value: "menucheckbox menucheckbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuimage")), [{
-  property: property$1,
-  value: "menuimage menuimage",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuitem")), [{
-  property: property$1,
-  value: "menuitem menuitem",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuitemtext")), [{
-  property: property$1,
-  value: "menuitemtext menuitemtext",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menulist")), [{
-  property: property$1,
-  value: "menulist menulist",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menulist-button")), [{
-  property: property$1,
-  value: "menulist-button menulist-button",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menulist-text")), [{
-  property: property$1,
-  value: "menulist-text menulist-text",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menulist-textfield")), [{
-  property: property$1,
-  value: "menulist-textfield menulist-textfield",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menupopup")), [{
-  property: property$1,
-  value: "menupopup menupopup",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuradio")), [{
-  property: property$1,
-  value: "menuradio menuradio",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "menuseparator")), [{
-  property: property$1,
-  value: "menuseparator menuseparator",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "meterbar")), [{
-  property: property$1,
-  value: "meterbar meterbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "meterchunk")), [{
-  property: property$1,
-  value: "meterchunk meterchunk",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "progressbar")), [{
-  property: property$1,
-  value: "progressbar progressbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "progressbar-vertical")), [{
-  property: property$1,
-  value: "progressbar-vertical progressbar-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "progresschunk")), [{
-  property: property$1,
-  value: "progresschunk progresschunk",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "progresschunk-vertical")), [{
-  property: property$1,
-  value: "progresschunk-vertical progresschunk-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "radio")), [{
-  property: property$1,
-  value: "radio radio",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "radio-container")), [{
-  property: property$1,
-  value: "radio-container radio-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "radio-label")), [{
-  property: property$1,
-  value: "radio-label radio-label",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "radiomenuitem")), [{
-  property: property$1,
-  value: "radiomenuitem radiomenuitem",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "range")), [{
-  property: property$1,
-  value: "range range",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "range-thumb")), [{
-  property: property$1,
-  value: "range-thumb range-thumb",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "resizer")), [{
-  property: property$1,
-  value: "resizer resizer",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "resizerpanel")), [{
-  property: property$1,
-  value: "resizerpanel resizerpanel",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scale-horizontal")), [{
-  property: property$1,
-  value: "scale-horizontal scale-horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scalethumbend")), [{
-  property: property$1,
-  value: "scalethumbend scalethumbend",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scalethumb-horizontal")), [{
-  property: property$1,
-  value: "scalethumb-horizontal scalethumb-horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scalethumbstart")), [{
-  property: property$1,
-  value: "scalethumbstart scalethumbstart",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scalethumbtick")), [{
-  property: property$1,
-  value: "scalethumbtick scalethumbtick",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scalethumb-vertical")), [{
-  property: property$1,
-  value: "scalethumb-vertical scalethumb-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scale-vertical")), [{
-  property: property$1,
-  value: "scale-vertical scale-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarbutton-down")), [{
-  property: property$1,
-  value: "scrollbarbutton-down scrollbarbutton-down",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarbutton-left")), [{
-  property: property$1,
-  value: "scrollbarbutton-left scrollbarbutton-left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarbutton-right")), [{
-  property: property$1,
-  value: "scrollbarbutton-right scrollbarbutton-right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarbutton-up")), [{
-  property: property$1,
-  value: "scrollbarbutton-up scrollbarbutton-up",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarthumb-horizontal")), [{
-  property: property$1,
-  value: "scrollbarthumb-horizontal scrollbarthumb-horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbarthumb-vertical")), [{
-  property: property$1,
-  value: "scrollbarthumb-vertical scrollbarthumb-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbartrack-horizontal")), [{
-  property: property$1,
-  value: "scrollbartrack-horizontal scrollbartrack-horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "scrollbartrack-vertical")), [{
-  property: property$1,
-  value: "scrollbartrack-vertical scrollbartrack-vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "searchfield")), [{
-  property: property$1,
-  value: "searchfield searchfield",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "separator")), [{
-  property: property$1,
-  value: "separator separator",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "sheet")), [{
-  property: property$1,
-  value: "sheet sheet",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "spinner")), [{
-  property: property$1,
-  value: "spinner spinner",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "spinner-downbutton")), [{
-  property: property$1,
-  value: "spinner-downbutton spinner-downbutton",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "spinner-textfield")), [{
-  property: property$1,
-  value: "spinner-textfield spinner-textfield",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "spinner-upbutton")), [{
-  property: property$1,
-  value: "spinner-upbutton spinner-upbutton",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "splitter")), [{
-  property: property$1,
-  value: "splitter splitter",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "statusbar")), [{
-  property: property$1,
-  value: "statusbar statusbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "statusbarpanel")), [{
-  property: property$1,
-  value: "statusbarpanel statusbarpanel",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tab")), [{
-  property: property$1,
-  value: "tab tab",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tabpanel")), [{
-  property: property$1,
-  value: "tabpanel tabpanel",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tabpanels")), [{
-  property: property$1,
-  value: "tabpanels tabpanels",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tab-scroll-arrow-back")), [{
-  property: property$1,
-  value: "tab-scroll-arrow-back tab-scroll-arrow-back",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tab-scroll-arrow-forward")), [{
-  property: property$1,
-  value: "tab-scroll-arrow-forward tab-scroll-arrow-forward",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "textfield")), [{
-  property: property$1,
-  value: "textfield textfield",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "textfield-multiline")), [{
-  property: property$1,
-  value: "textfield-multiline textfield-multiline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "toolbar")), [{
-  property: property$1,
-  value: "toolbar toolbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "toolbarbutton")), [{
-  property: property$1,
-  value: "toolbarbutton toolbarbutton",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "toolbarbutton-dropdown")), [{
-  property: property$1,
-  value: "toolbarbutton-dropdown toolbarbutton-dropdown",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "toolbargripper")), [{
-  property: property$1,
-  value: "toolbargripper toolbargripper",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "toolbox")), [{
-  property: property$1,
-  value: "toolbox toolbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "tooltip")), [{
-  property: property$1,
-  value: "tooltip tooltip",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeheader")), [{
-  property: property$1,
-  value: "treeheader treeheader",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeheadercell")), [{
-  property: property$1,
-  value: "treeheadercell treeheadercell",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeheadersortarrow")), [{
-  property: property$1,
-  value: "treeheadersortarrow treeheadersortarrow",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeitem")), [{
-  property: property$1,
-  value: "treeitem treeitem",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeline")), [{
-  property: property$1,
-  value: "treeline treeline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treetwisty")), [{
-  property: property$1,
-  value: "treetwisty treetwisty",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treetwistyopen")), [{
-  property: property$1,
-  value: "treetwistyopen treetwistyopen",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "treeview")), [{
-  property: property$1,
-  value: "treeview treeview",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-mac-unified-toolbar")), [{
-  property: property$1,
-  value: "-moz-mac-unified-toolbar -moz-mac-unified-toolbar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-borderless-glass")), [{
-  property: property$1,
-  value: "-moz-win-borderless-glass -moz-win-borderless-glass",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-browsertabbar-toolbox")), [{
-  property: property$1,
-  value: "-moz-win-browsertabbar-toolbox -moz-win-browsertabbar-toolbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-communicationstext")), [{
-  property: property$1,
-  value: "-moz-win-communicationstext -moz-win-communicationstext",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-communications-toolbox")), [{
-  property: property$1,
-  value: "-moz-win-communications-toolbox -moz-win-communications-toolbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-exclude-glass")), [{
-  property: property$1,
-  value: "-moz-win-exclude-glass -moz-win-exclude-glass",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-glass")), [{
-  property: property$1,
-  value: "-moz-win-glass -moz-win-glass",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-mediatext")), [{
-  property: property$1,
-  value: "-moz-win-mediatext -moz-win-mediatext",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-win-media-toolbox")), [{
-  property: property$1,
-  value: "-moz-win-media-toolbox -moz-win-media-toolbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-box")), [{
-  property: property$1,
-  value: "-moz-window-button-box -moz-window-button-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-box-maximized")), [{
-  property: property$1,
-  value: "-moz-window-button-box-maximized -moz-window-button-box-maximized",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-close")), [{
-  property: property$1,
-  value: "-moz-window-button-close -moz-window-button-close",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-maximize")), [{
-  property: property$1,
-  value: "-moz-window-button-maximize -moz-window-button-maximize",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-minimize")), [{
-  property: property$1,
-  value: "-moz-window-button-minimize -moz-window-button-minimize",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-button-restore")), [{
-  property: property$1,
-  value: "-moz-window-button-restore -moz-window-button-restore",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-frame-bottom")), [{
-  property: property$1,
-  value: "-moz-window-frame-bottom -moz-window-frame-bottom",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-frame-left")), [{
-  property: property$1,
-  value: "-moz-window-frame-left -moz-window-frame-left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-frame-right")), [{
-  property: property$1,
-  value: "-moz-window-frame-right -moz-window-frame-right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-titlebar")), [{
-  property: property$1,
-  value: "-moz-window-titlebar -moz-window-titlebar",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$1, "-moz-window-titlebar-maximized")), [{
-  property: property$1,
-  value: "-moz-window-titlebar-maximized -moz-window-titlebar-maximized",
-  valid: false
-}]);
-
-var mozBinding = ["-moz-binding", "list-style-image"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "url(https://ru.wikipedia.org/wiki/URI)",
-    valid: true
-  }, {
-    property: property,
-    value: "url(data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAAAAAMAAw)",
-    valid: true
-  }, {
-    property: property,
-    value: "ur(https://ru.wikipedia.org/wiki/URI)",
-    valid: false
-  }, {
-    property: property,
-    value: "url(https://ru.wikipedia.org/wiki/URI) url(https://ru.wikipedia.org/wiki/URI)",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$2 = "-moz-float-edge";
-var mozFloatEdge = [].concat(toConsumableArray(globalTests(property$2)), toConsumableArray(createCaseInsensitiveTest(property$2, "border-box")), [{
-  property: property$2,
-  value: "border-box border-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$2, "content-box")), [{
-  property: property$2,
-  value: "content-box content-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$2, "margin-box")), [{
-  property: property$2,
-  value: "margin-box margin-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$2, "padding-box")), [{
-  property: property$2,
-  value: "padding-box padding-box",
-  valid: false
-}]);
-
-var mozForceBrokenImageIcon = ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "10",
-    valid: true
-  }, {
-    property: property,
-    value: "+10",
-    valid: true
-  }, {
-    property: property,
-    value: "-10",
-    valid: true
-  }, {
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "+0",
-    valid: true
-  }, {
-    property: property,
-    value: "-0",
-    valid: true
-  }, {
-    property: property,
-    value: "12.0",
-    valid: false
-  }, {
-    property: property,
-    value: "+---12",
-    valid: false
-  }, {
-    property: property,
-    value: "3e4",
-    valid: false
-  }, {
-    property: property,
-    value: "\\4E94",
-    valid: false
-  }, {
-    property: property,
-    value: "_5",
-    valid: false
-  }, {
-    property: property,
-    value: "\"100\"",
-    valid: false
-  }, {
-    property: property,
-    value: "10 10",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$3 = "-moz-orient";
-var mozOrient = [].concat(toConsumableArray(globalTests(property$3)), toConsumableArray(createCaseInsensitiveTest(property$3, "inline")), [{
-  property: property$3,
-  value: "inline inline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$3, "block")), [{
-  property: property$3,
-  value: "block block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$3, "horizontal")), [{
-  property: property$3,
-  value: "horizontal horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$3, "vertical")), [{
-  property: property$3,
-  value: "vertical vertical",
-  valid: false
-}]);
-
-var property$4 = "-moz-stack-sizing";
-var mozStackSizing = [].concat(toConsumableArray(globalTests(property$4)), toConsumableArray(createCaseInsensitiveTest(property$4, "ignore")), [{
-  property: property$4,
-  value: "ignore ignore",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$4, "stretch-to-fit")), [{
-  property: property$4,
-  value: "stretch-to-fit stretch-to-fit",
-  valid: false
-}]);
-
-var property$5 = "-moz-text-blink";
-var mozTextBlink = [].concat(toConsumableArray(globalTests(property$5)), toConsumableArray(createCaseInsensitiveTest(property$5, "none")), [{
-  property: property$5,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$5, "blink")), [{
-  property: property$5,
-  value: "blink blink",
-  valid: false
-}]);
-
-var property$6 = "-moz-user-focus";
-var mozUserFocus = [].concat(toConsumableArray(globalTests(property$6)), toConsumableArray(createCaseInsensitiveTest(property$6, "ignore")), [{
-  property: property$6,
-  value: "ignore ignore",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "normal")), [{
-  property: property$6,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "select-after")), [{
-  property: property$6,
-  value: "select-after select-after",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "select-before")), [{
-  property: property$6,
-  value: "select-before select-before",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "select-menu")), [{
-  property: property$6,
-  value: "select-menu select-menu",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "select-same")), [{
-  property: property$6,
-  value: "select-same select-same",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "select-all")), [{
-  property: property$6,
-  value: "select-all select-all",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$6, "none")), [{
-  property: property$6,
-  value: "none none",
-  valid: false
-}]);
-
-var property$7 = "-moz-user-input";
-var mozUserInput = [].concat(toConsumableArray(globalTests(property$7)), toConsumableArray(createCaseInsensitiveTest(property$7, "none")), [{
-  property: property$7,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$7, "enabled")), [{
-  property: property$7,
-  value: "enabled enabled",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$7, "disabled")), [{
-  property: property$7,
-  value: "disabled disabled",
-  valid: false
-}]);
-
-var property$8 = "-moz-user-modify";
-var mozUserModify = [].concat(toConsumableArray(globalTests(property$8)), toConsumableArray(createCaseInsensitiveTest(property$8, "read-only")), [{
-  property: property$8,
-  value: "read-only read-only",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$8, "read-write")), [{
-  property: property$8,
-  value: "read-write read-write",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$8, "write-only")), [{
-  property: property$8,
-  value: "write-only write-only",
-  valid: false
-}]);
-
-var property$9 = "-moz-window-shadow";
-var mozWindowShadow = [].concat(toConsumableArray(globalTests(property$9)), toConsumableArray(createCaseInsensitiveTest(property$9, "default")), [{
-  property: property$9,
-  value: "default default",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$9, "menu")), [{
-  property: property$9,
-  value: "menu menu",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$9, "tooltip")), [{
-  property: property$9,
-  value: "tooltip tooltip",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$9, "sheet")), [{
-  property: property$9,
-  value: "sheet sheet",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$9, "none")), [{
-  property: property$9,
-  value: "none none",
-  valid: false
-}]);
-
-var webkitBorderBeforeColor = ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "RGB(1, 2, 3)",
-    valid: true
-  }, {
-    property: property,
-    value: "rgb(10%, 20%, 30%)",
-    valid: true
-  }, {
-    property: property,
-    value: "rgb(400, 400, 400)",
-    valid: true
-  }, {
-    property: property,
-    value: "rgbA(1, 2, 3, .5)",
-    valid: true
-  }, {
-    property: property,
-    value: "rgba(10%, 20%, 30%, 0.5)",
-    valid: true
-  }, {
-    property: property,
-    value: "rgba(400, 400, 400, 1)",
-    valid: true
-  }, {
-    property: property,
-    value: "hsl(90, 50%, 50%)",
-    valid: true
-  }, {
-    property: property,
-    value: "HSL(90, 50%, 50%)",
-    valid: true
-  }, {
-    property: property,
-    value: "hsla(90, 50%, 50%, .5)",
-    valid: true
-  }, {
-    property: property,
-    value: "hsla(90, 50%, 50%, 0.5)",
-    valid: true
-  }, {
-    property: property,
-    value: "hslA(90, 50%, 50%, 0)",
-    valid: true
-  }, {
-    property: property,
-    value: "#000",
-    valid: true
-  }, {
-    property: property,
-    value: "#000F",
-    valid: true
-  }, {
-    property: property,
-    value: "#000000",
-    valid: true
-  }, {
-    property: property,
-    value: "#000000FF",
-    valid: true
-  }, {
-    property: property,
-    value: "RED",
-    valid: true
-  }, {
-    property: property,
-    value: "black",
-    valid: true
-  }, {
-    property: property,
-    value: "currentcolor",
-    valid: true
-  }, {
-    property: property,
-    value: "CURRENTCOLOR",
-    valid: true
-  }, {
-    property: property,
-    value: "rgb(1, 2, 3, 4, 5)",
-    valid: false
-  }, {
-    property: property,
-    value: "rgb(1:2:3)",
-    valid: false
-  }, {
-    property: property,
-    value: "rgb(a, b, c)",
-    valid: false
-  }, {
-    property: property,
-    value: "rgba(10%, 20%, 30%, transparent)",
-    valid: false
-  }, {
-    property: property,
-    value: "rgba(400: 400)",
-    valid: false
-  }, {
-    property: property,
-    value: "rgba(400, 400, 400, 50%)",
-    valid: false
-  }, {
-    property: property,
-    value: "hsl(50%, 50%, 50%)",
-    valid: false
-  }, {
-    property: property,
-    value: "hsl(90, 50, 50)",
-    valid: false
-  }, {
-    property: property,
-    value: "hsla(90, 50%, 50%)",
-    valid: false
-  }, {
-    property: property,
-    value: "hsla(90, 50%, 50%, 50%)",
-    valid: false
-  }, {
-    property: property,
-    value: "hsla(90%, 50%, 50%, 0.5)",
-    valid: false
-  }, {
-    property: property,
-    value: "#ee",
-    valid: false
-  }, {
-    property: property,
-    value: "#eeeeeee",
-    valid: false
-  }, {
-    property: property,
-    value: "#ggg",
-    valid: false
-  }, {
-    property: property,
-    value: "blacklight",
-    valid: false
-  }, {
-    property: property,
-    value: "RGB(1, 2, 3) RGB(1, 2, 3)",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var webkitBorderBeforeStyle = ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "none",
-    valid: true
-  }, {
-    property: property,
-    value: "hidden",
-    valid: true
-  }, {
-    property: property,
-    value: "dotted",
-    valid: true
-  }, {
-    property: property,
-    value: "dashed",
-    valid: true
-  }, {
-    property: property,
-    value: "solid",
-    valid: true
-  }, {
-    property: property,
-    value: "double",
-    valid: true
-  }, {
-    property: property,
-    value: "groove",
-    valid: true
-  }, {
-    property: property,
-    value: "ridge",
-    valid: true
-  }, {
-    property: property,
-    value: "inset",
-    valid: true
-  }, {
-    property: property,
-    value: "outset",
-    valid: true
-  }, {
-    property: property,
-    value: "NONE",
-    valid: true
-  }, {
-    property: property,
-    value: "HIDDEN",
-    valid: true
-  }, {
-    property: property,
-    value: "DOTTED",
-    valid: true
-  }, {
-    property: property,
-    value: "DASHED",
-    valid: true
-  }, {
-    property: property,
-    value: "SOLID",
-    valid: true
-  }, {
-    property: property,
-    value: "DOUBLE",
-    valid: true
-  }, {
-    property: property,
-    value: "GROOVE",
-    valid: true
-  }, {
-    property: property,
-    value: "RIDGE",
-    valid: true
-  }, {
-    property: property,
-    value: "INSET",
-    valid: true
-  }, {
-    property: property,
-    value: "OUTSET",
-    valid: true
-  }, {
-    property: property,
-    value: "groovy",
-    valid: false
-  }, {
-    property: property,
-    value: "none none",
-    valid: true
-  }, {
-    property: property,
-    value: "none, none",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var webkitBorderBeforeWidth = ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "thin",
-    valid: true
-  }, {
-    property: property,
-    value: "medium",
-    valid: true
-  }, {
-    property: property,
-    value: "thick",
-    valid: true
-  }, {
-    property: property,
-    value: "THIN",
-    valid: true
-  }, {
-    property: property,
-    value: "MEDIUM",
-    valid: true
-  }, {
-    property: property,
-    value: "THICK",
-    valid: true
-  }, {
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "huuuuge",
-    valid: false
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "thin thin",
-    valid: true
-  }, {
-    property: property,
-    value: "thin, thin",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var webkitMaskRepeat = ["-webkit-mask-repeat", "background-repeat", "mask-repeat"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "repeat-x",
-    valid: true
-  }, {
-    property: property,
-    value: "repeat-y",
-    valid: true
-  }, {
-    property: property,
-    value: "space round",
-    valid: true
-  }, {
-    property: property,
-    value: "no-repeat, no-repeat",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "REPEAT-X",
-    valid: true
-  }, {
-    property: property,
-    value: "REPEAT-Y",
-    valid: true
-  }, {
-    property: property,
-    value: "SPACE ROUND",
-    valid: true
-  }, {
-    property: property,
-    value: "NO-REPEAT, NO-REPEAT",
-    valid: true
-  }, {
-    property: property,
-    value: "VAR(--FOO) VAR(--BAR)",
-    valid: true
-  }, {
-    property: property,
-    value: "space repeat-x",
-    valid: false
-  }, {
-    property: property,
-    value: "repeat-y round",
-    valid: false
-  }, {
-    property: property,
-    value: "space round repeat",
-    valid: false
-  }, {
-    property: property,
-    value: "repeat-xy",
-    valid: false
-  }, {
-    property: property,
-    value: "space / repeat",
-    valid: false
-  }, {
-    property: property,
-    value: "space,",
-    valid: false
-  }, {
-    property: property,
-    value: "repeat-x, repeat-x",
-    valid: true
-  }, {
-    property: property,
-    value: "repeat-x, repeat-x,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var webkitMaskRepeatX = ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "repeat")), [{
-    property: property,
-    value: "repeat repeat",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "no-repeat")), [{
-    property: property,
-    value: "no-repeat no-repeat",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space")), [{
-    property: property,
-    value: "space space",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "round")), [{
-    property: property,
-    value: "round round",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$10 = "-webkit-tap-highlight-color";
-var webkitTapHighlightColor = [].concat(toConsumableArray(globalTests(property$10)), [{
-  property: property$10,
-  value: "RGB(1, 2, 3)",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgb(10%, 20%, 30%)",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgb(400, 400, 400)",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgbA(1, 2, 3, .5)",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgba(10%, 20%, 30%, 0.5)",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgba(400, 400, 400, 1)",
-  valid: true
-}, {
-  property: property$10,
-  value: "hsl(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$10,
-  value: "HSL(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$10,
-  value: "hsla(90, 50%, 50%, .5)",
-  valid: true
-}, {
-  property: property$10,
-  value: "hsla(90, 50%, 50%, 0.5)",
-  valid: true
-}, {
-  property: property$10,
-  value: "hslA(90, 50%, 50%, 0)",
-  valid: true
-}, {
-  property: property$10,
-  value: "#000",
-  valid: true
-}, {
-  property: property$10,
-  value: "#000F",
-  valid: true
-}, {
-  property: property$10,
-  value: "#000000",
-  valid: true
-}, {
-  property: property$10,
-  value: "#000000FF",
-  valid: true
-}, {
-  property: property$10,
-  value: "RED",
-  valid: true
-}, {
-  property: property$10,
-  value: "black",
-  valid: true
-}, {
-  property: property$10,
-  value: "currentcolor",
-  valid: true
-}, {
-  property: property$10,
-  value: "CURRENTCOLOR",
-  valid: true
-}, {
-  property: property$10,
-  value: "rgb(1, 2, 3, 4, 5)",
-  valid: false
-}, {
-  property: property$10,
-  value: "rgb(1:2:3)",
-  valid: false
-}, {
-  property: property$10,
-  value: "rgb(a, b, c)",
-  valid: false
-}, {
-  property: property$10,
-  value: "rgba(10%, 20%, 30%, transparent)",
-  valid: false
-}, {
-  property: property$10,
-  value: "rgba(400: 400)",
-  valid: false
-}, {
-  property: property$10,
-  value: "rgba(400, 400, 400, 50%)",
-  valid: false
-}, {
-  property: property$10,
-  value: "hsl(50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$10,
-  value: "hsl(90, 50, 50)",
-  valid: false
-}, {
-  property: property$10,
-  value: "hsla(90, 50%, 50%)",
-  valid: false
-}, {
-  property: property$10,
-  value: "hsla(90, 50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$10,
-  value: "hsla(90%, 50%, 50%, 0.5)",
-  valid: false
-}, {
-  property: property$10,
-  value: "#ee",
-  valid: false
-}, {
-  property: property$10,
-  value: "#eeeeeee",
-  valid: false
-}, {
-  property: property$10,
-  value: "#ggg",
-  valid: false
-}, {
-  property: property$10,
-  value: "blacklight",
-  valid: false
-}, {
-  property: property$10,
-  value: "RGB(1, 2, 3), RGB(1, 2, 3)",
-  valid: true
-}, {
-  property: property$10,
-  value: "RGB(1, 2, 3), RGB(1, 2, 3),",
-  valid: false
-}, {
-  property: property$10,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$10,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var webkitTextStrokeWidth = ["-webkit-text-stroke-width", "outline-offset"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$11 = "-webkit-touch-callout";
-var webkitTouchCallout = [].concat(toConsumableArray(globalTests(property$11)), toConsumableArray(createCaseInsensitiveTest(property$11, "default")), [{
-  property: property$11,
-  value: "default default",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$11, "none")), [{
-  property: property$11,
-  value: "none none",
-  valid: false
-}]);
-
-var alignContent = ["-webkit-align-content", "align-content"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-between")), [{
-    property: property,
-    value: "space-between space-between",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-around")), [{
-    property: property,
-    value: "space-around space-around",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "stretch")), [{
-    property: property,
-    value: "stretch stretch",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$12 = "-ms-flex-line-pack";
-var msFlexLinePack = [].concat(toConsumableArray(globalTests(property$12)), toConsumableArray(createCaseInsensitiveTest(property$12, "flex-start")), [{
-  property: property$12,
-  value: "flex-start flex-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "flex-end")), [{
-  property: property$12,
-  value: "flex-end flex-end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "center")), [{
-  property: property$12,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "space-between")), [{
-  property: property$12,
-  value: "space-between space-between",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "space-around")), [{
-  property: property$12,
-  value: "space-around space-around",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "stretch")), [{
-  property: property$12,
-  value: "stretch stretch",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "start")), [{
-  property: property$12,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "end")), [{
-  property: property$12,
-  value: "end end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "justify")), [{
-  property: property$12,
-  value: "justify justify",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$12, "distribute")), [{
-  property: property$12,
-  value: "distribute distribute",
-  valid: false
-}]);
-
-var msFlexAlign = ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "baseline")), [{
-    property: property,
-    value: "baseline baseline",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "stretch")), [{
-    property: property,
-    value: "stretch stretch",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "start")), [{
-    property: property,
-    value: "start start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "end")), [{
-    property: property,
-    value: "end end",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var alignItems = ["-webkit-align-items", "-ms-grid-row-align", "align-items"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "baseline")), [{
-    property: property,
-    value: "baseline baseline",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "stretch")), [{
-    property: property,
-    value: "stretch stretch",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var alignSelf = ["-webkit-align-self", "align-self"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "baseline")), [{
-    property: property,
-    value: "baseline baseline",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "stretch")), [{
-    property: property,
-    value: "stretch stretch",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$13 = "-ms-flex-item-align";
-var msFlexItemAlign = [].concat(toConsumableArray(globalTests(property$13)), toConsumableArray(createCaseInsensitiveTest(property$13, "auto")), [{
-  property: property$13,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "flex-start")), [{
-  property: property$13,
-  value: "flex-start flex-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "flex-end")), [{
-  property: property$13,
-  value: "flex-end flex-end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "center")), [{
-  property: property$13,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "baseline")), [{
-  property: property$13,
-  value: "baseline baseline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "stretch")), [{
-  property: property$13,
-  value: "stretch stretch",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "start")), [{
-  property: property$13,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$13, "end")), [{
-  property: property$13,
-  value: "end end",
-  valid: false
-}]);
-
-var animationDelay = ["animation-delay", "animation-duration", "transition-delay", "transition-duration"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "2s",
-    valid: true
-  }, {
-    property: property,
-    value: "1500ms",
-    valid: true
-  }, {
-    property: property,
-    value: "0.75s",
-    valid: true
-  }, {
-    property: property,
-    value: "2 seconds",
-    valid: false
-  }, {
-    property: property,
-    value: "1000μs",
-    valid: false
-  }, {
-    property: property,
-    value: "10.s",
-    valid: false
-  }, {
-    property: property,
-    value: "2s, 2s",
-    valid: true
-  }, {
-    property: property,
-    value: "2s, 2s,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$14 = "animation-direction";
-var animationDirection = [].concat(toConsumableArray(globalTests(property$14)), [{
-  property: property$14,
-  value: "normal",
-  valid: true
-}, {
-  property: property$14,
-  value: "reverse",
-  valid: true
-}, {
-  property: property$14,
-  value: "alternate",
-  valid: true
-}, {
-  property: property$14,
-  value: "alternate-reverse",
-  valid: true
-}, {
-  property: property$14,
-  value: "NORMAL",
-  valid: true
-}, {
-  property: property$14,
-  value: "REVERSE",
-  valid: true
-}, {
-  property: property$14,
-  value: "ALTERNATE",
-  valid: true
-}, {
-  property: property$14,
-  value: "ALTERNATE-REVERSE",
-  valid: true
-}, {
-  property: property$14,
-  value: "alternate-normal-reverse",
-  valid: false
-}, {
-  property: property$14,
-  value: "normal, normal",
-  valid: true
-}, {
-  property: property$14,
-  value: "normal, normal,",
-  valid: false
-}, {
-  property: property$14,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$14,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$15 = "animation-fill-mode";
-var animationFillMode = [].concat(toConsumableArray(globalTests(property$15)), [{
-  property: property$15,
-  value: "none",
-  valid: true
-}, {
-  property: property$15,
-  value: "forwards",
-  valid: true
-}, {
-  property: property$15,
-  value: "backwards",
-  valid: true
-}, {
-  property: property$15,
-  value: "both",
-  valid: true
-}, {
-  property: property$15,
-  value: "NONE",
-  valid: true
-}, {
-  property: property$15,
-  value: "FORWARDS",
-  valid: true
-}, {
-  property: property$15,
-  value: "BACKWARDS",
-  valid: true
-}, {
-  property: property$15,
-  value: "BOTH",
-  valid: true
-}, {
-  property: property$15,
-  value: "forwards-backwards",
-  valid: false
-}, {
-  property: property$15,
-  value: "none, none",
-  valid: true
-}, {
-  property: property$15,
-  value: "none, none,",
-  valid: false
-}, {
-  property: property$15,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$15,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$16 = "animation-iteration-count";
-var animationIterationCount = [].concat(toConsumableArray(globalTests(property$16)), [{
-  property: property$16,
-  value: "12",
-  valid: true
-}, {
-  property: property$16,
-  value: "4.01",
-  valid: true
-}, {
-  property: property$16,
-  value: "-456.8",
-  valid: true
-}, {
-  property: property$16,
-  value: "0.0",
-  valid: true
-}, {
-  property: property$16,
-  value: "+0.0",
-  valid: true
-}, {
-  property: property$16,
-  value: "-0.0",
-  valid: true
-}, {
-  property: property$16,
-  value: ".60",
-  valid: true
-}, {
-  property: property$16,
-  value: "10e3",
-  valid: true
-}, {
-  property: property$16,
-  value: "-3.4e-2",
-  valid: true
-}, {
-  property: property$16,
-  value: "infinite",
-  valid: true
-}, {
-  property: property$16,
-  value: "12.",
-  valid: false
-}, {
-  property: property$16,
-  value: "+-12.2",
-  valid: false
-}, {
-  property: property$16,
-  value: "12.1.1",
-  valid: false
-}, {
-  property: property$16,
-  value: "\"10px\"",
-  valid: false
-}, {
-  property: property$16,
-  value: "12, 12",
-  valid: true
-}, {
-  property: property$16,
-  value: "12, 12,",
-  valid: false
-}, {
-  property: property$16,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$16,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$17 = "animation-name";
-var animationName = [].concat(toConsumableArray(globalTests(property$17)), [{
-  property: property$17,
-  value: "Bond-007",
-  valid: true
-}, {
-  property: property$17,
-  value: "alpha",
-  valid: true
-}, {
-  property: property$17,
-  value: "_-_",
-  valid: true
-}, {
-  property: property$17,
-  value: "\\1F638",
-  valid: true
-}, {
-  property: property$17,
-  value: "-B",
-  valid: true
-}, {
-  property: property$17,
-  value: "none",
-  valid: true
-}, {
-  property: property$17,
-  value: "NONE",
-  valid: true
-}, {
-  property: property$17,
-  value: "007-Bond",
-  valid: false
-}, {
-  property: property$17,
-  value: "0B",
-  valid: false
-}, {
-  property: property$17,
-  value: "--B",
-  valid: false
-}, {
-  property: property$17,
-  value: "-0",
-  valid: false
-}, {
-  property: property$17,
-  value: "\"foobar\"",
-  valid: false
-}, {
-  property: property$17,
-  value: "Bond-007, Bond-007",
-  valid: true
-}, {
-  property: property$17,
-  value: "Bond-007, Bond-007,",
-  valid: false
-}, {
-  property: property$17,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$17,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$18 = "animation-play-state";
-var animationPlayState = [].concat(toConsumableArray(globalTests(property$18)), [{
-  property: property$18,
-  value: "running",
-  valid: true
-}, {
-  property: property$18,
-  value: "paused",
-  valid: true
-}, {
-  property: property$18,
-  value: "RUNNING",
-  valid: true
-}, {
-  property: property$18,
-  value: "PAUSED",
-  valid: true
-}, {
-  property: property$18,
-  value: "running-paused",
-  valid: false
-}, {
-  property: property$18,
-  value: "running, running",
-  valid: true
-}, {
-  property: property$18,
-  value: "running, running,",
-  valid: false
-}, {
-  property: property$18,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$18,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var animationTimingFunction = ["animation-timing-function", "transition-timing-function"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "ease",
-    valid: true
-  }, {
-    property: property,
-    value: "linear",
-    valid: true
-  }, {
-    property: property,
-    value: "ease-in",
-    valid: true
-  }, {
-    property: property,
-    value: "ease-out",
-    valid: true
-  }, {
-    property: property,
-    value: "ease-in-out",
-    valid: true
-  }, {
-    property: property,
-    value: "step-start",
-    valid: true
-  }, {
-    property: property,
-    value: "step-end",
-    valid: true
-  }, {
-    property: property,
-    value: "EASE",
-    valid: true
-  }, {
-    property: property,
-    value: "LINEAR",
-    valid: true
-  }, {
-    property: property,
-    value: "EASE-IN",
-    valid: true
-  }, {
-    property: property,
-    value: "EASE-OUT",
-    valid: true
-  }, {
-    property: property,
-    value: "EASE-IN-OUT",
-    valid: true
-  }, {
-    property: property,
-    value: "STEP-START",
-    valid: true
-  }, {
-    property: property,
-    value: "STEP-END",
-    valid: true
-  }, {
-    property: property,
-    value: "STEPS(1)",
-    valid: true
-  }, {
-    property: property,
-    value: "steps(5, start)",
-    valid: true
-  }, {
-    property: property,
-    value: "steps(5, end)",
-    valid: true
-  }, {
-    property: property,
-    value: "steps(5, START)",
-    valid: true
-  }, {
-    property: property,
-    value: "steps(5, END)",
-    valid: true
-  }, {
-    property: property,
-    value: "cubic-bezier(0.1, 0.7, 1.0, 0.1)",
-    valid: true
-  }, {
-    property: property,
-    value: "CUBIC-BEZIER(0.1, 0.7, 1.0, 0.1)",
-    valid: true
-  }, {
-    property: property,
-    value: "ease-in-out-in-ease",
-    valid: false
-  }, {
-    property: property,
-    value: "steps(1.0)",
-    valid: false
-  }, {
-    property: property,
-    value: "steps(2.5, start)",
-    valid: false
-  }, {
-    property: property,
-    value: "steps(2/start)",
-    valid: false
-  }, {
-    property: property,
-    value: "steps(5, middle)",
-    valid: false
-  }, {
-    property: property,
-    value: "cubic-bezier(0.1, red, 1.0, green)",
-    valid: false
-  }, {
-    property: property,
-    value: "cubic-bezier(2.45, 0.6, 4, 0.1)",
-    valid: false
-  }, {
-    property: property,
-    value: "cubic-bezier(0.3, 2.1)",
-    valid: false
-  }, {
-    property: property,
-    value: "cubic-bezier(-1.9, 0.3, -0.2, 2.1)",
-    valid: false
-  }, {
-    property: property,
-    value: "ease, ease",
-    valid: true
-  }, {
-    property: property,
-    value: "ease, ease,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var appearance = ["-webkit-appearance", "-moz-appearance", "appearance"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var backfaceVisibility = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "visible")), [{
-    property: property,
-    value: "visible visible",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "hidden")), [{
-    property: property,
-    value: "hidden hidden",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$19 = "background-attachment";
-var backgroundAttachment = [].concat(toConsumableArray(globalTests(property$19)), [{
-  property: property$19,
-  value: "scroll",
-  valid: true
-}, {
-  property: property$19,
-  value: "fixed",
-  valid: true
-}, {
-  property: property$19,
-  value: "local",
-  valid: true
-}, {
-  property: property$19,
-  value: "SCROLL",
-  valid: true
-}, {
-  property: property$19,
-  value: "FIXED",
-  valid: true
-}, {
-  property: property$19,
-  value: "LOCAL",
-  valid: true
-}, {
-  property: property$19,
-  value: "local-scroll",
-  valid: false
-}, {
-  property: property$19,
-  value: "scroll, scroll",
-  valid: true
-}, {
-  property: property$19,
-  value: "scroll, scroll,",
-  valid: false
-}, {
-  property: property$19,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$19,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$20 = "background-blend-mode";
-var backgroundBlendMode = [].concat(toConsumableArray(globalTests(property$20)), [{
-  property: property$20,
-  value: "normal",
-  valid: true
-}, {
-  property: property$20,
-  value: "multiply",
-  valid: true
-}, {
-  property: property$20,
-  value: "screen",
-  valid: true
-}, {
-  property: property$20,
-  value: "overlay",
-  valid: true
-}, {
-  property: property$20,
-  value: "darken",
-  valid: true
-}, {
-  property: property$20,
-  value: "lighten",
-  valid: true
-}, {
-  property: property$20,
-  value: "color-dodge",
-  valid: true
-}, {
-  property: property$20,
-  value: "color-burn",
-  valid: true
-}, {
-  property: property$20,
-  value: "hard-light",
-  valid: true
-}, {
-  property: property$20,
-  value: "soft-light",
-  valid: true
-}, {
-  property: property$20,
-  value: "difference",
-  valid: true
-}, {
-  property: property$20,
-  value: "exclusion",
-  valid: true
-}, {
-  property: property$20,
-  value: "hue",
-  valid: true
-}, {
-  property: property$20,
-  value: "saturation",
-  valid: true
-}, {
-  property: property$20,
-  value: "color",
-  valid: true
-}, {
-  property: property$20,
-  value: "luminosity",
-  valid: true
-}, {
-  property: property$20,
-  value: "NORMAL",
-  valid: true
-}, {
-  property: property$20,
-  value: "MULTIPLY",
-  valid: true
-}, {
-  property: property$20,
-  value: "SCREEN",
-  valid: true
-}, {
-  property: property$20,
-  value: "OVERLAY",
-  valid: true
-}, {
-  property: property$20,
-  value: "DARKEN",
-  valid: true
-}, {
-  property: property$20,
-  value: "LIGHTEN",
-  valid: true
-}, {
-  property: property$20,
-  value: "COLOR-DODGE",
-  valid: true
-}, {
-  property: property$20,
-  value: "COLOR-BURN",
-  valid: true
-}, {
-  property: property$20,
-  value: "HARD-LIGHT",
-  valid: true
-}, {
-  property: property$20,
-  value: "SOFT-LIGHT",
-  valid: true
-}, {
-  property: property$20,
-  value: "DIFFERENCE",
-  valid: true
-}, {
-  property: property$20,
-  value: "EXCLUSION",
-  valid: true
-}, {
-  property: property$20,
-  value: "HUE",
-  valid: true
-}, {
-  property: property$20,
-  value: "SATURATION",
-  valid: true
-}, {
-  property: property$20,
-  value: "COLOR",
-  valid: true
-}, {
-  property: property$20,
-  value: "LUMINOSITY",
-  valid: true
-}, {
-  property: property$20,
-  value: "superblend",
-  valid: false
-}, {
-  property: property$20,
-  value: "blend-man",
-  valid: false
-}, {
-  property: property$20,
-  value: "normal, normal",
-  valid: true
-}, {
-  property: property$20,
-  value: "normal, normal,",
-  valid: false
-}, {
-  property: property$20,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$20,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var backgroundClip = ["background-clip", "background-origin"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "border-box",
-    valid: true
-  }, {
-    property: property,
-    value: "padding-box",
-    valid: true
-  }, {
-    property: property,
-    value: "content-box",
-    valid: true
-  }, {
-    property: property,
-    value: "BORDER-BOX",
-    valid: true
-  }, {
-    property: property,
-    value: "PADDING-BOX",
-    valid: true
-  }, {
-    property: property,
-    value: "CONTENT-BOX",
-    valid: true
-  }, {
-    property: property,
-    value: "rock-box",
-    valid: false
-  }, {
-    property: property,
-    value: "border-box, border-box",
-    valid: true
-  }, {
-    property: property,
-    value: "border-box, border-box,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var backgroundPosition = ["background-position", "mask-position"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "left",
-    valid: true
-  }, {
-    property: property,
-    value: "center",
-    valid: true
-  }, {
-    property: property,
-    value: "right",
-    valid: true
-  }, {
-    property: property,
-    value: "top",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "10px",
-    valid: true
-  }, {
-    property: property,
-    value: "50%",
-    valid: true
-  }, {
-    property: property,
-    value: "left top",
-    valid: true
-  }, {
-    property: property,
-    value: "left center",
-    valid: true
-  }, {
-    property: property,
-    value: "left bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "right 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "10px top",
-    valid: true
-  }, {
-    property: property,
-    value: "50% 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom right",
-    valid: true
-  }, {
-    property: property,
-    value: "center center",
-    valid: true
-  }, {
-    property: property,
-    value: "50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "top 50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom 25%",
-    valid: true
-  }, {
-    property: property,
-    value: "top 10px right 50px",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
-    valid: true
-  }, {
-    property: property,
-    value: "left right",
-    valid: false
-  }, {
-    property: property,
-    value: "right left",
-    valid: false
-  }, {
-    property: property,
-    value: "top bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "bottom top",
-    valid: false
-  }, {
-    property: property,
-    value: "left/top",
-    valid: false
-  }, {
-    property: property,
-    value: "50% left",
-    valid: false
-  }, {
-    property: property,
-    value: "left 50% 50%",
-    valid: false
-  }, {
-    property: property,
-    value: "left 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "top 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "center center center center",
-    valid: false
-  }, {
-    property: property,
-    value: "left/25%/bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "top/10px/right/50px",
-    valid: false
-  }, {
-    property: property,
-    value: "left, left",
-    valid: true
-  }, {
-    property: property,
-    value: "left, left,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var borderBottomLeftRadius = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: true
-  }, {
-    property: property,
-    value: "0, 0",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var borderBottomStyle = ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "none",
-    valid: true
-  }, {
-    property: property,
-    value: "hidden",
-    valid: true
-  }, {
-    property: property,
-    value: "dotted",
-    valid: true
-  }, {
-    property: property,
-    value: "dashed",
-    valid: true
-  }, {
-    property: property,
-    value: "solid",
-    valid: true
-  }, {
-    property: property,
-    value: "double",
-    valid: true
-  }, {
-    property: property,
-    value: "groove",
-    valid: true
-  }, {
-    property: property,
-    value: "ridge",
-    valid: true
-  }, {
-    property: property,
-    value: "inset",
-    valid: true
-  }, {
-    property: property,
-    value: "outset",
-    valid: true
-  }, {
-    property: property,
-    value: "NONE",
-    valid: true
-  }, {
-    property: property,
-    value: "HIDDEN",
-    valid: true
-  }, {
-    property: property,
-    value: "DOTTED",
-    valid: true
-  }, {
-    property: property,
-    value: "DASHED",
-    valid: true
-  }, {
-    property: property,
-    value: "SOLID",
-    valid: true
-  }, {
-    property: property,
-    value: "DOUBLE",
-    valid: true
-  }, {
-    property: property,
-    value: "GROOVE",
-    valid: true
-  }, {
-    property: property,
-    value: "RIDGE",
-    valid: true
-  }, {
-    property: property,
-    value: "INSET",
-    valid: true
-  }, {
-    property: property,
-    value: "OUTSET",
-    valid: true
-  }, {
-    property: property,
-    value: "groovy",
-    valid: false
-  }, {
-    property: property,
-    value: "none none",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var borderBottomWidth = ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "thin",
-    valid: true
-  }, {
-    property: property,
-    value: "medium",
-    valid: true
-  }, {
-    property: property,
-    value: "thick",
-    valid: true
-  }, {
-    property: property,
-    value: "THIN",
-    valid: true
-  }, {
-    property: property,
-    value: "MEDIUM",
-    valid: true
-  }, {
-    property: property,
-    value: "THICK",
-    valid: true
-  }, {
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "huuuuge",
-    valid: false
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "thin thin",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$21 = "border-collapse";
-var borderCollapse = [].concat(toConsumableArray(globalTests(property$21)), toConsumableArray(createCaseInsensitiveTest(property$21, "collapse")), [{
-  property: property$21,
-  value: "collapse collapse",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$21, "separate")), [{
-  property: property$21,
-  value: "separate separate",
-  valid: false
-}]);
-
-var property$22 = "border-color";
-var borderColor = [].concat(toConsumableArray(globalTests(property$22)), [{
-  property: property$22,
-  value: "RGB(1, 2, 3)",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgb(10%, 20%, 30%)",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgb(400, 400, 400)",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgbA(1, 2, 3, .5)",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgba(10%, 20%, 30%, 0.5)",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgba(400, 400, 400, 1)",
-  valid: true
-}, {
-  property: property$22,
-  value: "hsl(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$22,
-  value: "HSL(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$22,
-  value: "hsla(90, 50%, 50%, .5)",
-  valid: true
-}, {
-  property: property$22,
-  value: "hsla(90, 50%, 50%, 0.5)",
-  valid: true
-}, {
-  property: property$22,
-  value: "hslA(90, 50%, 50%, 0)",
-  valid: true
-}, {
-  property: property$22,
-  value: "#000",
-  valid: true
-}, {
-  property: property$22,
-  value: "#000F",
-  valid: true
-}, {
-  property: property$22,
-  value: "#000000",
-  valid: true
-}, {
-  property: property$22,
-  value: "#000000FF",
-  valid: true
-}, {
-  property: property$22,
-  value: "RED",
-  valid: true
-}, {
-  property: property$22,
-  value: "black",
-  valid: true
-}, {
-  property: property$22,
-  value: "currentcolor",
-  valid: true
-}, {
-  property: property$22,
-  value: "CURRENTCOLOR",
-  valid: true
-}, {
-  property: property$22,
-  value: "rgb(1, 2, 3, 4, 5)",
-  valid: false
-}, {
-  property: property$22,
-  value: "rgb(1:2:3)",
-  valid: false
-}, {
-  property: property$22,
-  value: "rgb(a, b, c)",
-  valid: false
-}, {
-  property: property$22,
-  value: "rgba(10%, 20%, 30%, transparent)",
-  valid: false
-}, {
-  property: property$22,
-  value: "rgba(400: 400)",
-  valid: false
-}, {
-  property: property$22,
-  value: "rgba(400, 400, 400, 50%)",
-  valid: false
-}, {
-  property: property$22,
-  value: "hsl(50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$22,
-  value: "hsl(90, 50, 50)",
-  valid: false
-}, {
-  property: property$22,
-  value: "hsla(90, 50%, 50%)",
-  valid: false
-}, {
-  property: property$22,
-  value: "hsla(90, 50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$22,
-  value: "hsla(90%, 50%, 50%, 0.5)",
-  valid: false
-}, {
-  property: property$22,
-  value: "#ee",
-  valid: false
-}, {
-  property: property$22,
-  value: "#eeeeeee",
-  valid: false
-}, {
-  property: property$22,
-  value: "#ggg",
-  valid: false
-}, {
-  property: property$22,
-  value: "blacklight",
-  valid: false
-}, {
-  property: property$22,
-  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
-  valid: true
-}, {
-  property: property$22,
-  value: "RGB(1, 2, 3), RGB(1, 2, 3)",
-  valid: false
-}, {
-  property: property$22,
-  value: "var(--foo) var(--bar)",
-  valid: true
-}, {
-  property: property$22,
-  value: "var(--foo), var(--bar)",
-  valid: false
-}]);
-
-var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "1% 1%",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$23 = "box-align";
-var boxAlign = [].concat(toConsumableArray(globalTests(property$23)), toConsumableArray(createCaseInsensitiveTest(property$23, "start")), [{
-  property: property$23,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "center")), [{
-  property: property$23,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "end")), [{
-  property: property$23,
-  value: "end end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "baseline")), [{
-  property: property$23,
-  value: "baseline baseline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$23, "stretch")), [{
-  property: property$23,
-  value: "stretch stretch",
-  valid: false
-}]);
-
-var boxDecorationBreak = ["-webkit-box-decoration-break", "box-decoration-break"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "slice")), [{
-    property: property,
-    value: "slice slice",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "clone")), [{
-    property: property,
-    value: "clone clone",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$24 = "box-direction";
-var boxDirection = [].concat(toConsumableArray(globalTests(property$24)), toConsumableArray(createCaseInsensitiveTest(property$24, "normal")), [{
-  property: property$24,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$24, "reverse")), [{
-  property: property$24,
-  value: "reverse reverse",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$24, "inherit")), [{
-  property: property$24,
-  value: "inherit inherit",
-  valid: false
-}]);
-
-var boxFlex = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "12",
-    valid: true
-  }, {
-    property: property,
-    value: "4.01",
-    valid: true
-  }, {
-    property: property,
-    value: "-456.8",
-    valid: true
-  }, {
-    property: property,
-    value: "0.0",
-    valid: true
-  }, {
-    property: property,
-    value: "+0.0",
-    valid: true
-  }, {
-    property: property,
-    value: "-0.0",
-    valid: true
-  }, {
-    property: property,
-    value: ".60",
-    valid: true
-  }, {
-    property: property,
-    value: "10e3",
-    valid: true
-  }, {
-    property: property,
-    value: "-3.4e-2",
-    valid: true
-  }, {
-    property: property,
-    value: "12.",
-    valid: false
-  }, {
-    property: property,
-    value: "+-12.2",
-    valid: false
-  }, {
-    property: property,
-    value: "12.1.1",
-    valid: false
-  }, {
-    property: property,
-    value: "\"10px\"",
-    valid: false
-  }, {
-    property: property,
-    value: "12 12",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$25 = "box-lines";
-var boxLines = [].concat(toConsumableArray(globalTests(property$25)), toConsumableArray(createCaseInsensitiveTest(property$25, "single")), [{
-  property: property$25,
-  value: "single single",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$25, "multiple")), [{
-  property: property$25,
-  value: "multiple multiple",
-  valid: false
-}]);
-
-var property$26 = "box-orient";
-var boxOrient = [].concat(toConsumableArray(globalTests(property$26)), toConsumableArray(createCaseInsensitiveTest(property$26, "horizontal")), [{
-  property: property$26,
-  value: "horizontal horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "vertical")), [{
-  property: property$26,
-  value: "vertical vertical",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "inline-axis")), [{
-  property: property$26,
-  value: "inline-axis inline-axis",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "block-axis")), [{
-  property: property$26,
-  value: "block-axis block-axis",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$26, "inherit")), [{
-  property: property$26,
-  value: "inherit inherit",
-  valid: false
-}]);
-
-var property$27 = "box-pack";
-var boxPack = [].concat(toConsumableArray(globalTests(property$27)), toConsumableArray(createCaseInsensitiveTest(property$27, "start")), [{
-  property: property$27,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$27, "center")), [{
-  property: property$27,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$27, "end")), [{
-  property: property$27,
-  value: "end end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$27, "justify")), [{
-  property: property$27,
-  value: "justify justify",
-  valid: false
-}]);
-
-var boxSizing = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "content-box")), [{
-    property: property,
-    value: "content-box content-box",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "border-box")), [{
-    property: property,
-    value: "border-box border-box",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$28 = "box-suppress";
-var boxSuppress = [].concat(toConsumableArray(globalTests(property$28)), toConsumableArray(createCaseInsensitiveTest(property$28, "show")), [{
-  property: property$28,
-  value: "show show",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "discard")), [{
-  property: property$28,
-  value: "discard discard",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$28, "hide")), [{
-  property: property$28,
-  value: "hide hide",
-  valid: false
-}]);
-
-var pageBreakAfter = ["page-break-after", "page-break-before"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "always")), [{
-    property: property,
-    value: "always always",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "avoid")), [{
-    property: property,
-    value: "avoid avoid",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "left")), [{
-    property: property,
-    value: "left left",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "right")), [{
-    property: property,
-    value: "right right",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var webkitColumnBreakInside = ["-webkit-column-break-inside", "page-break-inside", "break-inside"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "avoid")), [{
-    property: property,
-    value: "avoid avoid",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "avoid-page")), [{
-    property: property,
-    value: "avoid-page avoid-page",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "avoid-column")), [{
-    property: property,
-    value: "avoid-column avoid-column",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "avoid-region")), [{
-    property: property,
-    value: "avoid-region avoid-region",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$29 = "caption-side";
-var captionSide = [].concat(toConsumableArray(globalTests(property$29)), toConsumableArray(createCaseInsensitiveTest(property$29, "top")), [{
-  property: property$29,
-  value: "top top",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "bottom")), [{
-  property: property$29,
-  value: "bottom bottom",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "block-start")), [{
-  property: property$29,
-  value: "block-start block-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "block-end")), [{
-  property: property$29,
-  value: "block-end block-end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "inline-start")), [{
-  property: property$29,
-  value: "inline-start inline-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$29, "inline-end")), [{
-  property: property$29,
-  value: "inline-end inline-end",
-  valid: false
-}]);
-
-var property$30 = "clear";
-var clear = [].concat(toConsumableArray(globalTests(property$30)), toConsumableArray(createCaseInsensitiveTest(property$30, "none")), [{
-  property: property$30,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "left")), [{
-  property: property$30,
-  value: "left left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "right")), [{
-  property: property$30,
-  value: "right right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "both")), [{
-  property: property$30,
-  value: "both both",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "inline-start")), [{
-  property: property$30,
-  value: "inline-start inline-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$30, "inline-end")), [{
-  property: property$30,
-  value: "inline-end inline-end",
-  valid: false
-}]);
-
-var columnCount = ["-webkit-column-count", "-moz-column-count", "column-count"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "12",
-    valid: true
-  }, {
-    property: property,
-    value: "4.01",
-    valid: true
-  }, {
-    property: property,
-    value: "-456.8",
-    valid: true
-  }, {
-    property: property,
-    value: "0.0",
-    valid: true
-  }, {
-    property: property,
-    value: "+0.0",
-    valid: true
-  }, {
-    property: property,
-    value: "-0.0",
-    valid: true
-  }, {
-    property: property,
-    value: ".60",
-    valid: true
-  }, {
-    property: property,
-    value: "10e3",
-    valid: true
-  }, {
-    property: property,
-    value: "-3.4e-2",
-    valid: true
-  }, {
-    property: property,
-    value: "12.",
-    valid: false
-  }, {
-    property: property,
-    value: "+-12.2",
-    valid: false
-  }, {
-    property: property,
-    value: "12.1.1",
-    valid: false
-  }, {
-    property: property,
-    value: "\"10px\"",
-    valid: false
-  }, {
-    property: property,
-    value: "12 12",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var columnFill = ["-webkit-column-fill", "-moz-column-fill", "column-fill"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "balance")), [{
-    property: property,
-    value: "balance balance",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var columnGap = ["-webkit-column-gap", "-moz-column-gap", "column-gap"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
-    property: property,
-    value: "normal normal",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var columnSpan = ["-webkit-column-span", "-moz-column-span", "column-span"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "all")), [{
-    property: property,
-    value: "all all",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var columnWidth = ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$31 = "direction";
-var direction = [].concat(toConsumableArray(globalTests(property$31)), toConsumableArray(createCaseInsensitiveTest(property$31, "ltr")), [{
-  property: property$31,
-  value: "ltr ltr",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$31, "rtl")), [{
-  property: property$31,
-  value: "rtl rtl",
-  valid: false
-}]);
-
-var property$32 = "display";
-var display = [].concat(toConsumableArray(globalTests(property$32)), toConsumableArray(createCaseInsensitiveTest(property$32, "none")), [{
-  property: property$32,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline")), [{
-  property: property$32,
-  value: "inline inline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "block")), [{
-  property: property$32,
-  value: "block block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "list-item")), [{
-  property: property$32,
-  value: "list-item list-item",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-list-item")), [{
-  property: property$32,
-  value: "inline-list-item inline-list-item",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-block")), [{
-  property: property$32,
-  value: "inline-block inline-block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-table")), [{
-  property: property$32,
-  value: "inline-table inline-table",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table")), [{
-  property: property$32,
-  value: "table table",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-cell")), [{
-  property: property$32,
-  value: "table-cell table-cell",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-column")), [{
-  property: property$32,
-  value: "table-column table-column",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-column-group")), [{
-  property: property$32,
-  value: "table-column-group table-column-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-footer-group")), [{
-  property: property$32,
-  value: "table-footer-group table-footer-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-header-group")), [{
-  property: property$32,
-  value: "table-header-group table-header-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-row")), [{
-  property: property$32,
-  value: "table-row table-row",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "table-row-group")), [{
-  property: property$32,
-  value: "table-row-group table-row-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "flex")), [{
-  property: property$32,
-  value: "flex flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-flex")), [{
-  property: property$32,
-  value: "inline-flex inline-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "grid")), [{
-  property: property$32,
-  value: "grid grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "inline-grid")), [{
-  property: property$32,
-  value: "inline-grid inline-grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "run-in")), [{
-  property: property$32,
-  value: "run-in run-in",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby")), [{
-  property: property$32,
-  value: "ruby ruby",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-base")), [{
-  property: property$32,
-  value: "ruby-base ruby-base",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-text")), [{
-  property: property$32,
-  value: "ruby-text ruby-text",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-base-container")), [{
-  property: property$32,
-  value: "ruby-base-container ruby-base-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "ruby-text-container")), [{
-  property: property$32,
-  value: "ruby-text-container ruby-text-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "contents")), [{
-  property: property$32,
-  value: "contents contents",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-box")), [{
-  property: property$32,
-  value: "-webkit-box -webkit-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-flex")), [{
-  property: property$32,
-  value: "-webkit-flex -webkit-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-moz-box")), [{
-  property: property$32,
-  value: "-moz-box -moz-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-flexbox")), [{
-  property: property$32,
-  value: "-ms-flexbox -ms-flexbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-inline-box")), [{
-  property: property$32,
-  value: "-webkit-inline-box -webkit-inline-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-webkit-inline-flex")), [{
-  property: property$32,
-  value: "-webkit-inline-flex -webkit-inline-flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-moz-inline-box")), [{
-  property: property$32,
-  value: "-moz-inline-box -moz-inline-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-inline-flexbox")), [{
-  property: property$32,
-  value: "-ms-inline-flexbox -ms-inline-flexbox",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-grid")), [{
-  property: property$32,
-  value: "-ms-grid -ms-grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$32, "-ms-inline-grid")), [{
-  property: property$32,
-  value: "-ms-inline-grid -ms-inline-grid",
-  valid: false
-}]);
-
-var property$33 = "display-inside";
-var displayInside = [].concat(toConsumableArray(globalTests(property$33)), toConsumableArray(createCaseInsensitiveTest(property$33, "auto")), [{
-  property: property$33,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "block")), [{
-  property: property$33,
-  value: "block block",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "table")), [{
-  property: property$33,
-  value: "table table",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "flex")), [{
-  property: property$33,
-  value: "flex flex",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "grid")), [{
-  property: property$33,
-  value: "grid grid",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$33, "ruby")), [{
-  property: property$33,
-  value: "ruby ruby",
-  valid: false
-}]);
-
-var property$34 = "display-list";
-var displayList = [].concat(toConsumableArray(globalTests(property$34)), toConsumableArray(createCaseInsensitiveTest(property$34, "none")), [{
-  property: property$34,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$34, "list-item")), [{
-  property: property$34,
-  value: "list-item list-item",
-  valid: false
-}]);
-
-var property$35 = "display-outside";
-var displayOutside = [].concat(toConsumableArray(globalTests(property$35)), toConsumableArray(createCaseInsensitiveTest(property$35, "block-level")), [{
-  property: property$35,
-  value: "block-level block-level",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "inline-level")), [{
-  property: property$35,
-  value: "inline-level inline-level",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "run-in")), [{
-  property: property$35,
-  value: "run-in run-in",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "contents")), [{
-  property: property$35,
-  value: "contents contents",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "none")), [{
-  property: property$35,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-row-group")), [{
-  property: property$35,
-  value: "table-row-group table-row-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-header-group")), [{
-  property: property$35,
-  value: "table-header-group table-header-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-footer-group")), [{
-  property: property$35,
-  value: "table-footer-group table-footer-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-row")), [{
-  property: property$35,
-  value: "table-row table-row",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-cell")), [{
-  property: property$35,
-  value: "table-cell table-cell",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-column-group")), [{
-  property: property$35,
-  value: "table-column-group table-column-group",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-column")), [{
-  property: property$35,
-  value: "table-column table-column",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "table-caption")), [{
-  property: property$35,
-  value: "table-caption table-caption",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-base")), [{
-  property: property$35,
-  value: "ruby-base ruby-base",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-text")), [{
-  property: property$35,
-  value: "ruby-text ruby-text",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-base-container")), [{
-  property: property$35,
-  value: "ruby-base-container ruby-base-container",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$35, "ruby-text-container")), [{
-  property: property$35,
-  value: "ruby-text-container ruby-text-container",
-  valid: false
-}]);
-
-var property$36 = "empty-cells";
-var emptyCells = [].concat(toConsumableArray(globalTests(property$36)), toConsumableArray(createCaseInsensitiveTest(property$36, "show")), [{
-  property: property$36,
-  value: "show show",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$36, "hide")), [{
-  property: property$36,
-  value: "hide hide",
-  valid: false
-}]);
-
-var mozBoxOrient = ["-webkit-box-orient", "-moz-box-orient"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "row")), [{
-    property: property,
-    value: "row row",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "row-reverse")), [{
-    property: property,
-    value: "row-reverse row-reverse",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column")), [{
-    property: property,
-    value: "column column",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column-reverse")), [{
-    property: property,
-    value: "column-reverse column-reverse",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "horizontal")), [{
-    property: property,
-    value: "horizontal horizontal",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "vertical")), [{
-    property: property,
-    value: "vertical vertical",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var mozBoxDirection = ["-webkit-box-direction", "-moz-box-direction"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "row")), [{
-    property: property,
-    value: "row row",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "row-reverse")), [{
-    property: property,
-    value: "row-reverse row-reverse",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column")), [{
-    property: property,
-    value: "column column",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column-reverse")), [{
-    property: property,
-    value: "column-reverse column-reverse",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
-    property: property,
-    value: "normal normal",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "reverse")), [{
-    property: property,
-    value: "reverse reverse",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var flexDirection = ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "row")), [{
-    property: property,
-    value: "row row",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "row-reverse")), [{
-    property: property,
-    value: "row-reverse row-reverse",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column")), [{
-    property: property,
-    value: "column column",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "column-reverse")), [{
-    property: property,
-    value: "column-reverse column-reverse",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var flexWrap = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "nowrap")), [{
-    property: property,
-    value: "nowrap nowrap",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "wrap")), [{
-    property: property,
-    value: "wrap wrap",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "wrap-reverse")), [{
-    property: property,
-    value: "wrap-reverse wrap-reverse",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$37 = "float";
-var float = [].concat(toConsumableArray(globalTests(property$37)), toConsumableArray(createCaseInsensitiveTest(property$37, "left")), [{
-  property: property$37,
-  value: "left left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$37, "right")), [{
-  property: property$37,
-  value: "right right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$37, "none")), [{
-  property: property$37,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$37, "inline-start")), [{
-  property: property$37,
-  value: "inline-start inline-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$37, "inline-end")), [{
-  property: property$37,
-  value: "inline-end inline-end",
-  valid: false
-}]);
-
-var fontKerning = ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
-    property: property,
-    value: "normal normal",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var fontLanguageOverride = ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
-    property: property,
-    value: "normal normal",
-    valid: false
-  }, {
-    property: property,
-    value: "\"foo\"",
-    valid: true
-  }, {
-    property: property,
-    value: "'bar'",
-    valid: true
-  }, {
-    property: property,
-    value: "baz",
-    valid: false
-  }, {
-    property: property,
-    value: "`quux`",
-    valid: false
-  }, {
-    property: property,
-    value: "\"foo\" \"foo\"",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$38 = "font-size";
-var fontSize = [].concat(toConsumableArray(globalTests(property$38)), [{
-  property: property$38,
-  value: "xx-small",
-  valid: true
-}, {
-  property: property$38,
-  value: "x-small",
-  valid: true
-}, {
-  property: property$38,
-  value: "small",
-  valid: true
-}, {
-  property: property$38,
-  value: "medium",
-  valid: true
-}, {
-  property: property$38,
-  value: "large",
-  valid: true
-}, {
-  property: property$38,
-  value: "x-large",
-  valid: true
-}, {
-  property: property$38,
-  value: "xx-large",
-  valid: true
-}, {
-  property: property$38,
-  value: "XX-SMALL",
-  valid: true
-}, {
-  property: property$38,
-  value: "X-SMALL",
-  valid: true
-}, {
-  property: property$38,
-  value: "SMALL",
-  valid: true
-}, {
-  property: property$38,
-  value: "MEDIUM",
-  valid: true
-}, {
-  property: property$38,
-  value: "LARGE",
-  valid: true
-}, {
-  property: property$38,
-  value: "X-LARGE",
-  valid: true
-}, {
-  property: property$38,
-  value: "XX-LARGE",
-  valid: true
-}, {
-  property: property$38,
-  value: "reallysmall",
-  valid: false
-}, {
-  property: property$38,
-  value: "superduperlarge",
-  valid: false
-}, {
-  property: property$38,
-  value: "xx-small xx-small",
-  valid: false
-}, {
-  property: property$38,
-  value: "larger",
-  valid: true
-}, {
-  property: property$38,
-  value: "smaller",
-  valid: true
-}, {
-  property: property$38,
-  value: "LARGER",
-  valid: true
-}, {
-  property: property$38,
-  value: "SMALLER",
-  valid: true
-}, {
-  property: property$38,
-  value: "larger-really-larger",
-  valid: false
-}, {
-  property: property$38,
-  value: "smaller-still",
-  valid: false
-}, {
-  property: property$38,
-  value: "larger larger",
-  valid: false
-}, {
-  property: property$38,
-  value: "0",
-  valid: true
-}, {
-  property: property$38,
-  value: "16px",
-  valid: true
-}, {
-  property: property$38,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$38,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$38,
-  value: "1%",
-  valid: true
-}, {
-  property: property$38,
-  value: "88%",
-  valid: true
-}, {
-  property: property$38,
-  value: "99.99%",
-  valid: true
-}, {
-  property: property$38,
-  value: "+100%",
-  valid: true
-}, {
-  property: property$38,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$38,
-  value: "px16",
-  valid: false
-}, {
-  property: property$38,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$38,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$38,
-  value: "12.%",
-  valid: false
-}, {
-  property: property$38,
-  value: "42.2.3.4.7.8.1.2%",
-  valid: false
-}, {
-  property: property$38,
-  value: "0 0",
-  valid: false
-}]);
-
-var property$39 = "font-size-adjust";
-var fontSizeAdjust = [].concat(toConsumableArray(globalTests(property$39)), toConsumableArray(createCaseInsensitiveTest(property$39, "none")), [{
-  property: property$39,
-  value: "none none",
-  valid: false
-}, {
-  property: property$39,
-  value: "12",
-  valid: true
-}, {
-  property: property$39,
-  value: "4.01",
-  valid: true
-}, {
-  property: property$39,
-  value: "-456.8",
-  valid: true
-}, {
-  property: property$39,
-  value: "0.0",
-  valid: true
-}, {
-  property: property$39,
-  value: "+0.0",
-  valid: true
-}, {
-  property: property$39,
-  value: "-0.0",
-  valid: true
-}, {
-  property: property$39,
-  value: ".60",
-  valid: true
-}, {
-  property: property$39,
-  value: "10e3",
-  valid: true
-}, {
-  property: property$39,
-  value: "-3.4e-2",
-  valid: true
-}, {
-  property: property$39,
-  value: "12.",
-  valid: false
-}, {
-  property: property$39,
-  value: "+-12.2",
-  valid: false
-}, {
-  property: property$39,
-  value: "12.1.1",
-  valid: false
-}, {
-  property: property$39,
-  value: "\"10px\"",
-  valid: false
-}, {
-  property: property$39,
-  value: "12 12",
-  valid: false
-}]);
-
-var property$40 = "font-stretch";
-var fontStretch = [].concat(toConsumableArray(globalTests(property$40)), toConsumableArray(createCaseInsensitiveTest(property$40, "normal")), [{
-  property: property$40,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "ultra-condensed")), [{
-  property: property$40,
-  value: "ultra-condensed ultra-condensed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "extra-condensed")), [{
-  property: property$40,
-  value: "extra-condensed extra-condensed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "condensed")), [{
-  property: property$40,
-  value: "condensed condensed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "semi-condensed")), [{
-  property: property$40,
-  value: "semi-condensed semi-condensed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "semi-expanded")), [{
-  property: property$40,
-  value: "semi-expanded semi-expanded",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "expanded")), [{
-  property: property$40,
-  value: "expanded expanded",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "extra-expanded")), [{
-  property: property$40,
-  value: "extra-expanded extra-expanded",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$40, "ultra-expanded")), [{
-  property: property$40,
-  value: "ultra-expanded ultra-expanded",
-  valid: false
-}]);
-
-var property$41 = "font-style";
-var fontStyle = [].concat(toConsumableArray(globalTests(property$41)), toConsumableArray(createCaseInsensitiveTest(property$41, "normal")), [{
-  property: property$41,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "italic")), [{
-  property: property$41,
-  value: "italic italic",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$41, "oblique")), [{
-  property: property$41,
-  value: "oblique oblique",
-  valid: false
-}]);
-
-var property$42 = "font-variant-caps";
-var fontVariantCaps = [].concat(toConsumableArray(globalTests(property$42)), toConsumableArray(createCaseInsensitiveTest(property$42, "normal")), [{
-  property: property$42,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "small-caps")), [{
-  property: property$42,
-  value: "small-caps small-caps",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "all-small-caps")), [{
-  property: property$42,
-  value: "all-small-caps all-small-caps",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "petite-caps")), [{
-  property: property$42,
-  value: "petite-caps petite-caps",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "all-petite-caps")), [{
-  property: property$42,
-  value: "all-petite-caps all-petite-caps",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "unicase")), [{
-  property: property$42,
-  value: "unicase unicase",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$42, "titling-caps")), [{
-  property: property$42,
-  value: "titling-caps titling-caps",
-  valid: false
-}]);
-
-var property$43 = "font-variant-position";
-var fontVariantPosition = [].concat(toConsumableArray(globalTests(property$43)), toConsumableArray(createCaseInsensitiveTest(property$43, "normal")), [{
-  property: property$43,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "sub")), [{
-  property: property$43,
-  value: "sub sub",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$43, "super")), [{
-  property: property$43,
-  value: "super super",
-  valid: false
-}]);
-
-var property$44 = "font-weight";
-var fontWeight = [].concat(toConsumableArray(globalTests(property$44)), toConsumableArray(createCaseInsensitiveTest(property$44, "normal")), [{
-  property: property$44,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "bold")), [{
-  property: property$44,
-  value: "bold bold",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "bolder")), [{
-  property: property$44,
-  value: "bolder bolder",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "lighter")), [{
-  property: property$44,
-  value: "lighter lighter",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "100")), [{
-  property: property$44,
-  value: "100 100",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "200")), [{
-  property: property$44,
-  value: "200 200",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "300")), [{
-  property: property$44,
-  value: "300 300",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "400")), [{
-  property: property$44,
-  value: "400 400",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "500")), [{
-  property: property$44,
-  value: "500 500",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "600")), [{
-  property: property$44,
-  value: "600 600",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "700")), [{
-  property: property$44,
-  value: "700 700",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "800")), [{
-  property: property$44,
-  value: "800 800",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$44, "900")), [{
-  property: property$44,
-  value: "900 900",
-  valid: false
-}]);
-
-var gridColumnGap = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$45 = "grid-template-areas";
-var gridTemplateAreas = [].concat(toConsumableArray(globalTests(property$45)), toConsumableArray(createCaseInsensitiveTest(property$45, "none")), [{
-  property: property$45,
-  value: "none none",
-  valid: false
-}, {
-  property: property$45,
-  value: "\"foo\"",
-  valid: true
-}, {
-  property: property$45,
-  value: "'bar'",
-  valid: true
-}, {
-  property: property$45,
-  value: "baz",
-  valid: false
-}, {
-  property: property$45,
-  value: "`quux`",
-  valid: false
-}, {
-  property: property$45,
-  value: "\"foo\" \"foo\"",
-  valid: true
-}, {
-  property: property$45,
-  value: "\"foo\", \"foo\"",
-  valid: false
-}, {
-  property: property$45,
-  value: "var(--foo) var(--bar)",
-  valid: true
-}, {
-  property: property$45,
-  value: "var(--foo), var(--bar)",
-  valid: false
-}]);
-
-var hyphens = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "manual")), [{
-    property: property,
-    value: "manual manual",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$46 = "image-rendering";
-var imageRendering = [].concat(toConsumableArray(globalTests(property$46)), toConsumableArray(createCaseInsensitiveTest(property$46, "auto")), [{
-  property: property$46,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "crisp-edges")), [{
-  property: property$46,
-  value: "crisp-edges crisp-edges",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "pixelated")), [{
-  property: property$46,
-  value: "pixelated pixelated",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "-webkit-optimize-contrast")), [{
-  property: property$46,
-  value: "-webkit-optimize-contrast -webkit-optimize-contrast",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "-moz-crisp-edges")), [{
-  property: property$46,
-  value: "-moz-crisp-edges -moz-crisp-edges",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$46, "-o-pixelated")), [{
-  property: property$46,
-  value: "-o-pixelated -o-pixelated",
-  valid: false
-}]);
-
-var property$47 = "-ms-interpolation-mode";
-var msInterpolationMode = [].concat(toConsumableArray(globalTests(property$47)), toConsumableArray(createCaseInsensitiveTest(property$47, "auto")), [{
-  property: property$47,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "crisp-edges")), [{
-  property: property$47,
-  value: "crisp-edges crisp-edges",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "pixelated")), [{
-  property: property$47,
-  value: "pixelated pixelated",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$47, "nearest-neighbor")), [{
-  property: property$47,
-  value: "nearest-neighbor nearest-neighbor",
-  valid: false
-}]);
-
-var property$48 = "ime-mode";
-var imeMode = [].concat(toConsumableArray(globalTests(property$48)), toConsumableArray(createCaseInsensitiveTest(property$48, "auto")), [{
-  property: property$48,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "normal")), [{
-  property: property$48,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "active")), [{
-  property: property$48,
-  value: "active active",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "inactive")), [{
-  property: property$48,
-  value: "inactive inactive",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$48, "disabled")), [{
-  property: property$48,
-  value: "disabled disabled",
-  valid: false
-}]);
-
-var property$49 = "initial-letter-align";
-var initialLetterAlign = [].concat(toConsumableArray(globalTests(property$49)), toConsumableArray(createCaseInsensitiveTest(property$49, "auto")), [{
-  property: property$49,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$49, "alphabetic")), [{
-  property: property$49,
-  value: "alphabetic alphabetic",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$49, "hanging")), [{
-  property: property$49,
-  value: "hanging hanging",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$49, "ideographic")), [{
-  property: property$49,
-  value: "ideographic ideographic",
-  valid: false
-}]);
-
-var property$50 = "isolation";
-var isolation = [].concat(toConsumableArray(globalTests(property$50)), toConsumableArray(createCaseInsensitiveTest(property$50, "auto")), [{
-  property: property$50,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$50, "isolate")), [{
-  property: property$50,
-  value: "isolate isolate",
-  valid: false
-}]);
-
-var mozBoxPack = ["-webkit-box-pack", "-moz-box-pack"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-between")), [{
-    property: property,
-    value: "space-between space-between",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-around")), [{
-    property: property,
-    value: "space-around space-around",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "start")), [{
-    property: property,
-    value: "start start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "end")), [{
-    property: property,
-    value: "end end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "justify")), [{
-    property: property,
-    value: "justify justify",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var justifyContent = ["-webkit-justify-content", "justify-content"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flex-start")), [{
-    property: property,
-    value: "flex-start flex-start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "flex-end")), [{
-    property: property,
-    value: "flex-end flex-end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-between")), [{
-    property: property,
-    value: "space-between space-between",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "space-around")), [{
-    property: property,
-    value: "space-around space-around",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$51 = "-ms-flex-pack";
-var msFlexPack = [].concat(toConsumableArray(globalTests(property$51)), toConsumableArray(createCaseInsensitiveTest(property$51, "flex-start")), [{
-  property: property$51,
-  value: "flex-start flex-start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "flex-end")), [{
-  property: property$51,
-  value: "flex-end flex-end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "center")), [{
-  property: property$51,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "space-between")), [{
-  property: property$51,
-  value: "space-between space-between",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "space-around")), [{
-  property: property$51,
-  value: "space-around space-around",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "start")), [{
-  property: property$51,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "end")), [{
-  property: property$51,
-  value: "end end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "justify")), [{
-  property: property$51,
-  value: "justify justify",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$51, "distribute")), [{
-  property: property$51,
-  value: "distribute distribute",
-  valid: false
-}]);
-
-var property$52 = "letter-spacing";
-var letterSpacing = [].concat(toConsumableArray(globalTests(property$52)), toConsumableArray(createCaseInsensitiveTest(property$52, "normal")), [{
-  property: property$52,
-  value: "normal normal",
-  valid: false
-}, {
-  property: property$52,
-  value: "0",
-  valid: true
-}, {
-  property: property$52,
-  value: "16px",
-  valid: true
-}, {
-  property: property$52,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$52,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$52,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$52,
-  value: "px16",
-  valid: false
-}, {
-  property: property$52,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$52,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$52,
-  value: "0 0",
-  valid: false
-}]);
-
-var property$53 = "line-break";
-var lineBreak = [].concat(toConsumableArray(globalTests(property$53)), toConsumableArray(createCaseInsensitiveTest(property$53, "auto")), [{
-  property: property$53,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$53, "loose")), [{
-  property: property$53,
-  value: "loose loose",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$53, "normal")), [{
-  property: property$53,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$53, "strict")), [{
-  property: property$53,
-  value: "strict strict",
-  valid: false
-}]);
-
-var property$54 = "line-height";
-var lineHeight = [].concat(toConsumableArray(globalTests(property$54)), toConsumableArray(createCaseInsensitiveTest(property$54, "normal")), [{
-  property: property$54,
-  value: "normal normal",
-  valid: false
-}, {
-  property: property$54,
-  value: "12",
-  valid: true
-}, {
-  property: property$54,
-  value: "4.01",
-  valid: true
-}, {
-  property: property$54,
-  value: "-456.8",
-  valid: true
-}, {
-  property: property$54,
-  value: "0.0",
-  valid: true
-}, {
-  property: property$54,
-  value: "+0.0",
-  valid: true
-}, {
-  property: property$54,
-  value: "-0.0",
-  valid: true
-}, {
-  property: property$54,
-  value: ".60",
-  valid: true
-}, {
-  property: property$54,
-  value: "10e3",
-  valid: true
-}, {
-  property: property$54,
-  value: "-3.4e-2",
-  valid: true
-}, {
-  property: property$54,
-  value: "12.",
-  valid: false
-}, {
-  property: property$54,
-  value: "+-12.2",
-  valid: false
-}, {
-  property: property$54,
-  value: "12.1.1",
-  valid: false
-}, {
-  property: property$54,
-  value: "\"10px\"",
-  valid: false
-}, {
-  property: property$54,
-  value: "12 12",
-  valid: false
-}, {
-  property: property$54,
-  value: "0",
-  valid: true
-}, {
-  property: property$54,
-  value: "16px",
-  valid: true
-}, {
-  property: property$54,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$54,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$54,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$54,
-  value: "px16",
-  valid: false
-}, {
-  property: property$54,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$54,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$54,
-  value: "0 0",
-  valid: false
-}, {
-  property: property$54,
-  value: "1%",
-  valid: true
-}, {
-  property: property$54,
-  value: "88%",
-  valid: true
-}, {
-  property: property$54,
-  value: "99.99%",
-  valid: true
-}, {
-  property: property$54,
-  value: "+100%",
-  valid: true
-}, {
-  property: property$54,
-  value: "12.%",
-  valid: false
-}, {
-  property: property$54,
-  value: "42.2.3.4.7.8.1.2%",
-  valid: false
-}, {
-  property: property$54,
-  value: "1% 1%",
-  valid: false
-}]);
-
-var property$55 = "list-style-position";
-var listStylePosition = [].concat(toConsumableArray(globalTests(property$55)), toConsumableArray(createCaseInsensitiveTest(property$55, "inside")), [{
-  property: property$55,
-  value: "inside inside",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$55, "outside")), [{
-  property: property$55,
-  value: "outside outside",
-  valid: false
-}]);
-
-var property$56 = "mask-composite";
-var maskComposite = [].concat(toConsumableArray(globalTests(property$56)), [{
-  property: property$56,
-  value: "add",
-  valid: true
-}, {
-  property: property$56,
-  value: "subtract",
-  valid: true
-}, {
-  property: property$56,
-  value: "intersect",
-  valid: true
-}, {
-  property: property$56,
-  value: "exclude",
-  valid: true
-}, {
-  property: property$56,
-  value: "ADD",
-  valid: true
-}, {
-  property: property$56,
-  value: "SUBTRACT",
-  valid: true
-}, {
-  property: property$56,
-  value: "INTERSECT",
-  valid: true
-}, {
-  property: property$56,
-  value: "EXCLUDE",
-  valid: true
-}, {
-  property: property$56,
-  value: "add-subtract",
-  valid: false
-}, {
-  property: property$56,
-  value: "add, add",
-  valid: true
-}, {
-  property: property$56,
-  value: "add, add,",
-  valid: false
-}, {
-  property: property$56,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$56,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$57 = "mask-mode";
-var maskMode = [].concat(toConsumableArray(globalTests(property$57)), [{
-  property: property$57,
-  value: "alpha",
-  valid: true
-}, {
-  property: property$57,
-  value: "luminance",
-  valid: true
-}, {
-  property: property$57,
-  value: "match-source",
-  valid: true
-}, {
-  property: property$57,
-  value: "ALPHA",
-  valid: true
-}, {
-  property: property$57,
-  value: "LUMINANCE",
-  valid: true
-}, {
-  property: property$57,
-  value: "MATCH-SOURCE",
-  valid: true
-}, {
-  property: property$57,
-  value: "jim-carrey",
-  valid: false
-}, {
-  property: property$57,
-  value: "alpha, alpha",
-  valid: true
-}, {
-  property: property$57,
-  value: "alpha, alpha,",
-  valid: false
-}, {
-  property: property$57,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$57,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$58 = "mask-type";
-var maskType = [].concat(toConsumableArray(globalTests(property$58)), toConsumableArray(createCaseInsensitiveTest(property$58, "luminance")), [{
-  property: property$58,
-  value: "luminance luminance",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$58, "alpha")), [{
-  property: property$58,
-  value: "alpha alpha",
-  valid: false
-}]);
-
-var maxBlockSize = ["max-block-size", "max-height", "max-inline-size", "max-width"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "1% 1%",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "max-content")), [{
-    property: property,
-    value: "max-content max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "min-content")), [{
-    property: property,
-    value: "min-content min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "fit-content")), [{
-    property: property,
-    value: "fit-content fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "fill-available")), [{
-    property: property,
-    value: "fill-available fill-available",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-max-content")), [{
-    property: property,
-    value: "-webkit-max-content -webkit-max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-max-content")), [{
-    property: property,
-    value: "-moz-max-content -moz-max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-min-content")), [{
-    property: property,
-    value: "-webkit-min-content -webkit-min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-min-content")), [{
-    property: property,
-    value: "-moz-min-content -moz-min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-fit-content")), [{
-    property: property,
-    value: "-webkit-fit-content -webkit-fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-fit-content")), [{
-    property: property,
-    value: "-moz-fit-content -moz-fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-fill-available")), [{
-    property: property,
-    value: "-webkit-fill-available -webkit-fill-available",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-available")), [{
-    property: property,
-    value: "-moz-available -moz-available",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var minBlockSize = ["min-block-size", "min-height", "min-inline-size", "min-width"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "1% 1%",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "max-content")), [{
-    property: property,
-    value: "max-content max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "min-content")), [{
-    property: property,
-    value: "min-content min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "fit-content")), [{
-    property: property,
-    value: "fit-content fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "fill-available")), [{
-    property: property,
-    value: "fill-available fill-available",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-max-content")), [{
-    property: property,
-    value: "-webkit-max-content -webkit-max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-max-content")), [{
-    property: property,
-    value: "-moz-max-content -moz-max-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-min-content")), [{
-    property: property,
-    value: "-webkit-min-content -webkit-min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-min-content")), [{
-    property: property,
-    value: "-moz-min-content -moz-min-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-fit-content")), [{
-    property: property,
-    value: "-webkit-fit-content -webkit-fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-fit-content")), [{
-    property: property,
-    value: "-moz-fit-content -moz-fit-content",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-webkit-fill-available")), [{
-    property: property,
-    value: "-webkit-fill-available -webkit-fill-available",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "-moz-available")), [{
-    property: property,
-    value: "-moz-available -moz-available",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$59 = "mix-blend-mode";
-var mixBlendMode = [].concat(toConsumableArray(globalTests(property$59)), [{
-  property: property$59,
-  value: "normal",
-  valid: true
-}, {
-  property: property$59,
-  value: "multiply",
-  valid: true
-}, {
-  property: property$59,
-  value: "screen",
-  valid: true
-}, {
-  property: property$59,
-  value: "overlay",
-  valid: true
-}, {
-  property: property$59,
-  value: "darken",
-  valid: true
-}, {
-  property: property$59,
-  value: "lighten",
-  valid: true
-}, {
-  property: property$59,
-  value: "color-dodge",
-  valid: true
-}, {
-  property: property$59,
-  value: "color-burn",
-  valid: true
-}, {
-  property: property$59,
-  value: "hard-light",
-  valid: true
-}, {
-  property: property$59,
-  value: "soft-light",
-  valid: true
-}, {
-  property: property$59,
-  value: "difference",
-  valid: true
-}, {
-  property: property$59,
-  value: "exclusion",
-  valid: true
-}, {
-  property: property$59,
-  value: "hue",
-  valid: true
-}, {
-  property: property$59,
-  value: "saturation",
-  valid: true
-}, {
-  property: property$59,
-  value: "color",
-  valid: true
-}, {
-  property: property$59,
-  value: "luminosity",
-  valid: true
-}, {
-  property: property$59,
-  value: "NORMAL",
-  valid: true
-}, {
-  property: property$59,
-  value: "MULTIPLY",
-  valid: true
-}, {
-  property: property$59,
-  value: "SCREEN",
-  valid: true
-}, {
-  property: property$59,
-  value: "OVERLAY",
-  valid: true
-}, {
-  property: property$59,
-  value: "DARKEN",
-  valid: true
-}, {
-  property: property$59,
-  value: "LIGHTEN",
-  valid: true
-}, {
-  property: property$59,
-  value: "COLOR-DODGE",
-  valid: true
-}, {
-  property: property$59,
-  value: "COLOR-BURN",
-  valid: true
-}, {
-  property: property$59,
-  value: "HARD-LIGHT",
-  valid: true
-}, {
-  property: property$59,
-  value: "SOFT-LIGHT",
-  valid: true
-}, {
-  property: property$59,
-  value: "DIFFERENCE",
-  valid: true
-}, {
-  property: property$59,
-  value: "EXCLUSION",
-  valid: true
-}, {
-  property: property$59,
-  value: "HUE",
-  valid: true
-}, {
-  property: property$59,
-  value: "SATURATION",
-  valid: true
-}, {
-  property: property$59,
-  value: "COLOR",
-  valid: true
-}, {
-  property: property$59,
-  value: "LUMINOSITY",
-  valid: true
-}, {
-  property: property$59,
-  value: "superblend",
-  valid: false
-}, {
-  property: property$59,
-  value: "blend-man",
-  valid: false
-}, {
-  property: property$59,
-  value: "normal normal",
-  valid: false
-}]);
-
-var objectFit = ["-o-object-fit", "object-fit"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "fill")), [{
-    property: property,
-    value: "fill fill",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "contain")), [{
-    property: property,
-    value: "contain contain",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "cover")), [{
-    property: property,
-    value: "cover cover",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "scale-down")), [{
-    property: property,
-    value: "scale-down scale-down",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var objectPosition = ["object-position", "perspective-origin", "scroll-snap-destination"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "left",
-    valid: true
-  }, {
-    property: property,
-    value: "center",
-    valid: true
-  }, {
-    property: property,
-    value: "right",
-    valid: true
-  }, {
-    property: property,
-    value: "top",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "10px",
-    valid: true
-  }, {
-    property: property,
-    value: "50%",
-    valid: true
-  }, {
-    property: property,
-    value: "left top",
-    valid: true
-  }, {
-    property: property,
-    value: "left center",
-    valid: true
-  }, {
-    property: property,
-    value: "left bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "right 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "10px top",
-    valid: true
-  }, {
-    property: property,
-    value: "50% 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom right",
-    valid: true
-  }, {
-    property: property,
-    value: "center center",
-    valid: true
-  }, {
-    property: property,
-    value: "50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "top 50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom 25%",
-    valid: true
-  }, {
-    property: property,
-    value: "top 10px right 50px",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
-    valid: true
-  }, {
-    property: property,
-    value: "left right",
-    valid: false
-  }, {
-    property: property,
-    value: "right left",
-    valid: false
-  }, {
-    property: property,
-    value: "top bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "bottom top",
-    valid: false
-  }, {
-    property: property,
-    value: "left/top",
-    valid: false
-  }, {
-    property: property,
-    value: "50% left",
-    valid: false
-  }, {
-    property: property,
-    value: "left 50% 50%",
-    valid: false
-  }, {
-    property: property,
-    value: "left 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "top 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "center center center center",
-    valid: false
-  }, {
-    property: property,
-    value: "left/25%/bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "top/10px/right/50px",
-    valid: false
-  }, {
-    property: property,
-    value: "left left",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$60 = "outline-color";
-var outlineColor = [].concat(toConsumableArray(globalTests(property$60)), [{
-  property: property$60,
-  value: "RGB(1, 2, 3)",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgb(10%, 20%, 30%)",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgb(400, 400, 400)",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgbA(1, 2, 3, .5)",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgba(10%, 20%, 30%, 0.5)",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgba(400, 400, 400, 1)",
-  valid: true
-}, {
-  property: property$60,
-  value: "hsl(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$60,
-  value: "HSL(90, 50%, 50%)",
-  valid: true
-}, {
-  property: property$60,
-  value: "hsla(90, 50%, 50%, .5)",
-  valid: true
-}, {
-  property: property$60,
-  value: "hsla(90, 50%, 50%, 0.5)",
-  valid: true
-}, {
-  property: property$60,
-  value: "hslA(90, 50%, 50%, 0)",
-  valid: true
-}, {
-  property: property$60,
-  value: "#000",
-  valid: true
-}, {
-  property: property$60,
-  value: "#000F",
-  valid: true
-}, {
-  property: property$60,
-  value: "#000000",
-  valid: true
-}, {
-  property: property$60,
-  value: "#000000FF",
-  valid: true
-}, {
-  property: property$60,
-  value: "RED",
-  valid: true
-}, {
-  property: property$60,
-  value: "black",
-  valid: true
-}, {
-  property: property$60,
-  value: "currentcolor",
-  valid: true
-}, {
-  property: property$60,
-  value: "CURRENTCOLOR",
-  valid: true
-}, {
-  property: property$60,
-  value: "rgb(1, 2, 3, 4, 5)",
-  valid: false
-}, {
-  property: property$60,
-  value: "rgb(1:2:3)",
-  valid: false
-}, {
-  property: property$60,
-  value: "rgb(a, b, c)",
-  valid: false
-}, {
-  property: property$60,
-  value: "rgba(10%, 20%, 30%, transparent)",
-  valid: false
-}, {
-  property: property$60,
-  value: "rgba(400: 400)",
-  valid: false
-}, {
-  property: property$60,
-  value: "rgba(400, 400, 400, 50%)",
-  valid: false
-}, {
-  property: property$60,
-  value: "hsl(50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$60,
-  value: "hsl(90, 50, 50)",
-  valid: false
-}, {
-  property: property$60,
-  value: "hsla(90, 50%, 50%)",
-  valid: false
-}, {
-  property: property$60,
-  value: "hsla(90, 50%, 50%, 50%)",
-  valid: false
-}, {
-  property: property$60,
-  value: "hsla(90%, 50%, 50%, 0.5)",
-  valid: false
-}, {
-  property: property$60,
-  value: "#ee",
-  valid: false
-}, {
-  property: property$60,
-  value: "#eeeeeee",
-  valid: false
-}, {
-  property: property$60,
-  value: "#ggg",
-  valid: false
-}, {
-  property: property$60,
-  value: "blacklight",
-  valid: false
-}, {
-  property: property$60,
-  value: "RGB(1, 2, 3) RGB(1, 2, 3)",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$60, "invert")), [{
-  property: property$60,
-  value: "invert invert",
-  valid: false
-}]);
-
-var property$61 = "outline-style";
-var outlineStyle = [].concat(toConsumableArray(globalTests(property$61)), toConsumableArray(createCaseInsensitiveTest(property$61, "auto")), [{
-  property: property$61,
-  value: "auto auto",
-  valid: false
-}, {
-  property: property$61,
-  value: "none",
-  valid: true
-}, {
-  property: property$61,
-  value: "hidden",
-  valid: true
-}, {
-  property: property$61,
-  value: "dotted",
-  valid: true
-}, {
-  property: property$61,
-  value: "dashed",
-  valid: true
-}, {
-  property: property$61,
-  value: "solid",
-  valid: true
-}, {
-  property: property$61,
-  value: "double",
-  valid: true
-}, {
-  property: property$61,
-  value: "groove",
-  valid: true
-}, {
-  property: property$61,
-  value: "ridge",
-  valid: true
-}, {
-  property: property$61,
-  value: "inset",
-  valid: true
-}, {
-  property: property$61,
-  value: "outset",
-  valid: true
-}, {
-  property: property$61,
-  value: "NONE",
-  valid: true
-}, {
-  property: property$61,
-  value: "HIDDEN",
-  valid: true
-}, {
-  property: property$61,
-  value: "DOTTED",
-  valid: true
-}, {
-  property: property$61,
-  value: "DASHED",
-  valid: true
-}, {
-  property: property$61,
-  value: "SOLID",
-  valid: true
-}, {
-  property: property$61,
-  value: "DOUBLE",
-  valid: true
-}, {
-  property: property$61,
-  value: "GROOVE",
-  valid: true
-}, {
-  property: property$61,
-  value: "RIDGE",
-  valid: true
-}, {
-  property: property$61,
-  value: "INSET",
-  valid: true
-}, {
-  property: property$61,
-  value: "OUTSET",
-  valid: true
-}, {
-  property: property$61,
-  value: "groovy",
-  valid: false
-}, {
-  property: property$61,
-  value: "none none",
-  valid: false
-}]);
-
-var overflow = ["overflow", "overflow-x", "overflow-y"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "visible")), [{
-    property: property,
-    value: "visible visible",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "hidden")), [{
-    property: property,
-    value: "hidden hidden",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "scroll")), [{
-    property: property,
-    value: "scroll scroll",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$62 = "overflow-clip-box";
-var overflowClipBox = [].concat(toConsumableArray(globalTests(property$62)), toConsumableArray(createCaseInsensitiveTest(property$62, "padding-box")), [{
-  property: property$62,
-  value: "padding-box padding-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$62, "content-box")), [{
-  property: property$62,
-  value: "content-box content-box",
-  valid: false
-}]);
-
-var overflowWrap = ["overflow-wrap", "word-wrap"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "normal")), [{
-    property: property,
-    value: "normal normal",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "break-word")), [{
-    property: property,
-    value: "break-word break-word",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var paddingBlockEnd = ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat([{
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "1% 1%",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$63 = "page-break-inside";
-var pageBreakInside = [].concat(toConsumableArray(globalTests(property$63)), toConsumableArray(createCaseInsensitiveTest(property$63, "auto")), [{
-  property: property$63,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$63, "avoid")), [{
-  property: property$63,
-  value: "avoid avoid",
-  valid: false
-}]);
-
-var perspective = ["-webkit-perspective", "-moz-perspective", "perspective"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }, {
-    property: property,
-    value: "0",
-    valid: true
-  }, {
-    property: property,
-    value: "16px",
-    valid: true
-  }, {
-    property: property,
-    value: "1pc",
-    valid: true
-  }, {
-    property: property,
-    value: "2.34254645654324rem",
-    valid: true
-  }, {
-    property: property,
-    value: "16.px",
-    valid: false
-  }, {
-    property: property,
-    value: "px16",
-    valid: false
-  }, {
-    property: property,
-    value: "one rem",
-    valid: false
-  }, {
-    property: property,
-    value: "\"1rem\"",
-    valid: false
-  }, {
-    property: property,
-    value: "0 0",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$64 = "pointer-events";
-var pointerEvents = [].concat(toConsumableArray(globalTests(property$64)), toConsumableArray(createCaseInsensitiveTest(property$64, "auto")), [{
-  property: property$64,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "none")), [{
-  property: property$64,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "visiblePainted")), [{
-  property: property$64,
-  value: "visiblePainted visiblePainted",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "visibleFill")), [{
-  property: property$64,
-  value: "visibleFill visibleFill",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "visibleStroke")), [{
-  property: property$64,
-  value: "visibleStroke visibleStroke",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "visible")), [{
-  property: property$64,
-  value: "visible visible",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "painted")), [{
-  property: property$64,
-  value: "painted painted",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "fill")), [{
-  property: property$64,
-  value: "fill fill",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "stroke")), [{
-  property: property$64,
-  value: "stroke stroke",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "all")), [{
-  property: property$64,
-  value: "all all",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$64, "inherit")), [{
-  property: property$64,
-  value: "inherit inherit",
-  valid: false
-}]);
-
-var property$65 = "position";
-var position = [].concat(toConsumableArray(globalTests(property$65)), toConsumableArray(createCaseInsensitiveTest(property$65, "static")), [{
-  property: property$65,
-  value: "static static",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "relative")), [{
-  property: property$65,
-  value: "relative relative",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "absolute")), [{
-  property: property$65,
-  value: "absolute absolute",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "sticky")), [{
-  property: property$65,
-  value: "sticky sticky",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "fixed")), [{
-  property: property$65,
-  value: "fixed fixed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$65, "-webkit-sticky")), [{
-  property: property$65,
-  value: "-webkit-sticky -webkit-sticky",
-  valid: false
-}]);
-
-var property$66 = "resize";
-var resize = [].concat(toConsumableArray(globalTests(property$66)), toConsumableArray(createCaseInsensitiveTest(property$66, "none")), [{
-  property: property$66,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "both")), [{
-  property: property$66,
-  value: "both both",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "horizontal")), [{
-  property: property$66,
-  value: "horizontal horizontal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$66, "vertical")), [{
-  property: property$66,
-  value: "vertical vertical",
-  valid: false
-}]);
-
-var property$67 = "ruby-align";
-var rubyAlign = [].concat(toConsumableArray(globalTests(property$67)), toConsumableArray(createCaseInsensitiveTest(property$67, "start")), [{
-  property: property$67,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$67, "center")), [{
-  property: property$67,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$67, "space-between")), [{
-  property: property$67,
-  value: "space-between space-between",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$67, "space-around")), [{
-  property: property$67,
-  value: "space-around space-around",
-  valid: false
-}]);
-
-var property$68 = "ruby-merge";
-var rubyMerge = [].concat(toConsumableArray(globalTests(property$68)), toConsumableArray(createCaseInsensitiveTest(property$68, "separate")), [{
-  property: property$68,
-  value: "separate separate",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$68, "collapse")), [{
-  property: property$68,
-  value: "collapse collapse",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$68, "auto")), [{
-  property: property$68,
-  value: "auto auto",
-  valid: false
-}]);
-
-var property$69 = "ruby-position";
-var rubyPosition = [].concat(toConsumableArray(globalTests(property$69)), toConsumableArray(createCaseInsensitiveTest(property$69, "over")), [{
-  property: property$69,
-  value: "over over",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$69, "under")), [{
-  property: property$69,
-  value: "under under",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$69, "inter-character")), [{
-  property: property$69,
-  value: "inter-character inter-character",
-  valid: false
-}]);
-
-var property$70 = "scroll-behavior";
-var scrollBehavior = [].concat(toConsumableArray(globalTests(property$70)), toConsumableArray(createCaseInsensitiveTest(property$70, "auto")), [{
-  property: property$70,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$70, "smooth")), [{
-  property: property$70,
-  value: "smooth smooth",
-  valid: false
-}]);
-
-var scrollSnapCoordinate = ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }, {
-    property: property,
-    value: "left",
-    valid: true
-  }, {
-    property: property,
-    value: "center",
-    valid: true
-  }, {
-    property: property,
-    value: "right",
-    valid: true
-  }, {
-    property: property,
-    value: "top",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "10px",
-    valid: true
-  }, {
-    property: property,
-    value: "50%",
-    valid: true
-  }, {
-    property: property,
-    value: "left top",
-    valid: true
-  }, {
-    property: property,
-    value: "left center",
-    valid: true
-  }, {
-    property: property,
-    value: "left bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "right 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "10px top",
-    valid: true
-  }, {
-    property: property,
-    value: "50% 50%",
-    valid: true
-  }, {
-    property: property,
-    value: "bottom right",
-    valid: true
-  }, {
-    property: property,
-    value: "center center",
-    valid: true
-  }, {
-    property: property,
-    value: "50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom",
-    valid: true
-  }, {
-    property: property,
-    value: "top 50% center",
-    valid: true
-  }, {
-    property: property,
-    value: "left 25% bottom 25%",
-    valid: true
-  }, {
-    property: property,
-    value: "top 10px right 50px",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo) var(--bar) var(--baz) var(--quux)",
-    valid: true
-  }, {
-    property: property,
-    value: "left right",
-    valid: false
-  }, {
-    property: property,
-    value: "right left",
-    valid: false
-  }, {
-    property: property,
-    value: "top bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "bottom top",
-    valid: false
-  }, {
-    property: property,
-    value: "left/top",
-    valid: false
-  }, {
-    property: property,
-    value: "50% left",
-    valid: false
-  }, {
-    property: property,
-    value: "left 50% 50%",
-    valid: false
-  }, {
-    property: property,
-    value: "left 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "top 75% center 75%",
-    valid: false
-  }, {
-    property: property,
-    value: "center center center center",
-    valid: false
-  }, {
-    property: property,
-    value: "left/25%/bottom",
-    valid: false
-  }, {
-    property: property,
-    value: "top/10px/right/50px",
-    valid: false
-  }, {
-    property: property,
-    value: "left, left",
-    valid: true
-  }, {
-    property: property,
-    value: "left, left,",
-    valid: false
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar)",
-    valid: true
-  }, {
-    property: property,
-    value: "var(--foo), var(--bar),",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var scrollSnapType = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "mandatory")), [{
-    property: property,
-    value: "mandatory mandatory",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "proximity")), [{
-    property: property,
-    value: "proximity proximity",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$71 = "tab-size";
-var tabSize = [].concat(toConsumableArray(globalTests(property$71)), [{
-  property: property$71,
-  value: "10",
-  valid: true
-}, {
-  property: property$71,
-  value: "+10",
-  valid: true
-}, {
-  property: property$71,
-  value: "-10",
-  valid: true
-}, {
-  property: property$71,
-  value: "0",
-  valid: true
-}, {
-  property: property$71,
-  value: "+0",
-  valid: true
-}, {
-  property: property$71,
-  value: "-0",
-  valid: true
-}, {
-  property: property$71,
-  value: "12.0",
-  valid: false
-}, {
-  property: property$71,
-  value: "+---12",
-  valid: false
-}, {
-  property: property$71,
-  value: "3e4",
-  valid: false
-}, {
-  property: property$71,
-  value: "\\4E94",
-  valid: false
-}, {
-  property: property$71,
-  value: "_5",
-  valid: false
-}, {
-  property: property$71,
-  value: "\"100\"",
-  valid: false
-}, {
-  property: property$71,
-  value: "10 10",
-  valid: false
-}, {
-  property: property$71,
-  value: "0",
-  valid: true
-}, {
-  property: property$71,
-  value: "16px",
-  valid: true
-}, {
-  property: property$71,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$71,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$71,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$71,
-  value: "px16",
-  valid: false
-}, {
-  property: property$71,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$71,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$71,
-  value: "0 0",
-  valid: false
-}]);
-
-var property$72 = "table-layout";
-var tableLayout = [].concat(toConsumableArray(globalTests(property$72)), toConsumableArray(createCaseInsensitiveTest(property$72, "auto")), [{
-  property: property$72,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$72, "fixed")), [{
-  property: property$72,
-  value: "fixed fixed",
-  valid: false
-}]);
-
-var property$73 = "text-align";
-var textAlign = [].concat(toConsumableArray(globalTests(property$73)), toConsumableArray(createCaseInsensitiveTest(property$73, "start")), [{
-  property: property$73,
-  value: "start start",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "end")), [{
-  property: property$73,
-  value: "end end",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "left")), [{
-  property: property$73,
-  value: "left left",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "right")), [{
-  property: property$73,
-  value: "right right",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "center")), [{
-  property: property$73,
-  value: "center center",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "justify")), [{
-  property: property$73,
-  value: "justify justify",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$73, "match-parent")), [{
-  property: property$73,
-  value: "match-parent match-parent",
-  valid: false
-}]);
-
-var textAlignLast = ["-moz-text-align-last", "text-align-last"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "start")), [{
-    property: property,
-    value: "start start",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "end")), [{
-    property: property,
-    value: "end end",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "left")), [{
-    property: property,
-    value: "left left",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "right")), [{
-    property: property,
-    value: "right right",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "center")), [{
-    property: property,
-    value: "center center",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "justify")), [{
-    property: property,
-    value: "justify justify",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var textDecorationStyle = ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "solid")), [{
-    property: property,
-    value: "solid solid",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "double")), [{
-    property: property,
-    value: "double double",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "dotted")), [{
-    property: property,
-    value: "dotted dotted",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "dashed")), [{
-    property: property,
-    value: "dashed dashed",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "wavy")), [{
-    property: property,
-    value: "wavy wavy",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$74 = "text-orientation";
-var textOrientation = [].concat(toConsumableArray(globalTests(property$74)), toConsumableArray(createCaseInsensitiveTest(property$74, "mixed")), [{
-  property: property$74,
-  value: "mixed mixed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$74, "upright")), [{
-  property: property$74,
-  value: "upright upright",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$74, "sideways")), [{
-  property: property$74,
-  value: "sideways sideways",
-  valid: false
-}]);
-
-var property$75 = "text-rendering";
-var textRendering = [].concat(toConsumableArray(globalTests(property$75)), toConsumableArray(createCaseInsensitiveTest(property$75, "auto")), [{
-  property: property$75,
-  value: "auto auto",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "optimizeSpeed")), [{
-  property: property$75,
-  value: "optimizeSpeed optimizeSpeed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "optimizeLegibility")), [{
-  property: property$75,
-  value: "optimizeLegibility optimizeLegibility",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$75, "geometricPrecision")), [{
-  property: property$75,
-  value: "geometricPrecision geometricPrecision",
-  valid: false
-}]);
-
-var textSizeAdjust = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }, {
-    property: property,
-    value: "1%",
-    valid: true
-  }, {
-    property: property,
-    value: "88%",
-    valid: true
-  }, {
-    property: property,
-    value: "99.99%",
-    valid: true
-  }, {
-    property: property,
-    value: "+100%",
-    valid: true
-  }, {
-    property: property,
-    value: "12.%",
-    valid: false
-  }, {
-    property: property,
-    value: "42.2.3.4.7.8.1.2%",
-    valid: false
-  }, {
-    property: property,
-    value: "1% 1%",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$76 = "text-transform";
-var textTransform = [].concat(toConsumableArray(globalTests(property$76)), toConsumableArray(createCaseInsensitiveTest(property$76, "none")), [{
-  property: property$76,
-  value: "none none",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "capitalize")), [{
-  property: property$76,
-  value: "capitalize capitalize",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "uppercase")), [{
-  property: property$76,
-  value: "uppercase uppercase",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "lowercase")), [{
-  property: property$76,
-  value: "lowercase lowercase",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$76, "full-width")), [{
-  property: property$76,
-  value: "full-width full-width",
-  valid: false
-}]);
-
-var property$77 = "transform-box";
-var transformBox = [].concat(toConsumableArray(globalTests(property$77)), toConsumableArray(createCaseInsensitiveTest(property$77, "border-box")), [{
-  property: property$77,
-  value: "border-box border-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "fill-box")), [{
-  property: property$77,
-  value: "fill-box fill-box",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$77, "view-box")), [{
-  property: property$77,
-  value: "view-box view-box",
-  valid: false
-}]);
-
-var transformStyle = ["-webkit-transform-style", "-moz-transform-style", "transform-style"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "flat")), [{
-    property: property,
-    value: "flat flat",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "preserve-3d")), [{
-    property: property,
-    value: "preserve-3d preserve-3d",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$78 = "unicode-bidi";
-var unicodeBidi = [].concat(toConsumableArray(globalTests(property$78)), toConsumableArray(createCaseInsensitiveTest(property$78, "normal")), [{
-  property: property$78,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "embed")), [{
-  property: property$78,
-  value: "embed embed",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "isolate")), [{
-  property: property$78,
-  value: "isolate isolate",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "bidi-override")), [{
-  property: property$78,
-  value: "bidi-override bidi-override",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "isolate-override")), [{
-  property: property$78,
-  value: "isolate-override isolate-override",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$78, "plaintext")), [{
-  property: property$78,
-  value: "plaintext plaintext",
-  valid: false
-}]);
-
-var userSelect = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "auto")), [{
-    property: property,
-    value: "auto auto",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "text")), [{
-    property: property,
-    value: "text text",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "none")), [{
-    property: property,
-    value: "none none",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "contain")), [{
-    property: property,
-    value: "contain contain",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "all")), [{
-    property: property,
-    value: "all all",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$79 = "vertical-align";
-var verticalAlign = [].concat(toConsumableArray(globalTests(property$79)), toConsumableArray(createCaseInsensitiveTest(property$79, "baseline")), [{
-  property: property$79,
-  value: "baseline baseline",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "sub")), [{
-  property: property$79,
-  value: "sub sub",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "super")), [{
-  property: property$79,
-  value: "super super",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "text-top")), [{
-  property: property$79,
-  value: "text-top text-top",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "text-bottom")), [{
-  property: property$79,
-  value: "text-bottom text-bottom",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "middle")), [{
-  property: property$79,
-  value: "middle middle",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "top")), [{
-  property: property$79,
-  value: "top top",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$79, "bottom")), [{
-  property: property$79,
-  value: "bottom bottom",
-  valid: false
-}, {
-  property: property$79,
-  value: "1%",
-  valid: true
-}, {
-  property: property$79,
-  value: "88%",
-  valid: true
-}, {
-  property: property$79,
-  value: "99.99%",
-  valid: true
-}, {
-  property: property$79,
-  value: "+100%",
-  valid: true
-}, {
-  property: property$79,
-  value: "12.%",
-  valid: false
-}, {
-  property: property$79,
-  value: "42.2.3.4.7.8.1.2%",
-  valid: false
-}, {
-  property: property$79,
-  value: "1% 1%",
-  valid: false
-}, {
-  property: property$79,
-  value: "0",
-  valid: true
-}, {
-  property: property$79,
-  value: "16px",
-  valid: true
-}, {
-  property: property$79,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$79,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$79,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$79,
-  value: "px16",
-  valid: false
-}, {
-  property: property$79,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$79,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$79,
-  value: "0 0",
-  valid: false
-}]);
-
-var property$80 = "visibility";
-var visibility = [].concat(toConsumableArray(globalTests(property$80)), toConsumableArray(createCaseInsensitiveTest(property$80, "visible")), [{
-  property: property$80,
-  value: "visible visible",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "hidden")), [{
-  property: property$80,
-  value: "hidden hidden",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$80, "collapse")), [{
-  property: property$80,
-  value: "collapse collapse",
-  valid: false
-}]);
-
-var property$81 = "white-space";
-var whiteSpace = [].concat(toConsumableArray(globalTests(property$81)), toConsumableArray(createCaseInsensitiveTest(property$81, "normal")), [{
-  property: property$81,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre")), [{
-  property: property$81,
-  value: "pre pre",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$81, "nowrap")), [{
-  property: property$81,
-  value: "nowrap nowrap",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre-wrap")), [{
-  property: property$81,
-  value: "pre-wrap pre-wrap",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$81, "pre-line")), [{
-  property: property$81,
-  value: "pre-line pre-line",
-  valid: false
-}]);
-
-var property$82 = "will-change";
-var willChange = [].concat(toConsumableArray(globalTests(property$82)), toConsumableArray(createCaseInsensitiveTest(property$82, "auto")), [{
-  property: property$82,
-  value: "auto auto",
-  valid: false
-}, {
-  property: property$82,
-  value: "Bond-007",
-  valid: true
-}, {
-  property: property$82,
-  value: "alpha",
-  valid: true
-}, {
-  property: property$82,
-  value: "_-_",
-  valid: true
-}, {
-  property: property$82,
-  value: "\\1F638",
-  valid: true
-}, {
-  property: property$82,
-  value: "-B",
-  valid: true
-}, {
-  property: property$82,
-  value: "NONE",
-  valid: true
-}, {
-  property: property$82,
-  value: "007-Bond",
-  valid: false
-}, {
-  property: property$82,
-  value: "0B",
-  valid: false
-}, {
-  property: property$82,
-  value: "--B",
-  valid: false
-}, {
-  property: property$82,
-  value: "-0",
-  valid: false
-}, {
-  property: property$82,
-  value: "\"foobar\"",
-  valid: false
-}, {
-  property: property$82,
-  value: "Bond-007, Bond-007",
-  valid: true
-}, {
-  property: property$82,
-  value: "Bond-007, Bond-007,",
-  valid: false
-}, {
-  property: property$82,
-  value: "var(--foo), var(--bar)",
-  valid: true
-}, {
-  property: property$82,
-  value: "var(--foo), var(--bar),",
-  valid: false
-}]);
-
-var property$83 = "word-break";
-var wordBreak = [].concat(toConsumableArray(globalTests(property$83)), toConsumableArray(createCaseInsensitiveTest(property$83, "normal")), [{
-  property: property$83,
-  value: "normal normal",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$83, "break-all")), [{
-  property: property$83,
-  value: "break-all break-all",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$83, "keep-all")), [{
-  property: property$83,
-  value: "keep-all keep-all",
-  valid: false
-}]);
-
-var property$84 = "word-spacing";
-var wordSpacing = [].concat(toConsumableArray(globalTests(property$84)), toConsumableArray(createCaseInsensitiveTest(property$84, "normal")), [{
-  property: property$84,
-  value: "normal normal",
-  valid: false
-}, {
-  property: property$84,
-  value: "0",
-  valid: true
-}, {
-  property: property$84,
-  value: "16px",
-  valid: true
-}, {
-  property: property$84,
-  value: "1pc",
-  valid: true
-}, {
-  property: property$84,
-  value: "2.34254645654324rem",
-  valid: true
-}, {
-  property: property$84,
-  value: "1%",
-  valid: true
-}, {
-  property: property$84,
-  value: "88%",
-  valid: true
-}, {
-  property: property$84,
-  value: "99.99%",
-  valid: true
-}, {
-  property: property$84,
-  value: "+100%",
-  valid: true
-}, {
-  property: property$84,
-  value: "16.px",
-  valid: false
-}, {
-  property: property$84,
-  value: "px16",
-  valid: false
-}, {
-  property: property$84,
-  value: "one rem",
-  valid: false
-}, {
-  property: property$84,
-  value: "\"1rem\"",
-  valid: false
-}, {
-  property: property$84,
-  value: "12.%",
-  valid: false
-}, {
-  property: property$84,
-  value: "42.2.3.4.7.8.1.2%",
-  valid: false
-}, {
-  property: property$84,
-  value: "0 0",
-  valid: false
-}]);
-
-var writingMode = ["-webkit-writing-mode", "writing-mode"].reduce(function (suite, property) {
-  suite.push.apply(suite, toConsumableArray(globalTests(property)).concat(toConsumableArray(createCaseInsensitiveTest(property, "horizontal-tb")), [{
-    property: property,
-    value: "horizontal-tb horizontal-tb",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "vertical-rl")), [{
-    property: property,
-    value: "vertical-rl vertical-rl",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "vertical-lr")), [{
-    property: property,
-    value: "vertical-lr vertical-lr",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "sideways-rl")), [{
-    property: property,
-    value: "sideways-rl sideways-rl",
-    valid: false
-  }], toConsumableArray(createCaseInsensitiveTest(property, "sideways-lr")), [{
-    property: property,
-    value: "sideways-lr sideways-lr",
-    valid: false
-  }]));
-  return suite;
-}, []);
-
-var property$85 = "-ms-writing-mode";
-var msWritingMode = [].concat(toConsumableArray(globalTests(property$85)), toConsumableArray(createCaseInsensitiveTest(property$85, "horizontal-tb")), [{
-  property: property$85,
-  value: "horizontal-tb horizontal-tb",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "vertical-rl")), [{
-  property: property$85,
-  value: "vertical-rl vertical-rl",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "vertical-lr")), [{
-  property: property$85,
-  value: "vertical-lr vertical-lr",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "sideways-rl")), [{
-  property: property$85,
-  value: "sideways-rl sideways-rl",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "sideways-lr")), [{
-  property: property$85,
-  value: "sideways-lr sideways-lr",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "lr-tb")), [{
-  property: property$85,
-  value: "lr-tb lr-tb",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "tb-rl")), [{
-  property: property$85,
-  value: "tb-rl tb-rl",
-  valid: false
-}], toConsumableArray(createCaseInsensitiveTest(property$85, "tb-lr")), [{
-  property: property$85,
-  value: "tb-lr tb-lr",
-  valid: false
-}]);
-
-var property$86 = "z-index";
-var zIndex = [].concat(toConsumableArray(globalTests(property$86)), toConsumableArray(createCaseInsensitiveTest(property$86, "auto")), [{
-  property: property$86,
-  value: "auto auto",
-  valid: false
-}, {
-  property: property$86,
-  value: "10",
-  valid: true
-}, {
-  property: property$86,
-  value: "+10",
-  valid: true
-}, {
-  property: property$86,
-  value: "-10",
-  valid: true
-}, {
-  property: property$86,
-  value: "0",
-  valid: true
-}, {
-  property: property$86,
-  value: "+0",
-  valid: true
-}, {
-  property: property$86,
-  value: "-0",
-  valid: true
-}, {
-  property: property$86,
-  value: "12.0",
-  valid: false
-}, {
-  property: property$86,
-  value: "+---12",
-  valid: false
-}, {
-  property: property$86,
-  value: "3e4",
-  valid: false
-}, {
-  property: property$86,
-  value: "\\4E94",
-  valid: false
-}, {
-  property: property$86,
-  value: "_5",
-  valid: false
-}, {
-  property: property$86,
-  value: "\"100\"",
-  valid: false
-}, {
-  property: property$86,
-  value: "10 10",
-  valid: false
-}]);
-
-var suites = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
-
-function macro(t, property, value, valid) {
-    t.is(cssValues(property, value), valid);
-}
-
-macro.title = function (title, property, value, valid) {
-    var validStr = ' (' + (valid ? 'valid' : 'invalid') + ')';
-    if (typeof value === 'string') {
-        return property + ': ' + value + validStr;
+var cssGlobals = ['inherit', 'initial', 'revert', 'unset'];
+
+var valid = function valid(t, property, value) {
+    if (Array.isArray(property)) {
+        property.forEach(function (prop) {
+            return t.is(cssValues(prop, value), true);
+        });
+        return;
     }
-    return '[parsed nodes]' + validStr;
+    t.is(cssValues(property, value), true);
 };
 
-suites.forEach(function (suite) {
-  suite.forEach(function (_ref) {
-    var property = _ref.property;
-    var value = _ref.value;
-    var valid = _ref.valid;
-    return test(macro, property, value, valid);
-  });
-});
-test('should accept an ast', macro, 'color', valueParser('blue'), true);
+valid.title = function (title, property, value) {
+    if (typeof value === 'string') {
+        return property + ': ' + value + ' (valid)';
+    }
+    return '[parsed nodes] (valid)';
+};
+
+var invalid = function invalid(t, property, value) {
+    if (Array.isArray(property)) {
+        property.forEach(function (prop) {
+            return t.is(cssValues(prop, value), false);
+        });
+        return;
+    }
+    t.is(cssValues(property, value), false);
+};
+
+invalid.title = function (title, property, value) {
+    if (typeof value === 'string') {
+        return property + ': ' + value + ' (invalid)';
+    }
+    return '[parsed nodes] (invalid)';
+};
+
+var globals = function globals(t, property) {
+    cssGlobals.forEach(function (keyword) {
+        return t.is(cssValues(property, keyword), true);
+    });
+    t.is(cssValues(property, 'var(--foo)'), true);
+    t.is(cssValues(property, 'VAR(--foo)'), true);
+};
+
+globals.title = function (title, property) {
+    return property + ' should handle global keywords';
+};
+
+var msOverflowStyle = "-ms-overflow-style";
+test(globals, msOverflowStyle);
+test(valid, msOverflowStyle, "auto");
+test(valid, msOverflowStyle, "AUTO");
+test(invalid, msOverflowStyle, "auto auto");
+test(valid, msOverflowStyle, "none");
+test(valid, msOverflowStyle, "NONE");
+test(invalid, msOverflowStyle, "none none");
+test(valid, msOverflowStyle, "scrollbar");
+test(valid, msOverflowStyle, "SCROLLBAR");
+test(invalid, msOverflowStyle, "scrollbar scrollbar");
+test(valid, msOverflowStyle, "-ms-autohiding-scrollbar");
+test(valid, msOverflowStyle, "-MS-AUTOHIDING-SCROLLBAR");
+test(invalid, msOverflowStyle, "-ms-autohiding-scrollbar -ms-autohiding-scrollbar");
+var mozAppearance = "-moz-appearance";
+test(globals, mozAppearance);
+test(valid, mozAppearance, "none");
+test(valid, mozAppearance, "NONE");
+test(invalid, mozAppearance, "none none");
+test(valid, mozAppearance, "button");
+test(valid, mozAppearance, "BUTTON");
+test(invalid, mozAppearance, "button button");
+test(valid, mozAppearance, "button-arrow-down");
+test(valid, mozAppearance, "BUTTON-ARROW-DOWN");
+test(invalid, mozAppearance, "button-arrow-down button-arrow-down");
+test(valid, mozAppearance, "button-arrow-next");
+test(valid, mozAppearance, "BUTTON-ARROW-NEXT");
+test(invalid, mozAppearance, "button-arrow-next button-arrow-next");
+test(valid, mozAppearance, "button-arrow-previous");
+test(valid, mozAppearance, "BUTTON-ARROW-PREVIOUS");
+test(invalid, mozAppearance, "button-arrow-previous button-arrow-previous");
+test(valid, mozAppearance, "button-arrow-up");
+test(valid, mozAppearance, "BUTTON-ARROW-UP");
+test(invalid, mozAppearance, "button-arrow-up button-arrow-up");
+test(valid, mozAppearance, "button-bevel");
+test(valid, mozAppearance, "BUTTON-BEVEL");
+test(invalid, mozAppearance, "button-bevel button-bevel");
+test(valid, mozAppearance, "button-focus");
+test(valid, mozAppearance, "BUTTON-FOCUS");
+test(invalid, mozAppearance, "button-focus button-focus");
+test(valid, mozAppearance, "caret");
+test(valid, mozAppearance, "CARET");
+test(invalid, mozAppearance, "caret caret");
+test(valid, mozAppearance, "checkbox");
+test(valid, mozAppearance, "CHECKBOX");
+test(invalid, mozAppearance, "checkbox checkbox");
+test(valid, mozAppearance, "checkbox-container");
+test(valid, mozAppearance, "CHECKBOX-CONTAINER");
+test(invalid, mozAppearance, "checkbox-container checkbox-container");
+test(valid, mozAppearance, "checkbox-label");
+test(valid, mozAppearance, "CHECKBOX-LABEL");
+test(invalid, mozAppearance, "checkbox-label checkbox-label");
+test(valid, mozAppearance, "checkmenuitem");
+test(valid, mozAppearance, "CHECKMENUITEM");
+test(invalid, mozAppearance, "checkmenuitem checkmenuitem");
+test(valid, mozAppearance, "dualbutton");
+test(valid, mozAppearance, "DUALBUTTON");
+test(invalid, mozAppearance, "dualbutton dualbutton");
+test(valid, mozAppearance, "groupbox");
+test(valid, mozAppearance, "GROUPBOX");
+test(invalid, mozAppearance, "groupbox groupbox");
+test(valid, mozAppearance, "listbox");
+test(valid, mozAppearance, "LISTBOX");
+test(invalid, mozAppearance, "listbox listbox");
+test(valid, mozAppearance, "listitem");
+test(valid, mozAppearance, "LISTITEM");
+test(invalid, mozAppearance, "listitem listitem");
+test(valid, mozAppearance, "menuarrow");
+test(valid, mozAppearance, "MENUARROW");
+test(invalid, mozAppearance, "menuarrow menuarrow");
+test(valid, mozAppearance, "menubar");
+test(valid, mozAppearance, "MENUBAR");
+test(invalid, mozAppearance, "menubar menubar");
+test(valid, mozAppearance, "menucheckbox");
+test(valid, mozAppearance, "MENUCHECKBOX");
+test(invalid, mozAppearance, "menucheckbox menucheckbox");
+test(valid, mozAppearance, "menuimage");
+test(valid, mozAppearance, "MENUIMAGE");
+test(invalid, mozAppearance, "menuimage menuimage");
+test(valid, mozAppearance, "menuitem");
+test(valid, mozAppearance, "MENUITEM");
+test(invalid, mozAppearance, "menuitem menuitem");
+test(valid, mozAppearance, "menuitemtext");
+test(valid, mozAppearance, "MENUITEMTEXT");
+test(invalid, mozAppearance, "menuitemtext menuitemtext");
+test(valid, mozAppearance, "menulist");
+test(valid, mozAppearance, "MENULIST");
+test(invalid, mozAppearance, "menulist menulist");
+test(valid, mozAppearance, "menulist-button");
+test(valid, mozAppearance, "MENULIST-BUTTON");
+test(invalid, mozAppearance, "menulist-button menulist-button");
+test(valid, mozAppearance, "menulist-text");
+test(valid, mozAppearance, "MENULIST-TEXT");
+test(invalid, mozAppearance, "menulist-text menulist-text");
+test(valid, mozAppearance, "menulist-textfield");
+test(valid, mozAppearance, "MENULIST-TEXTFIELD");
+test(invalid, mozAppearance, "menulist-textfield menulist-textfield");
+test(valid, mozAppearance, "menupopup");
+test(valid, mozAppearance, "MENUPOPUP");
+test(invalid, mozAppearance, "menupopup menupopup");
+test(valid, mozAppearance, "menuradio");
+test(valid, mozAppearance, "MENURADIO");
+test(invalid, mozAppearance, "menuradio menuradio");
+test(valid, mozAppearance, "menuseparator");
+test(valid, mozAppearance, "MENUSEPARATOR");
+test(invalid, mozAppearance, "menuseparator menuseparator");
+test(valid, mozAppearance, "meterbar");
+test(valid, mozAppearance, "METERBAR");
+test(invalid, mozAppearance, "meterbar meterbar");
+test(valid, mozAppearance, "meterchunk");
+test(valid, mozAppearance, "METERCHUNK");
+test(invalid, mozAppearance, "meterchunk meterchunk");
+test(valid, mozAppearance, "progressbar");
+test(valid, mozAppearance, "PROGRESSBAR");
+test(invalid, mozAppearance, "progressbar progressbar");
+test(valid, mozAppearance, "progressbar-vertical");
+test(valid, mozAppearance, "PROGRESSBAR-VERTICAL");
+test(invalid, mozAppearance, "progressbar-vertical progressbar-vertical");
+test(valid, mozAppearance, "progresschunk");
+test(valid, mozAppearance, "PROGRESSCHUNK");
+test(invalid, mozAppearance, "progresschunk progresschunk");
+test(valid, mozAppearance, "progresschunk-vertical");
+test(valid, mozAppearance, "PROGRESSCHUNK-VERTICAL");
+test(invalid, mozAppearance, "progresschunk-vertical progresschunk-vertical");
+test(valid, mozAppearance, "radio");
+test(valid, mozAppearance, "RADIO");
+test(invalid, mozAppearance, "radio radio");
+test(valid, mozAppearance, "radio-container");
+test(valid, mozAppearance, "RADIO-CONTAINER");
+test(invalid, mozAppearance, "radio-container radio-container");
+test(valid, mozAppearance, "radio-label");
+test(valid, mozAppearance, "RADIO-LABEL");
+test(invalid, mozAppearance, "radio-label radio-label");
+test(valid, mozAppearance, "radiomenuitem");
+test(valid, mozAppearance, "RADIOMENUITEM");
+test(invalid, mozAppearance, "radiomenuitem radiomenuitem");
+test(valid, mozAppearance, "range");
+test(valid, mozAppearance, "RANGE");
+test(invalid, mozAppearance, "range range");
+test(valid, mozAppearance, "range-thumb");
+test(valid, mozAppearance, "RANGE-THUMB");
+test(invalid, mozAppearance, "range-thumb range-thumb");
+test(valid, mozAppearance, "resizer");
+test(valid, mozAppearance, "RESIZER");
+test(invalid, mozAppearance, "resizer resizer");
+test(valid, mozAppearance, "resizerpanel");
+test(valid, mozAppearance, "RESIZERPANEL");
+test(invalid, mozAppearance, "resizerpanel resizerpanel");
+test(valid, mozAppearance, "scale-horizontal");
+test(valid, mozAppearance, "SCALE-HORIZONTAL");
+test(invalid, mozAppearance, "scale-horizontal scale-horizontal");
+test(valid, mozAppearance, "scalethumbend");
+test(valid, mozAppearance, "SCALETHUMBEND");
+test(invalid, mozAppearance, "scalethumbend scalethumbend");
+test(valid, mozAppearance, "scalethumb-horizontal");
+test(valid, mozAppearance, "SCALETHUMB-HORIZONTAL");
+test(invalid, mozAppearance, "scalethumb-horizontal scalethumb-horizontal");
+test(valid, mozAppearance, "scalethumbstart");
+test(valid, mozAppearance, "SCALETHUMBSTART");
+test(invalid, mozAppearance, "scalethumbstart scalethumbstart");
+test(valid, mozAppearance, "scalethumbtick");
+test(valid, mozAppearance, "SCALETHUMBTICK");
+test(invalid, mozAppearance, "scalethumbtick scalethumbtick");
+test(valid, mozAppearance, "scalethumb-vertical");
+test(valid, mozAppearance, "SCALETHUMB-VERTICAL");
+test(invalid, mozAppearance, "scalethumb-vertical scalethumb-vertical");
+test(valid, mozAppearance, "scale-vertical");
+test(valid, mozAppearance, "SCALE-VERTICAL");
+test(invalid, mozAppearance, "scale-vertical scale-vertical");
+test(valid, mozAppearance, "scrollbarbutton-down");
+test(valid, mozAppearance, "SCROLLBARBUTTON-DOWN");
+test(invalid, mozAppearance, "scrollbarbutton-down scrollbarbutton-down");
+test(valid, mozAppearance, "scrollbarbutton-left");
+test(valid, mozAppearance, "SCROLLBARBUTTON-LEFT");
+test(invalid, mozAppearance, "scrollbarbutton-left scrollbarbutton-left");
+test(valid, mozAppearance, "scrollbarbutton-right");
+test(valid, mozAppearance, "SCROLLBARBUTTON-RIGHT");
+test(invalid, mozAppearance, "scrollbarbutton-right scrollbarbutton-right");
+test(valid, mozAppearance, "scrollbarbutton-up");
+test(valid, mozAppearance, "SCROLLBARBUTTON-UP");
+test(invalid, mozAppearance, "scrollbarbutton-up scrollbarbutton-up");
+test(valid, mozAppearance, "scrollbarthumb-horizontal");
+test(valid, mozAppearance, "SCROLLBARTHUMB-HORIZONTAL");
+test(invalid, mozAppearance, "scrollbarthumb-horizontal scrollbarthumb-horizontal");
+test(valid, mozAppearance, "scrollbarthumb-vertical");
+test(valid, mozAppearance, "SCROLLBARTHUMB-VERTICAL");
+test(invalid, mozAppearance, "scrollbarthumb-vertical scrollbarthumb-vertical");
+test(valid, mozAppearance, "scrollbartrack-horizontal");
+test(valid, mozAppearance, "SCROLLBARTRACK-HORIZONTAL");
+test(invalid, mozAppearance, "scrollbartrack-horizontal scrollbartrack-horizontal");
+test(valid, mozAppearance, "scrollbartrack-vertical");
+test(valid, mozAppearance, "SCROLLBARTRACK-VERTICAL");
+test(invalid, mozAppearance, "scrollbartrack-vertical scrollbartrack-vertical");
+test(valid, mozAppearance, "searchfield");
+test(valid, mozAppearance, "SEARCHFIELD");
+test(invalid, mozAppearance, "searchfield searchfield");
+test(valid, mozAppearance, "separator");
+test(valid, mozAppearance, "SEPARATOR");
+test(invalid, mozAppearance, "separator separator");
+test(valid, mozAppearance, "sheet");
+test(valid, mozAppearance, "SHEET");
+test(invalid, mozAppearance, "sheet sheet");
+test(valid, mozAppearance, "spinner");
+test(valid, mozAppearance, "SPINNER");
+test(invalid, mozAppearance, "spinner spinner");
+test(valid, mozAppearance, "spinner-downbutton");
+test(valid, mozAppearance, "SPINNER-DOWNBUTTON");
+test(invalid, mozAppearance, "spinner-downbutton spinner-downbutton");
+test(valid, mozAppearance, "spinner-textfield");
+test(valid, mozAppearance, "SPINNER-TEXTFIELD");
+test(invalid, mozAppearance, "spinner-textfield spinner-textfield");
+test(valid, mozAppearance, "spinner-upbutton");
+test(valid, mozAppearance, "SPINNER-UPBUTTON");
+test(invalid, mozAppearance, "spinner-upbutton spinner-upbutton");
+test(valid, mozAppearance, "splitter");
+test(valid, mozAppearance, "SPLITTER");
+test(invalid, mozAppearance, "splitter splitter");
+test(valid, mozAppearance, "statusbar");
+test(valid, mozAppearance, "STATUSBAR");
+test(invalid, mozAppearance, "statusbar statusbar");
+test(valid, mozAppearance, "statusbarpanel");
+test(valid, mozAppearance, "STATUSBARPANEL");
+test(invalid, mozAppearance, "statusbarpanel statusbarpanel");
+test(valid, mozAppearance, "tab");
+test(valid, mozAppearance, "TAB");
+test(invalid, mozAppearance, "tab tab");
+test(valid, mozAppearance, "tabpanel");
+test(valid, mozAppearance, "TABPANEL");
+test(invalid, mozAppearance, "tabpanel tabpanel");
+test(valid, mozAppearance, "tabpanels");
+test(valid, mozAppearance, "TABPANELS");
+test(invalid, mozAppearance, "tabpanels tabpanels");
+test(valid, mozAppearance, "tab-scroll-arrow-back");
+test(valid, mozAppearance, "TAB-SCROLL-ARROW-BACK");
+test(invalid, mozAppearance, "tab-scroll-arrow-back tab-scroll-arrow-back");
+test(valid, mozAppearance, "tab-scroll-arrow-forward");
+test(valid, mozAppearance, "TAB-SCROLL-ARROW-FORWARD");
+test(invalid, mozAppearance, "tab-scroll-arrow-forward tab-scroll-arrow-forward");
+test(valid, mozAppearance, "textfield");
+test(valid, mozAppearance, "TEXTFIELD");
+test(invalid, mozAppearance, "textfield textfield");
+test(valid, mozAppearance, "textfield-multiline");
+test(valid, mozAppearance, "TEXTFIELD-MULTILINE");
+test(invalid, mozAppearance, "textfield-multiline textfield-multiline");
+test(valid, mozAppearance, "toolbar");
+test(valid, mozAppearance, "TOOLBAR");
+test(invalid, mozAppearance, "toolbar toolbar");
+test(valid, mozAppearance, "toolbarbutton");
+test(valid, mozAppearance, "TOOLBARBUTTON");
+test(invalid, mozAppearance, "toolbarbutton toolbarbutton");
+test(valid, mozAppearance, "toolbarbutton-dropdown");
+test(valid, mozAppearance, "TOOLBARBUTTON-DROPDOWN");
+test(invalid, mozAppearance, "toolbarbutton-dropdown toolbarbutton-dropdown");
+test(valid, mozAppearance, "toolbargripper");
+test(valid, mozAppearance, "TOOLBARGRIPPER");
+test(invalid, mozAppearance, "toolbargripper toolbargripper");
+test(valid, mozAppearance, "toolbox");
+test(valid, mozAppearance, "TOOLBOX");
+test(invalid, mozAppearance, "toolbox toolbox");
+test(valid, mozAppearance, "tooltip");
+test(valid, mozAppearance, "TOOLTIP");
+test(invalid, mozAppearance, "tooltip tooltip");
+test(valid, mozAppearance, "treeheader");
+test(valid, mozAppearance, "TREEHEADER");
+test(invalid, mozAppearance, "treeheader treeheader");
+test(valid, mozAppearance, "treeheadercell");
+test(valid, mozAppearance, "TREEHEADERCELL");
+test(invalid, mozAppearance, "treeheadercell treeheadercell");
+test(valid, mozAppearance, "treeheadersortarrow");
+test(valid, mozAppearance, "TREEHEADERSORTARROW");
+test(invalid, mozAppearance, "treeheadersortarrow treeheadersortarrow");
+test(valid, mozAppearance, "treeitem");
+test(valid, mozAppearance, "TREEITEM");
+test(invalid, mozAppearance, "treeitem treeitem");
+test(valid, mozAppearance, "treeline");
+test(valid, mozAppearance, "TREELINE");
+test(invalid, mozAppearance, "treeline treeline");
+test(valid, mozAppearance, "treetwisty");
+test(valid, mozAppearance, "TREETWISTY");
+test(invalid, mozAppearance, "treetwisty treetwisty");
+test(valid, mozAppearance, "treetwistyopen");
+test(valid, mozAppearance, "TREETWISTYOPEN");
+test(invalid, mozAppearance, "treetwistyopen treetwistyopen");
+test(valid, mozAppearance, "treeview");
+test(valid, mozAppearance, "TREEVIEW");
+test(invalid, mozAppearance, "treeview treeview");
+test(valid, mozAppearance, "-moz-mac-unified-toolbar");
+test(valid, mozAppearance, "-MOZ-MAC-UNIFIED-TOOLBAR");
+test(invalid, mozAppearance, "-moz-mac-unified-toolbar -moz-mac-unified-toolbar");
+test(valid, mozAppearance, "-moz-win-borderless-glass");
+test(valid, mozAppearance, "-MOZ-WIN-BORDERLESS-GLASS");
+test(invalid, mozAppearance, "-moz-win-borderless-glass -moz-win-borderless-glass");
+test(valid, mozAppearance, "-moz-win-browsertabbar-toolbox");
+test(valid, mozAppearance, "-MOZ-WIN-BROWSERTABBAR-TOOLBOX");
+test(invalid, mozAppearance, "-moz-win-browsertabbar-toolbox -moz-win-browsertabbar-toolbox");
+test(valid, mozAppearance, "-moz-win-communicationstext");
+test(valid, mozAppearance, "-MOZ-WIN-COMMUNICATIONSTEXT");
+test(invalid, mozAppearance, "-moz-win-communicationstext -moz-win-communicationstext");
+test(valid, mozAppearance, "-moz-win-communications-toolbox");
+test(valid, mozAppearance, "-MOZ-WIN-COMMUNICATIONS-TOOLBOX");
+test(invalid, mozAppearance, "-moz-win-communications-toolbox -moz-win-communications-toolbox");
+test(valid, mozAppearance, "-moz-win-exclude-glass");
+test(valid, mozAppearance, "-MOZ-WIN-EXCLUDE-GLASS");
+test(invalid, mozAppearance, "-moz-win-exclude-glass -moz-win-exclude-glass");
+test(valid, mozAppearance, "-moz-win-glass");
+test(valid, mozAppearance, "-MOZ-WIN-GLASS");
+test(invalid, mozAppearance, "-moz-win-glass -moz-win-glass");
+test(valid, mozAppearance, "-moz-win-mediatext");
+test(valid, mozAppearance, "-MOZ-WIN-MEDIATEXT");
+test(invalid, mozAppearance, "-moz-win-mediatext -moz-win-mediatext");
+test(valid, mozAppearance, "-moz-win-media-toolbox");
+test(valid, mozAppearance, "-MOZ-WIN-MEDIA-TOOLBOX");
+test(invalid, mozAppearance, "-moz-win-media-toolbox -moz-win-media-toolbox");
+test(valid, mozAppearance, "-moz-window-button-box");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-BOX");
+test(invalid, mozAppearance, "-moz-window-button-box -moz-window-button-box");
+test(valid, mozAppearance, "-moz-window-button-box-maximized");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-BOX-MAXIMIZED");
+test(invalid, mozAppearance, "-moz-window-button-box-maximized -moz-window-button-box-maximized");
+test(valid, mozAppearance, "-moz-window-button-close");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-CLOSE");
+test(invalid, mozAppearance, "-moz-window-button-close -moz-window-button-close");
+test(valid, mozAppearance, "-moz-window-button-maximize");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-MAXIMIZE");
+test(invalid, mozAppearance, "-moz-window-button-maximize -moz-window-button-maximize");
+test(valid, mozAppearance, "-moz-window-button-minimize");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-MINIMIZE");
+test(invalid, mozAppearance, "-moz-window-button-minimize -moz-window-button-minimize");
+test(valid, mozAppearance, "-moz-window-button-restore");
+test(valid, mozAppearance, "-MOZ-WINDOW-BUTTON-RESTORE");
+test(invalid, mozAppearance, "-moz-window-button-restore -moz-window-button-restore");
+test(valid, mozAppearance, "-moz-window-frame-bottom");
+test(valid, mozAppearance, "-MOZ-WINDOW-FRAME-BOTTOM");
+test(invalid, mozAppearance, "-moz-window-frame-bottom -moz-window-frame-bottom");
+test(valid, mozAppearance, "-moz-window-frame-left");
+test(valid, mozAppearance, "-MOZ-WINDOW-FRAME-LEFT");
+test(invalid, mozAppearance, "-moz-window-frame-left -moz-window-frame-left");
+test(valid, mozAppearance, "-moz-window-frame-right");
+test(valid, mozAppearance, "-MOZ-WINDOW-FRAME-RIGHT");
+test(invalid, mozAppearance, "-moz-window-frame-right -moz-window-frame-right");
+test(valid, mozAppearance, "-moz-window-titlebar");
+test(valid, mozAppearance, "-MOZ-WINDOW-TITLEBAR");
+test(invalid, mozAppearance, "-moz-window-titlebar -moz-window-titlebar");
+test(valid, mozAppearance, "-moz-window-titlebar-maximized");
+test(valid, mozAppearance, "-MOZ-WINDOW-TITLEBAR-MAXIMIZED");
+test(invalid, mozAppearance, "-moz-window-titlebar-maximized -moz-window-titlebar-maximized");
+var mozBinding = ["-moz-binding", "list-style-image"];
+test(globals, mozBinding);
+test(valid, mozBinding, "url(https://ru.wikipedia.org/wiki/URI)");
+test(valid, mozBinding, "url(data:image/gif;base64,R0lGODdhMAAwAPAAAAAAAP///ywAAAAAMAAw)");
+test(invalid, mozBinding, "ur(https://ru.wikipedia.org/wiki/URI)");
+test(invalid, mozBinding, "url(https://ru.wikipedia.org/wiki/URI) url(https://ru.wikipedia.org/wiki/URI)");
+test(valid, mozBinding, "none");
+test(valid, mozBinding, "NONE");
+test(invalid, mozBinding, "none none");
+var mozFloatEdge = "-moz-float-edge";
+test(globals, mozFloatEdge);
+test(valid, mozFloatEdge, "border-box");
+test(valid, mozFloatEdge, "BORDER-BOX");
+test(invalid, mozFloatEdge, "border-box border-box");
+test(valid, mozFloatEdge, "content-box");
+test(valid, mozFloatEdge, "CONTENT-BOX");
+test(invalid, mozFloatEdge, "content-box content-box");
+test(valid, mozFloatEdge, "margin-box");
+test(valid, mozFloatEdge, "MARGIN-BOX");
+test(invalid, mozFloatEdge, "margin-box margin-box");
+test(valid, mozFloatEdge, "padding-box");
+test(valid, mozFloatEdge, "PADDING-BOX");
+test(invalid, mozFloatEdge, "padding-box padding-box");
+var mozForceBrokenImageIcon = ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"];
+test(globals, mozForceBrokenImageIcon);
+test(valid, mozForceBrokenImageIcon, "10");
+test(valid, mozForceBrokenImageIcon, "+10");
+test(valid, mozForceBrokenImageIcon, "-10");
+test(valid, mozForceBrokenImageIcon, "0");
+test(valid, mozForceBrokenImageIcon, "+0");
+test(valid, mozForceBrokenImageIcon, "-0");
+test(invalid, mozForceBrokenImageIcon, "12.0");
+test(invalid, mozForceBrokenImageIcon, "+---12");
+test(invalid, mozForceBrokenImageIcon, "3e4");
+test(invalid, mozForceBrokenImageIcon, "\\4E94");
+test(invalid, mozForceBrokenImageIcon, "_5");
+test(invalid, mozForceBrokenImageIcon, "\"100\"");
+test(invalid, mozForceBrokenImageIcon, "10 10");
+var mozOrient = "-moz-orient";
+test(globals, mozOrient);
+test(valid, mozOrient, "inline");
+test(valid, mozOrient, "INLINE");
+test(invalid, mozOrient, "inline inline");
+test(valid, mozOrient, "block");
+test(valid, mozOrient, "BLOCK");
+test(invalid, mozOrient, "block block");
+test(valid, mozOrient, "horizontal");
+test(valid, mozOrient, "HORIZONTAL");
+test(invalid, mozOrient, "horizontal horizontal");
+test(valid, mozOrient, "vertical");
+test(valid, mozOrient, "VERTICAL");
+test(invalid, mozOrient, "vertical vertical");
+var mozStackSizing = "-moz-stack-sizing";
+test(globals, mozStackSizing);
+test(valid, mozStackSizing, "ignore");
+test(valid, mozStackSizing, "IGNORE");
+test(invalid, mozStackSizing, "ignore ignore");
+test(valid, mozStackSizing, "stretch-to-fit");
+test(valid, mozStackSizing, "STRETCH-TO-FIT");
+test(invalid, mozStackSizing, "stretch-to-fit stretch-to-fit");
+var mozTextBlink = "-moz-text-blink";
+test(globals, mozTextBlink);
+test(valid, mozTextBlink, "none");
+test(valid, mozTextBlink, "NONE");
+test(invalid, mozTextBlink, "none none");
+test(valid, mozTextBlink, "blink");
+test(valid, mozTextBlink, "BLINK");
+test(invalid, mozTextBlink, "blink blink");
+var mozUserFocus = "-moz-user-focus";
+test(globals, mozUserFocus);
+test(valid, mozUserFocus, "ignore");
+test(valid, mozUserFocus, "IGNORE");
+test(invalid, mozUserFocus, "ignore ignore");
+test(valid, mozUserFocus, "normal");
+test(valid, mozUserFocus, "NORMAL");
+test(invalid, mozUserFocus, "normal normal");
+test(valid, mozUserFocus, "select-after");
+test(valid, mozUserFocus, "SELECT-AFTER");
+test(invalid, mozUserFocus, "select-after select-after");
+test(valid, mozUserFocus, "select-before");
+test(valid, mozUserFocus, "SELECT-BEFORE");
+test(invalid, mozUserFocus, "select-before select-before");
+test(valid, mozUserFocus, "select-menu");
+test(valid, mozUserFocus, "SELECT-MENU");
+test(invalid, mozUserFocus, "select-menu select-menu");
+test(valid, mozUserFocus, "select-same");
+test(valid, mozUserFocus, "SELECT-SAME");
+test(invalid, mozUserFocus, "select-same select-same");
+test(valid, mozUserFocus, "select-all");
+test(valid, mozUserFocus, "SELECT-ALL");
+test(invalid, mozUserFocus, "select-all select-all");
+test(valid, mozUserFocus, "none");
+test(valid, mozUserFocus, "NONE");
+test(invalid, mozUserFocus, "none none");
+var mozUserInput = "-moz-user-input";
+test(globals, mozUserInput);
+test(valid, mozUserInput, "none");
+test(valid, mozUserInput, "NONE");
+test(invalid, mozUserInput, "none none");
+test(valid, mozUserInput, "enabled");
+test(valid, mozUserInput, "ENABLED");
+test(invalid, mozUserInput, "enabled enabled");
+test(valid, mozUserInput, "disabled");
+test(valid, mozUserInput, "DISABLED");
+test(invalid, mozUserInput, "disabled disabled");
+var mozUserModify = "-moz-user-modify";
+test(globals, mozUserModify);
+test(valid, mozUserModify, "read-only");
+test(valid, mozUserModify, "READ-ONLY");
+test(invalid, mozUserModify, "read-only read-only");
+test(valid, mozUserModify, "read-write");
+test(valid, mozUserModify, "READ-WRITE");
+test(invalid, mozUserModify, "read-write read-write");
+test(valid, mozUserModify, "write-only");
+test(valid, mozUserModify, "WRITE-ONLY");
+test(invalid, mozUserModify, "write-only write-only");
+var mozWindowShadow = "-moz-window-shadow";
+test(globals, mozWindowShadow);
+test(valid, mozWindowShadow, "default");
+test(valid, mozWindowShadow, "DEFAULT");
+test(invalid, mozWindowShadow, "default default");
+test(valid, mozWindowShadow, "menu");
+test(valid, mozWindowShadow, "MENU");
+test(invalid, mozWindowShadow, "menu menu");
+test(valid, mozWindowShadow, "tooltip");
+test(valid, mozWindowShadow, "TOOLTIP");
+test(invalid, mozWindowShadow, "tooltip tooltip");
+test(valid, mozWindowShadow, "sheet");
+test(valid, mozWindowShadow, "SHEET");
+test(invalid, mozWindowShadow, "sheet sheet");
+test(valid, mozWindowShadow, "none");
+test(valid, mozWindowShadow, "NONE");
+test(invalid, mozWindowShadow, "none none");
+var webkitBorderBeforeColor = ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"];
+test(globals, webkitBorderBeforeColor);
+test(valid, webkitBorderBeforeColor, "RGB(1, 2, 3)");
+test(valid, webkitBorderBeforeColor, "rgb(10%, 20%, 30%)");
+test(valid, webkitBorderBeforeColor, "rgb(400, 400, 400)");
+test(valid, webkitBorderBeforeColor, "rgbA(1, 2, 3, .5)");
+test(valid, webkitBorderBeforeColor, "rgba(10%, 20%, 30%, 0.5)");
+test(valid, webkitBorderBeforeColor, "rgba(400, 400, 400, 1)");
+test(valid, webkitBorderBeforeColor, "hsl(90, 50%, 50%)");
+test(valid, webkitBorderBeforeColor, "HSL(90, 50%, 50%)");
+test(valid, webkitBorderBeforeColor, "hsla(90, 50%, 50%, .5)");
+test(valid, webkitBorderBeforeColor, "hsla(90, 50%, 50%, 0.5)");
+test(valid, webkitBorderBeforeColor, "hslA(90, 50%, 50%, 0)");
+test(valid, webkitBorderBeforeColor, "#000");
+test(valid, webkitBorderBeforeColor, "#000F");
+test(valid, webkitBorderBeforeColor, "#000000");
+test(valid, webkitBorderBeforeColor, "#000000FF");
+test(valid, webkitBorderBeforeColor, "RED");
+test(valid, webkitBorderBeforeColor, "black");
+test(valid, webkitBorderBeforeColor, "currentcolor");
+test(valid, webkitBorderBeforeColor, "CURRENTCOLOR");
+test(invalid, webkitBorderBeforeColor, "rgb(1, 2, 3, 4, 5)");
+test(invalid, webkitBorderBeforeColor, "rgb(1:2:3)");
+test(invalid, webkitBorderBeforeColor, "rgb(a, b, c)");
+test(invalid, webkitBorderBeforeColor, "rgba(10%, 20%, 30%, transparent)");
+test(invalid, webkitBorderBeforeColor, "rgba(400: 400)");
+test(invalid, webkitBorderBeforeColor, "rgba(400, 400, 400, 50%)");
+test(invalid, webkitBorderBeforeColor, "hsl(50%, 50%, 50%)");
+test(invalid, webkitBorderBeforeColor, "hsl(90, 50, 50)");
+test(invalid, webkitBorderBeforeColor, "hsla(90, 50%, 50%)");
+test(invalid, webkitBorderBeforeColor, "hsla(90, 50%, 50%, 50%)");
+test(invalid, webkitBorderBeforeColor, "hsla(90%, 50%, 50%, 0.5)");
+test(invalid, webkitBorderBeforeColor, "#ee");
+test(invalid, webkitBorderBeforeColor, "#eeeeeee");
+test(invalid, webkitBorderBeforeColor, "#ggg");
+test(invalid, webkitBorderBeforeColor, "blacklight");
+test(invalid, webkitBorderBeforeColor, "RGB(1, 2, 3) RGB(1, 2, 3)");
+var webkitBorderBeforeStyle = ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"];
+test(globals, webkitBorderBeforeStyle);
+test(valid, webkitBorderBeforeStyle, "none");
+test(valid, webkitBorderBeforeStyle, "hidden");
+test(valid, webkitBorderBeforeStyle, "dotted");
+test(valid, webkitBorderBeforeStyle, "dashed");
+test(valid, webkitBorderBeforeStyle, "solid");
+test(valid, webkitBorderBeforeStyle, "double");
+test(valid, webkitBorderBeforeStyle, "groove");
+test(valid, webkitBorderBeforeStyle, "ridge");
+test(valid, webkitBorderBeforeStyle, "inset");
+test(valid, webkitBorderBeforeStyle, "outset");
+test(valid, webkitBorderBeforeStyle, "NONE");
+test(valid, webkitBorderBeforeStyle, "HIDDEN");
+test(valid, webkitBorderBeforeStyle, "DOTTED");
+test(valid, webkitBorderBeforeStyle, "DASHED");
+test(valid, webkitBorderBeforeStyle, "SOLID");
+test(valid, webkitBorderBeforeStyle, "DOUBLE");
+test(valid, webkitBorderBeforeStyle, "GROOVE");
+test(valid, webkitBorderBeforeStyle, "RIDGE");
+test(valid, webkitBorderBeforeStyle, "INSET");
+test(valid, webkitBorderBeforeStyle, "OUTSET");
+test(invalid, webkitBorderBeforeStyle, "groovy");
+test(valid, webkitBorderBeforeStyle, "none none");
+test(invalid, webkitBorderBeforeStyle, "none, none");
+test(valid, webkitBorderBeforeStyle, "var(--foo) var(--bar)");
+test(invalid, webkitBorderBeforeStyle, "var(--foo), var(--bar)");
+var webkitBorderBeforeWidth = ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"];
+test(globals, webkitBorderBeforeWidth);
+test(valid, webkitBorderBeforeWidth, "thin");
+test(valid, webkitBorderBeforeWidth, "medium");
+test(valid, webkitBorderBeforeWidth, "thick");
+test(valid, webkitBorderBeforeWidth, "THIN");
+test(valid, webkitBorderBeforeWidth, "MEDIUM");
+test(valid, webkitBorderBeforeWidth, "THICK");
+test(valid, webkitBorderBeforeWidth, "0");
+test(valid, webkitBorderBeforeWidth, "16px");
+test(valid, webkitBorderBeforeWidth, "1pc");
+test(valid, webkitBorderBeforeWidth, "2.34254645654324rem");
+test(invalid, webkitBorderBeforeWidth, "huuuuge");
+test(invalid, webkitBorderBeforeWidth, "16.px");
+test(invalid, webkitBorderBeforeWidth, "px16");
+test(invalid, webkitBorderBeforeWidth, "one rem");
+test(invalid, webkitBorderBeforeWidth, "\"1rem\"");
+test(valid, webkitBorderBeforeWidth, "thin thin");
+test(invalid, webkitBorderBeforeWidth, "thin, thin");
+test(valid, webkitBorderBeforeWidth, "var(--foo) var(--bar)");
+test(invalid, webkitBorderBeforeWidth, "var(--foo), var(--bar)");
+var webkitMaskRepeat = ["-webkit-mask-repeat", "background-repeat", "mask-repeat"];
+test(globals, webkitMaskRepeat);
+test(valid, webkitMaskRepeat, "repeat-x");
+test(valid, webkitMaskRepeat, "repeat-y");
+test(valid, webkitMaskRepeat, "space round");
+test(valid, webkitMaskRepeat, "no-repeat, no-repeat");
+test(valid, webkitMaskRepeat, "var(--foo) var(--bar)");
+test(valid, webkitMaskRepeat, "REPEAT-X");
+test(valid, webkitMaskRepeat, "REPEAT-Y");
+test(valid, webkitMaskRepeat, "SPACE ROUND");
+test(valid, webkitMaskRepeat, "NO-REPEAT, NO-REPEAT");
+test(valid, webkitMaskRepeat, "VAR(--FOO) VAR(--BAR)");
+test(invalid, webkitMaskRepeat, "space repeat-x");
+test(invalid, webkitMaskRepeat, "repeat-y round");
+test(invalid, webkitMaskRepeat, "space round repeat");
+test(invalid, webkitMaskRepeat, "repeat-xy");
+test(invalid, webkitMaskRepeat, "space / repeat");
+test(invalid, webkitMaskRepeat, "space,");
+test(valid, webkitMaskRepeat, "repeat-x, repeat-x");
+test(invalid, webkitMaskRepeat, "repeat-x, repeat-x,");
+test(valid, webkitMaskRepeat, "var(--foo), var(--bar)");
+test(invalid, webkitMaskRepeat, "var(--foo), var(--bar),");
+var webkitMaskRepeatX = ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"];
+test(globals, webkitMaskRepeatX);
+test(valid, webkitMaskRepeatX, "repeat");
+test(valid, webkitMaskRepeatX, "REPEAT");
+test(invalid, webkitMaskRepeatX, "repeat repeat");
+test(valid, webkitMaskRepeatX, "no-repeat");
+test(valid, webkitMaskRepeatX, "NO-REPEAT");
+test(invalid, webkitMaskRepeatX, "no-repeat no-repeat");
+test(valid, webkitMaskRepeatX, "space");
+test(valid, webkitMaskRepeatX, "SPACE");
+test(invalid, webkitMaskRepeatX, "space space");
+test(valid, webkitMaskRepeatX, "round");
+test(valid, webkitMaskRepeatX, "ROUND");
+test(invalid, webkitMaskRepeatX, "round round");
+var webkitTapHighlightColor = "-webkit-tap-highlight-color";
+test(globals, webkitTapHighlightColor);
+test(valid, webkitTapHighlightColor, "RGB(1, 2, 3)");
+test(valid, webkitTapHighlightColor, "rgb(10%, 20%, 30%)");
+test(valid, webkitTapHighlightColor, "rgb(400, 400, 400)");
+test(valid, webkitTapHighlightColor, "rgbA(1, 2, 3, .5)");
+test(valid, webkitTapHighlightColor, "rgba(10%, 20%, 30%, 0.5)");
+test(valid, webkitTapHighlightColor, "rgba(400, 400, 400, 1)");
+test(valid, webkitTapHighlightColor, "hsl(90, 50%, 50%)");
+test(valid, webkitTapHighlightColor, "HSL(90, 50%, 50%)");
+test(valid, webkitTapHighlightColor, "hsla(90, 50%, 50%, .5)");
+test(valid, webkitTapHighlightColor, "hsla(90, 50%, 50%, 0.5)");
+test(valid, webkitTapHighlightColor, "hslA(90, 50%, 50%, 0)");
+test(valid, webkitTapHighlightColor, "#000");
+test(valid, webkitTapHighlightColor, "#000F");
+test(valid, webkitTapHighlightColor, "#000000");
+test(valid, webkitTapHighlightColor, "#000000FF");
+test(valid, webkitTapHighlightColor, "RED");
+test(valid, webkitTapHighlightColor, "black");
+test(valid, webkitTapHighlightColor, "currentcolor");
+test(valid, webkitTapHighlightColor, "CURRENTCOLOR");
+test(invalid, webkitTapHighlightColor, "rgb(1, 2, 3, 4, 5)");
+test(invalid, webkitTapHighlightColor, "rgb(1:2:3)");
+test(invalid, webkitTapHighlightColor, "rgb(a, b, c)");
+test(invalid, webkitTapHighlightColor, "rgba(10%, 20%, 30%, transparent)");
+test(invalid, webkitTapHighlightColor, "rgba(400: 400)");
+test(invalid, webkitTapHighlightColor, "rgba(400, 400, 400, 50%)");
+test(invalid, webkitTapHighlightColor, "hsl(50%, 50%, 50%)");
+test(invalid, webkitTapHighlightColor, "hsl(90, 50, 50)");
+test(invalid, webkitTapHighlightColor, "hsla(90, 50%, 50%)");
+test(invalid, webkitTapHighlightColor, "hsla(90, 50%, 50%, 50%)");
+test(invalid, webkitTapHighlightColor, "hsla(90%, 50%, 50%, 0.5)");
+test(invalid, webkitTapHighlightColor, "#ee");
+test(invalid, webkitTapHighlightColor, "#eeeeeee");
+test(invalid, webkitTapHighlightColor, "#ggg");
+test(invalid, webkitTapHighlightColor, "blacklight");
+test(valid, webkitTapHighlightColor, "RGB(1, 2, 3), RGB(1, 2, 3)");
+test(invalid, webkitTapHighlightColor, "RGB(1, 2, 3), RGB(1, 2, 3),");
+test(valid, webkitTapHighlightColor, "var(--foo), var(--bar)");
+test(invalid, webkitTapHighlightColor, "var(--foo), var(--bar),");
+var webkitTextStrokeWidth = ["-webkit-text-stroke-width", "outline-offset"];
+test(globals, webkitTextStrokeWidth);
+test(valid, webkitTextStrokeWidth, "0");
+test(valid, webkitTextStrokeWidth, "16px");
+test(valid, webkitTextStrokeWidth, "1pc");
+test(valid, webkitTextStrokeWidth, "2.34254645654324rem");
+test(invalid, webkitTextStrokeWidth, "16.px");
+test(invalid, webkitTextStrokeWidth, "px16");
+test(invalid, webkitTextStrokeWidth, "one rem");
+test(invalid, webkitTextStrokeWidth, "\"1rem\"");
+test(invalid, webkitTextStrokeWidth, "0 0");
+var webkitTouchCallout = "-webkit-touch-callout";
+test(globals, webkitTouchCallout);
+test(valid, webkitTouchCallout, "default");
+test(valid, webkitTouchCallout, "DEFAULT");
+test(invalid, webkitTouchCallout, "default default");
+test(valid, webkitTouchCallout, "none");
+test(valid, webkitTouchCallout, "NONE");
+test(invalid, webkitTouchCallout, "none none");
+var alignContent = ["-webkit-align-content", "align-content"];
+test(globals, alignContent);
+test(valid, alignContent, "flex-start");
+test(valid, alignContent, "FLEX-START");
+test(invalid, alignContent, "flex-start flex-start");
+test(valid, alignContent, "flex-end");
+test(valid, alignContent, "FLEX-END");
+test(invalid, alignContent, "flex-end flex-end");
+test(valid, alignContent, "center");
+test(valid, alignContent, "CENTER");
+test(invalid, alignContent, "center center");
+test(valid, alignContent, "space-between");
+test(valid, alignContent, "SPACE-BETWEEN");
+test(invalid, alignContent, "space-between space-between");
+test(valid, alignContent, "space-around");
+test(valid, alignContent, "SPACE-AROUND");
+test(invalid, alignContent, "space-around space-around");
+test(valid, alignContent, "stretch");
+test(valid, alignContent, "STRETCH");
+test(invalid, alignContent, "stretch stretch");
+var msFlexLinePack = "-ms-flex-line-pack";
+test(globals, msFlexLinePack);
+test(valid, msFlexLinePack, "flex-start");
+test(valid, msFlexLinePack, "FLEX-START");
+test(invalid, msFlexLinePack, "flex-start flex-start");
+test(valid, msFlexLinePack, "flex-end");
+test(valid, msFlexLinePack, "FLEX-END");
+test(invalid, msFlexLinePack, "flex-end flex-end");
+test(valid, msFlexLinePack, "center");
+test(valid, msFlexLinePack, "CENTER");
+test(invalid, msFlexLinePack, "center center");
+test(valid, msFlexLinePack, "space-between");
+test(valid, msFlexLinePack, "SPACE-BETWEEN");
+test(invalid, msFlexLinePack, "space-between space-between");
+test(valid, msFlexLinePack, "space-around");
+test(valid, msFlexLinePack, "SPACE-AROUND");
+test(invalid, msFlexLinePack, "space-around space-around");
+test(valid, msFlexLinePack, "stretch");
+test(valid, msFlexLinePack, "STRETCH");
+test(invalid, msFlexLinePack, "stretch stretch");
+test(valid, msFlexLinePack, "start");
+test(valid, msFlexLinePack, "START");
+test(invalid, msFlexLinePack, "start start");
+test(valid, msFlexLinePack, "end");
+test(valid, msFlexLinePack, "END");
+test(invalid, msFlexLinePack, "end end");
+test(valid, msFlexLinePack, "justify");
+test(valid, msFlexLinePack, "JUSTIFY");
+test(invalid, msFlexLinePack, "justify justify");
+test(valid, msFlexLinePack, "distribute");
+test(valid, msFlexLinePack, "DISTRIBUTE");
+test(invalid, msFlexLinePack, "distribute distribute");
+var msFlexAlign = ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"];
+test(globals, msFlexAlign);
+test(valid, msFlexAlign, "flex-start");
+test(valid, msFlexAlign, "FLEX-START");
+test(invalid, msFlexAlign, "flex-start flex-start");
+test(valid, msFlexAlign, "flex-end");
+test(valid, msFlexAlign, "FLEX-END");
+test(invalid, msFlexAlign, "flex-end flex-end");
+test(valid, msFlexAlign, "center");
+test(valid, msFlexAlign, "CENTER");
+test(invalid, msFlexAlign, "center center");
+test(valid, msFlexAlign, "baseline");
+test(valid, msFlexAlign, "BASELINE");
+test(invalid, msFlexAlign, "baseline baseline");
+test(valid, msFlexAlign, "stretch");
+test(valid, msFlexAlign, "STRETCH");
+test(invalid, msFlexAlign, "stretch stretch");
+test(valid, msFlexAlign, "start");
+test(valid, msFlexAlign, "START");
+test(invalid, msFlexAlign, "start start");
+test(valid, msFlexAlign, "end");
+test(valid, msFlexAlign, "END");
+test(invalid, msFlexAlign, "end end");
+var alignItems = ["-webkit-align-items", "-ms-grid-row-align", "align-items"];
+test(globals, alignItems);
+test(valid, alignItems, "flex-start");
+test(valid, alignItems, "FLEX-START");
+test(invalid, alignItems, "flex-start flex-start");
+test(valid, alignItems, "flex-end");
+test(valid, alignItems, "FLEX-END");
+test(invalid, alignItems, "flex-end flex-end");
+test(valid, alignItems, "center");
+test(valid, alignItems, "CENTER");
+test(invalid, alignItems, "center center");
+test(valid, alignItems, "baseline");
+test(valid, alignItems, "BASELINE");
+test(invalid, alignItems, "baseline baseline");
+test(valid, alignItems, "stretch");
+test(valid, alignItems, "STRETCH");
+test(invalid, alignItems, "stretch stretch");
+var alignSelf = ["-webkit-align-self", "align-self"];
+test(globals, alignSelf);
+test(valid, alignSelf, "auto");
+test(valid, alignSelf, "AUTO");
+test(invalid, alignSelf, "auto auto");
+test(valid, alignSelf, "flex-start");
+test(valid, alignSelf, "FLEX-START");
+test(invalid, alignSelf, "flex-start flex-start");
+test(valid, alignSelf, "flex-end");
+test(valid, alignSelf, "FLEX-END");
+test(invalid, alignSelf, "flex-end flex-end");
+test(valid, alignSelf, "center");
+test(valid, alignSelf, "CENTER");
+test(invalid, alignSelf, "center center");
+test(valid, alignSelf, "baseline");
+test(valid, alignSelf, "BASELINE");
+test(invalid, alignSelf, "baseline baseline");
+test(valid, alignSelf, "stretch");
+test(valid, alignSelf, "STRETCH");
+test(invalid, alignSelf, "stretch stretch");
+var msFlexItemAlign = "-ms-flex-item-align";
+test(globals, msFlexItemAlign);
+test(valid, msFlexItemAlign, "auto");
+test(valid, msFlexItemAlign, "AUTO");
+test(invalid, msFlexItemAlign, "auto auto");
+test(valid, msFlexItemAlign, "flex-start");
+test(valid, msFlexItemAlign, "FLEX-START");
+test(invalid, msFlexItemAlign, "flex-start flex-start");
+test(valid, msFlexItemAlign, "flex-end");
+test(valid, msFlexItemAlign, "FLEX-END");
+test(invalid, msFlexItemAlign, "flex-end flex-end");
+test(valid, msFlexItemAlign, "center");
+test(valid, msFlexItemAlign, "CENTER");
+test(invalid, msFlexItemAlign, "center center");
+test(valid, msFlexItemAlign, "baseline");
+test(valid, msFlexItemAlign, "BASELINE");
+test(invalid, msFlexItemAlign, "baseline baseline");
+test(valid, msFlexItemAlign, "stretch");
+test(valid, msFlexItemAlign, "STRETCH");
+test(invalid, msFlexItemAlign, "stretch stretch");
+test(valid, msFlexItemAlign, "start");
+test(valid, msFlexItemAlign, "START");
+test(invalid, msFlexItemAlign, "start start");
+test(valid, msFlexItemAlign, "end");
+test(valid, msFlexItemAlign, "END");
+test(invalid, msFlexItemAlign, "end end");
+var animationDelay = ["animation-delay", "animation-duration", "transition-delay", "transition-duration"];
+test(globals, animationDelay);
+test(valid, animationDelay, "2s");
+test(valid, animationDelay, "1500ms");
+test(valid, animationDelay, "0.75s");
+test(invalid, animationDelay, "2 seconds");
+test(invalid, animationDelay, "1000μs");
+test(invalid, animationDelay, "10.s");
+test(valid, animationDelay, "2s, 2s");
+test(invalid, animationDelay, "2s, 2s,");
+test(valid, animationDelay, "var(--foo), var(--bar)");
+test(invalid, animationDelay, "var(--foo), var(--bar),");
+var animationDirection = "animation-direction";
+test(globals, animationDirection);
+test(valid, animationDirection, "normal");
+test(valid, animationDirection, "reverse");
+test(valid, animationDirection, "alternate");
+test(valid, animationDirection, "alternate-reverse");
+test(valid, animationDirection, "NORMAL");
+test(valid, animationDirection, "REVERSE");
+test(valid, animationDirection, "ALTERNATE");
+test(valid, animationDirection, "ALTERNATE-REVERSE");
+test(invalid, animationDirection, "alternate-normal-reverse");
+test(valid, animationDirection, "normal, normal");
+test(invalid, animationDirection, "normal, normal,");
+test(valid, animationDirection, "var(--foo), var(--bar)");
+test(invalid, animationDirection, "var(--foo), var(--bar),");
+var animationFillMode = "animation-fill-mode";
+test(globals, animationFillMode);
+test(valid, animationFillMode, "none");
+test(valid, animationFillMode, "forwards");
+test(valid, animationFillMode, "backwards");
+test(valid, animationFillMode, "both");
+test(valid, animationFillMode, "NONE");
+test(valid, animationFillMode, "FORWARDS");
+test(valid, animationFillMode, "BACKWARDS");
+test(valid, animationFillMode, "BOTH");
+test(invalid, animationFillMode, "forwards-backwards");
+test(valid, animationFillMode, "none, none");
+test(invalid, animationFillMode, "none, none,");
+test(valid, animationFillMode, "var(--foo), var(--bar)");
+test(invalid, animationFillMode, "var(--foo), var(--bar),");
+var animationIterationCount = "animation-iteration-count";
+test(globals, animationIterationCount);
+test(valid, animationIterationCount, "12");
+test(valid, animationIterationCount, "4.01");
+test(valid, animationIterationCount, "-456.8");
+test(valid, animationIterationCount, "0.0");
+test(valid, animationIterationCount, "+0.0");
+test(valid, animationIterationCount, "-0.0");
+test(valid, animationIterationCount, ".60");
+test(valid, animationIterationCount, "10e3");
+test(valid, animationIterationCount, "-3.4e-2");
+test(valid, animationIterationCount, "infinite");
+test(invalid, animationIterationCount, "12.");
+test(invalid, animationIterationCount, "+-12.2");
+test(invalid, animationIterationCount, "12.1.1");
+test(invalid, animationIterationCount, "\"10px\"");
+test(valid, animationIterationCount, "12, 12");
+test(invalid, animationIterationCount, "12, 12,");
+test(valid, animationIterationCount, "var(--foo), var(--bar)");
+test(invalid, animationIterationCount, "var(--foo), var(--bar),");
+var animationName = "animation-name";
+test(globals, animationName);
+test(valid, animationName, "Bond-007");
+test(valid, animationName, "alpha");
+test(valid, animationName, "_-_");
+test(valid, animationName, "\\1F638");
+test(valid, animationName, "-B");
+test(valid, animationName, "none");
+test(valid, animationName, "NONE");
+test(invalid, animationName, "007-Bond");
+test(invalid, animationName, "0B");
+test(invalid, animationName, "--B");
+test(invalid, animationName, "-0");
+test(invalid, animationName, "\"foobar\"");
+test(valid, animationName, "Bond-007, Bond-007");
+test(invalid, animationName, "Bond-007, Bond-007,");
+test(valid, animationName, "var(--foo), var(--bar)");
+test(invalid, animationName, "var(--foo), var(--bar),");
+var animationPlayState = "animation-play-state";
+test(globals, animationPlayState);
+test(valid, animationPlayState, "running");
+test(valid, animationPlayState, "paused");
+test(valid, animationPlayState, "RUNNING");
+test(valid, animationPlayState, "PAUSED");
+test(invalid, animationPlayState, "running-paused");
+test(valid, animationPlayState, "running, running");
+test(invalid, animationPlayState, "running, running,");
+test(valid, animationPlayState, "var(--foo), var(--bar)");
+test(invalid, animationPlayState, "var(--foo), var(--bar),");
+var animationTimingFunction = ["animation-timing-function", "transition-timing-function"];
+test(globals, animationTimingFunction);
+test(valid, animationTimingFunction, "ease");
+test(valid, animationTimingFunction, "linear");
+test(valid, animationTimingFunction, "ease-in");
+test(valid, animationTimingFunction, "ease-out");
+test(valid, animationTimingFunction, "ease-in-out");
+test(valid, animationTimingFunction, "step-start");
+test(valid, animationTimingFunction, "step-end");
+test(valid, animationTimingFunction, "EASE");
+test(valid, animationTimingFunction, "LINEAR");
+test(valid, animationTimingFunction, "EASE-IN");
+test(valid, animationTimingFunction, "EASE-OUT");
+test(valid, animationTimingFunction, "EASE-IN-OUT");
+test(valid, animationTimingFunction, "STEP-START");
+test(valid, animationTimingFunction, "STEP-END");
+test(valid, animationTimingFunction, "STEPS(1)");
+test(valid, animationTimingFunction, "steps(5, start)");
+test(valid, animationTimingFunction, "steps(5, end)");
+test(valid, animationTimingFunction, "steps(5, START)");
+test(valid, animationTimingFunction, "steps(5, END)");
+test(valid, animationTimingFunction, "cubic-bezier(0.1, 0.7, 1.0, 0.1)");
+test(valid, animationTimingFunction, "CUBIC-BEZIER(0.1, 0.7, 1.0, 0.1)");
+test(invalid, animationTimingFunction, "ease-in-out-in-ease");
+test(invalid, animationTimingFunction, "steps(1.0)");
+test(invalid, animationTimingFunction, "steps(2.5, start)");
+test(invalid, animationTimingFunction, "steps(2/start)");
+test(invalid, animationTimingFunction, "steps(5, middle)");
+test(invalid, animationTimingFunction, "cubic-bezier(0.1, red, 1.0, green)");
+test(invalid, animationTimingFunction, "cubic-bezier(2.45, 0.6, 4, 0.1)");
+test(invalid, animationTimingFunction, "cubic-bezier(0.3, 2.1)");
+test(invalid, animationTimingFunction, "cubic-bezier(-1.9, 0.3, -0.2, 2.1)");
+test(valid, animationTimingFunction, "ease, ease");
+test(invalid, animationTimingFunction, "ease, ease,");
+test(valid, animationTimingFunction, "var(--foo), var(--bar)");
+test(invalid, animationTimingFunction, "var(--foo), var(--bar),");
+var appearance = ["-webkit-appearance", "-moz-appearance", "appearance"];
+test(globals, appearance);
+test(valid, appearance, "auto");
+test(valid, appearance, "AUTO");
+test(invalid, appearance, "auto auto");
+test(valid, appearance, "none");
+test(valid, appearance, "NONE");
+test(invalid, appearance, "none none");
+var backfaceVisibility = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"];
+test(globals, backfaceVisibility);
+test(valid, backfaceVisibility, "visible");
+test(valid, backfaceVisibility, "VISIBLE");
+test(invalid, backfaceVisibility, "visible visible");
+test(valid, backfaceVisibility, "hidden");
+test(valid, backfaceVisibility, "HIDDEN");
+test(invalid, backfaceVisibility, "hidden hidden");
+var backgroundAttachment = "background-attachment";
+test(globals, backgroundAttachment);
+test(valid, backgroundAttachment, "scroll");
+test(valid, backgroundAttachment, "fixed");
+test(valid, backgroundAttachment, "local");
+test(valid, backgroundAttachment, "SCROLL");
+test(valid, backgroundAttachment, "FIXED");
+test(valid, backgroundAttachment, "LOCAL");
+test(invalid, backgroundAttachment, "local-scroll");
+test(valid, backgroundAttachment, "scroll, scroll");
+test(invalid, backgroundAttachment, "scroll, scroll,");
+test(valid, backgroundAttachment, "var(--foo), var(--bar)");
+test(invalid, backgroundAttachment, "var(--foo), var(--bar),");
+var backgroundBlendMode = "background-blend-mode";
+test(globals, backgroundBlendMode);
+test(valid, backgroundBlendMode, "normal");
+test(valid, backgroundBlendMode, "multiply");
+test(valid, backgroundBlendMode, "screen");
+test(valid, backgroundBlendMode, "overlay");
+test(valid, backgroundBlendMode, "darken");
+test(valid, backgroundBlendMode, "lighten");
+test(valid, backgroundBlendMode, "color-dodge");
+test(valid, backgroundBlendMode, "color-burn");
+test(valid, backgroundBlendMode, "hard-light");
+test(valid, backgroundBlendMode, "soft-light");
+test(valid, backgroundBlendMode, "difference");
+test(valid, backgroundBlendMode, "exclusion");
+test(valid, backgroundBlendMode, "hue");
+test(valid, backgroundBlendMode, "saturation");
+test(valid, backgroundBlendMode, "color");
+test(valid, backgroundBlendMode, "luminosity");
+test(valid, backgroundBlendMode, "NORMAL");
+test(valid, backgroundBlendMode, "MULTIPLY");
+test(valid, backgroundBlendMode, "SCREEN");
+test(valid, backgroundBlendMode, "OVERLAY");
+test(valid, backgroundBlendMode, "DARKEN");
+test(valid, backgroundBlendMode, "LIGHTEN");
+test(valid, backgroundBlendMode, "COLOR-DODGE");
+test(valid, backgroundBlendMode, "COLOR-BURN");
+test(valid, backgroundBlendMode, "HARD-LIGHT");
+test(valid, backgroundBlendMode, "SOFT-LIGHT");
+test(valid, backgroundBlendMode, "DIFFERENCE");
+test(valid, backgroundBlendMode, "EXCLUSION");
+test(valid, backgroundBlendMode, "HUE");
+test(valid, backgroundBlendMode, "SATURATION");
+test(valid, backgroundBlendMode, "COLOR");
+test(valid, backgroundBlendMode, "LUMINOSITY");
+test(invalid, backgroundBlendMode, "superblend");
+test(invalid, backgroundBlendMode, "blend-man");
+test(valid, backgroundBlendMode, "normal, normal");
+test(invalid, backgroundBlendMode, "normal, normal,");
+test(valid, backgroundBlendMode, "var(--foo), var(--bar)");
+test(invalid, backgroundBlendMode, "var(--foo), var(--bar),");
+var backgroundClip = ["background-clip", "background-origin"];
+test(globals, backgroundClip);
+test(valid, backgroundClip, "border-box");
+test(valid, backgroundClip, "padding-box");
+test(valid, backgroundClip, "content-box");
+test(valid, backgroundClip, "BORDER-BOX");
+test(valid, backgroundClip, "PADDING-BOX");
+test(valid, backgroundClip, "CONTENT-BOX");
+test(invalid, backgroundClip, "rock-box");
+test(valid, backgroundClip, "border-box, border-box");
+test(invalid, backgroundClip, "border-box, border-box,");
+test(valid, backgroundClip, "var(--foo), var(--bar)");
+test(invalid, backgroundClip, "var(--foo), var(--bar),");
+var backgroundPosition = ["background-position", "mask-position"];
+test(globals, backgroundPosition);
+test(valid, backgroundPosition, "left");
+test(valid, backgroundPosition, "center");
+test(valid, backgroundPosition, "right");
+test(valid, backgroundPosition, "top");
+test(valid, backgroundPosition, "bottom");
+test(valid, backgroundPosition, "10px");
+test(valid, backgroundPosition, "50%");
+test(valid, backgroundPosition, "left top");
+test(valid, backgroundPosition, "left center");
+test(valid, backgroundPosition, "left bottom");
+test(valid, backgroundPosition, "right 50%");
+test(valid, backgroundPosition, "10px top");
+test(valid, backgroundPosition, "50% 50%");
+test(valid, backgroundPosition, "bottom right");
+test(valid, backgroundPosition, "center center");
+test(valid, backgroundPosition, "50% center");
+test(valid, backgroundPosition, "left 25% bottom");
+test(valid, backgroundPosition, "top 50% center");
+test(valid, backgroundPosition, "left 25% bottom 25%");
+test(valid, backgroundPosition, "top 10px right 50px");
+test(valid, backgroundPosition, "var(--foo) var(--bar)");
+test(valid, backgroundPosition, "var(--foo) var(--bar) var(--baz)");
+test(valid, backgroundPosition, "var(--foo) var(--bar) var(--baz) var(--quux)");
+test(invalid, backgroundPosition, "left right");
+test(invalid, backgroundPosition, "right left");
+test(invalid, backgroundPosition, "top bottom");
+test(invalid, backgroundPosition, "bottom top");
+test(invalid, backgroundPosition, "left/top");
+test(invalid, backgroundPosition, "50% left");
+test(invalid, backgroundPosition, "left 50% 50%");
+test(invalid, backgroundPosition, "left 75% center 75%");
+test(invalid, backgroundPosition, "top 75% center 75%");
+test(invalid, backgroundPosition, "center center center center");
+test(invalid, backgroundPosition, "left/25%/bottom");
+test(invalid, backgroundPosition, "top/10px/right/50px");
+test(valid, backgroundPosition, "left, left");
+test(invalid, backgroundPosition, "left, left,");
+test(valid, backgroundPosition, "var(--foo), var(--bar)");
+test(invalid, backgroundPosition, "var(--foo), var(--bar),");
+var borderBottomLeftRadius = ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"];
+test(globals, borderBottomLeftRadius);
+test(valid, borderBottomLeftRadius, "0");
+test(valid, borderBottomLeftRadius, "16px");
+test(valid, borderBottomLeftRadius, "1pc");
+test(valid, borderBottomLeftRadius, "2.34254645654324rem");
+test(valid, borderBottomLeftRadius, "1%");
+test(valid, borderBottomLeftRadius, "88%");
+test(valid, borderBottomLeftRadius, "99.99%");
+test(valid, borderBottomLeftRadius, "+100%");
+test(invalid, borderBottomLeftRadius, "16.px");
+test(invalid, borderBottomLeftRadius, "px16");
+test(invalid, borderBottomLeftRadius, "one rem");
+test(invalid, borderBottomLeftRadius, "\"1rem\"");
+test(invalid, borderBottomLeftRadius, "12.%");
+test(invalid, borderBottomLeftRadius, "42.2.3.4.7.8.1.2%");
+test(valid, borderBottomLeftRadius, "0 0");
+test(invalid, borderBottomLeftRadius, "0, 0");
+test(valid, borderBottomLeftRadius, "var(--foo) var(--bar)");
+test(invalid, borderBottomLeftRadius, "var(--foo), var(--bar)");
+var borderBottomStyle = ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"];
+test(globals, borderBottomStyle);
+test(valid, borderBottomStyle, "none");
+test(valid, borderBottomStyle, "hidden");
+test(valid, borderBottomStyle, "dotted");
+test(valid, borderBottomStyle, "dashed");
+test(valid, borderBottomStyle, "solid");
+test(valid, borderBottomStyle, "double");
+test(valid, borderBottomStyle, "groove");
+test(valid, borderBottomStyle, "ridge");
+test(valid, borderBottomStyle, "inset");
+test(valid, borderBottomStyle, "outset");
+test(valid, borderBottomStyle, "NONE");
+test(valid, borderBottomStyle, "HIDDEN");
+test(valid, borderBottomStyle, "DOTTED");
+test(valid, borderBottomStyle, "DASHED");
+test(valid, borderBottomStyle, "SOLID");
+test(valid, borderBottomStyle, "DOUBLE");
+test(valid, borderBottomStyle, "GROOVE");
+test(valid, borderBottomStyle, "RIDGE");
+test(valid, borderBottomStyle, "INSET");
+test(valid, borderBottomStyle, "OUTSET");
+test(invalid, borderBottomStyle, "groovy");
+test(invalid, borderBottomStyle, "none none");
+var borderBottomWidth = ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"];
+test(globals, borderBottomWidth);
+test(valid, borderBottomWidth, "thin");
+test(valid, borderBottomWidth, "medium");
+test(valid, borderBottomWidth, "thick");
+test(valid, borderBottomWidth, "THIN");
+test(valid, borderBottomWidth, "MEDIUM");
+test(valid, borderBottomWidth, "THICK");
+test(valid, borderBottomWidth, "0");
+test(valid, borderBottomWidth, "16px");
+test(valid, borderBottomWidth, "1pc");
+test(valid, borderBottomWidth, "2.34254645654324rem");
+test(invalid, borderBottomWidth, "huuuuge");
+test(invalid, borderBottomWidth, "16.px");
+test(invalid, borderBottomWidth, "px16");
+test(invalid, borderBottomWidth, "one rem");
+test(invalid, borderBottomWidth, "\"1rem\"");
+test(invalid, borderBottomWidth, "thin thin");
+var borderCollapse = "border-collapse";
+test(globals, borderCollapse);
+test(valid, borderCollapse, "collapse");
+test(valid, borderCollapse, "COLLAPSE");
+test(invalid, borderCollapse, "collapse collapse");
+test(valid, borderCollapse, "separate");
+test(valid, borderCollapse, "SEPARATE");
+test(invalid, borderCollapse, "separate separate");
+var borderColor = "border-color";
+test(globals, borderColor);
+test(valid, borderColor, "RGB(1, 2, 3)");
+test(valid, borderColor, "rgb(10%, 20%, 30%)");
+test(valid, borderColor, "rgb(400, 400, 400)");
+test(valid, borderColor, "rgbA(1, 2, 3, .5)");
+test(valid, borderColor, "rgba(10%, 20%, 30%, 0.5)");
+test(valid, borderColor, "rgba(400, 400, 400, 1)");
+test(valid, borderColor, "hsl(90, 50%, 50%)");
+test(valid, borderColor, "HSL(90, 50%, 50%)");
+test(valid, borderColor, "hsla(90, 50%, 50%, .5)");
+test(valid, borderColor, "hsla(90, 50%, 50%, 0.5)");
+test(valid, borderColor, "hslA(90, 50%, 50%, 0)");
+test(valid, borderColor, "#000");
+test(valid, borderColor, "#000F");
+test(valid, borderColor, "#000000");
+test(valid, borderColor, "#000000FF");
+test(valid, borderColor, "RED");
+test(valid, borderColor, "black");
+test(valid, borderColor, "currentcolor");
+test(valid, borderColor, "CURRENTCOLOR");
+test(invalid, borderColor, "rgb(1, 2, 3, 4, 5)");
+test(invalid, borderColor, "rgb(1:2:3)");
+test(invalid, borderColor, "rgb(a, b, c)");
+test(invalid, borderColor, "rgba(10%, 20%, 30%, transparent)");
+test(invalid, borderColor, "rgba(400: 400)");
+test(invalid, borderColor, "rgba(400, 400, 400, 50%)");
+test(invalid, borderColor, "hsl(50%, 50%, 50%)");
+test(invalid, borderColor, "hsl(90, 50, 50)");
+test(invalid, borderColor, "hsla(90, 50%, 50%)");
+test(invalid, borderColor, "hsla(90, 50%, 50%, 50%)");
+test(invalid, borderColor, "hsla(90%, 50%, 50%, 0.5)");
+test(invalid, borderColor, "#ee");
+test(invalid, borderColor, "#eeeeeee");
+test(invalid, borderColor, "#ggg");
+test(invalid, borderColor, "blacklight");
+test(valid, borderColor, "RGB(1, 2, 3) RGB(1, 2, 3)");
+test(invalid, borderColor, "RGB(1, 2, 3), RGB(1, 2, 3)");
+test(valid, borderColor, "var(--foo) var(--bar)");
+test(invalid, borderColor, "var(--foo), var(--bar)");
+var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"];
+test(globals, bottom);
+test(valid, bottom, "0");
+test(valid, bottom, "16px");
+test(valid, bottom, "1pc");
+test(valid, bottom, "2.34254645654324rem");
+test(invalid, bottom, "16.px");
+test(invalid, bottom, "px16");
+test(invalid, bottom, "one rem");
+test(invalid, bottom, "\"1rem\"");
+test(invalid, bottom, "0 0");
+test(valid, bottom, "1%");
+test(valid, bottom, "88%");
+test(valid, bottom, "99.99%");
+test(valid, bottom, "+100%");
+test(invalid, bottom, "12.%");
+test(invalid, bottom, "42.2.3.4.7.8.1.2%");
+test(invalid, bottom, "1% 1%");
+test(valid, bottom, "auto");
+test(valid, bottom, "AUTO");
+test(invalid, bottom, "auto auto");
+var boxAlign = "box-align";
+test(globals, boxAlign);
+test(valid, boxAlign, "start");
+test(valid, boxAlign, "START");
+test(invalid, boxAlign, "start start");
+test(valid, boxAlign, "center");
+test(valid, boxAlign, "CENTER");
+test(invalid, boxAlign, "center center");
+test(valid, boxAlign, "end");
+test(valid, boxAlign, "END");
+test(invalid, boxAlign, "end end");
+test(valid, boxAlign, "baseline");
+test(valid, boxAlign, "BASELINE");
+test(invalid, boxAlign, "baseline baseline");
+test(valid, boxAlign, "stretch");
+test(valid, boxAlign, "STRETCH");
+test(invalid, boxAlign, "stretch stretch");
+var boxDecorationBreak = ["-webkit-box-decoration-break", "box-decoration-break"];
+test(globals, boxDecorationBreak);
+test(valid, boxDecorationBreak, "slice");
+test(valid, boxDecorationBreak, "SLICE");
+test(invalid, boxDecorationBreak, "slice slice");
+test(valid, boxDecorationBreak, "clone");
+test(valid, boxDecorationBreak, "CLONE");
+test(invalid, boxDecorationBreak, "clone clone");
+var boxDirection = "box-direction";
+test(globals, boxDirection);
+test(valid, boxDirection, "normal");
+test(valid, boxDirection, "NORMAL");
+test(invalid, boxDirection, "normal normal");
+test(valid, boxDirection, "reverse");
+test(valid, boxDirection, "REVERSE");
+test(invalid, boxDirection, "reverse reverse");
+test(valid, boxDirection, "inherit");
+test(valid, boxDirection, "INHERIT");
+test(invalid, boxDirection, "inherit inherit");
+var boxFlex = ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"];
+test(globals, boxFlex);
+test(valid, boxFlex, "12");
+test(valid, boxFlex, "4.01");
+test(valid, boxFlex, "-456.8");
+test(valid, boxFlex, "0.0");
+test(valid, boxFlex, "+0.0");
+test(valid, boxFlex, "-0.0");
+test(valid, boxFlex, ".60");
+test(valid, boxFlex, "10e3");
+test(valid, boxFlex, "-3.4e-2");
+test(invalid, boxFlex, "12.");
+test(invalid, boxFlex, "+-12.2");
+test(invalid, boxFlex, "12.1.1");
+test(invalid, boxFlex, "\"10px\"");
+test(invalid, boxFlex, "12 12");
+var boxLines = "box-lines";
+test(globals, boxLines);
+test(valid, boxLines, "single");
+test(valid, boxLines, "SINGLE");
+test(invalid, boxLines, "single single");
+test(valid, boxLines, "multiple");
+test(valid, boxLines, "MULTIPLE");
+test(invalid, boxLines, "multiple multiple");
+var boxOrient = "box-orient";
+test(globals, boxOrient);
+test(valid, boxOrient, "horizontal");
+test(valid, boxOrient, "HORIZONTAL");
+test(invalid, boxOrient, "horizontal horizontal");
+test(valid, boxOrient, "vertical");
+test(valid, boxOrient, "VERTICAL");
+test(invalid, boxOrient, "vertical vertical");
+test(valid, boxOrient, "inline-axis");
+test(valid, boxOrient, "INLINE-AXIS");
+test(invalid, boxOrient, "inline-axis inline-axis");
+test(valid, boxOrient, "block-axis");
+test(valid, boxOrient, "BLOCK-AXIS");
+test(invalid, boxOrient, "block-axis block-axis");
+test(valid, boxOrient, "inherit");
+test(valid, boxOrient, "INHERIT");
+test(invalid, boxOrient, "inherit inherit");
+var boxPack = "box-pack";
+test(globals, boxPack);
+test(valid, boxPack, "start");
+test(valid, boxPack, "START");
+test(invalid, boxPack, "start start");
+test(valid, boxPack, "center");
+test(valid, boxPack, "CENTER");
+test(invalid, boxPack, "center center");
+test(valid, boxPack, "end");
+test(valid, boxPack, "END");
+test(invalid, boxPack, "end end");
+test(valid, boxPack, "justify");
+test(valid, boxPack, "JUSTIFY");
+test(invalid, boxPack, "justify justify");
+var boxSizing = ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"];
+test(globals, boxSizing);
+test(valid, boxSizing, "content-box");
+test(valid, boxSizing, "CONTENT-BOX");
+test(invalid, boxSizing, "content-box content-box");
+test(valid, boxSizing, "border-box");
+test(valid, boxSizing, "BORDER-BOX");
+test(invalid, boxSizing, "border-box border-box");
+var boxSuppress = "box-suppress";
+test(globals, boxSuppress);
+test(valid, boxSuppress, "show");
+test(valid, boxSuppress, "SHOW");
+test(invalid, boxSuppress, "show show");
+test(valid, boxSuppress, "discard");
+test(valid, boxSuppress, "DISCARD");
+test(invalid, boxSuppress, "discard discard");
+test(valid, boxSuppress, "hide");
+test(valid, boxSuppress, "HIDE");
+test(invalid, boxSuppress, "hide hide");
+var pageBreakAfter = ["page-break-after", "page-break-before"];
+test(globals, pageBreakAfter);
+test(valid, pageBreakAfter, "auto");
+test(valid, pageBreakAfter, "AUTO");
+test(invalid, pageBreakAfter, "auto auto");
+test(valid, pageBreakAfter, "always");
+test(valid, pageBreakAfter, "ALWAYS");
+test(invalid, pageBreakAfter, "always always");
+test(valid, pageBreakAfter, "avoid");
+test(valid, pageBreakAfter, "AVOID");
+test(invalid, pageBreakAfter, "avoid avoid");
+test(valid, pageBreakAfter, "left");
+test(valid, pageBreakAfter, "LEFT");
+test(invalid, pageBreakAfter, "left left");
+test(valid, pageBreakAfter, "right");
+test(valid, pageBreakAfter, "RIGHT");
+test(invalid, pageBreakAfter, "right right");
+var webkitColumnBreakInside = ["-webkit-column-break-inside", "page-break-inside", "break-inside"];
+test(globals, webkitColumnBreakInside);
+test(valid, webkitColumnBreakInside, "auto");
+test(valid, webkitColumnBreakInside, "AUTO");
+test(invalid, webkitColumnBreakInside, "auto auto");
+test(valid, webkitColumnBreakInside, "avoid");
+test(valid, webkitColumnBreakInside, "AVOID");
+test(invalid, webkitColumnBreakInside, "avoid avoid");
+test(valid, webkitColumnBreakInside, "avoid-page");
+test(valid, webkitColumnBreakInside, "AVOID-PAGE");
+test(invalid, webkitColumnBreakInside, "avoid-page avoid-page");
+test(valid, webkitColumnBreakInside, "avoid-column");
+test(valid, webkitColumnBreakInside, "AVOID-COLUMN");
+test(invalid, webkitColumnBreakInside, "avoid-column avoid-column");
+test(valid, webkitColumnBreakInside, "avoid-region");
+test(valid, webkitColumnBreakInside, "AVOID-REGION");
+test(invalid, webkitColumnBreakInside, "avoid-region avoid-region");
+var captionSide = "caption-side";
+test(globals, captionSide);
+test(valid, captionSide, "top");
+test(valid, captionSide, "TOP");
+test(invalid, captionSide, "top top");
+test(valid, captionSide, "bottom");
+test(valid, captionSide, "BOTTOM");
+test(invalid, captionSide, "bottom bottom");
+test(valid, captionSide, "block-start");
+test(valid, captionSide, "BLOCK-START");
+test(invalid, captionSide, "block-start block-start");
+test(valid, captionSide, "block-end");
+test(valid, captionSide, "BLOCK-END");
+test(invalid, captionSide, "block-end block-end");
+test(valid, captionSide, "inline-start");
+test(valid, captionSide, "INLINE-START");
+test(invalid, captionSide, "inline-start inline-start");
+test(valid, captionSide, "inline-end");
+test(valid, captionSide, "INLINE-END");
+test(invalid, captionSide, "inline-end inline-end");
+var clear = "clear";
+test(globals, clear);
+test(valid, clear, "none");
+test(valid, clear, "NONE");
+test(invalid, clear, "none none");
+test(valid, clear, "left");
+test(valid, clear, "LEFT");
+test(invalid, clear, "left left");
+test(valid, clear, "right");
+test(valid, clear, "RIGHT");
+test(invalid, clear, "right right");
+test(valid, clear, "both");
+test(valid, clear, "BOTH");
+test(invalid, clear, "both both");
+test(valid, clear, "inline-start");
+test(valid, clear, "INLINE-START");
+test(invalid, clear, "inline-start inline-start");
+test(valid, clear, "inline-end");
+test(valid, clear, "INLINE-END");
+test(invalid, clear, "inline-end inline-end");
+var columnCount = ["-webkit-column-count", "-moz-column-count", "column-count"];
+test(globals, columnCount);
+test(valid, columnCount, "12");
+test(valid, columnCount, "4.01");
+test(valid, columnCount, "-456.8");
+test(valid, columnCount, "0.0");
+test(valid, columnCount, "+0.0");
+test(valid, columnCount, "-0.0");
+test(valid, columnCount, ".60");
+test(valid, columnCount, "10e3");
+test(valid, columnCount, "-3.4e-2");
+test(invalid, columnCount, "12.");
+test(invalid, columnCount, "+-12.2");
+test(invalid, columnCount, "12.1.1");
+test(invalid, columnCount, "\"10px\"");
+test(invalid, columnCount, "12 12");
+test(valid, columnCount, "auto");
+test(valid, columnCount, "AUTO");
+test(invalid, columnCount, "auto auto");
+var columnFill = ["-webkit-column-fill", "-moz-column-fill", "column-fill"];
+test(globals, columnFill);
+test(valid, columnFill, "auto");
+test(valid, columnFill, "AUTO");
+test(invalid, columnFill, "auto auto");
+test(valid, columnFill, "balance");
+test(valid, columnFill, "BALANCE");
+test(invalid, columnFill, "balance balance");
+var columnGap = ["-webkit-column-gap", "-moz-column-gap", "column-gap"];
+test(globals, columnGap);
+test(valid, columnGap, "0");
+test(valid, columnGap, "16px");
+test(valid, columnGap, "1pc");
+test(valid, columnGap, "2.34254645654324rem");
+test(invalid, columnGap, "16.px");
+test(invalid, columnGap, "px16");
+test(invalid, columnGap, "one rem");
+test(invalid, columnGap, "\"1rem\"");
+test(invalid, columnGap, "0 0");
+test(valid, columnGap, "normal");
+test(valid, columnGap, "NORMAL");
+test(invalid, columnGap, "normal normal");
+var columnSpan = ["-webkit-column-span", "-moz-column-span", "column-span"];
+test(globals, columnSpan);
+test(valid, columnSpan, "none");
+test(valid, columnSpan, "NONE");
+test(invalid, columnSpan, "none none");
+test(valid, columnSpan, "all");
+test(valid, columnSpan, "ALL");
+test(invalid, columnSpan, "all all");
+var columnWidth = ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"];
+test(globals, columnWidth);
+test(valid, columnWidth, "0");
+test(valid, columnWidth, "16px");
+test(valid, columnWidth, "1pc");
+test(valid, columnWidth, "2.34254645654324rem");
+test(invalid, columnWidth, "16.px");
+test(invalid, columnWidth, "px16");
+test(invalid, columnWidth, "one rem");
+test(invalid, columnWidth, "\"1rem\"");
+test(invalid, columnWidth, "0 0");
+test(valid, columnWidth, "auto");
+test(valid, columnWidth, "AUTO");
+test(invalid, columnWidth, "auto auto");
+var direction = "direction";
+test(globals, direction);
+test(valid, direction, "ltr");
+test(valid, direction, "LTR");
+test(invalid, direction, "ltr ltr");
+test(valid, direction, "rtl");
+test(valid, direction, "RTL");
+test(invalid, direction, "rtl rtl");
+var display = "display";
+test(globals, display);
+test(valid, display, "none");
+test(valid, display, "NONE");
+test(invalid, display, "none none");
+test(valid, display, "inline");
+test(valid, display, "INLINE");
+test(invalid, display, "inline inline");
+test(valid, display, "block");
+test(valid, display, "BLOCK");
+test(invalid, display, "block block");
+test(valid, display, "list-item");
+test(valid, display, "LIST-ITEM");
+test(invalid, display, "list-item list-item");
+test(valid, display, "inline-list-item");
+test(valid, display, "INLINE-LIST-ITEM");
+test(invalid, display, "inline-list-item inline-list-item");
+test(valid, display, "inline-block");
+test(valid, display, "INLINE-BLOCK");
+test(invalid, display, "inline-block inline-block");
+test(valid, display, "inline-table");
+test(valid, display, "INLINE-TABLE");
+test(invalid, display, "inline-table inline-table");
+test(valid, display, "table");
+test(valid, display, "TABLE");
+test(invalid, display, "table table");
+test(valid, display, "table-cell");
+test(valid, display, "TABLE-CELL");
+test(invalid, display, "table-cell table-cell");
+test(valid, display, "table-column");
+test(valid, display, "TABLE-COLUMN");
+test(invalid, display, "table-column table-column");
+test(valid, display, "table-column-group");
+test(valid, display, "TABLE-COLUMN-GROUP");
+test(invalid, display, "table-column-group table-column-group");
+test(valid, display, "table-footer-group");
+test(valid, display, "TABLE-FOOTER-GROUP");
+test(invalid, display, "table-footer-group table-footer-group");
+test(valid, display, "table-header-group");
+test(valid, display, "TABLE-HEADER-GROUP");
+test(invalid, display, "table-header-group table-header-group");
+test(valid, display, "table-row");
+test(valid, display, "TABLE-ROW");
+test(invalid, display, "table-row table-row");
+test(valid, display, "table-row-group");
+test(valid, display, "TABLE-ROW-GROUP");
+test(invalid, display, "table-row-group table-row-group");
+test(valid, display, "flex");
+test(valid, display, "FLEX");
+test(invalid, display, "flex flex");
+test(valid, display, "inline-flex");
+test(valid, display, "INLINE-FLEX");
+test(invalid, display, "inline-flex inline-flex");
+test(valid, display, "grid");
+test(valid, display, "GRID");
+test(invalid, display, "grid grid");
+test(valid, display, "inline-grid");
+test(valid, display, "INLINE-GRID");
+test(invalid, display, "inline-grid inline-grid");
+test(valid, display, "run-in");
+test(valid, display, "RUN-IN");
+test(invalid, display, "run-in run-in");
+test(valid, display, "ruby");
+test(valid, display, "RUBY");
+test(invalid, display, "ruby ruby");
+test(valid, display, "ruby-base");
+test(valid, display, "RUBY-BASE");
+test(invalid, display, "ruby-base ruby-base");
+test(valid, display, "ruby-text");
+test(valid, display, "RUBY-TEXT");
+test(invalid, display, "ruby-text ruby-text");
+test(valid, display, "ruby-base-container");
+test(valid, display, "RUBY-BASE-CONTAINER");
+test(invalid, display, "ruby-base-container ruby-base-container");
+test(valid, display, "ruby-text-container");
+test(valid, display, "RUBY-TEXT-CONTAINER");
+test(invalid, display, "ruby-text-container ruby-text-container");
+test(valid, display, "contents");
+test(valid, display, "CONTENTS");
+test(invalid, display, "contents contents");
+test(valid, display, "-webkit-box");
+test(valid, display, "-WEBKIT-BOX");
+test(invalid, display, "-webkit-box -webkit-box");
+test(valid, display, "-webkit-flex");
+test(valid, display, "-WEBKIT-FLEX");
+test(invalid, display, "-webkit-flex -webkit-flex");
+test(valid, display, "-moz-box");
+test(valid, display, "-MOZ-BOX");
+test(invalid, display, "-moz-box -moz-box");
+test(valid, display, "-ms-flexbox");
+test(valid, display, "-MS-FLEXBOX");
+test(invalid, display, "-ms-flexbox -ms-flexbox");
+test(valid, display, "-webkit-inline-box");
+test(valid, display, "-WEBKIT-INLINE-BOX");
+test(invalid, display, "-webkit-inline-box -webkit-inline-box");
+test(valid, display, "-webkit-inline-flex");
+test(valid, display, "-WEBKIT-INLINE-FLEX");
+test(invalid, display, "-webkit-inline-flex -webkit-inline-flex");
+test(valid, display, "-moz-inline-box");
+test(valid, display, "-MOZ-INLINE-BOX");
+test(invalid, display, "-moz-inline-box -moz-inline-box");
+test(valid, display, "-ms-inline-flexbox");
+test(valid, display, "-MS-INLINE-FLEXBOX");
+test(invalid, display, "-ms-inline-flexbox -ms-inline-flexbox");
+test(valid, display, "-ms-grid");
+test(valid, display, "-MS-GRID");
+test(invalid, display, "-ms-grid -ms-grid");
+test(valid, display, "-ms-inline-grid");
+test(valid, display, "-MS-INLINE-GRID");
+test(invalid, display, "-ms-inline-grid -ms-inline-grid");
+var displayInside = "display-inside";
+test(globals, displayInside);
+test(valid, displayInside, "auto");
+test(valid, displayInside, "AUTO");
+test(invalid, displayInside, "auto auto");
+test(valid, displayInside, "block");
+test(valid, displayInside, "BLOCK");
+test(invalid, displayInside, "block block");
+test(valid, displayInside, "table");
+test(valid, displayInside, "TABLE");
+test(invalid, displayInside, "table table");
+test(valid, displayInside, "flex");
+test(valid, displayInside, "FLEX");
+test(invalid, displayInside, "flex flex");
+test(valid, displayInside, "grid");
+test(valid, displayInside, "GRID");
+test(invalid, displayInside, "grid grid");
+test(valid, displayInside, "ruby");
+test(valid, displayInside, "RUBY");
+test(invalid, displayInside, "ruby ruby");
+var displayList = "display-list";
+test(globals, displayList);
+test(valid, displayList, "none");
+test(valid, displayList, "NONE");
+test(invalid, displayList, "none none");
+test(valid, displayList, "list-item");
+test(valid, displayList, "LIST-ITEM");
+test(invalid, displayList, "list-item list-item");
+var displayOutside = "display-outside";
+test(globals, displayOutside);
+test(valid, displayOutside, "block-level");
+test(valid, displayOutside, "BLOCK-LEVEL");
+test(invalid, displayOutside, "block-level block-level");
+test(valid, displayOutside, "inline-level");
+test(valid, displayOutside, "INLINE-LEVEL");
+test(invalid, displayOutside, "inline-level inline-level");
+test(valid, displayOutside, "run-in");
+test(valid, displayOutside, "RUN-IN");
+test(invalid, displayOutside, "run-in run-in");
+test(valid, displayOutside, "contents");
+test(valid, displayOutside, "CONTENTS");
+test(invalid, displayOutside, "contents contents");
+test(valid, displayOutside, "none");
+test(valid, displayOutside, "NONE");
+test(invalid, displayOutside, "none none");
+test(valid, displayOutside, "table-row-group");
+test(valid, displayOutside, "TABLE-ROW-GROUP");
+test(invalid, displayOutside, "table-row-group table-row-group");
+test(valid, displayOutside, "table-header-group");
+test(valid, displayOutside, "TABLE-HEADER-GROUP");
+test(invalid, displayOutside, "table-header-group table-header-group");
+test(valid, displayOutside, "table-footer-group");
+test(valid, displayOutside, "TABLE-FOOTER-GROUP");
+test(invalid, displayOutside, "table-footer-group table-footer-group");
+test(valid, displayOutside, "table-row");
+test(valid, displayOutside, "TABLE-ROW");
+test(invalid, displayOutside, "table-row table-row");
+test(valid, displayOutside, "table-cell");
+test(valid, displayOutside, "TABLE-CELL");
+test(invalid, displayOutside, "table-cell table-cell");
+test(valid, displayOutside, "table-column-group");
+test(valid, displayOutside, "TABLE-COLUMN-GROUP");
+test(invalid, displayOutside, "table-column-group table-column-group");
+test(valid, displayOutside, "table-column");
+test(valid, displayOutside, "TABLE-COLUMN");
+test(invalid, displayOutside, "table-column table-column");
+test(valid, displayOutside, "table-caption");
+test(valid, displayOutside, "TABLE-CAPTION");
+test(invalid, displayOutside, "table-caption table-caption");
+test(valid, displayOutside, "ruby-base");
+test(valid, displayOutside, "RUBY-BASE");
+test(invalid, displayOutside, "ruby-base ruby-base");
+test(valid, displayOutside, "ruby-text");
+test(valid, displayOutside, "RUBY-TEXT");
+test(invalid, displayOutside, "ruby-text ruby-text");
+test(valid, displayOutside, "ruby-base-container");
+test(valid, displayOutside, "RUBY-BASE-CONTAINER");
+test(invalid, displayOutside, "ruby-base-container ruby-base-container");
+test(valid, displayOutside, "ruby-text-container");
+test(valid, displayOutside, "RUBY-TEXT-CONTAINER");
+test(invalid, displayOutside, "ruby-text-container ruby-text-container");
+var emptyCells = "empty-cells";
+test(globals, emptyCells);
+test(valid, emptyCells, "show");
+test(valid, emptyCells, "SHOW");
+test(invalid, emptyCells, "show show");
+test(valid, emptyCells, "hide");
+test(valid, emptyCells, "HIDE");
+test(invalid, emptyCells, "hide hide");
+var mozBoxOrient = ["-webkit-box-orient", "-moz-box-orient"];
+test(globals, mozBoxOrient);
+test(valid, mozBoxOrient, "row");
+test(valid, mozBoxOrient, "ROW");
+test(invalid, mozBoxOrient, "row row");
+test(valid, mozBoxOrient, "row-reverse");
+test(valid, mozBoxOrient, "ROW-REVERSE");
+test(invalid, mozBoxOrient, "row-reverse row-reverse");
+test(valid, mozBoxOrient, "column");
+test(valid, mozBoxOrient, "COLUMN");
+test(invalid, mozBoxOrient, "column column");
+test(valid, mozBoxOrient, "column-reverse");
+test(valid, mozBoxOrient, "COLUMN-REVERSE");
+test(invalid, mozBoxOrient, "column-reverse column-reverse");
+test(valid, mozBoxOrient, "horizontal");
+test(valid, mozBoxOrient, "HORIZONTAL");
+test(invalid, mozBoxOrient, "horizontal horizontal");
+test(valid, mozBoxOrient, "vertical");
+test(valid, mozBoxOrient, "VERTICAL");
+test(invalid, mozBoxOrient, "vertical vertical");
+var mozBoxDirection = ["-webkit-box-direction", "-moz-box-direction"];
+test(globals, mozBoxDirection);
+test(valid, mozBoxDirection, "row");
+test(valid, mozBoxDirection, "ROW");
+test(invalid, mozBoxDirection, "row row");
+test(valid, mozBoxDirection, "row-reverse");
+test(valid, mozBoxDirection, "ROW-REVERSE");
+test(invalid, mozBoxDirection, "row-reverse row-reverse");
+test(valid, mozBoxDirection, "column");
+test(valid, mozBoxDirection, "COLUMN");
+test(invalid, mozBoxDirection, "column column");
+test(valid, mozBoxDirection, "column-reverse");
+test(valid, mozBoxDirection, "COLUMN-REVERSE");
+test(invalid, mozBoxDirection, "column-reverse column-reverse");
+test(valid, mozBoxDirection, "normal");
+test(valid, mozBoxDirection, "NORMAL");
+test(invalid, mozBoxDirection, "normal normal");
+test(valid, mozBoxDirection, "reverse");
+test(valid, mozBoxDirection, "REVERSE");
+test(invalid, mozBoxDirection, "reverse reverse");
+var flexDirection = ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"];
+test(globals, flexDirection);
+test(valid, flexDirection, "row");
+test(valid, flexDirection, "ROW");
+test(invalid, flexDirection, "row row");
+test(valid, flexDirection, "row-reverse");
+test(valid, flexDirection, "ROW-REVERSE");
+test(invalid, flexDirection, "row-reverse row-reverse");
+test(valid, flexDirection, "column");
+test(valid, flexDirection, "COLUMN");
+test(invalid, flexDirection, "column column");
+test(valid, flexDirection, "column-reverse");
+test(valid, flexDirection, "COLUMN-REVERSE");
+test(invalid, flexDirection, "column-reverse column-reverse");
+var flexWrap = ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"];
+test(globals, flexWrap);
+test(valid, flexWrap, "nowrap");
+test(valid, flexWrap, "NOWRAP");
+test(invalid, flexWrap, "nowrap nowrap");
+test(valid, flexWrap, "wrap");
+test(valid, flexWrap, "WRAP");
+test(invalid, flexWrap, "wrap wrap");
+test(valid, flexWrap, "wrap-reverse");
+test(valid, flexWrap, "WRAP-REVERSE");
+test(invalid, flexWrap, "wrap-reverse wrap-reverse");
+var float = "float";
+test(globals, float);
+test(valid, float, "left");
+test(valid, float, "LEFT");
+test(invalid, float, "left left");
+test(valid, float, "right");
+test(valid, float, "RIGHT");
+test(invalid, float, "right right");
+test(valid, float, "none");
+test(valid, float, "NONE");
+test(invalid, float, "none none");
+test(valid, float, "inline-start");
+test(valid, float, "INLINE-START");
+test(invalid, float, "inline-start inline-start");
+test(valid, float, "inline-end");
+test(valid, float, "INLINE-END");
+test(invalid, float, "inline-end inline-end");
+var fontKerning = ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"];
+test(globals, fontKerning);
+test(valid, fontKerning, "auto");
+test(valid, fontKerning, "AUTO");
+test(invalid, fontKerning, "auto auto");
+test(valid, fontKerning, "normal");
+test(valid, fontKerning, "NORMAL");
+test(invalid, fontKerning, "normal normal");
+test(valid, fontKerning, "none");
+test(valid, fontKerning, "NONE");
+test(invalid, fontKerning, "none none");
+var fontLanguageOverride = ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"];
+test(globals, fontLanguageOverride);
+test(valid, fontLanguageOverride, "normal");
+test(valid, fontLanguageOverride, "NORMAL");
+test(invalid, fontLanguageOverride, "normal normal");
+test(valid, fontLanguageOverride, "\"foo\"");
+test(valid, fontLanguageOverride, "'bar'");
+test(invalid, fontLanguageOverride, "baz");
+test(invalid, fontLanguageOverride, "`quux`");
+test(invalid, fontLanguageOverride, "\"foo\" \"foo\"");
+var fontSize = "font-size";
+test(globals, fontSize);
+test(valid, fontSize, "xx-small");
+test(valid, fontSize, "x-small");
+test(valid, fontSize, "small");
+test(valid, fontSize, "medium");
+test(valid, fontSize, "large");
+test(valid, fontSize, "x-large");
+test(valid, fontSize, "xx-large");
+test(valid, fontSize, "XX-SMALL");
+test(valid, fontSize, "X-SMALL");
+test(valid, fontSize, "SMALL");
+test(valid, fontSize, "MEDIUM");
+test(valid, fontSize, "LARGE");
+test(valid, fontSize, "X-LARGE");
+test(valid, fontSize, "XX-LARGE");
+test(invalid, fontSize, "reallysmall");
+test(invalid, fontSize, "superduperlarge");
+test(invalid, fontSize, "xx-small xx-small");
+test(valid, fontSize, "larger");
+test(valid, fontSize, "smaller");
+test(valid, fontSize, "LARGER");
+test(valid, fontSize, "SMALLER");
+test(invalid, fontSize, "larger-really-larger");
+test(invalid, fontSize, "smaller-still");
+test(invalid, fontSize, "larger larger");
+test(valid, fontSize, "0");
+test(valid, fontSize, "16px");
+test(valid, fontSize, "1pc");
+test(valid, fontSize, "2.34254645654324rem");
+test(valid, fontSize, "1%");
+test(valid, fontSize, "88%");
+test(valid, fontSize, "99.99%");
+test(valid, fontSize, "+100%");
+test(invalid, fontSize, "16.px");
+test(invalid, fontSize, "px16");
+test(invalid, fontSize, "one rem");
+test(invalid, fontSize, "\"1rem\"");
+test(invalid, fontSize, "12.%");
+test(invalid, fontSize, "42.2.3.4.7.8.1.2%");
+test(invalid, fontSize, "0 0");
+var fontSizeAdjust = "font-size-adjust";
+test(globals, fontSizeAdjust);
+test(valid, fontSizeAdjust, "none");
+test(valid, fontSizeAdjust, "NONE");
+test(invalid, fontSizeAdjust, "none none");
+test(valid, fontSizeAdjust, "12");
+test(valid, fontSizeAdjust, "4.01");
+test(valid, fontSizeAdjust, "-456.8");
+test(valid, fontSizeAdjust, "0.0");
+test(valid, fontSizeAdjust, "+0.0");
+test(valid, fontSizeAdjust, "-0.0");
+test(valid, fontSizeAdjust, ".60");
+test(valid, fontSizeAdjust, "10e3");
+test(valid, fontSizeAdjust, "-3.4e-2");
+test(invalid, fontSizeAdjust, "12.");
+test(invalid, fontSizeAdjust, "+-12.2");
+test(invalid, fontSizeAdjust, "12.1.1");
+test(invalid, fontSizeAdjust, "\"10px\"");
+test(invalid, fontSizeAdjust, "12 12");
+var fontStretch = "font-stretch";
+test(globals, fontStretch);
+test(valid, fontStretch, "normal");
+test(valid, fontStretch, "NORMAL");
+test(invalid, fontStretch, "normal normal");
+test(valid, fontStretch, "ultra-condensed");
+test(valid, fontStretch, "ULTRA-CONDENSED");
+test(invalid, fontStretch, "ultra-condensed ultra-condensed");
+test(valid, fontStretch, "extra-condensed");
+test(valid, fontStretch, "EXTRA-CONDENSED");
+test(invalid, fontStretch, "extra-condensed extra-condensed");
+test(valid, fontStretch, "condensed");
+test(valid, fontStretch, "CONDENSED");
+test(invalid, fontStretch, "condensed condensed");
+test(valid, fontStretch, "semi-condensed");
+test(valid, fontStretch, "SEMI-CONDENSED");
+test(invalid, fontStretch, "semi-condensed semi-condensed");
+test(valid, fontStretch, "semi-expanded");
+test(valid, fontStretch, "SEMI-EXPANDED");
+test(invalid, fontStretch, "semi-expanded semi-expanded");
+test(valid, fontStretch, "expanded");
+test(valid, fontStretch, "EXPANDED");
+test(invalid, fontStretch, "expanded expanded");
+test(valid, fontStretch, "extra-expanded");
+test(valid, fontStretch, "EXTRA-EXPANDED");
+test(invalid, fontStretch, "extra-expanded extra-expanded");
+test(valid, fontStretch, "ultra-expanded");
+test(valid, fontStretch, "ULTRA-EXPANDED");
+test(invalid, fontStretch, "ultra-expanded ultra-expanded");
+var fontStyle = "font-style";
+test(globals, fontStyle);
+test(valid, fontStyle, "normal");
+test(valid, fontStyle, "NORMAL");
+test(invalid, fontStyle, "normal normal");
+test(valid, fontStyle, "italic");
+test(valid, fontStyle, "ITALIC");
+test(invalid, fontStyle, "italic italic");
+test(valid, fontStyle, "oblique");
+test(valid, fontStyle, "OBLIQUE");
+test(invalid, fontStyle, "oblique oblique");
+var fontVariantCaps = "font-variant-caps";
+test(globals, fontVariantCaps);
+test(valid, fontVariantCaps, "normal");
+test(valid, fontVariantCaps, "NORMAL");
+test(invalid, fontVariantCaps, "normal normal");
+test(valid, fontVariantCaps, "small-caps");
+test(valid, fontVariantCaps, "SMALL-CAPS");
+test(invalid, fontVariantCaps, "small-caps small-caps");
+test(valid, fontVariantCaps, "all-small-caps");
+test(valid, fontVariantCaps, "ALL-SMALL-CAPS");
+test(invalid, fontVariantCaps, "all-small-caps all-small-caps");
+test(valid, fontVariantCaps, "petite-caps");
+test(valid, fontVariantCaps, "PETITE-CAPS");
+test(invalid, fontVariantCaps, "petite-caps petite-caps");
+test(valid, fontVariantCaps, "all-petite-caps");
+test(valid, fontVariantCaps, "ALL-PETITE-CAPS");
+test(invalid, fontVariantCaps, "all-petite-caps all-petite-caps");
+test(valid, fontVariantCaps, "unicase");
+test(valid, fontVariantCaps, "UNICASE");
+test(invalid, fontVariantCaps, "unicase unicase");
+test(valid, fontVariantCaps, "titling-caps");
+test(valid, fontVariantCaps, "TITLING-CAPS");
+test(invalid, fontVariantCaps, "titling-caps titling-caps");
+var fontVariantPosition = "font-variant-position";
+test(globals, fontVariantPosition);
+test(valid, fontVariantPosition, "normal");
+test(valid, fontVariantPosition, "NORMAL");
+test(invalid, fontVariantPosition, "normal normal");
+test(valid, fontVariantPosition, "sub");
+test(valid, fontVariantPosition, "SUB");
+test(invalid, fontVariantPosition, "sub sub");
+test(valid, fontVariantPosition, "super");
+test(valid, fontVariantPosition, "SUPER");
+test(invalid, fontVariantPosition, "super super");
+var fontWeight = "font-weight";
+test(globals, fontWeight);
+test(valid, fontWeight, "normal");
+test(valid, fontWeight, "NORMAL");
+test(invalid, fontWeight, "normal normal");
+test(valid, fontWeight, "bold");
+test(valid, fontWeight, "BOLD");
+test(invalid, fontWeight, "bold bold");
+test(valid, fontWeight, "bolder");
+test(valid, fontWeight, "BOLDER");
+test(invalid, fontWeight, "bolder bolder");
+test(valid, fontWeight, "lighter");
+test(valid, fontWeight, "LIGHTER");
+test(invalid, fontWeight, "lighter lighter");
+test(valid, fontWeight, "100");
+test(valid, fontWeight, "100");
+test(invalid, fontWeight, "100 100");
+test(valid, fontWeight, "200");
+test(valid, fontWeight, "200");
+test(invalid, fontWeight, "200 200");
+test(valid, fontWeight, "300");
+test(valid, fontWeight, "300");
+test(invalid, fontWeight, "300 300");
+test(valid, fontWeight, "400");
+test(valid, fontWeight, "400");
+test(invalid, fontWeight, "400 400");
+test(valid, fontWeight, "500");
+test(valid, fontWeight, "500");
+test(invalid, fontWeight, "500 500");
+test(valid, fontWeight, "600");
+test(valid, fontWeight, "600");
+test(invalid, fontWeight, "600 600");
+test(valid, fontWeight, "700");
+test(valid, fontWeight, "700");
+test(invalid, fontWeight, "700 700");
+test(valid, fontWeight, "800");
+test(valid, fontWeight, "800");
+test(invalid, fontWeight, "800 800");
+test(valid, fontWeight, "900");
+test(valid, fontWeight, "900");
+test(invalid, fontWeight, "900 900");
+var gridColumnGap = ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"];
+test(globals, gridColumnGap);
+test(valid, gridColumnGap, "0");
+test(valid, gridColumnGap, "16px");
+test(valid, gridColumnGap, "1pc");
+test(valid, gridColumnGap, "2.34254645654324rem");
+test(valid, gridColumnGap, "1%");
+test(valid, gridColumnGap, "88%");
+test(valid, gridColumnGap, "99.99%");
+test(valid, gridColumnGap, "+100%");
+test(invalid, gridColumnGap, "16.px");
+test(invalid, gridColumnGap, "px16");
+test(invalid, gridColumnGap, "one rem");
+test(invalid, gridColumnGap, "\"1rem\"");
+test(invalid, gridColumnGap, "12.%");
+test(invalid, gridColumnGap, "42.2.3.4.7.8.1.2%");
+test(invalid, gridColumnGap, "0 0");
+var gridTemplateAreas = "grid-template-areas";
+test(globals, gridTemplateAreas);
+test(valid, gridTemplateAreas, "none");
+test(valid, gridTemplateAreas, "NONE");
+test(invalid, gridTemplateAreas, "none none");
+test(valid, gridTemplateAreas, "\"foo\"");
+test(valid, gridTemplateAreas, "'bar'");
+test(invalid, gridTemplateAreas, "baz");
+test(invalid, gridTemplateAreas, "`quux`");
+test(valid, gridTemplateAreas, "\"foo\" \"foo\"");
+test(invalid, gridTemplateAreas, "\"foo\", \"foo\"");
+test(valid, gridTemplateAreas, "var(--foo) var(--bar)");
+test(invalid, gridTemplateAreas, "var(--foo), var(--bar)");
+var hyphens = ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"];
+test(globals, hyphens);
+test(valid, hyphens, "none");
+test(valid, hyphens, "NONE");
+test(invalid, hyphens, "none none");
+test(valid, hyphens, "manual");
+test(valid, hyphens, "MANUAL");
+test(invalid, hyphens, "manual manual");
+test(valid, hyphens, "auto");
+test(valid, hyphens, "AUTO");
+test(invalid, hyphens, "auto auto");
+var imageRendering = "image-rendering";
+test(globals, imageRendering);
+test(valid, imageRendering, "auto");
+test(valid, imageRendering, "AUTO");
+test(invalid, imageRendering, "auto auto");
+test(valid, imageRendering, "crisp-edges");
+test(valid, imageRendering, "CRISP-EDGES");
+test(invalid, imageRendering, "crisp-edges crisp-edges");
+test(valid, imageRendering, "pixelated");
+test(valid, imageRendering, "PIXELATED");
+test(invalid, imageRendering, "pixelated pixelated");
+test(valid, imageRendering, "-webkit-optimize-contrast");
+test(valid, imageRendering, "-WEBKIT-OPTIMIZE-CONTRAST");
+test(invalid, imageRendering, "-webkit-optimize-contrast -webkit-optimize-contrast");
+test(valid, imageRendering, "-moz-crisp-edges");
+test(valid, imageRendering, "-MOZ-CRISP-EDGES");
+test(invalid, imageRendering, "-moz-crisp-edges -moz-crisp-edges");
+test(valid, imageRendering, "-o-pixelated");
+test(valid, imageRendering, "-O-PIXELATED");
+test(invalid, imageRendering, "-o-pixelated -o-pixelated");
+var msInterpolationMode = "-ms-interpolation-mode";
+test(globals, msInterpolationMode);
+test(valid, msInterpolationMode, "auto");
+test(valid, msInterpolationMode, "AUTO");
+test(invalid, msInterpolationMode, "auto auto");
+test(valid, msInterpolationMode, "crisp-edges");
+test(valid, msInterpolationMode, "CRISP-EDGES");
+test(invalid, msInterpolationMode, "crisp-edges crisp-edges");
+test(valid, msInterpolationMode, "pixelated");
+test(valid, msInterpolationMode, "PIXELATED");
+test(invalid, msInterpolationMode, "pixelated pixelated");
+test(valid, msInterpolationMode, "nearest-neighbor");
+test(valid, msInterpolationMode, "NEAREST-NEIGHBOR");
+test(invalid, msInterpolationMode, "nearest-neighbor nearest-neighbor");
+var imeMode = "ime-mode";
+test(globals, imeMode);
+test(valid, imeMode, "auto");
+test(valid, imeMode, "AUTO");
+test(invalid, imeMode, "auto auto");
+test(valid, imeMode, "normal");
+test(valid, imeMode, "NORMAL");
+test(invalid, imeMode, "normal normal");
+test(valid, imeMode, "active");
+test(valid, imeMode, "ACTIVE");
+test(invalid, imeMode, "active active");
+test(valid, imeMode, "inactive");
+test(valid, imeMode, "INACTIVE");
+test(invalid, imeMode, "inactive inactive");
+test(valid, imeMode, "disabled");
+test(valid, imeMode, "DISABLED");
+test(invalid, imeMode, "disabled disabled");
+var initialLetterAlign = "initial-letter-align";
+test(globals, initialLetterAlign);
+test(valid, initialLetterAlign, "auto");
+test(valid, initialLetterAlign, "AUTO");
+test(invalid, initialLetterAlign, "auto auto");
+test(valid, initialLetterAlign, "alphabetic");
+test(valid, initialLetterAlign, "ALPHABETIC");
+test(invalid, initialLetterAlign, "alphabetic alphabetic");
+test(valid, initialLetterAlign, "hanging");
+test(valid, initialLetterAlign, "HANGING");
+test(invalid, initialLetterAlign, "hanging hanging");
+test(valid, initialLetterAlign, "ideographic");
+test(valid, initialLetterAlign, "IDEOGRAPHIC");
+test(invalid, initialLetterAlign, "ideographic ideographic");
+var isolation = "isolation";
+test(globals, isolation);
+test(valid, isolation, "auto");
+test(valid, isolation, "AUTO");
+test(invalid, isolation, "auto auto");
+test(valid, isolation, "isolate");
+test(valid, isolation, "ISOLATE");
+test(invalid, isolation, "isolate isolate");
+var mozBoxPack = ["-webkit-box-pack", "-moz-box-pack"];
+test(globals, mozBoxPack);
+test(valid, mozBoxPack, "flex-start");
+test(valid, mozBoxPack, "FLEX-START");
+test(invalid, mozBoxPack, "flex-start flex-start");
+test(valid, mozBoxPack, "flex-end");
+test(valid, mozBoxPack, "FLEX-END");
+test(invalid, mozBoxPack, "flex-end flex-end");
+test(valid, mozBoxPack, "center");
+test(valid, mozBoxPack, "CENTER");
+test(invalid, mozBoxPack, "center center");
+test(valid, mozBoxPack, "space-between");
+test(valid, mozBoxPack, "SPACE-BETWEEN");
+test(invalid, mozBoxPack, "space-between space-between");
+test(valid, mozBoxPack, "space-around");
+test(valid, mozBoxPack, "SPACE-AROUND");
+test(invalid, mozBoxPack, "space-around space-around");
+test(valid, mozBoxPack, "start");
+test(valid, mozBoxPack, "START");
+test(invalid, mozBoxPack, "start start");
+test(valid, mozBoxPack, "end");
+test(valid, mozBoxPack, "END");
+test(invalid, mozBoxPack, "end end");
+test(valid, mozBoxPack, "justify");
+test(valid, mozBoxPack, "JUSTIFY");
+test(invalid, mozBoxPack, "justify justify");
+var justifyContent = ["-webkit-justify-content", "justify-content"];
+test(globals, justifyContent);
+test(valid, justifyContent, "flex-start");
+test(valid, justifyContent, "FLEX-START");
+test(invalid, justifyContent, "flex-start flex-start");
+test(valid, justifyContent, "flex-end");
+test(valid, justifyContent, "FLEX-END");
+test(invalid, justifyContent, "flex-end flex-end");
+test(valid, justifyContent, "center");
+test(valid, justifyContent, "CENTER");
+test(invalid, justifyContent, "center center");
+test(valid, justifyContent, "space-between");
+test(valid, justifyContent, "SPACE-BETWEEN");
+test(invalid, justifyContent, "space-between space-between");
+test(valid, justifyContent, "space-around");
+test(valid, justifyContent, "SPACE-AROUND");
+test(invalid, justifyContent, "space-around space-around");
+var msFlexPack = "-ms-flex-pack";
+test(globals, msFlexPack);
+test(valid, msFlexPack, "flex-start");
+test(valid, msFlexPack, "FLEX-START");
+test(invalid, msFlexPack, "flex-start flex-start");
+test(valid, msFlexPack, "flex-end");
+test(valid, msFlexPack, "FLEX-END");
+test(invalid, msFlexPack, "flex-end flex-end");
+test(valid, msFlexPack, "center");
+test(valid, msFlexPack, "CENTER");
+test(invalid, msFlexPack, "center center");
+test(valid, msFlexPack, "space-between");
+test(valid, msFlexPack, "SPACE-BETWEEN");
+test(invalid, msFlexPack, "space-between space-between");
+test(valid, msFlexPack, "space-around");
+test(valid, msFlexPack, "SPACE-AROUND");
+test(invalid, msFlexPack, "space-around space-around");
+test(valid, msFlexPack, "start");
+test(valid, msFlexPack, "START");
+test(invalid, msFlexPack, "start start");
+test(valid, msFlexPack, "end");
+test(valid, msFlexPack, "END");
+test(invalid, msFlexPack, "end end");
+test(valid, msFlexPack, "justify");
+test(valid, msFlexPack, "JUSTIFY");
+test(invalid, msFlexPack, "justify justify");
+test(valid, msFlexPack, "distribute");
+test(valid, msFlexPack, "DISTRIBUTE");
+test(invalid, msFlexPack, "distribute distribute");
+var letterSpacing = "letter-spacing";
+test(globals, letterSpacing);
+test(valid, letterSpacing, "normal");
+test(valid, letterSpacing, "NORMAL");
+test(invalid, letterSpacing, "normal normal");
+test(valid, letterSpacing, "0");
+test(valid, letterSpacing, "16px");
+test(valid, letterSpacing, "1pc");
+test(valid, letterSpacing, "2.34254645654324rem");
+test(invalid, letterSpacing, "16.px");
+test(invalid, letterSpacing, "px16");
+test(invalid, letterSpacing, "one rem");
+test(invalid, letterSpacing, "\"1rem\"");
+test(invalid, letterSpacing, "0 0");
+var lineBreak = "line-break";
+test(globals, lineBreak);
+test(valid, lineBreak, "auto");
+test(valid, lineBreak, "AUTO");
+test(invalid, lineBreak, "auto auto");
+test(valid, lineBreak, "loose");
+test(valid, lineBreak, "LOOSE");
+test(invalid, lineBreak, "loose loose");
+test(valid, lineBreak, "normal");
+test(valid, lineBreak, "NORMAL");
+test(invalid, lineBreak, "normal normal");
+test(valid, lineBreak, "strict");
+test(valid, lineBreak, "STRICT");
+test(invalid, lineBreak, "strict strict");
+var lineHeight = "line-height";
+test(globals, lineHeight);
+test(valid, lineHeight, "normal");
+test(valid, lineHeight, "NORMAL");
+test(invalid, lineHeight, "normal normal");
+test(valid, lineHeight, "12");
+test(valid, lineHeight, "4.01");
+test(valid, lineHeight, "-456.8");
+test(valid, lineHeight, "0.0");
+test(valid, lineHeight, "+0.0");
+test(valid, lineHeight, "-0.0");
+test(valid, lineHeight, ".60");
+test(valid, lineHeight, "10e3");
+test(valid, lineHeight, "-3.4e-2");
+test(invalid, lineHeight, "12.");
+test(invalid, lineHeight, "+-12.2");
+test(invalid, lineHeight, "12.1.1");
+test(invalid, lineHeight, "\"10px\"");
+test(invalid, lineHeight, "12 12");
+test(valid, lineHeight, "0");
+test(valid, lineHeight, "16px");
+test(valid, lineHeight, "1pc");
+test(valid, lineHeight, "2.34254645654324rem");
+test(invalid, lineHeight, "16.px");
+test(invalid, lineHeight, "px16");
+test(invalid, lineHeight, "one rem");
+test(invalid, lineHeight, "\"1rem\"");
+test(invalid, lineHeight, "0 0");
+test(valid, lineHeight, "1%");
+test(valid, lineHeight, "88%");
+test(valid, lineHeight, "99.99%");
+test(valid, lineHeight, "+100%");
+test(invalid, lineHeight, "12.%");
+test(invalid, lineHeight, "42.2.3.4.7.8.1.2%");
+test(invalid, lineHeight, "1% 1%");
+var listStylePosition = "list-style-position";
+test(globals, listStylePosition);
+test(valid, listStylePosition, "inside");
+test(valid, listStylePosition, "INSIDE");
+test(invalid, listStylePosition, "inside inside");
+test(valid, listStylePosition, "outside");
+test(valid, listStylePosition, "OUTSIDE");
+test(invalid, listStylePosition, "outside outside");
+var maskComposite = "mask-composite";
+test(globals, maskComposite);
+test(valid, maskComposite, "add");
+test(valid, maskComposite, "subtract");
+test(valid, maskComposite, "intersect");
+test(valid, maskComposite, "exclude");
+test(valid, maskComposite, "ADD");
+test(valid, maskComposite, "SUBTRACT");
+test(valid, maskComposite, "INTERSECT");
+test(valid, maskComposite, "EXCLUDE");
+test(invalid, maskComposite, "add-subtract");
+test(valid, maskComposite, "add, add");
+test(invalid, maskComposite, "add, add,");
+test(valid, maskComposite, "var(--foo), var(--bar)");
+test(invalid, maskComposite, "var(--foo), var(--bar),");
+var maskMode = "mask-mode";
+test(globals, maskMode);
+test(valid, maskMode, "alpha");
+test(valid, maskMode, "luminance");
+test(valid, maskMode, "match-source");
+test(valid, maskMode, "ALPHA");
+test(valid, maskMode, "LUMINANCE");
+test(valid, maskMode, "MATCH-SOURCE");
+test(invalid, maskMode, "jim-carrey");
+test(valid, maskMode, "alpha, alpha");
+test(invalid, maskMode, "alpha, alpha,");
+test(valid, maskMode, "var(--foo), var(--bar)");
+test(invalid, maskMode, "var(--foo), var(--bar),");
+var maskType = "mask-type";
+test(globals, maskType);
+test(valid, maskType, "luminance");
+test(valid, maskType, "LUMINANCE");
+test(invalid, maskType, "luminance luminance");
+test(valid, maskType, "alpha");
+test(valid, maskType, "ALPHA");
+test(invalid, maskType, "alpha alpha");
+var maxBlockSize = ["max-block-size", "max-height", "max-inline-size", "max-width"];
+test(globals, maxBlockSize);
+test(valid, maxBlockSize, "0");
+test(valid, maxBlockSize, "16px");
+test(valid, maxBlockSize, "1pc");
+test(valid, maxBlockSize, "2.34254645654324rem");
+test(invalid, maxBlockSize, "16.px");
+test(invalid, maxBlockSize, "px16");
+test(invalid, maxBlockSize, "one rem");
+test(invalid, maxBlockSize, "\"1rem\"");
+test(invalid, maxBlockSize, "0 0");
+test(valid, maxBlockSize, "1%");
+test(valid, maxBlockSize, "88%");
+test(valid, maxBlockSize, "99.99%");
+test(valid, maxBlockSize, "+100%");
+test(invalid, maxBlockSize, "12.%");
+test(invalid, maxBlockSize, "42.2.3.4.7.8.1.2%");
+test(invalid, maxBlockSize, "1% 1%");
+test(valid, maxBlockSize, "none");
+test(valid, maxBlockSize, "NONE");
+test(invalid, maxBlockSize, "none none");
+test(valid, maxBlockSize, "max-content");
+test(valid, maxBlockSize, "MAX-CONTENT");
+test(invalid, maxBlockSize, "max-content max-content");
+test(valid, maxBlockSize, "min-content");
+test(valid, maxBlockSize, "MIN-CONTENT");
+test(invalid, maxBlockSize, "min-content min-content");
+test(valid, maxBlockSize, "fit-content");
+test(valid, maxBlockSize, "FIT-CONTENT");
+test(invalid, maxBlockSize, "fit-content fit-content");
+test(valid, maxBlockSize, "fill-available");
+test(valid, maxBlockSize, "FILL-AVAILABLE");
+test(invalid, maxBlockSize, "fill-available fill-available");
+test(valid, maxBlockSize, "-webkit-max-content");
+test(valid, maxBlockSize, "-WEBKIT-MAX-CONTENT");
+test(invalid, maxBlockSize, "-webkit-max-content -webkit-max-content");
+test(valid, maxBlockSize, "-moz-max-content");
+test(valid, maxBlockSize, "-MOZ-MAX-CONTENT");
+test(invalid, maxBlockSize, "-moz-max-content -moz-max-content");
+test(valid, maxBlockSize, "-webkit-min-content");
+test(valid, maxBlockSize, "-WEBKIT-MIN-CONTENT");
+test(invalid, maxBlockSize, "-webkit-min-content -webkit-min-content");
+test(valid, maxBlockSize, "-moz-min-content");
+test(valid, maxBlockSize, "-MOZ-MIN-CONTENT");
+test(invalid, maxBlockSize, "-moz-min-content -moz-min-content");
+test(valid, maxBlockSize, "-webkit-fit-content");
+test(valid, maxBlockSize, "-WEBKIT-FIT-CONTENT");
+test(invalid, maxBlockSize, "-webkit-fit-content -webkit-fit-content");
+test(valid, maxBlockSize, "-moz-fit-content");
+test(valid, maxBlockSize, "-MOZ-FIT-CONTENT");
+test(invalid, maxBlockSize, "-moz-fit-content -moz-fit-content");
+test(valid, maxBlockSize, "-webkit-fill-available");
+test(valid, maxBlockSize, "-WEBKIT-FILL-AVAILABLE");
+test(invalid, maxBlockSize, "-webkit-fill-available -webkit-fill-available");
+test(valid, maxBlockSize, "-moz-available");
+test(valid, maxBlockSize, "-MOZ-AVAILABLE");
+test(invalid, maxBlockSize, "-moz-available -moz-available");
+var minBlockSize = ["min-block-size", "min-height", "min-inline-size", "min-width"];
+test(globals, minBlockSize);
+test(valid, minBlockSize, "0");
+test(valid, minBlockSize, "16px");
+test(valid, minBlockSize, "1pc");
+test(valid, minBlockSize, "2.34254645654324rem");
+test(invalid, minBlockSize, "16.px");
+test(invalid, minBlockSize, "px16");
+test(invalid, minBlockSize, "one rem");
+test(invalid, minBlockSize, "\"1rem\"");
+test(invalid, minBlockSize, "0 0");
+test(valid, minBlockSize, "1%");
+test(valid, minBlockSize, "88%");
+test(valid, minBlockSize, "99.99%");
+test(valid, minBlockSize, "+100%");
+test(invalid, minBlockSize, "12.%");
+test(invalid, minBlockSize, "42.2.3.4.7.8.1.2%");
+test(invalid, minBlockSize, "1% 1%");
+test(valid, minBlockSize, "auto");
+test(valid, minBlockSize, "AUTO");
+test(invalid, minBlockSize, "auto auto");
+test(valid, minBlockSize, "max-content");
+test(valid, minBlockSize, "MAX-CONTENT");
+test(invalid, minBlockSize, "max-content max-content");
+test(valid, minBlockSize, "min-content");
+test(valid, minBlockSize, "MIN-CONTENT");
+test(invalid, minBlockSize, "min-content min-content");
+test(valid, minBlockSize, "fit-content");
+test(valid, minBlockSize, "FIT-CONTENT");
+test(invalid, minBlockSize, "fit-content fit-content");
+test(valid, minBlockSize, "fill-available");
+test(valid, minBlockSize, "FILL-AVAILABLE");
+test(invalid, minBlockSize, "fill-available fill-available");
+test(valid, minBlockSize, "-webkit-max-content");
+test(valid, minBlockSize, "-WEBKIT-MAX-CONTENT");
+test(invalid, minBlockSize, "-webkit-max-content -webkit-max-content");
+test(valid, minBlockSize, "-moz-max-content");
+test(valid, minBlockSize, "-MOZ-MAX-CONTENT");
+test(invalid, minBlockSize, "-moz-max-content -moz-max-content");
+test(valid, minBlockSize, "-webkit-min-content");
+test(valid, minBlockSize, "-WEBKIT-MIN-CONTENT");
+test(invalid, minBlockSize, "-webkit-min-content -webkit-min-content");
+test(valid, minBlockSize, "-moz-min-content");
+test(valid, minBlockSize, "-MOZ-MIN-CONTENT");
+test(invalid, minBlockSize, "-moz-min-content -moz-min-content");
+test(valid, minBlockSize, "-webkit-fit-content");
+test(valid, minBlockSize, "-WEBKIT-FIT-CONTENT");
+test(invalid, minBlockSize, "-webkit-fit-content -webkit-fit-content");
+test(valid, minBlockSize, "-moz-fit-content");
+test(valid, minBlockSize, "-MOZ-FIT-CONTENT");
+test(invalid, minBlockSize, "-moz-fit-content -moz-fit-content");
+test(valid, minBlockSize, "-webkit-fill-available");
+test(valid, minBlockSize, "-WEBKIT-FILL-AVAILABLE");
+test(invalid, minBlockSize, "-webkit-fill-available -webkit-fill-available");
+test(valid, minBlockSize, "-moz-available");
+test(valid, minBlockSize, "-MOZ-AVAILABLE");
+test(invalid, minBlockSize, "-moz-available -moz-available");
+var mixBlendMode = "mix-blend-mode";
+test(globals, mixBlendMode);
+test(valid, mixBlendMode, "normal");
+test(valid, mixBlendMode, "multiply");
+test(valid, mixBlendMode, "screen");
+test(valid, mixBlendMode, "overlay");
+test(valid, mixBlendMode, "darken");
+test(valid, mixBlendMode, "lighten");
+test(valid, mixBlendMode, "color-dodge");
+test(valid, mixBlendMode, "color-burn");
+test(valid, mixBlendMode, "hard-light");
+test(valid, mixBlendMode, "soft-light");
+test(valid, mixBlendMode, "difference");
+test(valid, mixBlendMode, "exclusion");
+test(valid, mixBlendMode, "hue");
+test(valid, mixBlendMode, "saturation");
+test(valid, mixBlendMode, "color");
+test(valid, mixBlendMode, "luminosity");
+test(valid, mixBlendMode, "NORMAL");
+test(valid, mixBlendMode, "MULTIPLY");
+test(valid, mixBlendMode, "SCREEN");
+test(valid, mixBlendMode, "OVERLAY");
+test(valid, mixBlendMode, "DARKEN");
+test(valid, mixBlendMode, "LIGHTEN");
+test(valid, mixBlendMode, "COLOR-DODGE");
+test(valid, mixBlendMode, "COLOR-BURN");
+test(valid, mixBlendMode, "HARD-LIGHT");
+test(valid, mixBlendMode, "SOFT-LIGHT");
+test(valid, mixBlendMode, "DIFFERENCE");
+test(valid, mixBlendMode, "EXCLUSION");
+test(valid, mixBlendMode, "HUE");
+test(valid, mixBlendMode, "SATURATION");
+test(valid, mixBlendMode, "COLOR");
+test(valid, mixBlendMode, "LUMINOSITY");
+test(invalid, mixBlendMode, "superblend");
+test(invalid, mixBlendMode, "blend-man");
+test(invalid, mixBlendMode, "normal normal");
+var objectFit = ["-o-object-fit", "object-fit"];
+test(globals, objectFit);
+test(valid, objectFit, "fill");
+test(valid, objectFit, "FILL");
+test(invalid, objectFit, "fill fill");
+test(valid, objectFit, "contain");
+test(valid, objectFit, "CONTAIN");
+test(invalid, objectFit, "contain contain");
+test(valid, objectFit, "cover");
+test(valid, objectFit, "COVER");
+test(invalid, objectFit, "cover cover");
+test(valid, objectFit, "none");
+test(valid, objectFit, "NONE");
+test(invalid, objectFit, "none none");
+test(valid, objectFit, "scale-down");
+test(valid, objectFit, "SCALE-DOWN");
+test(invalid, objectFit, "scale-down scale-down");
+var objectPosition = ["object-position", "perspective-origin", "scroll-snap-destination"];
+test(globals, objectPosition);
+test(valid, objectPosition, "left");
+test(valid, objectPosition, "center");
+test(valid, objectPosition, "right");
+test(valid, objectPosition, "top");
+test(valid, objectPosition, "bottom");
+test(valid, objectPosition, "10px");
+test(valid, objectPosition, "50%");
+test(valid, objectPosition, "left top");
+test(valid, objectPosition, "left center");
+test(valid, objectPosition, "left bottom");
+test(valid, objectPosition, "right 50%");
+test(valid, objectPosition, "10px top");
+test(valid, objectPosition, "50% 50%");
+test(valid, objectPosition, "bottom right");
+test(valid, objectPosition, "center center");
+test(valid, objectPosition, "50% center");
+test(valid, objectPosition, "left 25% bottom");
+test(valid, objectPosition, "top 50% center");
+test(valid, objectPosition, "left 25% bottom 25%");
+test(valid, objectPosition, "top 10px right 50px");
+test(valid, objectPosition, "var(--foo) var(--bar)");
+test(valid, objectPosition, "var(--foo) var(--bar) var(--baz)");
+test(valid, objectPosition, "var(--foo) var(--bar) var(--baz) var(--quux)");
+test(invalid, objectPosition, "left right");
+test(invalid, objectPosition, "right left");
+test(invalid, objectPosition, "top bottom");
+test(invalid, objectPosition, "bottom top");
+test(invalid, objectPosition, "left/top");
+test(invalid, objectPosition, "50% left");
+test(invalid, objectPosition, "left 50% 50%");
+test(invalid, objectPosition, "left 75% center 75%");
+test(invalid, objectPosition, "top 75% center 75%");
+test(invalid, objectPosition, "center center center center");
+test(invalid, objectPosition, "left/25%/bottom");
+test(invalid, objectPosition, "top/10px/right/50px");
+test(invalid, objectPosition, "left left");
+var outlineColor = "outline-color";
+test(globals, outlineColor);
+test(valid, outlineColor, "RGB(1, 2, 3)");
+test(valid, outlineColor, "rgb(10%, 20%, 30%)");
+test(valid, outlineColor, "rgb(400, 400, 400)");
+test(valid, outlineColor, "rgbA(1, 2, 3, .5)");
+test(valid, outlineColor, "rgba(10%, 20%, 30%, 0.5)");
+test(valid, outlineColor, "rgba(400, 400, 400, 1)");
+test(valid, outlineColor, "hsl(90, 50%, 50%)");
+test(valid, outlineColor, "HSL(90, 50%, 50%)");
+test(valid, outlineColor, "hsla(90, 50%, 50%, .5)");
+test(valid, outlineColor, "hsla(90, 50%, 50%, 0.5)");
+test(valid, outlineColor, "hslA(90, 50%, 50%, 0)");
+test(valid, outlineColor, "#000");
+test(valid, outlineColor, "#000F");
+test(valid, outlineColor, "#000000");
+test(valid, outlineColor, "#000000FF");
+test(valid, outlineColor, "RED");
+test(valid, outlineColor, "black");
+test(valid, outlineColor, "currentcolor");
+test(valid, outlineColor, "CURRENTCOLOR");
+test(invalid, outlineColor, "rgb(1, 2, 3, 4, 5)");
+test(invalid, outlineColor, "rgb(1:2:3)");
+test(invalid, outlineColor, "rgb(a, b, c)");
+test(invalid, outlineColor, "rgba(10%, 20%, 30%, transparent)");
+test(invalid, outlineColor, "rgba(400: 400)");
+test(invalid, outlineColor, "rgba(400, 400, 400, 50%)");
+test(invalid, outlineColor, "hsl(50%, 50%, 50%)");
+test(invalid, outlineColor, "hsl(90, 50, 50)");
+test(invalid, outlineColor, "hsla(90, 50%, 50%)");
+test(invalid, outlineColor, "hsla(90, 50%, 50%, 50%)");
+test(invalid, outlineColor, "hsla(90%, 50%, 50%, 0.5)");
+test(invalid, outlineColor, "#ee");
+test(invalid, outlineColor, "#eeeeeee");
+test(invalid, outlineColor, "#ggg");
+test(invalid, outlineColor, "blacklight");
+test(invalid, outlineColor, "RGB(1, 2, 3) RGB(1, 2, 3)");
+test(valid, outlineColor, "invert");
+test(valid, outlineColor, "INVERT");
+test(invalid, outlineColor, "invert invert");
+var outlineStyle = "outline-style";
+test(globals, outlineStyle);
+test(valid, outlineStyle, "auto");
+test(valid, outlineStyle, "AUTO");
+test(invalid, outlineStyle, "auto auto");
+test(valid, outlineStyle, "none");
+test(valid, outlineStyle, "hidden");
+test(valid, outlineStyle, "dotted");
+test(valid, outlineStyle, "dashed");
+test(valid, outlineStyle, "solid");
+test(valid, outlineStyle, "double");
+test(valid, outlineStyle, "groove");
+test(valid, outlineStyle, "ridge");
+test(valid, outlineStyle, "inset");
+test(valid, outlineStyle, "outset");
+test(valid, outlineStyle, "NONE");
+test(valid, outlineStyle, "HIDDEN");
+test(valid, outlineStyle, "DOTTED");
+test(valid, outlineStyle, "DASHED");
+test(valid, outlineStyle, "SOLID");
+test(valid, outlineStyle, "DOUBLE");
+test(valid, outlineStyle, "GROOVE");
+test(valid, outlineStyle, "RIDGE");
+test(valid, outlineStyle, "INSET");
+test(valid, outlineStyle, "OUTSET");
+test(invalid, outlineStyle, "groovy");
+test(invalid, outlineStyle, "none none");
+var overflow = ["overflow", "overflow-x", "overflow-y"];
+test(globals, overflow);
+test(valid, overflow, "visible");
+test(valid, overflow, "VISIBLE");
+test(invalid, overflow, "visible visible");
+test(valid, overflow, "hidden");
+test(valid, overflow, "HIDDEN");
+test(invalid, overflow, "hidden hidden");
+test(valid, overflow, "scroll");
+test(valid, overflow, "SCROLL");
+test(invalid, overflow, "scroll scroll");
+test(valid, overflow, "auto");
+test(valid, overflow, "AUTO");
+test(invalid, overflow, "auto auto");
+var overflowClipBox = "overflow-clip-box";
+test(globals, overflowClipBox);
+test(valid, overflowClipBox, "padding-box");
+test(valid, overflowClipBox, "PADDING-BOX");
+test(invalid, overflowClipBox, "padding-box padding-box");
+test(valid, overflowClipBox, "content-box");
+test(valid, overflowClipBox, "CONTENT-BOX");
+test(invalid, overflowClipBox, "content-box content-box");
+var overflowWrap = ["overflow-wrap", "word-wrap"];
+test(globals, overflowWrap);
+test(valid, overflowWrap, "normal");
+test(valid, overflowWrap, "NORMAL");
+test(invalid, overflowWrap, "normal normal");
+test(valid, overflowWrap, "break-word");
+test(valid, overflowWrap, "BREAK-WORD");
+test(invalid, overflowWrap, "break-word break-word");
+var paddingBlockEnd = ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"];
+test(globals, paddingBlockEnd);
+test(valid, paddingBlockEnd, "0");
+test(valid, paddingBlockEnd, "16px");
+test(valid, paddingBlockEnd, "1pc");
+test(valid, paddingBlockEnd, "2.34254645654324rem");
+test(invalid, paddingBlockEnd, "16.px");
+test(invalid, paddingBlockEnd, "px16");
+test(invalid, paddingBlockEnd, "one rem");
+test(invalid, paddingBlockEnd, "\"1rem\"");
+test(invalid, paddingBlockEnd, "0 0");
+test(valid, paddingBlockEnd, "1%");
+test(valid, paddingBlockEnd, "88%");
+test(valid, paddingBlockEnd, "99.99%");
+test(valid, paddingBlockEnd, "+100%");
+test(invalid, paddingBlockEnd, "12.%");
+test(invalid, paddingBlockEnd, "42.2.3.4.7.8.1.2%");
+test(invalid, paddingBlockEnd, "1% 1%");
+var pageBreakInside = "page-break-inside";
+test(globals, pageBreakInside);
+test(valid, pageBreakInside, "auto");
+test(valid, pageBreakInside, "AUTO");
+test(invalid, pageBreakInside, "auto auto");
+test(valid, pageBreakInside, "avoid");
+test(valid, pageBreakInside, "AVOID");
+test(invalid, pageBreakInside, "avoid avoid");
+var perspective = ["-webkit-perspective", "-moz-perspective", "perspective"];
+test(globals, perspective);
+test(valid, perspective, "none");
+test(valid, perspective, "NONE");
+test(invalid, perspective, "none none");
+test(valid, perspective, "0");
+test(valid, perspective, "16px");
+test(valid, perspective, "1pc");
+test(valid, perspective, "2.34254645654324rem");
+test(invalid, perspective, "16.px");
+test(invalid, perspective, "px16");
+test(invalid, perspective, "one rem");
+test(invalid, perspective, "\"1rem\"");
+test(invalid, perspective, "0 0");
+var pointerEvents = "pointer-events";
+test(globals, pointerEvents);
+test(valid, pointerEvents, "auto");
+test(valid, pointerEvents, "AUTO");
+test(invalid, pointerEvents, "auto auto");
+test(valid, pointerEvents, "none");
+test(valid, pointerEvents, "NONE");
+test(invalid, pointerEvents, "none none");
+test(valid, pointerEvents, "visiblePainted");
+test(valid, pointerEvents, "VISIBLEPAINTED");
+test(invalid, pointerEvents, "visiblePainted visiblePainted");
+test(valid, pointerEvents, "visibleFill");
+test(valid, pointerEvents, "VISIBLEFILL");
+test(invalid, pointerEvents, "visibleFill visibleFill");
+test(valid, pointerEvents, "visibleStroke");
+test(valid, pointerEvents, "VISIBLESTROKE");
+test(invalid, pointerEvents, "visibleStroke visibleStroke");
+test(valid, pointerEvents, "visible");
+test(valid, pointerEvents, "VISIBLE");
+test(invalid, pointerEvents, "visible visible");
+test(valid, pointerEvents, "painted");
+test(valid, pointerEvents, "PAINTED");
+test(invalid, pointerEvents, "painted painted");
+test(valid, pointerEvents, "fill");
+test(valid, pointerEvents, "FILL");
+test(invalid, pointerEvents, "fill fill");
+test(valid, pointerEvents, "stroke");
+test(valid, pointerEvents, "STROKE");
+test(invalid, pointerEvents, "stroke stroke");
+test(valid, pointerEvents, "all");
+test(valid, pointerEvents, "ALL");
+test(invalid, pointerEvents, "all all");
+test(valid, pointerEvents, "inherit");
+test(valid, pointerEvents, "INHERIT");
+test(invalid, pointerEvents, "inherit inherit");
+var position = "position";
+test(globals, position);
+test(valid, position, "static");
+test(valid, position, "STATIC");
+test(invalid, position, "static static");
+test(valid, position, "relative");
+test(valid, position, "RELATIVE");
+test(invalid, position, "relative relative");
+test(valid, position, "absolute");
+test(valid, position, "ABSOLUTE");
+test(invalid, position, "absolute absolute");
+test(valid, position, "sticky");
+test(valid, position, "STICKY");
+test(invalid, position, "sticky sticky");
+test(valid, position, "fixed");
+test(valid, position, "FIXED");
+test(invalid, position, "fixed fixed");
+test(valid, position, "-webkit-sticky");
+test(valid, position, "-WEBKIT-STICKY");
+test(invalid, position, "-webkit-sticky -webkit-sticky");
+var resize = "resize";
+test(globals, resize);
+test(valid, resize, "none");
+test(valid, resize, "NONE");
+test(invalid, resize, "none none");
+test(valid, resize, "both");
+test(valid, resize, "BOTH");
+test(invalid, resize, "both both");
+test(valid, resize, "horizontal");
+test(valid, resize, "HORIZONTAL");
+test(invalid, resize, "horizontal horizontal");
+test(valid, resize, "vertical");
+test(valid, resize, "VERTICAL");
+test(invalid, resize, "vertical vertical");
+var rubyAlign = "ruby-align";
+test(globals, rubyAlign);
+test(valid, rubyAlign, "start");
+test(valid, rubyAlign, "START");
+test(invalid, rubyAlign, "start start");
+test(valid, rubyAlign, "center");
+test(valid, rubyAlign, "CENTER");
+test(invalid, rubyAlign, "center center");
+test(valid, rubyAlign, "space-between");
+test(valid, rubyAlign, "SPACE-BETWEEN");
+test(invalid, rubyAlign, "space-between space-between");
+test(valid, rubyAlign, "space-around");
+test(valid, rubyAlign, "SPACE-AROUND");
+test(invalid, rubyAlign, "space-around space-around");
+var rubyMerge = "ruby-merge";
+test(globals, rubyMerge);
+test(valid, rubyMerge, "separate");
+test(valid, rubyMerge, "SEPARATE");
+test(invalid, rubyMerge, "separate separate");
+test(valid, rubyMerge, "collapse");
+test(valid, rubyMerge, "COLLAPSE");
+test(invalid, rubyMerge, "collapse collapse");
+test(valid, rubyMerge, "auto");
+test(valid, rubyMerge, "AUTO");
+test(invalid, rubyMerge, "auto auto");
+var rubyPosition = "ruby-position";
+test(globals, rubyPosition);
+test(valid, rubyPosition, "over");
+test(valid, rubyPosition, "OVER");
+test(invalid, rubyPosition, "over over");
+test(valid, rubyPosition, "under");
+test(valid, rubyPosition, "UNDER");
+test(invalid, rubyPosition, "under under");
+test(valid, rubyPosition, "inter-character");
+test(valid, rubyPosition, "INTER-CHARACTER");
+test(invalid, rubyPosition, "inter-character inter-character");
+var scrollBehavior = "scroll-behavior";
+test(globals, scrollBehavior);
+test(valid, scrollBehavior, "auto");
+test(valid, scrollBehavior, "AUTO");
+test(invalid, scrollBehavior, "auto auto");
+test(valid, scrollBehavior, "smooth");
+test(valid, scrollBehavior, "SMOOTH");
+test(invalid, scrollBehavior, "smooth smooth");
+var scrollSnapCoordinate = ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"];
+test(globals, scrollSnapCoordinate);
+test(valid, scrollSnapCoordinate, "none");
+test(valid, scrollSnapCoordinate, "NONE");
+test(invalid, scrollSnapCoordinate, "none none");
+test(valid, scrollSnapCoordinate, "left");
+test(valid, scrollSnapCoordinate, "center");
+test(valid, scrollSnapCoordinate, "right");
+test(valid, scrollSnapCoordinate, "top");
+test(valid, scrollSnapCoordinate, "bottom");
+test(valid, scrollSnapCoordinate, "10px");
+test(valid, scrollSnapCoordinate, "50%");
+test(valid, scrollSnapCoordinate, "left top");
+test(valid, scrollSnapCoordinate, "left center");
+test(valid, scrollSnapCoordinate, "left bottom");
+test(valid, scrollSnapCoordinate, "right 50%");
+test(valid, scrollSnapCoordinate, "10px top");
+test(valid, scrollSnapCoordinate, "50% 50%");
+test(valid, scrollSnapCoordinate, "bottom right");
+test(valid, scrollSnapCoordinate, "center center");
+test(valid, scrollSnapCoordinate, "50% center");
+test(valid, scrollSnapCoordinate, "left 25% bottom");
+test(valid, scrollSnapCoordinate, "top 50% center");
+test(valid, scrollSnapCoordinate, "left 25% bottom 25%");
+test(valid, scrollSnapCoordinate, "top 10px right 50px");
+test(valid, scrollSnapCoordinate, "var(--foo) var(--bar)");
+test(valid, scrollSnapCoordinate, "var(--foo) var(--bar) var(--baz)");
+test(valid, scrollSnapCoordinate, "var(--foo) var(--bar) var(--baz) var(--quux)");
+test(invalid, scrollSnapCoordinate, "left right");
+test(invalid, scrollSnapCoordinate, "right left");
+test(invalid, scrollSnapCoordinate, "top bottom");
+test(invalid, scrollSnapCoordinate, "bottom top");
+test(invalid, scrollSnapCoordinate, "left/top");
+test(invalid, scrollSnapCoordinate, "50% left");
+test(invalid, scrollSnapCoordinate, "left 50% 50%");
+test(invalid, scrollSnapCoordinate, "left 75% center 75%");
+test(invalid, scrollSnapCoordinate, "top 75% center 75%");
+test(invalid, scrollSnapCoordinate, "center center center center");
+test(invalid, scrollSnapCoordinate, "left/25%/bottom");
+test(invalid, scrollSnapCoordinate, "top/10px/right/50px");
+test(valid, scrollSnapCoordinate, "left, left");
+test(invalid, scrollSnapCoordinate, "left, left,");
+test(valid, scrollSnapCoordinate, "var(--foo), var(--bar)");
+test(invalid, scrollSnapCoordinate, "var(--foo), var(--bar),");
+var scrollSnapType = ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"];
+test(globals, scrollSnapType);
+test(valid, scrollSnapType, "none");
+test(valid, scrollSnapType, "NONE");
+test(invalid, scrollSnapType, "none none");
+test(valid, scrollSnapType, "mandatory");
+test(valid, scrollSnapType, "MANDATORY");
+test(invalid, scrollSnapType, "mandatory mandatory");
+test(valid, scrollSnapType, "proximity");
+test(valid, scrollSnapType, "PROXIMITY");
+test(invalid, scrollSnapType, "proximity proximity");
+var tabSize = "tab-size";
+test(globals, tabSize);
+test(valid, tabSize, "10");
+test(valid, tabSize, "+10");
+test(valid, tabSize, "-10");
+test(valid, tabSize, "0");
+test(valid, tabSize, "+0");
+test(valid, tabSize, "-0");
+test(invalid, tabSize, "12.0");
+test(invalid, tabSize, "+---12");
+test(invalid, tabSize, "3e4");
+test(invalid, tabSize, "\\4E94");
+test(invalid, tabSize, "_5");
+test(invalid, tabSize, "\"100\"");
+test(invalid, tabSize, "10 10");
+test(valid, tabSize, "0");
+test(valid, tabSize, "16px");
+test(valid, tabSize, "1pc");
+test(valid, tabSize, "2.34254645654324rem");
+test(invalid, tabSize, "16.px");
+test(invalid, tabSize, "px16");
+test(invalid, tabSize, "one rem");
+test(invalid, tabSize, "\"1rem\"");
+test(invalid, tabSize, "0 0");
+var tableLayout = "table-layout";
+test(globals, tableLayout);
+test(valid, tableLayout, "auto");
+test(valid, tableLayout, "AUTO");
+test(invalid, tableLayout, "auto auto");
+test(valid, tableLayout, "fixed");
+test(valid, tableLayout, "FIXED");
+test(invalid, tableLayout, "fixed fixed");
+var textAlign = "text-align";
+test(globals, textAlign);
+test(valid, textAlign, "start");
+test(valid, textAlign, "START");
+test(invalid, textAlign, "start start");
+test(valid, textAlign, "end");
+test(valid, textAlign, "END");
+test(invalid, textAlign, "end end");
+test(valid, textAlign, "left");
+test(valid, textAlign, "LEFT");
+test(invalid, textAlign, "left left");
+test(valid, textAlign, "right");
+test(valid, textAlign, "RIGHT");
+test(invalid, textAlign, "right right");
+test(valid, textAlign, "center");
+test(valid, textAlign, "CENTER");
+test(invalid, textAlign, "center center");
+test(valid, textAlign, "justify");
+test(valid, textAlign, "JUSTIFY");
+test(invalid, textAlign, "justify justify");
+test(valid, textAlign, "match-parent");
+test(valid, textAlign, "MATCH-PARENT");
+test(invalid, textAlign, "match-parent match-parent");
+var textAlignLast = ["-moz-text-align-last", "text-align-last"];
+test(globals, textAlignLast);
+test(valid, textAlignLast, "auto");
+test(valid, textAlignLast, "AUTO");
+test(invalid, textAlignLast, "auto auto");
+test(valid, textAlignLast, "start");
+test(valid, textAlignLast, "START");
+test(invalid, textAlignLast, "start start");
+test(valid, textAlignLast, "end");
+test(valid, textAlignLast, "END");
+test(invalid, textAlignLast, "end end");
+test(valid, textAlignLast, "left");
+test(valid, textAlignLast, "LEFT");
+test(invalid, textAlignLast, "left left");
+test(valid, textAlignLast, "right");
+test(valid, textAlignLast, "RIGHT");
+test(invalid, textAlignLast, "right right");
+test(valid, textAlignLast, "center");
+test(valid, textAlignLast, "CENTER");
+test(invalid, textAlignLast, "center center");
+test(valid, textAlignLast, "justify");
+test(valid, textAlignLast, "JUSTIFY");
+test(invalid, textAlignLast, "justify justify");
+var textDecorationStyle = ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"];
+test(globals, textDecorationStyle);
+test(valid, textDecorationStyle, "solid");
+test(valid, textDecorationStyle, "SOLID");
+test(invalid, textDecorationStyle, "solid solid");
+test(valid, textDecorationStyle, "double");
+test(valid, textDecorationStyle, "DOUBLE");
+test(invalid, textDecorationStyle, "double double");
+test(valid, textDecorationStyle, "dotted");
+test(valid, textDecorationStyle, "DOTTED");
+test(invalid, textDecorationStyle, "dotted dotted");
+test(valid, textDecorationStyle, "dashed");
+test(valid, textDecorationStyle, "DASHED");
+test(invalid, textDecorationStyle, "dashed dashed");
+test(valid, textDecorationStyle, "wavy");
+test(valid, textDecorationStyle, "WAVY");
+test(invalid, textDecorationStyle, "wavy wavy");
+var textOrientation = "text-orientation";
+test(globals, textOrientation);
+test(valid, textOrientation, "mixed");
+test(valid, textOrientation, "MIXED");
+test(invalid, textOrientation, "mixed mixed");
+test(valid, textOrientation, "upright");
+test(valid, textOrientation, "UPRIGHT");
+test(invalid, textOrientation, "upright upright");
+test(valid, textOrientation, "sideways");
+test(valid, textOrientation, "SIDEWAYS");
+test(invalid, textOrientation, "sideways sideways");
+var textRendering = "text-rendering";
+test(globals, textRendering);
+test(valid, textRendering, "auto");
+test(valid, textRendering, "AUTO");
+test(invalid, textRendering, "auto auto");
+test(valid, textRendering, "optimizeSpeed");
+test(valid, textRendering, "OPTIMIZESPEED");
+test(invalid, textRendering, "optimizeSpeed optimizeSpeed");
+test(valid, textRendering, "optimizeLegibility");
+test(valid, textRendering, "OPTIMIZELEGIBILITY");
+test(invalid, textRendering, "optimizeLegibility optimizeLegibility");
+test(valid, textRendering, "geometricPrecision");
+test(valid, textRendering, "GEOMETRICPRECISION");
+test(invalid, textRendering, "geometricPrecision geometricPrecision");
+var textSizeAdjust = ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"];
+test(globals, textSizeAdjust);
+test(valid, textSizeAdjust, "none");
+test(valid, textSizeAdjust, "NONE");
+test(invalid, textSizeAdjust, "none none");
+test(valid, textSizeAdjust, "auto");
+test(valid, textSizeAdjust, "AUTO");
+test(invalid, textSizeAdjust, "auto auto");
+test(valid, textSizeAdjust, "1%");
+test(valid, textSizeAdjust, "88%");
+test(valid, textSizeAdjust, "99.99%");
+test(valid, textSizeAdjust, "+100%");
+test(invalid, textSizeAdjust, "12.%");
+test(invalid, textSizeAdjust, "42.2.3.4.7.8.1.2%");
+test(invalid, textSizeAdjust, "1% 1%");
+var textTransform = "text-transform";
+test(globals, textTransform);
+test(valid, textTransform, "none");
+test(valid, textTransform, "NONE");
+test(invalid, textTransform, "none none");
+test(valid, textTransform, "capitalize");
+test(valid, textTransform, "CAPITALIZE");
+test(invalid, textTransform, "capitalize capitalize");
+test(valid, textTransform, "uppercase");
+test(valid, textTransform, "UPPERCASE");
+test(invalid, textTransform, "uppercase uppercase");
+test(valid, textTransform, "lowercase");
+test(valid, textTransform, "LOWERCASE");
+test(invalid, textTransform, "lowercase lowercase");
+test(valid, textTransform, "full-width");
+test(valid, textTransform, "FULL-WIDTH");
+test(invalid, textTransform, "full-width full-width");
+var transformBox = "transform-box";
+test(globals, transformBox);
+test(valid, transformBox, "border-box");
+test(valid, transformBox, "BORDER-BOX");
+test(invalid, transformBox, "border-box border-box");
+test(valid, transformBox, "fill-box");
+test(valid, transformBox, "FILL-BOX");
+test(invalid, transformBox, "fill-box fill-box");
+test(valid, transformBox, "view-box");
+test(valid, transformBox, "VIEW-BOX");
+test(invalid, transformBox, "view-box view-box");
+var transformStyle = ["-webkit-transform-style", "-moz-transform-style", "transform-style"];
+test(globals, transformStyle);
+test(valid, transformStyle, "flat");
+test(valid, transformStyle, "FLAT");
+test(invalid, transformStyle, "flat flat");
+test(valid, transformStyle, "preserve-3d");
+test(valid, transformStyle, "PRESERVE-3D");
+test(invalid, transformStyle, "preserve-3d preserve-3d");
+var unicodeBidi = "unicode-bidi";
+test(globals, unicodeBidi);
+test(valid, unicodeBidi, "normal");
+test(valid, unicodeBidi, "NORMAL");
+test(invalid, unicodeBidi, "normal normal");
+test(valid, unicodeBidi, "embed");
+test(valid, unicodeBidi, "EMBED");
+test(invalid, unicodeBidi, "embed embed");
+test(valid, unicodeBidi, "isolate");
+test(valid, unicodeBidi, "ISOLATE");
+test(invalid, unicodeBidi, "isolate isolate");
+test(valid, unicodeBidi, "bidi-override");
+test(valid, unicodeBidi, "BIDI-OVERRIDE");
+test(invalid, unicodeBidi, "bidi-override bidi-override");
+test(valid, unicodeBidi, "isolate-override");
+test(valid, unicodeBidi, "ISOLATE-OVERRIDE");
+test(invalid, unicodeBidi, "isolate-override isolate-override");
+test(valid, unicodeBidi, "plaintext");
+test(valid, unicodeBidi, "PLAINTEXT");
+test(invalid, unicodeBidi, "plaintext plaintext");
+var userSelect = ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"];
+test(globals, userSelect);
+test(valid, userSelect, "auto");
+test(valid, userSelect, "AUTO");
+test(invalid, userSelect, "auto auto");
+test(valid, userSelect, "text");
+test(valid, userSelect, "TEXT");
+test(invalid, userSelect, "text text");
+test(valid, userSelect, "none");
+test(valid, userSelect, "NONE");
+test(invalid, userSelect, "none none");
+test(valid, userSelect, "contain");
+test(valid, userSelect, "CONTAIN");
+test(invalid, userSelect, "contain contain");
+test(valid, userSelect, "all");
+test(valid, userSelect, "ALL");
+test(invalid, userSelect, "all all");
+var verticalAlign = "vertical-align";
+test(globals, verticalAlign);
+test(valid, verticalAlign, "baseline");
+test(valid, verticalAlign, "BASELINE");
+test(invalid, verticalAlign, "baseline baseline");
+test(valid, verticalAlign, "sub");
+test(valid, verticalAlign, "SUB");
+test(invalid, verticalAlign, "sub sub");
+test(valid, verticalAlign, "super");
+test(valid, verticalAlign, "SUPER");
+test(invalid, verticalAlign, "super super");
+test(valid, verticalAlign, "text-top");
+test(valid, verticalAlign, "TEXT-TOP");
+test(invalid, verticalAlign, "text-top text-top");
+test(valid, verticalAlign, "text-bottom");
+test(valid, verticalAlign, "TEXT-BOTTOM");
+test(invalid, verticalAlign, "text-bottom text-bottom");
+test(valid, verticalAlign, "middle");
+test(valid, verticalAlign, "MIDDLE");
+test(invalid, verticalAlign, "middle middle");
+test(valid, verticalAlign, "top");
+test(valid, verticalAlign, "TOP");
+test(invalid, verticalAlign, "top top");
+test(valid, verticalAlign, "bottom");
+test(valid, verticalAlign, "BOTTOM");
+test(invalid, verticalAlign, "bottom bottom");
+test(valid, verticalAlign, "1%");
+test(valid, verticalAlign, "88%");
+test(valid, verticalAlign, "99.99%");
+test(valid, verticalAlign, "+100%");
+test(invalid, verticalAlign, "12.%");
+test(invalid, verticalAlign, "42.2.3.4.7.8.1.2%");
+test(invalid, verticalAlign, "1% 1%");
+test(valid, verticalAlign, "0");
+test(valid, verticalAlign, "16px");
+test(valid, verticalAlign, "1pc");
+test(valid, verticalAlign, "2.34254645654324rem");
+test(invalid, verticalAlign, "16.px");
+test(invalid, verticalAlign, "px16");
+test(invalid, verticalAlign, "one rem");
+test(invalid, verticalAlign, "\"1rem\"");
+test(invalid, verticalAlign, "0 0");
+var visibility = "visibility";
+test(globals, visibility);
+test(valid, visibility, "visible");
+test(valid, visibility, "VISIBLE");
+test(invalid, visibility, "visible visible");
+test(valid, visibility, "hidden");
+test(valid, visibility, "HIDDEN");
+test(invalid, visibility, "hidden hidden");
+test(valid, visibility, "collapse");
+test(valid, visibility, "COLLAPSE");
+test(invalid, visibility, "collapse collapse");
+var whiteSpace = "white-space";
+test(globals, whiteSpace);
+test(valid, whiteSpace, "normal");
+test(valid, whiteSpace, "NORMAL");
+test(invalid, whiteSpace, "normal normal");
+test(valid, whiteSpace, "pre");
+test(valid, whiteSpace, "PRE");
+test(invalid, whiteSpace, "pre pre");
+test(valid, whiteSpace, "nowrap");
+test(valid, whiteSpace, "NOWRAP");
+test(invalid, whiteSpace, "nowrap nowrap");
+test(valid, whiteSpace, "pre-wrap");
+test(valid, whiteSpace, "PRE-WRAP");
+test(invalid, whiteSpace, "pre-wrap pre-wrap");
+test(valid, whiteSpace, "pre-line");
+test(valid, whiteSpace, "PRE-LINE");
+test(invalid, whiteSpace, "pre-line pre-line");
+var willChange = "will-change";
+test(globals, willChange);
+test(valid, willChange, "auto");
+test(valid, willChange, "AUTO");
+test(invalid, willChange, "auto auto");
+test(valid, willChange, "Bond-007");
+test(valid, willChange, "alpha");
+test(valid, willChange, "_-_");
+test(valid, willChange, "\\1F638");
+test(valid, willChange, "-B");
+test(valid, willChange, "NONE");
+test(invalid, willChange, "007-Bond");
+test(invalid, willChange, "0B");
+test(invalid, willChange, "--B");
+test(invalid, willChange, "-0");
+test(invalid, willChange, "\"foobar\"");
+test(valid, willChange, "Bond-007, Bond-007");
+test(invalid, willChange, "Bond-007, Bond-007,");
+test(valid, willChange, "var(--foo), var(--bar)");
+test(invalid, willChange, "var(--foo), var(--bar),");
+var wordBreak = "word-break";
+test(globals, wordBreak);
+test(valid, wordBreak, "normal");
+test(valid, wordBreak, "NORMAL");
+test(invalid, wordBreak, "normal normal");
+test(valid, wordBreak, "break-all");
+test(valid, wordBreak, "BREAK-ALL");
+test(invalid, wordBreak, "break-all break-all");
+test(valid, wordBreak, "keep-all");
+test(valid, wordBreak, "KEEP-ALL");
+test(invalid, wordBreak, "keep-all keep-all");
+var wordSpacing = "word-spacing";
+test(globals, wordSpacing);
+test(valid, wordSpacing, "normal");
+test(valid, wordSpacing, "NORMAL");
+test(invalid, wordSpacing, "normal normal");
+test(valid, wordSpacing, "0");
+test(valid, wordSpacing, "16px");
+test(valid, wordSpacing, "1pc");
+test(valid, wordSpacing, "2.34254645654324rem");
+test(valid, wordSpacing, "1%");
+test(valid, wordSpacing, "88%");
+test(valid, wordSpacing, "99.99%");
+test(valid, wordSpacing, "+100%");
+test(invalid, wordSpacing, "16.px");
+test(invalid, wordSpacing, "px16");
+test(invalid, wordSpacing, "one rem");
+test(invalid, wordSpacing, "\"1rem\"");
+test(invalid, wordSpacing, "12.%");
+test(invalid, wordSpacing, "42.2.3.4.7.8.1.2%");
+test(invalid, wordSpacing, "0 0");
+var writingMode = ["-webkit-writing-mode", "writing-mode"];
+test(globals, writingMode);
+test(valid, writingMode, "horizontal-tb");
+test(valid, writingMode, "HORIZONTAL-TB");
+test(invalid, writingMode, "horizontal-tb horizontal-tb");
+test(valid, writingMode, "vertical-rl");
+test(valid, writingMode, "VERTICAL-RL");
+test(invalid, writingMode, "vertical-rl vertical-rl");
+test(valid, writingMode, "vertical-lr");
+test(valid, writingMode, "VERTICAL-LR");
+test(invalid, writingMode, "vertical-lr vertical-lr");
+test(valid, writingMode, "sideways-rl");
+test(valid, writingMode, "SIDEWAYS-RL");
+test(invalid, writingMode, "sideways-rl sideways-rl");
+test(valid, writingMode, "sideways-lr");
+test(valid, writingMode, "SIDEWAYS-LR");
+test(invalid, writingMode, "sideways-lr sideways-lr");
+var msWritingMode = "-ms-writing-mode";
+test(globals, msWritingMode);
+test(valid, msWritingMode, "horizontal-tb");
+test(valid, msWritingMode, "HORIZONTAL-TB");
+test(invalid, msWritingMode, "horizontal-tb horizontal-tb");
+test(valid, msWritingMode, "vertical-rl");
+test(valid, msWritingMode, "VERTICAL-RL");
+test(invalid, msWritingMode, "vertical-rl vertical-rl");
+test(valid, msWritingMode, "vertical-lr");
+test(valid, msWritingMode, "VERTICAL-LR");
+test(invalid, msWritingMode, "vertical-lr vertical-lr");
+test(valid, msWritingMode, "sideways-rl");
+test(valid, msWritingMode, "SIDEWAYS-RL");
+test(invalid, msWritingMode, "sideways-rl sideways-rl");
+test(valid, msWritingMode, "sideways-lr");
+test(valid, msWritingMode, "SIDEWAYS-LR");
+test(invalid, msWritingMode, "sideways-lr sideways-lr");
+test(valid, msWritingMode, "lr-tb");
+test(valid, msWritingMode, "LR-TB");
+test(invalid, msWritingMode, "lr-tb lr-tb");
+test(valid, msWritingMode, "tb-rl");
+test(valid, msWritingMode, "TB-RL");
+test(invalid, msWritingMode, "tb-rl tb-rl");
+test(valid, msWritingMode, "tb-lr");
+test(valid, msWritingMode, "TB-LR");
+test(invalid, msWritingMode, "tb-lr tb-lr");
+var zIndex = "z-index";
+test(globals, zIndex);
+test(valid, zIndex, "auto");
+test(valid, zIndex, "AUTO");
+test(invalid, zIndex, "auto auto");
+test(valid, zIndex, "10");
+test(valid, zIndex, "+10");
+test(valid, zIndex, "-10");
+test(valid, zIndex, "0");
+test(valid, zIndex, "+0");
+test(valid, zIndex, "-0");
+test(invalid, zIndex, "12.0");
+test(invalid, zIndex, "+---12");
+test(invalid, zIndex, "3e4");
+test(invalid, zIndex, "\\4E94");
+test(invalid, zIndex, "_5");
+test(invalid, zIndex, "\"100\"");
+test(invalid, zIndex, "10 10");
+test("should accept an ast", valid, "color", valueParser("blue"));

@@ -15,6 +15,7 @@ export default function writeBundle ({entry, dest, external, files}) {
             vinyl({files}),
             babel({
                 babelrc: false,
+                compact: false,
                 presets: [
                     'es2015-rollup',
                 ],
