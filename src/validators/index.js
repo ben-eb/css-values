@@ -36,3 +36,4 @@ export * as isBlendMode from './isBlendMode';
 export * as isSingleAnimationIterationCount from './isSingleAnimationIterationCount';
 export * as isUrl from './isUrl';
 export * as isUri from './isUri';
+export * as isFrequency from './isFrequency';
