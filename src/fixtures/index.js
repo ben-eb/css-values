@@ -36,3 +36,4 @@ export blendMode from './blendMode';
 export singleAnimationIterationCount from './singleAnimationIterationCount';
 export url from './url';
 export uri from './uri';
+export frequency from './frequency';
