@@ -86,7 +86,7 @@ function createTests ({properties, candidates, identifier}) {
                     );
                 }
             } else {
-                list.push(createTest(identifier, `${values.valid[0]} ${values.valid[0]}`), false);
+                list.push(createTest(identifier, `${values.valid[0]} ${values.valid[0]}`, false));
             }
         }
         return list;
