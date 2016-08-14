@@ -12,7 +12,7 @@ function importMethod (identifier) {
     );
 }
 
-function createTest (property, value, valid = true, message = false) {
+function createGenericTest (property, value, valid = true, message = false) {
     let args = [
         t.identifier(valid ? 'valid' : 'invalid'),
         property,
@@ -26,6 +26,15 @@ function createTest (property, value, valid = true, message = false) {
             t.identifier('test'),
             args
         )
+    );
+}
+
+function createTest (property, value, valid = true, message = false) {
+    return createGenericTest(
+        t.identifier(property),
+        t.stringLiteral(value),
+        valid,
+        message
     );
 }
 
@@ -43,9 +52,9 @@ function createTests ({properties, candidates, identifier}) {
         if (type === 'keyword') {
             return [
                 ...list,
-                createTest(t.identifier(identifier), t.stringLiteral(value)),
-                createTest(t.identifier(identifier), t.stringLiteral(value.toUpperCase())),
-                createTest(t.identifier(identifier), t.stringLiteral(`${value} ${value}`), false),
+                createTest(identifier, value),
+                createTest(identifier, value.toUpperCase()),
+                createTest(identifier, `${value} ${value}`, false),
             ];
         }
         if (type === 'data') {
@@ -55,29 +64,29 @@ function createTests ({properties, candidates, identifier}) {
             }
             const values = fixtures[camel];
             list.push.apply(list, values.valid.map(fixture => {
-                return createTest(t.identifier(identifier), t.stringLiteral(fixture));
+                return createTest(identifier, fixture);
             }));
             list.push.apply(list, values.invalid.map(fixture => {
-                return createTest(t.identifier(identifier), t.stringLiteral(fixture), false);
+                return createTest(identifier, fixture, false);
             }));
             if (candidate.min === 1) {
                 if (candidate.max === false && candidate.separator === ',') {
                     list.push(
-                        createTest(t.identifier(identifier), t.stringLiteral(`${values.valid[0]}, ${values.valid[0]}`)),
-                        createTest(t.identifier(identifier), t.stringLiteral(`${values.valid[0]}, ${values.valid[0]},`), false),
-                        createTest(t.identifier(identifier), t.stringLiteral(`var(--foo), var(--bar)`)),
-                        createTest(t.identifier(identifier), t.stringLiteral(`var(--foo), var(--bar),`), false),
+                        createTest(identifier, `${values.valid[0]}, ${values.valid[0]}`),
+                        createTest(identifier, `${values.valid[0]}, ${values.valid[0]},`, false),
+                        createTest(identifier, `var(--foo), var(--bar)`),
+                        createTest(identifier, `var(--foo), var(--bar),`, false),
                     );
                 } else if (candidate.separator === ' ') {
                     list.push(
-                        createTest(t.identifier(identifier), t.stringLiteral(`${values.valid[0]} ${values.valid[0]}`)),
-                        createTest(t.identifier(identifier), t.stringLiteral(`${values.valid[0]}, ${values.valid[0]}`), false),
-                        createTest(t.identifier(identifier), t.stringLiteral(`var(--foo) var(--bar)`)),
-                        createTest(t.identifier(identifier), t.stringLiteral(`var(--foo), var(--bar)`), false),
+                        createTest(identifier, `${values.valid[0]} ${values.valid[0]}`),
+                        createTest(identifier, `${values.valid[0]}, ${values.valid[0]}`, false),
+                        createTest(identifier, `var(--foo) var(--bar)`),
+                        createTest(identifier, `var(--foo), var(--bar)`, false),
                     );
                 }
             } else {
-                list.push(createTest(t.identifier(identifier), t.stringLiteral(`${values.valid[0]} ${values.valid[0]}`), false));
+                list.push(createTest(identifier, `${values.valid[0]} ${values.valid[0]}`), false);
             }
         }
         return list;
@@ -114,7 +123,7 @@ export default config => {
                 ...createTests(descriptor),
             ];
         }, []),
-        createTest(
+        createGenericTest(
             t.stringLiteral('color'),
             t.callExpression(
                 t.identifier('valueParser'), [
