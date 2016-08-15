@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "acquire": "node ./dist/acquire.js > ./data/data.json",
+    "postacquire": "lerna run postacquire",
     "contributorAdd": "all-contributors add",
     "contributorGenerate": "all-contributors generate",
     "generate": "node ./dist/run.js",
