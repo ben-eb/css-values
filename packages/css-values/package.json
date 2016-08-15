@@ -18,7 +18,7 @@
     "email": "beneb.info@gmail.com",
     "url": "http://beneb.info"
   },
-  "repository": "ben-eb/css-values",
+  "repository": "https://github.com/ben-eb/css-values/tree/master/packages/css-values",
   "files": [
     "index.js"
   ]
