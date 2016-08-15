@@ -67,7 +67,8 @@
     "nyc": "^7.1.0-candidate2",
     "postcss-value-parser": "^3.3.0",
     "remark-cli": "^1.0.0",
-    "remark-heading-gap": "^2.0.1"
+    "remark-heading-gap": "^2.0.1",
+    "stylelint": "^7.1.0"
   },
   "nyc": {
     "include": [
@@ -75,7 +76,7 @@
       "packages/css-values/index.js"
     ],
     "exclude": [
-      "packages/css-values/test.js",
+      "packages/**/test.js",
       "**/__tests__"
     ],
     "sourceMap": false,
@@ -83,7 +84,7 @@
   },
   "ava": {
     "files": [
-      "packages/css-values/test.js",
+      "packages/**/test.js",
       "src/__tests__/**/*.js"
     ],
     "babel": "inherit",
