@@ -2,15 +2,9 @@ import camelCase from 'camelcase';
 import * as t from 'babel-types';
 import * as fixtures from '../fixtures/index';
 import arrayOfStrings from '../util/arrayOfStrings';
+import importMethod from '../util/importMethod';
 import generateProgram from './program';
 import requireModules from './requireModules';
-
-function importMethod (identifier) {
-    return t.importSpecifier(
-        identifier,
-        identifier
-    );
-}
 
 function testCall (...args) {
     return t.expressionStatement(
