@@ -6,7 +6,20 @@ import importMethod from '../util/importMethod';
 import generateProgram from './program';
 import requireModules from './requireModules';
 
-function testCall (...args) {
+/**
+ * Generate an AVA test.
+ *
+ * @param  {Babel} ...args Pass any number of Babel nodes as arguments to the test function.
+ * @return {Babel}         {@link https://github.com/babel/babel/tree/master/packages/babel-types#texpressionstatementexpression|t.expressionStatement}
+ * @example
+ * import * as t from 'babel-types';
+ *
+ * const test = avaTest(t.stringLiteral('description'), t.identifier('valid'));
+ *
+ * // => test('description', valid);
+ */
+
+function avaTest (...args) {
     return t.expressionStatement(
         t.callExpression(
             t.identifier('test'),
@@ -24,11 +37,11 @@ function createGenericTest (property, value, valid = true, message = false) {
     if (message) {
         args.unshift(message);
     }
-    return testCall(...args);
+    return avaTest(...args);
 }
 
 function createCaseInsensitiveTest (property, value) {
-    return testCall(
+    return avaTest(
         t.identifier('validCI'),
         t.identifier(property),
         t.stringLiteral(value),
@@ -97,7 +110,7 @@ function createTests ({properties, candidates, identifier}) {
         return list;
     }, [
         id,
-        testCall(
+        avaTest(
             t.identifier('globals'),
             t.identifier(identifier),
         ),
