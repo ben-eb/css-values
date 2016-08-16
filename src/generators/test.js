@@ -12,6 +12,15 @@ function importMethod (identifier) {
     );
 }
 
+function testCall (...args) {
+    return t.expressionStatement(
+        t.callExpression(
+            t.identifier('test'),
+            args
+        )
+    );
+}
+
 function createGenericTest (property, value, valid = true, message = false) {
     let args = [
         t.identifier(valid ? 'valid' : 'invalid'),
@@ -21,23 +30,14 @@ function createGenericTest (property, value, valid = true, message = false) {
     if (message) {
         args.unshift(message);
     }
-    return t.expressionStatement(
-        t.callExpression(
-            t.identifier('test'),
-            args
-        )
-    );
+    return testCall(...args);
 }
 
 function createCaseInsensitiveTest (property, value) {
-    return t.expressionStatement(
-        t.callExpression(
-            t.identifier('test'), [
-                t.identifier('validCI'),
-                t.identifier(property),
-                t.stringLiteral(value),
-            ]
-        )
+    return testCall(
+        t.identifier('validCI'),
+        t.identifier(property),
+        t.stringLiteral(value),
     );
 }
 
@@ -103,13 +103,9 @@ function createTests ({properties, candidates, identifier}) {
         return list;
     }, [
         id,
-        t.expressionStatement(
-            t.callExpression(
-                t.identifier('test'), [
-                    t.identifier('globals'),
-                    t.identifier(identifier),
-                ]
-            )
+        testCall(
+            t.identifier('globals'),
+            t.identifier(identifier),
         ),
     ]);
 }
