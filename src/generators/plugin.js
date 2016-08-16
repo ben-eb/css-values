@@ -1,3 +1,4 @@
+import * as t from 'babel-types';
 import template from '../util/moduleTemplate';
 import globals from '../util/globals';
 import arrayOfStrings from '../util/arrayOfStrings';
@@ -37,9 +38,12 @@ export default () => {
             identifier: 'valueParser',
             module: 'postcss-value-parser',
         }),
-        template(`const cssGlobals = INJECT;`)({
-            INJECT: arrayOfStrings(globals),
-        }),
+        t.variableDeclaration('const', [
+            t.variableDeclarator(
+                t.identifier('cssGlobals'),
+                arrayOfStrings(globals)
+            ),
+        ]),
         tmpl(),
     ]);
 };
