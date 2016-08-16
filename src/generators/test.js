@@ -129,12 +129,7 @@ export default config => {
             importMethod(t.identifier('validCI')),
             importMethod(t.identifier('globals')),
         ], t.stringLiteral('./util/testMacro')),
-        ...config.reduce((list, descriptor) => {
-            return [
-                ...list,
-                ...createTests(descriptor),
-            ];
-        }, []),
+        ...config.map(descriptor => createTests(descriptor)),
         createGenericTest(
             t.stringLiteral('color'),
             t.callExpression(
