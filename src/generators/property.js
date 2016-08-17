@@ -4,6 +4,7 @@ import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditiona
 import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
 import template from '../util/moduleTemplate';
+import templateExpression from '../util/templateExpression';
 import * as validators from '../validators';
 import generateProgram from './program';
 import requireModules from './requireModules';
@@ -21,10 +22,6 @@ function getValidator (identifier) {
         identifier,
         module: `${validatorPath}${identifier}`,
     };
-}
-
-function templateExpression (tmpl, opts = {}) {
-    return template(tmpl)(opts).expression;
 }
 
 function handleKeywords (keywords, settings) {
