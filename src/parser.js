@@ -1,6 +1,10 @@
 import tokenize from './tokenizer';
 import * as t from './types';
 
+/**
+ * @class Parser
+ */
+
 export default class Parser {
     constructor (input) {
         this.input = input;
@@ -14,7 +18,7 @@ export default class Parser {
         return this.loop();
     }
 
-    /**
+    /*
      * Token iteration methods
      */
 
@@ -73,7 +77,7 @@ export default class Parser {
         }
     }
 
-    /**
+    /*
      * Token type handlers
      */
 
@@ -263,12 +267,20 @@ export default class Parser {
     }
 
     /**
-     * Helper methods
+     * Get the previous token.
+     *
+     * @return token
      */
 
     get p1 () {
         return this.tokens[this.pos - 1];
     }
+
+    /**
+     * Get the next token.
+     *
+     * @return token
+     */
 
     get n1 () {
         return this.tokens[this.pos + 1];

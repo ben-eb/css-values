@@ -39,7 +39,7 @@ function mergeProperties (data) {
     }, []);
 }
 
-/**
+/*
  * This is a temporary function to be removed
  * once generation of all functions has been
  * achieved.

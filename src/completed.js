@@ -1,4 +1,4 @@
-/**
+/*
  * All completed properties.
  */
 

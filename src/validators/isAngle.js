@@ -1,4 +1,4 @@
-/**
+/*
  * See the specification for more details:
  * https://drafts.csswg.org/css-values-3/#angles
  */
