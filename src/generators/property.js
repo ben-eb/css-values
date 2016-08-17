@@ -1,5 +1,7 @@
 import * as t from 'babel-types';
 import arrayOfStrings from '../util/arrayOfStrings';
+import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditionals';
+import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
 import template from '../util/moduleTemplate';
 import * as validators from '../validators';
@@ -9,28 +11,17 @@ import validator, {generateValidatorStub} from './validator';
 
 const validatorPath = '../../validators/';
 
+const parsedNodes = t.memberExpression(
+    t.identifier('parsed'),
+    t.identifier('nodes')
+);
+
 function getValidator (identifier) {
     return {
         identifier,
         module: `${validatorPath}${identifier}`,
     };
 }
-
-function generateConditionsFactory (operator) {
-    return function generateConditions (...conditions) {
-        if (conditions.length === 1) {
-            return conditions[0];
-        }
-        return t.logicalExpression(
-            operator,
-            generateConditions(...conditions.slice(0, conditions.length - 1)),
-            conditions[conditions.length - 1]
-        );
-    };
-}
-
-const generateConditions = generateConditionsFactory('&&');
-const generateOrConditions = generateConditionsFactory('||');
 
 function templateExpression (tmpl, opts = {}) {
     return template(tmpl)(opts).expression;
@@ -46,9 +37,10 @@ function handleKeywords (keywords, settings) {
         const isKeyword = 'isKeyword';
         settings.dependencies.push(getValidator(isKeyword));
         settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
-        keywords.push(template(`const keywords = INJECT;`)({
-            INJECT: arrayOfStrings(settings.keywords.filter(Boolean)),
-        }));
+        keywords.push(createConst(
+            t.identifier('keywords'),
+            arrayOfStrings(settings.keywords.filter(Boolean))
+        ));
     }
 }
 
@@ -98,21 +90,27 @@ export default opts => {
                 }
 
                 config.repeatingConditions.push(
-                    template(`if (cons) { valid = false; }`)({
-                        cons: generateOrConditions(
-                            generateConditions(
-                                templateExpression(`even`),
-                                generateConditions(
-                                    templateExpression(`!${camel}(${type})`),
-                                    templateExpression('!isVar(node)'),
-                                ),
-                            ),
-                            generateConditions(
-                                templateExpression(`!even`),
-                                templateExpression(separator),
+                    ifAnyTruthy([
+                        allTruthy(
+                            templateExpression(`even`),
+                            allTruthy(
+                                templateExpression(`!${camel}(${type})`),
+                                templateExpression('!isVar(node)'),
                             ),
                         ),
-                    })
+                        allTruthy(
+                            templateExpression(`!even`),
+                            templateExpression(separator),
+                        ),
+                    ], [
+                        t.expressionStatement(
+                            t.assignmentExpression(
+                                '=',
+                                t.identifier('valid'),
+                                t.booleanLiteral(false)
+                            ),
+                        ),
+                    ])
                 );
                 const tmpl = `return valid && parsed.nodes.length % 2 !== 0`;
                 if (candidate.max !== false) {
@@ -144,10 +142,27 @@ export default opts => {
         handleKeywords(keywords, settings);
 
         const prevalid = settings.conditions.length ? [
-            template('const node = parsed.nodes[0];')(),
-            template('if (parsed.nodes.length === 1 && CONDITIONS) { return true; }')({
-                CONDITIONS: settings.conditions,
-            }),
+            createConst(
+                t.identifier('node'),
+                t.memberExpression(
+                    parsedNodes,
+                    t.numericLiteral(0),
+                    true
+                )
+            ),
+            ifAllTruthy([
+                t.binaryExpression(
+                    '===',
+                    t.memberExpression(
+                        parsedNodes,
+                        t.identifier('length')
+                    ),
+                    t.numericLiteral(1)
+                ),
+                ...settings.conditions,
+            ], [
+                t.returnStatement(t.booleanLiteral(true)),
+            ]),
         ] : [t.emptyStatement()];
 
         return generateProgram([
@@ -155,7 +170,10 @@ export default opts => {
             ...keywords,
             validator(opts.identifier, opts.properties, [
                 ...prevalid,
-                template('let valid = true;')(),
+                createLet(
+                    t.identifier('valid'),
+                    t.booleanLiteral(true)
+                ),
                 template('PRECONDITIONS')({
                     PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
                 }),
@@ -184,25 +202,43 @@ export default opts => {
         handleKeywords(keywords, settings);
     }
 
-    let conditions;
+    let block;
 
     if (settings.conditions.length) {
-        conditions = generateOrConditions(...settings.conditions);
+        block = [
+            createConst(
+                t.identifier('node'),
+                t.memberExpression(
+                    parsedNodes,
+                    t.numericLiteral(0),
+                    true
+                )
+            ),
+            t.returnStatement(anyTruthy(...settings.conditions)),
+        ];
     } else {
-        conditions = t.booleanLiteral(true);
+        block = [
+            t.returnStatement(t.booleanLiteral(true)),
+        ];
     }
 
     return generateProgram([
         requireModules(...settings.dependencies),
         ...keywords,
         validator(opts.identifier, opts.properties, [
-            template('PRECONDITIONS')({
-                PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
-            }),
-            template('if (parsed.nodes.length === 1) { const node = parsed.nodes[0]; return CONDITIONS; }')({
-                CONDITIONS: conditions,
-            }),
-            template('return false;')(),
+            ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
+            t.ifStatement(
+                t.binaryExpression(
+                    '===',
+                    t.memberExpression(
+                        parsedNodes,
+                        t.identifier('length')
+                    ),
+                    t.numericLiteral(1)
+                ),
+                t.blockStatement(block)
+            ),
+            t.returnStatement(t.booleanLiteral(false)),
         ]),
     ]);
 };
