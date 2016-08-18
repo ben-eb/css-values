@@ -41,23 +41,33 @@ function handleKeywords (keywords, settings) {
     }
 }
 
+function generatePositionValidator ({candidates, identifier, properties}) {
+    const func = 'isPosition';
+    return generateProgram([
+        requireModules(getValidator(func)),
+        generateValidatorStub(identifier, properties, t.callExpression(
+            t.identifier(validator),
+            [t.booleanLiteral(candidates[0].separator === ',')]
+        )),
+    ]);
+}
+
+function generateRepeatValidator ({identifier, properties}) {
+    const func = 'isRepeatStyle';
+    return generateProgram([
+        requireModules(getValidator(func)),
+        generateValidatorStub(identifier, properties, t.identifier(func)),
+    ]);
+}
+
 export default opts => {
-    if (opts.candidates.length === 1 && opts.candidates[0].value === 'position') {
-        const identifier = 'isPosition';
-        return generateProgram([
-            requireModules(getValidator(identifier)),
-            generateValidatorStub(opts.identifier, opts.properties, t.callExpression(
-                t.identifier(identifier),
-                [t.booleanLiteral(opts.candidates[0].separator === ',')]
-            )),
-        ]);
-    }
-    if (opts.candidates.length === 1 && opts.candidates[0].value === 'repeat-style') {
-        const identifier = 'isRepeatStyle';
-        return generateProgram([
-            requireModules(getValidator(identifier)),
-            generateValidatorStub(opts.identifier, opts.properties, t.identifier(identifier)),
-        ]);
+    if (opts.candidates.length === 1) {
+        switch (opts.candidates[0].value) {
+        case 'position':
+            return generatePositionValidator(opts);
+        case 'repeat-style':
+            return generateRepeatValidator(opts);
+        }
     }
     const settings = opts.candidates.reduce((config, candidate) => {
         if (candidate.type === 'keyword') {
