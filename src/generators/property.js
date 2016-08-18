@@ -46,7 +46,7 @@ function generatePositionValidator ({candidates, identifier, properties}) {
     return generateProgram([
         requireModules(getValidator(func)),
         generateValidatorStub(identifier, properties, t.callExpression(
-            t.identifier(validator),
+            t.identifier(func),
             [t.booleanLiteral(candidates[0].separator === ',')]
         )),
     ]);
