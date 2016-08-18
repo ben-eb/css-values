@@ -1,4 +1,4 @@
-import {rollup} from 'rollup';
+import {rollup} from 'rollup'; // eslint-disable-line
 import babel from 'rollup-plugin-babel';
 import vinyl from 'rollup-plugin-vinyl';
 
