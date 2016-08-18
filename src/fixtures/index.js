@@ -8,6 +8,7 @@ export brWidth from './brWidth';
 export color from './color';
 export compositeStyle from './compositeStyle';
 export compositingOperator from './compositingOperator';
+export counterStyle from './counterStyle';
 export customIdent from './customIdent';
 export filterFunctionList from './filterFunctionList';
 export flex from './flex';
