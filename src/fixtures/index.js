@@ -9,6 +9,7 @@ export color from './color';
 export compositeStyle from './compositeStyle';
 export compositingOperator from './compositingOperator';
 export customIdent from './customIdent';
+export filterFunctionList from './filterFunctionList';
 export flex from './flex';
 export genericFamily from './genericFamily';
 export integer from './integer';

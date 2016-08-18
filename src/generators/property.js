@@ -79,9 +79,15 @@ export default opts => {
                 return config;
             }
             config.dependencies.push(getValidator(camel));
-            if (candidate.value === 'position') {
+            if (camel === 'isPosition') {
                 config.preConditions.push(
-                    template(`if (isPosition(true)(parsed)) { return true; }`)()
+                    template(`if (${camel}(true)(parsed)) { return true; }`)()
+                );
+                return config;
+            }
+            if (camel === 'isFilterFunctionList') {
+                config.preConditions.push(
+                    template(`if (${camel}(parsed)) { return true; }`)()
                 );
                 return config;
             }

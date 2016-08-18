@@ -2,7 +2,7 @@ import test from 'ava';
 import valueParser from 'postcss-value-parser';
 import cssValues from './index.js';
 
-/**
+/*
  * CSS4 specification link;
  * https://drafts.csswg.org/css-cascade/#defaulting-keywords
  */
@@ -810,6 +810,46 @@ test(validCI, appearance, "auto");
 test(invalid, appearance, "auto auto");
 test(validCI, appearance, "none");
 test(invalid, appearance, "none none");
+var backdropFilter = ["-webkit-backdrop-filter", "backdrop-filter", "-webkit-filter", "filter"];
+test(globals, backdropFilter);
+test(validCI, backdropFilter, "none");
+test(invalid, backdropFilter, "none none");
+test(valid, backdropFilter, "blur(5px)");
+test(valid, backdropFilter, "brightness(60%)");
+test(valid, backdropFilter, "contrast(60%)");
+test(valid, backdropFilter, "grayscale(60%)");
+test(valid, backdropFilter, "invert(60%)");
+test(valid, backdropFilter, "opacity(60%)");
+test(valid, backdropFilter, "sepia(60%)");
+test(valid, backdropFilter, "saturate(60%)");
+test(valid, backdropFilter, "brightness(10)");
+test(valid, backdropFilter, "contrast(10)");
+test(valid, backdropFilter, "grayscale(10)");
+test(valid, backdropFilter, "invert(10)");
+test(valid, backdropFilter, "opacity(10)");
+test(valid, backdropFilter, "sepia(10)");
+test(valid, backdropFilter, "saturate(10)");
+test(valid, backdropFilter, "drop-shadow(5px 5px #fff)");
+test(valid, backdropFilter, "drop-shadow(5px 5px 5px #fff)");
+test(valid, backdropFilter, "hue-rotate(90deg)");
+test(valid, backdropFilter, "blur(10px) hue-rotate(1turn)");
+test(invalid, backdropFilter, "brightness(10.0.0)");
+test(invalid, backdropFilter, "contrast(10.0.0)");
+test(invalid, backdropFilter, "grayscale(10.0.0)");
+test(invalid, backdropFilter, "invert(10.0.0)");
+test(invalid, backdropFilter, "opacity(10.0.0)");
+test(invalid, backdropFilter, "sepia(10.0.0)");
+test(invalid, backdropFilter, "saturate(10.0.0)");
+test(invalid, backdropFilter, "drop-shadow(5px, 5px, 5px, #fff)");
+test(invalid, backdropFilter, "drop-shadow(5px 5px 5px 5px #fff)");
+test(invalid, backdropFilter, "drop-shadow(5 5 5 #fff)");
+test(invalid, backdropFilter, "drop=shadow(5px 5px 5px yrllow)");
+test(invalid, backdropFilter, "hue-rotate(90 degrees)");
+test(invalid, backdropFilter, "blur(10px), hue-rotate(1turn)");
+test(valid, backdropFilter, "blur(5px) blur(5px)");
+test(invalid, backdropFilter, "blur(5px), blur(5px)");
+test(valid, backdropFilter, "var(--foo) var(--bar)");
+test(invalid, backdropFilter, "var(--foo), var(--bar)");
 var backfaceVisibility = ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"];
 test(globals, backfaceVisibility);
 test(validCI, backfaceVisibility, "visible");

@@ -80,6 +80,10 @@ function createTests ({properties, candidates, identifier}) {
             if (!fixtures[camel]) {
                 return list;
             }
+            if (camel === 'filterFunctionList') {
+                candidate.min = 1;
+                candidate.separator = ' ';
+            }
             const values = fixtures[camel];
             list.push.apply(list, values.valid.map(fixture => {
                 return createTest(identifier, fixture);

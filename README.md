@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 236 of 361 CSS properties (65.37%).
+We support 238 of 361 CSS properties (65.93%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -80,6 +80,7 @@ We support 236 of 361 CSS properties (65.37%).
 * `animation-timing-function`
 * `animation-iteration-count`
 * `appearance`
+* `backdrop-filter`
 * `background-blend-mode`
 * `backface-visibility`
 * `background-attachment`
@@ -152,6 +153,7 @@ We support 236 of 361 CSS properties (65.37%).
 * `display-list`
 * `display-outside`
 * `empty-cells`
+* `filter`
 * `flex-direction`
 * `flex-grow`
 * `flex-shrink`
