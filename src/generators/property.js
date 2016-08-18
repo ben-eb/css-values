@@ -75,7 +75,7 @@ export default opts => {
         }
         if (candidate.type === 'data' || candidate.type === 'string') {
             const camel = candidate.type === 'string' ? 'isString' : dataValidator(candidate.value);
-            if (!validators[camel]) { // eslint-disable-line
+            if (!validators[camel]) {
                 return config;
             }
             config.dependencies.push(getValidator(camel));
@@ -85,7 +85,7 @@ export default opts => {
                 );
                 return config;
             }
-            const type = validators[camel].type // eslint-disable-line
+            const type = validators[camel].type;
             if (candidate.min === 1) {
                 let separator;
                 if (candidate.separator === ',') {

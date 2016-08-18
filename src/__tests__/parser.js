@@ -12,7 +12,7 @@ const macro = (t, syntax, ast, debug) => {
 };
 
 Object.keys(fixtures).forEach(key => {
-    const {syntax, ast, debug} = fixtures[key]; // eslint-disable-line
+    const {syntax, ast, debug} = fixtures[key];
     if (debug) {
         return test.only(key, macro, syntax, ast, debug);
     }
