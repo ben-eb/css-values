@@ -1,4 +1,4 @@
-import isComma from './isComma';
+import getArguments from './getArguments';
 import isKeyword from './isKeyword';
 import isLengthPercentage from './isLengthPercentage';
 import isSpace from './isSpace';
@@ -12,17 +12,6 @@ const bottom = 'bottom';
 
 const horizontals = [left, right, center];
 const verticals = [top, bottom, center];
-
-function getArguments (node) {
-    return node.nodes.reduce((list, child) => {
-        if (isComma(child)) {
-            list.push([]);
-        } else {
-            list[list.length - 1].push(child);
-        }
-        return list;
-    }, [[]]);
-}
 
 function isKeywordOrVar (node, keywords) {
     return isKeyword(node, keywords) || isVariable(node);
