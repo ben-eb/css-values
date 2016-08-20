@@ -1189,7 +1189,10 @@ function isRadialGradient(node) {
             var position4 = isRadialGradientPosition({ nodes: group.slice(4) });
             var position6 = isRadialGradientPosition({ nodes: group.slice(6) });
             var position8 = isRadialGradientPosition({ nodes: group.slice(8) });
-            if (length > 3 && (firstIsEllipse && secondIsLP && thirdIsLP || firstIsLP && secondIsLP && group[4].value === ellipse || firstIsEndingShape && isAt(group[2]) && position4 || firstIsExtent && isAt(group[2]) && position4 || firstIsLength && isAt(group[2]) && position4 || firstIsLP && secondIsLP && isAt(group[4]) && position6 || firstIsCircle && isLength(group[2]) && isAt(group[4]) && position6 || firstIsEndingShape && secondIsExtent && isAt(group[4]) && position6 || firstIsExtent && secondIsEndingShape && isAt(group[4]) && position6 || firstIsEllipse && secondIsLP && thirdIsLP && isAt(group[6]) && position8 || firstIsLP && secondIsLP && group[4].value === ellipse && isAt(group[6]) && position8)) {
+            if (length === 5 && (firstIsEllipse && secondIsLP && thirdIsLP || firstIsLP && secondIsLP && group[4].value === ellipse)) {
+                return true;
+            }
+            if (length > 3 && (firstIsEndingShape && isAt(group[2]) && position4 || firstIsExtent && isAt(group[2]) && position4 || firstIsLength && isAt(group[2]) && position4 || firstIsLP && secondIsLP && isAt(group[4]) && position6 || firstIsCircle && isLength(group[2]) && isAt(group[4]) && position6 || firstIsEndingShape && secondIsExtent && isAt(group[4]) && position6 || firstIsExtent && secondIsEndingShape && isAt(group[4]) && position6 || firstIsEllipse && secondIsLP && thirdIsLP && isAt(group[6]) && position8 || firstIsLP && secondIsLP && group[4].value === ellipse && isAt(group[6]) && position8)) {
                 return true;
             }
         }

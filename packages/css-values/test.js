@@ -1182,6 +1182,10 @@ test(invalid, borderImageSource, "radial-gradient(outer at 50% 75%, yellow, blue
 test(invalid, borderImageSource, "repeating-radial-gradient(outer at 50% 75%, yellow, blue)");
 test(invalid, borderImageSource, "radial-gradient(circle outer at top 50% left 50%, yellow, blue)");
 test(invalid, borderImageSource, "repeating-radial-gradient(circle outer at top 50% left 50%, yellow, blue)");
+test(invalid, borderImageSource, "radial-gradient(ellipse 50% 50% foo bar baz, yellow, green)");
+test(invalid, borderImageSource, "repeating-radial-gradient(ellipse 50% 50% foo bar baz, yellow, green)");
+test(invalid, borderImageSource, "radial-gradient(50% 50% ellipse foo bar baz, yellow, green)");
+test(invalid, borderImageSource, "repeating-radial-gradient(50% 50% ellipse foo bar baz, yellow, green)");
 test(invalid, borderImageSource, "url(cat.jpg) url(cat.jpg)");
 var bottom = ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"];
 test(globals, bottom);

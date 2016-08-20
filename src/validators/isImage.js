@@ -201,9 +201,13 @@ function isRadialGradient (node) {
             const position4 = isRadialGradientPosition({nodes: group.slice(4)});
             const position6 = isRadialGradientPosition({nodes: group.slice(6)});
             const position8 = isRadialGradientPosition({nodes: group.slice(8)});
-            if (length > 3 && (
+            if (length === 5 && (
                 (firstIsEllipse && secondIsLP && thirdIsLP) ||
-                (firstIsLP && secondIsLP && group[4].value === ellipse) ||
+                (firstIsLP && secondIsLP && group[4].value === ellipse)
+            )) {
+                return true;
+            }
+            if (length > 3 && (
                 (firstIsEndingShape && isAt(group[2]) && position4) ||
                 (firstIsExtent && isAt(group[2]) && position4) ||
                 (firstIsLength && isAt(group[2]) && position4) ||

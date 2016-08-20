@@ -68,5 +68,7 @@ export default {
         ...radial.map(fn => `${fn}(ellipse 10%, yellow, green)`),
         ...radial.map(fn => `${fn}(outer at 50% 75%, yellow, blue)`),
         ...radial.map(fn => `${fn}(circle outer at top 50% left 50%, yellow, blue)`),
+        ...radial.map(fn => `${fn}(ellipse 50% 50% foo bar baz, yellow, green)`),
+        ...radial.map(fn => `${fn}(50% 50% ellipse foo bar baz, yellow, green)`),
     ],
 };
