@@ -23,7 +23,7 @@ function isFunction(node, value) {
     return node.type === 'function' && node.value.toLowerCase() === value;
 }
 
-var isVar = (function (node) {
+var isVariable = (function (node) {
   return isFunction(node, 'var');
 });
 
@@ -267,7 +267,7 @@ var webkitBorderBeforeStyle = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isBrStyle(node) && !isVar(node) || !even && !isSpace(node)) {
+      if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
         valid = false;
       }
 
@@ -303,7 +303,7 @@ var webkitBorderBeforeWidth = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isBrWidth(node) && !isVar(node) || !even && !isSpace(node)) {
+      if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
         valid = false;
       }
 
@@ -330,7 +330,7 @@ var isRepeatStyle = (function (parsed) {
                 return false;
             }
             group.push(node);
-        } else if (isKeyword(node, multipleValues) || isVar(node)) {
+        } else if (isKeyword(node, multipleValues) || isVariable(node)) {
             if (group.some(function (n) {
                 return isKeyword(n, singleValues);
             }) || group.length === 2) {
@@ -366,7 +366,7 @@ var webkitTapHighlightColor = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isColor(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -439,7 +439,7 @@ var animationDelay = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isTime(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -462,7 +462,7 @@ var animationDirection = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleAnimationDirection(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -485,7 +485,7 @@ var animationFillMode = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleAnimationFillMode(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -508,7 +508,7 @@ var animationIterationCount = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleAnimationIterationCount(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -562,7 +562,7 @@ var animationName = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleAnimationName(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -585,7 +585,7 @@ var animationPlayState = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleAnimationPlayState(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -652,7 +652,7 @@ var animationTimingFunction = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isSingleTransitionTimingFunction(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -748,7 +748,7 @@ function isFilterFunctionList(parsed) {
     var valid = true;
     parsed.walk(function (node, index) {
         var even = index % 2 === 0;
-        if (even && !isFilterFunction(node) && !isVar(node)) {
+        if (even && !isFilterFunction(node) && !isVariable(node)) {
             valid = false;
         }
         if (!even && !isSpace(node)) {
@@ -793,7 +793,7 @@ var backgroundAttachment = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isAttachment(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -816,7 +816,7 @@ var backgroundBlendMode = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isBlendMode(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -839,7 +839,7 @@ var backgroundClip = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isBox(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -874,11 +874,11 @@ var horizontals = [left, right, center];
 var verticals = [top, bottom, center];
 
 function isKeywordOrVar(node, keywords) {
-    return isKeyword(node, keywords) || isVar(node);
+    return isKeyword(node, keywords) || isVariable(node);
 }
 
 function isLengthPercentageOrVar(node) {
-    return isLengthPercentage(node) || isVar(node);
+    return isLengthPercentage(node) || isVariable(node);
 }
 
 function validateGroup(group) {
@@ -943,7 +943,7 @@ var borderBottomLeftRadius = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isLengthPercentage(node) && !isVar(node) || !even && !isSpace(node)) {
+      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
         valid = false;
       }
 
@@ -989,7 +989,7 @@ var borderColor = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isColor(node) && !isVar(node) || !even && !isSpace(node)) {
+      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
         valid = false;
       }
 
@@ -1511,7 +1511,7 @@ var gridTemplateAreas = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isString(node) && !isVar(node) || !even && !isSpace(node)) {
+      if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
         valid = false;
       }
 
@@ -1652,7 +1652,7 @@ var maskComposite = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isCompositingOperator(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -1675,7 +1675,7 @@ var maskMode = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isMaskingMode(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -1984,7 +1984,7 @@ var willChange = {
     parsed.walk(function (node, index) {
       var even = index % 2 === 0;
 
-      if (even && !isAnimateableFeature(node) && !isVar(node) || !even && !isComma(node)) {
+      if (even && !isAnimateableFeature(node) && !isVariable(node) || !even && !isComma(node)) {
         valid = false;
       }
 
@@ -2043,7 +2043,7 @@ function cssValues(property, value) {
 
   var first = value.nodes[0];
 
-  if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVar(first))) {
+  if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
     return true;
   }
 

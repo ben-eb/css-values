@@ -10,8 +10,6 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 import validator, {generateValidatorStub} from './validator';
 
-const validatorPath = '../../validators/';
-
 const parsedNodes = t.memberExpression(
     t.identifier('parsed'),
     t.identifier('nodes')
@@ -20,7 +18,7 @@ const parsedNodes = t.memberExpression(
 function getValidator (identifier) {
     return {
         identifier,
-        module: `${validatorPath}${identifier}`,
+        module: `../../validators/${identifier}`,
     };
 }
 
@@ -102,13 +100,15 @@ export default opts => {
                     config.dependencies.push(getValidator('isSpace'));
                 }
 
+                config.dependencies.push(getValidator('isVariable'));
+
                 config.repeatingConditions.push(
                     ifAnyTruthy([
                         allTruthy(
                             templateExpression(`even`),
                             allTruthy(
                                 templateExpression(`!${camel}(${type})`),
-                                templateExpression('!isVar(node)'),
+                                templateExpression('!isVariable(node)'),
                             ),
                         ),
                         allTruthy(
@@ -142,10 +142,7 @@ export default opts => {
         conditions: [],
         preConditions: [],
         repeatingConditions: [],
-        dependencies: [{
-            identifier: 'isVar',
-            module: `${validatorPath}isVariable`,
-        }],
+        dependencies: [],
         repeatingReturn: false,
     });
 
