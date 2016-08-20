@@ -194,29 +194,35 @@ function isRadialGradient (node) {
                 return true;
             }
             const firstIsCircle = group[0].value === circle;
+            const secondIsExtent = group[2] && isKeyword(group[2], extentKeywords);
+            const secondIsEndingShape = group[2] && isKeyword(group[2], endingShapes);
             if (length === 3 && (
                 (firstIsCircle && isLength(group[2])) ||
                 (firstIsLength && group[2].value === circle) ||
-                (firstIsExtent && isKeyword(group[2], endingShapes)) ||
-                (firstIsEndingShape && isKeyword(group[2], extentKeywords))
+                (firstIsExtent && secondIsEndingShape) ||
+                (firstIsEndingShape && secondIsExtent)
             )) {
                 return true;
             }
             const firstIsEllipse = group[0].value === ellipse;
             const firstIsLP = isLengthPercentage(group[0]);
+            const secondIsLP = group[2] && isLengthPercentage(group[2]);
+            const thirdIsLP = group[4] && isLengthPercentage(group[4]);
             const position4 = isRadialGradientPosition({nodes: group.slice(4)});
             const position6 = isRadialGradientPosition({nodes: group.slice(6)});
+            const position8 = isRadialGradientPosition({nodes: group.slice(8)});
             if (length > 3 && (
-                (firstIsEllipse && isLengthPercentage(group[2]) && isLengthPercentage(group[4])) ||
-                (firstIsLP && isLengthPercentage(group[2]) && group[4].value === ellipse) ||
+                (firstIsEllipse && secondIsLP && thirdIsLP) ||
+                (firstIsLP && secondIsLP && group[4].value === ellipse) ||
                 (firstIsEndingShape && isAt(group[2]) && position4) ||
-                (firstIsExtent && isAt(group[2])  && position4) ||
-                (firstIsLength && isAt(group[2])  && position4) ||
-                (firstIsLP && isLengthPercentage(group[2]) && isAt(group[4]) && position6) ||
+                (firstIsExtent && isAt(group[2]) && position4) ||
+                (firstIsLength && isAt(group[2]) && position4) ||
+                (firstIsLP && secondIsLP && isAt(group[4]) && position6) ||
                 (firstIsCircle && isLength(group[2]) && isAt(group[4]) && position6) ||
-                (firstIsEndingShape && isKeyword(group[2], extentKeywords) && isAt(group[4]) && position6) ||
-                (firstIsEllipse && isLengthPercentage(group[2]) && isLengthPercentage(group[4]) && isAt(group[6]) && isRadialGradientPosition({nodes: group.slice(8)})) ||
-                (firstIsLP && isLengthPercentage(group[2]) && group[4].value === ellipse && isAt(group[6]) && isRadialGradientPosition({nodes: group.slice(8)}))
+                (firstIsEndingShape && secondIsExtent && isAt(group[4]) && position6) ||
+                (firstIsExtent && secondIsEndingShape && isAt(group[4]) && position6) ||
+                (firstIsEllipse && secondIsLP && thirdIsLP && isAt(group[6]) && position8) ||
+                (firstIsLP && secondIsLP && group[4].value === ellipse && isAt(group[6]) && position8)
             )) {
                 return true;
             }

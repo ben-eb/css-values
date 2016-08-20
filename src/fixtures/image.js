@@ -40,6 +40,7 @@ export default {
         ...radial.map(fn => `${fn}(circle 50px at top left, yellow, green)`),
         ...radial.map(fn => `${fn}(ellipse 50% 50% at top left, yellow, green)`),
         ...radial.map(fn => `${fn}(50% 50% ellipse at top left, yellow, green)`),
+        ...radial.map(fn => `${fn}(closest-corner circle at top 50% left 50%, yellow, green)`),
         ...radial.map(fn => `${fn}(circle closest-corner at top 50% left 50%, yellow, green)`),
     ],
     invalid: [

@@ -1139,6 +1139,8 @@ test(valid, borderImageSource, "radial-gradient(ellipse 50% 50% at top left, yel
 test(valid, borderImageSource, "repeating-radial-gradient(ellipse 50% 50% at top left, yellow, green)");
 test(valid, borderImageSource, "radial-gradient(50% 50% ellipse at top left, yellow, green)");
 test(valid, borderImageSource, "repeating-radial-gradient(50% 50% ellipse at top left, yellow, green)");
+test(valid, borderImageSource, "radial-gradient(closest-corner circle at top 50% left 50%, yellow, green)");
+test(valid, borderImageSource, "repeating-radial-gradient(closest-corner circle at top 50% left 50%, yellow, green)");
 test(valid, borderImageSource, "radial-gradient(circle closest-corner at top 50% left 50%, yellow, green)");
 test(valid, borderImageSource, "repeating-radial-gradient(circle closest-corner at top 50% left 50%, yellow, green)");
 test(invalid, borderImageSource, "ur(cat.jpg)");
