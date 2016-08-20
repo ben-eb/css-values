@@ -1251,7 +1251,7 @@ var bottom$2 = {
   fn: function bottom(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || isPercentage(node) || isKeyword(node, "auto");
+      return isLengthPercentage(node) || isKeyword(node, "auto");
     }
 
     return false;
@@ -1510,7 +1510,7 @@ var fontWeight = {
 };
 
 var gridColumnGap = {
-  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "shape-margin"],
+  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top", "shape-margin"],
   fn: function gridColumnGap(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
@@ -1604,18 +1604,6 @@ var letterSpacing = {
 var lineBreak = {
   properties: ["line-break"],
   fn: isKeywordFactory(["auto", "loose", "normal", "strict"])
-};
-
-var lineHeight = {
-  properties: ["line-height"],
-  fn: function lineHeight(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isLength(node) || isPercentage(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
 };
 
 var listStylePosition = {
@@ -1715,24 +1703,11 @@ var maskType = {
 
 var keywords$1 = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
 var maxBlockSize = {
-  properties: ["max-block-size", "max-height", "max-inline-size", "max-width"],
+  properties: ["max-block-size", "max-height", "max-inline-size", "max-width", "min-block-size", "min-height", "min-inline-size", "min-width"],
   fn: function maxBlockSize(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || isPercentage(node) || isKeyword(node, keywords$1);
-    }
-
-    return false;
-  }
-};
-
-var keywords$2 = ["auto", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
-var minBlockSize = {
-  properties: ["min-block-size", "min-height", "min-inline-size", "min-width"],
-  fn: function minBlockSize(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isPercentage(node) || isKeyword(node, keywords$2);
+      return isLengthPercentage(node) || isKeyword(node, keywords$1);
     }
 
     return false;
@@ -1798,18 +1773,6 @@ var overflowClipBox = {
 var overflowWrap = {
   properties: ["overflow-wrap", "word-wrap"],
   fn: isKeywordFactory(["normal", "break-word"])
-};
-
-var paddingBlockEnd = {
-  properties: ["padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top"],
-  fn: function paddingBlockEnd(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isPercentage(node);
-    }
-
-    return false;
-  }
 };
 
 var pageBreakInside = {
@@ -1927,13 +1890,13 @@ var textRendering = {
   fn: isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"])
 };
 
-var keywords$3 = ["none", "auto"];
+var keywords$2 = ["none", "auto"];
 var textSizeAdjust = {
   properties: ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"],
   fn: function textSizeAdjust(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isPercentage(node) || isKeyword(node, keywords$3);
+      return isPercentage(node) || isKeyword(node, keywords$2);
     }
 
     return false;
@@ -1965,13 +1928,13 @@ var userSelect = {
   fn: isKeywordFactory(["auto", "text", "none", "contain", "all"])
 };
 
-var keywords$4 = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
+var keywords$3 = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
 var verticalAlign = {
   properties: ["vertical-align"],
   fn: function verticalAlign(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isPercentage(node) || isLength(node) || isKeyword(node, keywords$4);
+      return isLengthPercentage(node) || isKeyword(node, keywords$3);
     }
 
     return false;
@@ -2056,7 +2019,7 @@ var zIndex = {
   }
 };
 
-var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {
