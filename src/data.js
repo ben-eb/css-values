@@ -11,7 +11,7 @@ const overrides = {
     bottom: '<length-percentage> | auto',
     cursor: '[ [<url> [<x> <y>]?,]* [ auto | default | none | context-menu | help | pointer | progress | wait | cell | crosshair | text | vertical-text | alias | copy | move | no-drop | not-allowed | grab | grabbing | e-resize | n-resize | ne-resize | nw-resize | s-resize | se-resize | sw-resize | w-resize | ew-resize | ns-resize | nesw-resize | nwse-resize | col-resize | row-resize | all-scroll | zoom-in | zoom-out ] ]',
     left: '<length-percentage> | auto',
-    'line-height': 'normal | &lt;number&gt; | <length-percentage>',
+    'line-height': 'normal | <number> | <length-percentage>',
     'margin-bottom': '<length-percentage> | auto',
     'margin-left': '<length-percentage> | auto',
     'margin-right': '<length-percentage> | auto',
