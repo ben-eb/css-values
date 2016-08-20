@@ -843,6 +843,17 @@ var backgroundClip = {
   }
 };
 
+function getArguments(node) {
+    return node.nodes.reduce(function (list, child) {
+        if (isComma(child)) {
+            list.push([]);
+        } else {
+            list[list.length - 1].push(child);
+        }
+        return list;
+    }, [[]]);
+}
+
 var isLengthPercentage = (function (node) {
     return isLength(node) || isPercentage(node);
 });
@@ -855,17 +866,6 @@ var bottom = 'bottom';
 
 var horizontals = [left, right, center];
 var verticals = [top, bottom, center];
-
-function getArguments(node) {
-    return node.nodes.reduce(function (list, child) {
-        if (isComma(child)) {
-            list.push([]);
-        } else {
-            list[list.length - 1].push(child);
-        }
-        return list;
-    }, [[]]);
-}
 
 function isKeywordOrVar(node, keywords) {
     return isKeyword(node, keywords) || isVar(node);
@@ -993,7 +993,216 @@ var borderColor = {
   }
 };
 
-var bottom$1 = {
+var resolutions = ['dpi', 'dpcm', 'dppx'];
+
+function isResolution(_ref) {
+    var type = _ref.type;
+    var value = _ref.value;
+
+    if (type !== 'word') {
+        return false;
+    }
+    var int = unit(value);
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~resolutions.indexOf(int.unit);
+};
+
+var isString = (function (_ref) {
+  var type = _ref.type;
+  return type === 'string';
+});
+
+function isMultiplier(_ref) {
+    var type = _ref.type;
+    var value = _ref.value;
+
+    if (type !== 'word') {
+        return false;
+    }
+    var int = unit(value);
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && int.unit === 'x';
+};
+
+function isImageFunction(node) {
+    if (!isFunction(node, 'image')) {
+        return false;
+    }
+    var valid = true;
+    walk(node.nodes, function (child, index) {
+        if (index === 0 && !isImage(child) && !isString(child) && !isColor(child)) {
+            valid = false;
+        }
+        if (index === 1 && !isComma(child)) {
+            valid = false;
+        }
+        if (index === 2 && (isColor(node.nodes[0]) || !isColor(child))) {
+            valid = false;
+        }
+        return false;
+    });
+    return valid && node.nodes.length <= 3;
+}
+
+function validateImageSet(group) {
+    if (!isImage(group[0]) && !isString(group[0]) || isFunction(group[0], 'image-set') || !group[2] || !isResolution(group[2]) && !isMultiplier(group[2])) {
+        return false;
+    }
+    return group.length === 3;
+}
+
+function isImageSet(node) {
+    if (!isFunction(node, 'image-set')) {
+        return false;
+    }
+    return getArguments(node).every(validateImageSet);
+}
+
+function isElement(node) {
+    if (!isFunction(node, 'element')) {
+        return false;
+    }
+    var valid = true;
+    walk(node.nodes, function (child, index) {
+        if (index === 0 && !isCustomIdent(child)) {
+            valid = false;
+        }
+        if (index === 1 && !isComma(child)) {
+            valid = false;
+        }
+        if (index === 2 && !isKeyword(child, ['first', 'start', 'last', 'first-except'])) {
+            valid = false;
+        }
+        return false;
+    });
+    return valid && (node.nodes.length === 1 || node.nodes.length === 3);
+}
+
+function isCrossFade(node) {
+    if (!isFunction(node, 'cross-fade')) {
+        return false;
+    }
+    var valid = true;
+    walk(node.nodes, function (child, index) {
+        if (index === 0 && !isPercentage(child) && !isImage(child)) {
+            valid = false;
+        }
+        if (index === 2 && !isPercentage(child) && !isImage(child)) {
+            valid = false;
+        }
+        if (index === 4 && !isImage(child) && !isColor(child)) {
+            valid = false;
+        }
+        return false;
+    });
+    return valid;
+}
+
+function isColourStop(group) {
+    var length = group.length;
+
+    if (length === 1) {
+        return isColor(group[0]);
+    }
+    if (length === 3) {
+        return isColor(group[0]) && isLengthPercentage(group[2]);
+    }
+    return false;
+}
+
+var top$1 = 'top';
+var right$1 = 'right';
+var bottom$1 = 'bottom';
+var left$1 = 'left';
+
+var verticals$1 = [top$1, bottom$1];
+var horizontals$1 = [right$1, left$1];
+var directions = [].concat(horizontals$1, verticals$1);
+
+function isLinearGradient(node) {
+    if (!isFunction(node, 'linear-gradient') && !isFunction(node, 'repeating-linear-gradient')) {
+        return false;
+    }
+    var colours = 0;
+    var valid = getArguments(node).every(function (group, index) {
+        if (index === 0) {
+            var length = group.length;
+
+            if (length === 1 && isAngle(group[0])) {
+                return true;
+            }
+            if (length > 1 && group[0].value === 'to' && length <= 5) {
+                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals$1) && isKeyword(group[4], verticals$1) || isKeyword(group[2], verticals$1) && isKeyword(group[4], horizontals$1);
+            }
+        }
+        var colour = isColourStop(group);
+        if (colour) {
+            colours++;
+        }
+        return colour;
+    });
+    return valid && colours > 1;
+}
+
+var at = 'at';
+var circle = 'circle';
+var ellipse = 'ellipse';
+var endingShapes = [circle, ellipse];
+
+var extentKeywords = ['closest-corner', 'closest-side', 'farthest-corner', 'farthest-side'];
+
+var isRadialGradientPosition = isPositionFactory(false);
+
+function isRadialGradient(node) {
+    if (!isFunction(node, 'radial-gradient') && !isFunction(node, 'repeating-radial-gradient')) {
+        return false;
+    }
+    var colours = 0;
+    var valid = getArguments(node).every(function (group, index) {
+        if (index === 0) {
+            var length = group.length;
+
+            if (length === 1 && (isKeyword(group[0], endingShapes) || isLength(group[0]) || isKeyword(group[0], extentKeywords))) {
+                return true;
+            }
+            if (group[0].value === at && isRadialGradientPosition({ nodes: group.slice(2) })) {
+                return true;
+            }
+            if (length === 3 && (group[0].value === circle && isLength(group[2]) || isLength(group[0]) && group[2].value === circle || group[0].value === ellipse && isLengthPercentage(group[2]) || isLengthPercentage(group[0]) && group[2].value === ellipse || isKeyword(group[0], extentKeywords) && isKeyword(group[2], endingShapes) || isKeyword(group[0], endingShapes) && isKeyword(group[2], extentKeywords))) {
+                return true;
+            }
+            if (length > 3 && (isKeyword(group[0], endingShapes) && group[2].value === at && isRadialGradientPosition({ nodes: group.slice(4) }) || isKeyword(group[0], extentKeywords) && group[2].value === at && isRadialGradientPosition({ nodes: group.slice(4) }) || isLength(group[0]) && group[2].value === at && isRadialGradientPosition({ nodes: group.slice(4) }) || isLengthPercentage(group[0]) && isLengthPercentage(group[2]) && group[4].value === at && isRadialGradientPosition({ nodes: group.slice(6) }) || group[0].value === circle && isLength(group[2]) && group[4].value === at && isRadialGradientPosition({ nodes: group.slice(6) }) || isKeyword(group[0], endingShapes) && isKeyword(group[2], extentKeywords) && group[4].value === at && isRadialGradientPosition({ nodes: group.slice(6) }) || group[0].value === ellipse && isLengthPercentage(group[2]) && isLengthPercentage(group[4]) && group[6].value === at && isRadialGradientPosition({ nodes: group.slice(8) }))) {
+                return true;
+            }
+        }
+        var colour = isColourStop(group);
+        if (colour) {
+            colours++;
+        }
+        return colour;
+    });
+    return valid && colours > 1;
+}
+
+function isGradient(node) {
+    return isLinearGradient(node) || isRadialGradient(node);
+}
+
+function isImage(node) {
+    return isUrl(node) || isImageFunction(node) || isImageSet(node) || isElement(node) || isCrossFade(node) || isGradient(node);
+}
+
+var borderImageSource = {
+  properties: ["border-image-source"],
+  fn: function borderImageSource(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isImage(node) || node.value.toLowerCase() === "none";
+    }
+
+    return false;
+  }
+};
+
+var bottom$2 = {
   properties: ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"],
   fn: function bottom(parsed) {
     if (parsed.nodes.length === 1) {
@@ -1183,11 +1392,6 @@ var fontKerning = {
   fn: isKeywordFactory(["auto", "normal", "none"])
 };
 
-var isString = (function (_ref) {
-  var type = _ref.type;
-  return type === 'string';
-});
-
 var fontLanguageOverride = {
   properties: ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"],
   fn: function fontLanguageOverride(parsed) {
@@ -1374,10 +1578,6 @@ var listStylePosition = {
   properties: ["list-style-position"],
   fn: isKeywordFactory(["inside", "outside"])
 };
-
-function isImage(node) {
-    return isUrl(node);
-}
 
 var standard = ['disc', 'circle', 'square', 'decimal', 'cjk-decimal', 'decimal-leading-zero', 'lower-roman', 'upper-roman', 'lower-greek', 'lower-alpha', 'lower-latin', 'upper-alpha', 'upper-latin', 'arabic-indic', '-moz-arabic-indic', 'armenian', 'bengali', '-moz-bengali', 'cambodian', 'cjk-earthly-branch', '-moz-cjk-earthly-branch', 'cjk-heavenly-stem', '-moz-cjk-heavenly-stem', 'cjk-ideographic', 'devanagari', '-moz-devanagari', 'ethiopic-numeric', 'georgian', 'gujarati', '-moz-gujarati', 'gurmukhi', '-moz-gurmukhi', 'hebrew', 'hiragana', 'hiragana-iroha', 'japanese-formal', 'japanese-informal', 'kannada', '-moz-kannada', 'katakana', 'katakana-iroha', 'khmer', '-moz-khmer', 'korean-hangul-formal', 'korean-hanja-formal', 'korean-hanja-informal', 'lao', '-moz-lao', 'lower-armenian', 'malayalam', '-moz-malayalam', 'mongolian', 'myanmar', '-moz-myanmar', 'oriya', '-moz-oriya', 'persian', '-moz-persian', 'simp-chinese-formal', 'simp-chinese-informal', 'tamil', '-moz-tamil', 'telugu', '-moz-telugu', 'thai', '-moz-thai', 'tibetan', 'trad-chinese-formal', 'trad-chinese-informal', 'upper-armenian', 'disclosure-open', 'disclosure-closed'];
 
@@ -1812,7 +2012,7 @@ var zIndex = {
   }
 };
 
-var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, bottom$1, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {

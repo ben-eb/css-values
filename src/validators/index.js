@@ -13,6 +13,7 @@ export * as isCustomIdent from './isCustomIdent';
 export * as isFilterFunctionList from './isFilterFunctionList';
 export * as isFlex from './isFlex';
 export * as isGenericFamily from './isGenericFamily';
+export * as isImage from './isImage';
 export * as isInteger from './isInteger';
 export * as isLength from './isLength';
 export * as isLengthPercentage from './isLengthPercentage';

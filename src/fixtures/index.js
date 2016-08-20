@@ -13,6 +13,7 @@ export customIdent from './customIdent';
 export filterFunctionList from './filterFunctionList';
 export flex from './flex';
 export genericFamily from './genericFamily';
+export image from './image';
 export integer from './integer';
 export length from './length';
 export lengthPercentage from './lengthPercentage';
