@@ -552,7 +552,7 @@ var isCustomIdent = (function (_ref) {
 });
 
 var isSingleAnimationName = (function (node) {
-    return node.type === 'word' && (node.value.toLowerCase() === 'none' || isCustomIdent(node));
+    return isKeyword(node, 'none') || isCustomIdent(node);
 });
 
 var animationName = {
