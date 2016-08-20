@@ -28,11 +28,11 @@ function handleKeywords (keywords, settings) {
     if (!settings.keywords.length) {
         return;
     }
+    const isKeyword = 'isKeyword';
+    settings.dependencies.push(getValidator(isKeyword));
     if (settings.keywords.length === 1) {
-        settings.conditions.push(templateExpression(`node.value.toLowerCase() === "${settings.keywords[0]}"`));
+        settings.conditions.push(templateExpression(`${isKeyword}(node, "${settings.keywords[0]}")`));
     } else {
-        const isKeyword = 'isKeyword';
-        settings.dependencies.push(getValidator(isKeyword));
         settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
         keywords.push(createConst(
             t.identifier('keywords'),

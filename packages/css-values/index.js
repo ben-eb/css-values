@@ -10,7 +10,13 @@ function isKeyword(_ref, values) {
     var type = _ref.type;
     var value = _ref.value;
 
-    return type === 'word' && ~values.map(lowercase).indexOf(lowercase(value));
+    if (type !== 'word') {
+        return false;
+    }
+    if (Array.isArray(values)) {
+        return ~values.map(lowercase).indexOf(lowercase(value));
+    }
+    return lowercase(value) === values;
 }
 
 function isFunction(node, value) {
@@ -49,7 +55,7 @@ var mozBinding = {
   fn: function mozBinding(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isUrl(node) || node.value.toLowerCase() === "none";
+      return isUrl(node) || isKeyword(node, "none");
     }
 
     return false;
@@ -762,7 +768,7 @@ var backdropFilter = {
 
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return node.value.toLowerCase() === "none";
+      return isKeyword(node, "none");
     }
 
     return false;
@@ -1210,7 +1216,7 @@ var borderImageSource = {
   fn: function borderImageSource(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isImage(node) || node.value.toLowerCase() === "none";
+      return isImage(node) || isKeyword(node, "none");
     }
 
     return false;
@@ -1222,7 +1228,7 @@ var bottom$2 = {
   fn: function bottom(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || isPercentage(node) || node.value.toLowerCase() === "auto";
+      return isLength(node) || isPercentage(node) || isKeyword(node, "auto");
     }
 
     return false;
@@ -1306,7 +1312,7 @@ var columnCount = {
   fn: function columnCount(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isNumber(node) || node.value.toLowerCase() === "auto";
+      return isNumber(node) || isKeyword(node, "auto");
     }
 
     return false;
@@ -1323,7 +1329,7 @@ var columnGap = {
   fn: function columnGap(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || node.value.toLowerCase() === "normal";
+      return isLength(node) || isKeyword(node, "normal");
     }
 
     return false;
@@ -1340,7 +1346,7 @@ var columnWidth = {
   fn: function columnWidth(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || node.value.toLowerCase() === "auto";
+      return isLength(node) || isKeyword(node, "auto");
     }
 
     return false;
@@ -1412,7 +1418,7 @@ var fontLanguageOverride = {
   fn: function fontLanguageOverride(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isString(node) || node.value.toLowerCase() === "normal";
+      return isString(node) || isKeyword(node, "normal");
     }
 
     return false;
@@ -1448,7 +1454,7 @@ var fontSizeAdjust = {
   fn: function fontSizeAdjust(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isNumber(node) || node.value.toLowerCase() === "none";
+      return isNumber(node) || isKeyword(node, "none");
     }
 
     return false;
@@ -1497,7 +1503,7 @@ var gridTemplateAreas = {
   fn: function gridTemplateAreas(parsed) {
     var node = parsed.nodes[0];
 
-    if (parsed.nodes.length === 1 && node.value.toLowerCase() === "none") {
+    if (parsed.nodes.length === 1 && isKeyword(node, "none")) {
       return true;
     }
 
@@ -1565,7 +1571,7 @@ var letterSpacing = {
   fn: function letterSpacing(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || node.value.toLowerCase() === "normal";
+      return isLength(node) || isKeyword(node, "normal");
     }
 
     return false;
@@ -1582,7 +1588,7 @@ var lineHeight = {
   fn: function lineHeight(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isNumber(node) || isLength(node) || isPercentage(node) || node.value.toLowerCase() === "normal";
+      return isNumber(node) || isLength(node) || isPercentage(node) || isKeyword(node, "normal");
     }
 
     return false;
@@ -1626,7 +1632,7 @@ var listStyleType = {
   fn: function listStyleType(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isCounterStyle(node) || isString(node) || node.value.toLowerCase() === "none";
+      return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
     }
 
     return false;
@@ -1737,7 +1743,7 @@ var outlineColor = {
   fn: function outlineColor(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isColor(node) || node.value.toLowerCase() === "invert";
+      return isColor(node) || isKeyword(node, "invert");
     }
 
     return false;
@@ -1749,7 +1755,7 @@ var outlineStyle = {
   fn: function outlineStyle(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isBrStyle(node) || node.value.toLowerCase() === "auto";
+      return isBrStyle(node) || isKeyword(node, "auto");
     }
 
     return false;
@@ -1793,7 +1799,7 @@ var perspective = {
   fn: function perspective(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLength(node) || node.value.toLowerCase() === "none";
+      return isLength(node) || isKeyword(node, "none");
     }
 
     return false;
@@ -1844,7 +1850,7 @@ var scrollSnapCoordinate = {
 
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return node.value.toLowerCase() === "none";
+      return isKeyword(node, "none");
     }
 
     return false;
@@ -1970,7 +1976,7 @@ var willChange = {
   fn: function willChange(parsed) {
     var node = parsed.nodes[0];
 
-    if (parsed.nodes.length === 1 && node.value.toLowerCase() === "auto") {
+    if (parsed.nodes.length === 1 && isKeyword(node, "auto")) {
       return true;
     }
 
@@ -1998,7 +2004,7 @@ var wordSpacing = {
   fn: function wordSpacing(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLengthPercentage(node) || node.value.toLowerCase() === "normal";
+      return isLengthPercentage(node) || isKeyword(node, "normal");
     }
 
     return false;
@@ -2020,7 +2026,7 @@ var zIndex = {
   fn: function zIndex(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isInteger(node) || node.value.toLowerCase() === "auto";
+      return isInteger(node) || isKeyword(node, "auto");
     }
 
     return false;
