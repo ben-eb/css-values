@@ -4,7 +4,6 @@ import getArguments from './getArguments';
 import isAngle from './isAngle';
 import isColor from './isColor';
 import isComma from './isComma';
-import isCustomIdent from './isCustomIdent';
 import isFunction from './isFunction';
 import isKeyword from './isKeyword';
 import isLength from './isLength';
@@ -69,20 +68,11 @@ function isElement (node) {
     if (!isFunction(node, 'element')) {
         return false;
     }
-    let valid = true;
-    walk(node.nodes, (child, index) => {
-        if (index === 0 && !isCustomIdent(child)) {
-            valid = false;
-        }
-        if (index === 1 && !isComma(child)) {
-            valid = false;
-        }
-        if (index === 2 && !isKeyword(child, ['first', 'start', 'last', 'first-except'])) {
-            valid = false;
-        }
+    if (node.nodes.length !== 1) {
         return false;
-    });
-    return valid && (node.nodes.length === 1 || node.nodes.length === 3);
+    }
+    const {type, value} = node.nodes[0];
+    return value[0] === '#' && type === 'word';
 }
 
 function isCrossFade (node) {

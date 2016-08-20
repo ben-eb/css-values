@@ -1066,20 +1066,14 @@ function isElement(node) {
     if (!isFunction(node, 'element')) {
         return false;
     }
-    var valid = true;
-    walk(node.nodes, function (child, index) {
-        if (index === 0 && !isCustomIdent(child)) {
-            valid = false;
-        }
-        if (index === 1 && !isComma(child)) {
-            valid = false;
-        }
-        if (index === 2 && !isKeyword(child, ['first', 'start', 'last', 'first-except'])) {
-            valid = false;
-        }
+    if (node.nodes.length !== 1) {
         return false;
-    });
-    return valid && (node.nodes.length === 1 || node.nodes.length === 3);
+    }
+    var _node$nodes$ = node.nodes[0];
+    var type = _node$nodes$.type;
+    var value = _node$nodes$.value;
+
+    return value[0] === '#' && type === 'word';
 }
 
 function isCrossFade(node) {
