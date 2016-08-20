@@ -26,6 +26,7 @@ export percentage from './percentage';
 export position from './position';
 export relativeSize from './relativeSize';
 export repeatStyle from './repeatStyle';
+export resolution from './resolution';
 export singleAnimationDirection from './singleAnimationDirection';
 export singleAnimationFillMode from './singleAnimationFillMode';
 export singleAnimationName from './singleAnimationName';

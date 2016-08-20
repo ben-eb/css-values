@@ -26,6 +26,7 @@ export * as isPercentage from './isPercentage';
 export * as isPosition from './isPosition';
 export * as isRelativeSize from './isRelativeSize';
 export * as isRepeatStyle from './isRepeatStyle';
+export * as isResolution from './isResolution';
 export * as isSingleAnimationDirection from './isSingleAnimationDirection';
 export * as isSingleAnimationFillMode from './isSingleAnimationFillMode';
 export * as isSingleAnimationName from './isSingleAnimationName';
