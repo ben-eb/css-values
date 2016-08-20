@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 238 of 361 CSS properties (65.93%).
+We support 240 of 361 CSS properties (66.48%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -102,6 +102,7 @@ We support 238 of 361 CSS properties (65.93%).
 * `border-bottom-width`
 * `border-collapse`
 * `border-color`
+* `border-image-source`
 * `border-inline-end-color`
 * `border-inline-end-style`
 * `border-inline-end-width`
@@ -183,6 +184,7 @@ We support 238 of 361 CSS properties (65.93%).
 * `line-height`
 * `list-style-image`
 * `list-style-position`
+* `list-style-type`
 * `margin-block-end`
 * `margin-block-start`
 * `margin-bottom`
