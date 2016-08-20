@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 240 of 361 CSS properties (66.48%).
+We support 241 of 361 CSS properties (66.76%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -86,6 +86,7 @@ We support 240 of 361 CSS properties (66.48%).
 * `background-attachment`
 * `background-color`
 * `background-clip`
+* `background-image`
 * `background-origin`
 * `background-position`
 * `background-repeat`

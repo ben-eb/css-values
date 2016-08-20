@@ -3,6 +3,7 @@ export angle from './angle';
 export animateableFeature from './animateableFeature';
 export attachment from './attachment';
 export box from './box';
+export bgImage from './bgImage';
 export brStyle from './brStyle';
 export brWidth from './brWidth';
 export color from './color';

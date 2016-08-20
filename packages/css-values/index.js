@@ -864,14 +864,14 @@ var isLengthPercentage = (function (node) {
     return isLength(node) || isPercentage(node);
 });
 
-var left = 'left';
+var left$1 = 'left';
 var center = 'center';
-var right = 'right';
-var top = 'top';
-var bottom = 'bottom';
+var right$1 = 'right';
+var top$1 = 'top';
+var bottom$1 = 'bottom';
 
-var horizontals = [left, right, center];
-var verticals = [top, bottom, center];
+var horizontals$1 = [left$1, right$1, center];
+var verticals$1 = [top$1, bottom$1, center];
 
 function isKeywordOrVar(node, keywords) {
     return isKeyword(node, keywords) || isVariable(node);
@@ -885,7 +885,7 @@ function validateGroup(group) {
     var length = group.length;
 
     if (length === 1) {
-        if (!isKeywordOrVar(group[0], [left, center, right, top, bottom]) && !isLengthPercentage(group[0])) {
+        if (!isKeywordOrVar(group[0], [left$1, center, right$1, top$1, bottom$1]) && !isLengthPercentage(group[0])) {
             return false;
         }
     }
@@ -893,24 +893,24 @@ function validateGroup(group) {
         if (!isSpace(group[1])) {
             return false;
         }
-        if (isKeywordOrVar(group[0], horizontals) && isKeywordOrVar(group[2], verticals) || isKeywordOrVar(group[0], verticals) && isKeywordOrVar(group[2], horizontals)) {
+        if (isKeywordOrVar(group[0], horizontals$1) && isKeywordOrVar(group[2], verticals$1) || isKeywordOrVar(group[0], verticals$1) && isKeywordOrVar(group[2], horizontals$1)) {
             return true;
         }
-        if (!isKeywordOrVar(group[0], horizontals) && !isLengthPercentage(group[0])) {
+        if (!isKeywordOrVar(group[0], horizontals$1) && !isLengthPercentage(group[0])) {
             return false;
         }
-        if (!isKeywordOrVar(group[2], verticals) && !isLengthPercentage(group[2])) {
+        if (!isKeywordOrVar(group[2], verticals$1) && !isLengthPercentage(group[2])) {
             return false;
         }
     }
     if (length >= 5 && length <= 7) {
-        if (isKeywordOrVar(group[0], [left, right]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals)) {
+        if (isKeywordOrVar(group[0], [left$1, right$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals$1)) {
             if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
             return true;
         }
-        if (isKeywordOrVar(group[0], [top, bottom]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals)) {
+        if (isKeywordOrVar(group[0], [top$1, bottom$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals$1)) {
             if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
                 return false;
             }
@@ -930,74 +930,6 @@ function isPositionFactory(repeating) {
         return getArguments(parsed).every(validateGroup);
     };
 }
-
-var backgroundPosition = {
-  properties: ["background-position", "mask-position"],
-  fn: isPositionFactory(true)
-};
-
-var borderBottomLeftRadius = {
-  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
-  fn: function borderBottomLeftRadius(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
-  }
-};
-
-var borderBottomStyle = {
-  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
-  fn: function borderBottomStyle(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrStyle(node);
-    }
-
-    return false;
-  }
-};
-
-var borderBottomWidth = {
-  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
-  fn: function borderBottomWidth(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrWidth(node);
-    }
-
-    return false;
-  }
-};
-
-var borderCollapse = {
-  properties: ["border-collapse"],
-  fn: isKeywordFactory(["collapse", "separate"])
-};
-
-var borderColor = {
-  properties: ["border-color"],
-  fn: function borderColor(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
 
 var resolutions = ['dpi', 'dpcm', 'dppx'];
 
@@ -1108,14 +1040,14 @@ function isColourStop(group) {
     return false;
 }
 
-var top$1 = 'top';
-var right$1 = 'right';
-var bottom$1 = 'bottom';
-var left$1 = 'left';
+var top = 'top';
+var right = 'right';
+var bottom = 'bottom';
+var left = 'left';
 
-var verticals$1 = [top$1, bottom$1];
-var horizontals$1 = [right$1, left$1];
-var directions = [].concat(horizontals$1, verticals$1);
+var verticals = [top, bottom];
+var horizontals = [right, left];
+var directions = [].concat(horizontals, verticals);
 
 function isLinearGradient(node) {
     if (!isFunction(node, 'linear-gradient') && !isFunction(node, 'repeating-linear-gradient')) {
@@ -1130,7 +1062,7 @@ function isLinearGradient(node) {
                 return true;
             }
             if (length > 1 && group[0].value === 'to' && length <= 5) {
-                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals$1) && isKeyword(group[4], verticals$1) || isKeyword(group[2], verticals$1) && isKeyword(group[4], horizontals$1);
+                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals) && isKeyword(group[4], verticals) || isKeyword(group[2], verticals) && isKeyword(group[4], horizontals);
             }
         }
         var colour = isColourStop(group);
@@ -1212,6 +1144,95 @@ function isGradient(node) {
 function isImage(node) {
     return isUrl(node) || isImageFunction(node) || isImageSet(node) || isElement(node) || isCrossFade(node) || isGradient(node);
 }
+
+function isBgImage(node) {
+    return isImage(node) || isKeyword(node, 'none');
+}
+
+var backgroundImage = {
+  properties: ["background-image"],
+  fn: function backgroundImage(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+
+var backgroundPosition = {
+  properties: ["background-position", "mask-position"],
+  fn: isPositionFactory(true)
+};
+
+var borderBottomLeftRadius = {
+  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
+  fn: function borderBottomLeftRadius(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
+  }
+};
+
+var borderBottomStyle = {
+  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
+  fn: function borderBottomStyle(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrStyle(node);
+    }
+
+    return false;
+  }
+};
+
+var borderBottomWidth = {
+  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
+  fn: function borderBottomWidth(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrWidth(node);
+    }
+
+    return false;
+  }
+};
+
+var borderCollapse = {
+  properties: ["border-collapse"],
+  fn: isKeywordFactory(["collapse", "separate"])
+};
+
+var borderColor = {
+  properties: ["border-color"],
+  fn: function borderColor(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
 
 var borderImageSource = {
   properties: ["border-image-source"],
@@ -2035,7 +2056,7 @@ var zIndex = {
   }
 };
 
-var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, minBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, paddingBlockEnd, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {

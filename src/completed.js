@@ -45,6 +45,7 @@ export default [
     'background-attachment',
     'background-color',
     'background-clip',
+    'background-image',
     'background-origin',
     'background-position',
     'background-repeat',
