@@ -186,7 +186,7 @@ Promise.all(promises).then((configs) => {
             generator.exportModules(exported),
         ])),
     }), new File({
-        path: resolve(`packages/css-values/plugin.js`),
+        path: resolve(`packages/css-values/index.js`),
         contents: new Buffer(generator.plugin()),
     }));
 
@@ -204,7 +204,7 @@ Promise.all(promises).then((configs) => {
 
     stream.on('close', () => {
         return writeBundle({
-            entry: './packages/css-values/plugin.js',
+            entry: './packages/css-values/index.js',
             dest: './packages/css-values/index.js',
             files: fileSystem,
         }).then(() => {
