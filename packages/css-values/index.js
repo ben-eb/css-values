@@ -20,7 +20,7 @@ function isKeyword(_ref, values) {
 }
 
 function isFunction(node, value) {
-    return node.type === 'function' && node.value.toLowerCase() === value;
+    return node.type === 'function' && lowercase(node.value) === value;
 }
 
 var isVariable = (function (node) {
