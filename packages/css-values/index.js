@@ -140,7 +140,7 @@ var isNumber = (function (_ref) {
         return false;
     }
     var int = unit(value);
-    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (!int.unit || /[0-9e\-]/i.test(int.unit));
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (!int.unit || /[0-9e\-]/g.test(int.unit));
 });
 
 var isPercentage = (function (_ref) {
@@ -666,6 +666,11 @@ var appearance = {
   properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
   fn: isKeywordFactory(["auto", "none"])
 };
+
+/*
+ * See the specification for more details:
+ * https://drafts.csswg.org/css-values-3/#angles
+ */
 
 var angles = ['deg', 'grad', 'rad', 'turn'];
 

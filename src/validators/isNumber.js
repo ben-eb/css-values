@@ -9,5 +9,5 @@ export default ({type, value}) => {
     return int &&
         !endsWith(int.number, '.') &&
         !~int.unit.indexOf('.') &&
-        (!int.unit || /[0-9e\-]/i.test(int.unit));
+        (!int.unit || /[0-9e\-]/g.test(int.unit));
 };
