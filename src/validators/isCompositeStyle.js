@@ -15,5 +15,3 @@ export const compositeStyles = [
 ];
 
 export default node => isKeyword(node, compositeStyles);
-
-export const type = 'node';

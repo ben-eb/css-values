@@ -7,5 +7,3 @@ export const boxes = [
 ];
 
 export default node => isKeyword(node, boxes);
-
-export const type = 'node';

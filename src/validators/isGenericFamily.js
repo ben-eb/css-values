@@ -9,5 +9,3 @@ export const genericFamilies = [
 ];
 
 export default node => isKeyword(node, genericFamilies);
-
-export const type = 'node';

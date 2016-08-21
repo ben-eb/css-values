@@ -11,5 +11,3 @@ export const absoluteSizes = [
 ];
 
 export default node => isKeyword(node, absoluteSizes);
-
-export const type = 'node';

@@ -20,5 +20,3 @@ export default ({value}) => {
         !~int.unit.indexOf('.') &&
         (int.number === '0' || ~angles.indexOf(int.unit));
 };
-
-export const type = 'node';

@@ -20,5 +20,3 @@ export const blendValues = [
 ];
 
 export default node => isKeyword(node, blendValues);
-
-export const type = 'node';

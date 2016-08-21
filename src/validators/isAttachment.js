@@ -7,5 +7,3 @@ export const attachments = [
 ];
 
 export default node => isKeyword(node, attachments);
-
-export const type = 'node';

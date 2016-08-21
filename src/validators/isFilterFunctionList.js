@@ -96,5 +96,3 @@ export default function isFilterFunctionList (parsed) {
     });
     return valid;
 }
-
-export const type = 'parsed';

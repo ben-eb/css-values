@@ -242,5 +242,3 @@ export default function isImage (node) {
            isCrossFade(node) ||
            isGradient(node);
 }
-
-export const type = 'node';

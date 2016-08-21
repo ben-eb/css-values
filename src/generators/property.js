@@ -89,7 +89,6 @@ export default opts => {
                 );
                 return config;
             }
-            const type = validators[camel].type;
             if (candidate.min === 1) {
                 let separator;
                 if (candidate.separator === ',') {
@@ -107,7 +106,7 @@ export default opts => {
                         allTruthy(
                             templateExpression(`even`),
                             allTruthy(
-                                templateExpression(`!${camel}(${type})`),
+                                templateExpression(`!${camel}(node)`),
                                 templateExpression('!isVariable(node)'),
                             ),
                         ),
@@ -134,7 +133,7 @@ export default opts => {
 
                 return config;
             }
-            config.conditions.push(templateExpression(`${camel}(${type})`));
+            config.conditions.push(templateExpression(`${camel}(node)`));
         }
         return config;
     }, {

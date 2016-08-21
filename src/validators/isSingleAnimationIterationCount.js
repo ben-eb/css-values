@@ -6,5 +6,3 @@ export const value = ['infinite'];
 export default node => {
     return  isKeyword(node, value) || isNumber(node);
 };
-
-export const type = 'node';

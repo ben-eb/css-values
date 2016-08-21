@@ -8,5 +8,3 @@ export const compositingOperators = [
 ];
 
 export default node => isKeyword(node, compositingOperators);
-
-export const type = 'node';

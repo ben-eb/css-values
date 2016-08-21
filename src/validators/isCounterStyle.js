@@ -132,5 +132,3 @@ function isSymbols (node) {
 export default function isCounterStyle (node) {
     return isCustomIdent(node) || isKeyword(node, valid) || isSymbols(node);
 }
-
-export const type = 'node';

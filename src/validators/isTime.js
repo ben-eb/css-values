@@ -13,5 +13,3 @@ export default ({value}) => {
         !~int.unit.indexOf('.') &&
         ~units.indexOf(int.unit);
 };
-
-export const type = 'node';

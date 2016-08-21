@@ -6,5 +6,3 @@ export const numericFigureValues = [
 ];
 
 export default node => isKeyword(node, numericFigureValues);
-
-export const type = 'node';

@@ -7,5 +7,3 @@ export default ({type, value}) => {
     let int = unit(value);
     return int && !~value.indexOf('.') && !int.unit;
 };
-
-export const type = 'node';

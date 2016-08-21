@@ -87,5 +87,3 @@ export default function isPositionFactory (repeating) {
         return getArguments(parsed).every(validateGroup);
     };
 }
-
-export const type = 'parsed';

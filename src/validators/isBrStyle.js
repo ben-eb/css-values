@@ -14,5 +14,3 @@ export const brStyles = [
 ];
 
 export default node => isKeyword(node, brStyles);
-
-export const type = 'node';

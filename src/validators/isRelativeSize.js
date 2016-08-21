@@ -6,5 +6,3 @@ export const relativeSizes = [
 ];
 
 export default node => isKeyword(node, relativeSizes);
-
-export const type = 'node';

@@ -8,5 +8,3 @@ export const singleAnimationDirections = [
 ];
 
 export default node => isKeyword(node, singleAnimationDirections);
-
-export const type = 'node';

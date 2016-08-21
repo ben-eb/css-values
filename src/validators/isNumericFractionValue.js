@@ -6,5 +6,3 @@ export const numericFractionValues = [
 ];
 
 export default node => isKeyword(node, numericFractionValues);
-
-export const type = 'node';

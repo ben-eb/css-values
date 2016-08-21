@@ -16,5 +16,3 @@ export default ({type, value}) => {
         !~freq.unit.indexOf('.') &&
         (freq.number === '0' || ~frequencies.indexOf(freq.unit));
 };
-
-export const type = 'node';

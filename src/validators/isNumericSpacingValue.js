@@ -6,5 +6,3 @@ export const numericSpacingValues = [
 ];
 
 export default node => isKeyword(node, numericSpacingValues);
-
-export const type = 'node';

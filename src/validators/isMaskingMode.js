@@ -7,5 +7,3 @@ export const maskingModes = [
 ];
 
 export default node => isKeyword(node, maskingModes);
-
-export const type = 'node';

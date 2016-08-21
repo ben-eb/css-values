@@ -10,5 +10,3 @@ export default ({value}) => {
         int.unit === 'fr' &&
         !isNegative(int.number);
 };
-
-export const type = 'node';

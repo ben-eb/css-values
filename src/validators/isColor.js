@@ -116,5 +116,3 @@ export default function isColor (node) {
            isNamedColor(node) ||
            isCurrentColor(node);
 }
-
-export const type = 'node';

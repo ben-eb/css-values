@@ -25,5 +25,3 @@ export default ({type, value}) => {
     }
     return !/[0-9]/.test(value[0]) && isValid(value);
 };
-
-export const type = 'node';

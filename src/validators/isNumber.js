@@ -11,5 +11,3 @@ export default ({type, value}) => {
         !~int.unit.indexOf('.') &&
         (!int.unit || /[0-9e\-]/i.test(int.unit));
 };
-
-export const type = 'node';

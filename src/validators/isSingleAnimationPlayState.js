@@ -6,5 +6,3 @@ export const singleAnimationPlayStates = [
 ];
 
 export default node => isKeyword(node, singleAnimationPlayStates);
-
-export const type = 'node';

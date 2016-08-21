@@ -67,5 +67,3 @@ export function isCubicBezier (node) {
 export default node => {
     return isTimingKeyword(node) || isSteps(node) || isCubicBezier(node);
 };
-
-export const type = 'node';

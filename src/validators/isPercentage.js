@@ -8,5 +8,3 @@ export default ({value}) => {
         !~int.unit.indexOf('.') &&
         int.unit === '%';
 };
-
-export const type = 'node';

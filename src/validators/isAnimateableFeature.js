@@ -9,5 +9,3 @@ export const animateableFeatures = [
 export default node => {
     return  isKeyword(node, animateableFeatures) || isCustomIdent(node);
 };
-
-export const type = 'node';

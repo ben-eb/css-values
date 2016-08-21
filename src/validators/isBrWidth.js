@@ -10,5 +10,3 @@ export const brWidths = [
 export default node => {
     return isLength(node) || isKeyword(node, brWidths);
 };
-
-export const type = 'node';
