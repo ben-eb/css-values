@@ -229,7 +229,7 @@ function isNamedColor(node) {
 }
 
 function isCurrentColor(node) {
-    return node.type === 'word' && node.value.toLowerCase() === 'currentcolor';
+    return isKeyword(node, 'currentcolor');
 }
 
 function isColor(node) {

@@ -104,7 +104,7 @@ export function isNamedColor (node) {
 }
 
 export function isCurrentColor (node) {
-    return node.type === 'word' && node.value.toLowerCase() === 'currentcolor';
+    return isKeyword(node, 'currentcolor');
 }
 
 export default function isColor (node) {
