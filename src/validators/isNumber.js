@@ -5,9 +5,8 @@ export default ({type, value}) => {
     if (type !== 'word') {
         return false;
     }
+
     let int = unit(value);
-    return int &&
-        !endsWith(int.number, '.') &&
-        !~int.unit.indexOf('.') &&
-        (!int.unit || /[0-9e\-]/g.test(int.unit));
+
+    return !isNaN(value) && !endsWith(int.number, '.');
 };
