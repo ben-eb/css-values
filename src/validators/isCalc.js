@@ -42,6 +42,7 @@ export default function (node) {
             if (child.value.length > 0) {
                 valid = false;
             }
+            
             if (child.nodes.length === 0 || !child.nodes) {
                 valid = false;
             }
