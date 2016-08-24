@@ -132,17 +132,12 @@ var isComma = (function (_ref) {
     return type === 'div' && value === ',';
 });
 
-var isNumber = (function (_ref) {
-    var type = _ref.type;
-    var value = _ref.value;
-
-    if (type !== 'word') {
+var isNumber = (function (node) {
+    if (node.type !== 'word') {
         return false;
     }
 
-    var int = unit(value);
-
-    return !isNaN(value) && !endsWith(int.number, '.');
+    return !isNaN(node.value) && !endsWith(node.value, '.');
 });
 
 var isPercentage = (function (_ref) {
@@ -304,7 +299,7 @@ var isTime = (function (_ref) {
 
 // import isNumber from './isNumber';
 var operators = ['+', '-', '*', '/'];
-// const operatorsRegexp = /[+\-\*\/]/g;
+var operatorsRegexp = /[+\-\*\/]/i;
 
 function isCalc (node) {
 
@@ -326,25 +321,31 @@ function isCalc (node) {
             lastNonSpaceNode = child;
         }
 
-        // only () functions and vars are allowed
-        if (child.type === 'function') {
-            if (!child.value && (child.nodes.length === 0 || !child.nodes) || !isVariable(child)) {
+        if (!isVariable(child) && child.type === 'function') {
+            if (child.value.length > 0) {
                 valid = false;
             }
-            return false;
-        }
 
+            if (child.nodes.length === 0 || !child.nodes) {
+                valid = false;
+            }
+        }
         // invalidate any invalid word node
         if (child.type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child)
         // && !isNumber(child)
         && !isPercentage(child) && operators.indexOf(child.value) < 0) {
-            // + and - must be surrounded by spaces          
+            // + and - must be surrounded by spaces
             if (child.value.indexOf('+') > 0 || child.value.indexOf('-') > 0) {
 
                 valid = false;
             }
-            // unknown word node w/o operators is invalid 
-            if (operators.indexOf(child.value[child.value.length - 1] >= 0)) {
+            // expression can't endwith operator
+            if (operators.indexOf(child.value[child.value.length - 1]) >= 0) {
+                valid = false;
+            }
+
+            // unknown word node w/o operators is invalid
+            if (!operatorsRegexp.test(child.value)) {
                 valid = false;
             }
         }

@@ -10,7 +10,7 @@ export default {
         'calc(100% - 80px)',
         'calc(80px + 2 * 1em)',
         'calc(var(--widthA) / 2)',
-        // 'calc(10px + (16px - 12px))',
+        'calc(10px + (16px - 12px))',
     ],
     invalid: [
         'calc(12px-6px)',
