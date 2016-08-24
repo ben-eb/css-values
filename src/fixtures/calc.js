@@ -3,7 +3,7 @@ export default {
         'calc(40px)',
         'calc(100%)',
         'calc(12)',
-        // 'calc(12.22)',
+        'calc(12.22)',
         'calc(90deg)',
         'calc(1500ms)',
         'calc(var(--someVar))',

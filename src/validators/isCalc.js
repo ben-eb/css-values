@@ -3,7 +3,7 @@ import isAngle from './isAngle';
 import isFunction from './isFunction';
 import isInteger from './isInteger';
 import isLength from './isLength';
-// import isNumber from './isNumber';
+import isNumber from './isNumber';
 import isTime from './isTime';
 import isPercentage from './isPercentage';
 import isVariable from './isVariable';
@@ -54,7 +54,7 @@ export default function (node) {
             && !isLength(child)
             && !isTime(child)
             && !isInteger(child)
-            // && !isNumber(child)
+            && !isNumber(child)
             && !isPercentage(child)
             && operators.indexOf(child.value) < 0
             ) {

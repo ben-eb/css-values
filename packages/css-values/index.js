@@ -297,7 +297,6 @@ var isTime = (function (_ref) {
     return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~units.indexOf(int.unit);
 });
 
-// import isNumber from './isNumber';
 var operators = ['+', '-', '*', '/'];
 var operatorsRegexp = /[+\-\*\/]/i;
 
@@ -321,6 +320,7 @@ function isCalc (node) {
             lastNonSpaceNode = child;
         }
 
+        // only variables and () fucntions are allowed
         if (!isVariable(child) && child.type === 'function') {
             if (child.value.length > 0) {
                 valid = false;
@@ -331,9 +331,7 @@ function isCalc (node) {
             }
         }
         // invalidate any invalid word node
-        if (child.type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child)
-        // && !isNumber(child)
-        && !isPercentage(child) && operators.indexOf(child.value) < 0) {
+        if (child.type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child) && !isNumber(child) && !isPercentage(child) && operators.indexOf(child.value) < 0) {
             // + and - must be surrounded by spaces
             if (child.value.indexOf('+') > 0 || child.value.indexOf('-') > 0) {
 
