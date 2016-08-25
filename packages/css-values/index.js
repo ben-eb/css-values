@@ -132,15 +132,15 @@ var isComma = (function (_ref) {
     return type === 'div' && value === ',';
 });
 
-var isNumber = (function (_ref) {
-    var type = _ref.type;
-    var value = _ref.value;
+var isNumber = (function (node) {
+    var value = node.value;
 
-    if (type !== 'word') {
+
+    if (node.type !== 'word') {
         return false;
     }
-    var int = unit(value);
-    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (!int.unit || /[0-9e\-]/g.test(int.unit));
+
+    return !isNaN(value) && !endsWith(value, '.');
 });
 
 var isPercentage = (function (_ref) {
@@ -277,16 +277,95 @@ var webkitBorderBeforeStyle = {
   }
 };
 
-var lengths = ['em', 'ex', 'ch', 'rem', 'vh', 'vw', 'vmin', 'vmax', 'px', 'q', 'mm', 'cm', 'in', 'pt', 'pc'];
+/*
+ * See the specification for more details:
+ * https://drafts.csswg.org/css-values-3/#angles
+ */
 
-var isLength = (function (_ref) {
-    var type = _ref.type;
+var angles = ['deg', 'grad', 'rad', 'turn'];
+
+var isAngle = (function (_ref) {
     var value = _ref.value;
 
-    if (type !== 'word') {
+    var int = unit(value);
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (int.number === '0' || ~angles.indexOf(int.unit));
+});
+
+var units = ['s', 'ms'];
+
+var isTime = (function (_ref) {
+    var value = _ref.value;
+
+    var int = unit(value);
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~units.indexOf(int.unit);
+});
+
+var operators = ['+', '-', '*', '/'];
+var operatorsRegExp = /[+\-\*\/]/i;
+
+function isCalc (node) {
+    if (!isFunction(node, 'calc') || !node.nodes || !node.nodes.length) {
         return false;
     }
-    var int = unit(value);
+
+    var valid = true;
+    var lastNonSpaceValue = false;
+
+    walk(node.nodes, function (child) {
+        var type = child.type;
+        var value = child.value;
+        // if an expression starts with operator
+
+        if (!lastNonSpaceValue && ~operators.indexOf(value)) {
+            valid = false;
+        }
+        // store last non space node
+        if (type !== 'space') {
+            lastNonSpaceValue = value;
+        }
+        // only variables and () functions are allowed
+        if (!isVariable(child) && type === 'function') {
+            if (value.length > 0) {
+                valid = false;
+            }
+            if (!child.nodes.length || !child.nodes) {
+                valid = false;
+            }
+        }
+        // invalidate any invalid word node
+        if (type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child) && !isNumber(child) && !isPercentage(child) && operators.indexOf(value) < 0) {
+            // + and - must be surrounded by spaces
+            if (value.indexOf('+') > 0 || value.indexOf('-') > 0) {
+                valid = false;
+            }
+            // expression can't endwith operator
+            if (~operators.indexOf(value[value.length - 1])) {
+                valid = false;
+            }
+            // unknown word node w/o operators is invalid
+            if (!operatorsRegExp.test(value)) {
+                valid = false;
+            }
+        }
+    });
+    // if an expression ends with operator
+    if (~operators.indexOf(lastNonSpaceValue)) {
+        valid = false;
+    }
+
+    return valid;
+}
+
+var lengths = ['em', 'ex', 'ch', 'rem', 'vh', 'vw', 'vmin', 'vmax', 'px', 'q', 'mm', 'cm', 'in', 'pt', 'pc'];
+
+var isLength = (function (node) {
+    if (isCalc(node)) {
+        return true;
+    }
+    if (node.type !== 'word') {
+        return false;
+    }
+    var int = unit(node.value);
     return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (int.number === '0' || ~lengths.indexOf(int.unit));
 });
 
@@ -422,15 +501,6 @@ var msFlexItemAlign = {
   properties: ["-ms-flex-item-align"],
   fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
 };
-
-var units = ['s', 'ms'];
-
-var isTime = (function (_ref) {
-    var value = _ref.value;
-
-    var int = unit(value);
-    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~units.indexOf(int.unit);
-});
 
 var animationDelay = {
   properties: ["animation-delay", "animation-duration", "transition-delay", "transition-duration"],
@@ -666,20 +736,6 @@ var appearance = {
   properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
   fn: isKeywordFactory(["auto", "none"])
 };
-
-/*
- * See the specification for more details:
- * https://drafts.csswg.org/css-values-3/#angles
- */
-
-var angles = ['deg', 'grad', 'rad', 'turn'];
-
-var isAngle = (function (_ref) {
-    var value = _ref.value;
-
-    var int = unit(value);
-    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && (int.number === '0' || ~angles.indexOf(int.unit));
-});
 
 function isNumberOrPercentageFactory(name) {
     return function isNumberOrPercentage(node) {

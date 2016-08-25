@@ -1,13 +1,11 @@
-import {unit} from 'postcss-value-parser';
 import endsWith from 'ends-with';
 
-export default ({type, value}) => {
-    if (type !== 'word') {
+export default (node) => {
+    const {value} = node;
+    
+    if (node.type !== 'word') {
         return false;
     }
-    let int = unit(value);
-    return int &&
-        !endsWith(int.number, '.') &&
-        !~int.unit.indexOf('.') &&
-        (!int.unit || /[0-9e\-]/g.test(int.unit));
+
+    return !isNaN(value) && !endsWith(value, '.');
 };
