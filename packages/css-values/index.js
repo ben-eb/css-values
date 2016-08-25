@@ -133,11 +133,14 @@ var isComma = (function (_ref) {
 });
 
 var isNumber = (function (node) {
+    var value = node.value;
+
+
     if (node.type !== 'word') {
         return false;
     }
 
-    return !isNaN(node.value) && !endsWith(node.value, '.');
+    return !isNaN(value) && !endsWith(value, '.');
 });
 
 var isPercentage = (function (_ref) {
@@ -298,59 +301,55 @@ var isTime = (function (_ref) {
 });
 
 var operators = ['+', '-', '*', '/'];
-var operatorsRegexp = /[+\-\*\/]/i;
+var operatorsRegExp = /[+\-\*\/]/i;
 
 function isCalc (node) {
-
-    if (!isFunction(node, 'calc') || !node.nodes || node.nodes.length === 0) {
+    if (!isFunction(node, 'calc') || !node.nodes || !node.nodes.length) {
         return false;
     }
+
     var valid = true;
-    var lastNonSpaceNode = false;
+    var lastNonSpaceValue = false;
 
     walk(node.nodes, function (child) {
-
+        var type = child.type;
+        var value = child.value;
         // if an expression starts with operator
-        if (!lastNonSpaceNode && ~operators.indexOf(child.value)) {
+
+        if (!lastNonSpaceValue && ~operators.indexOf(value)) {
             valid = false;
         }
-
         // store last non space node
-        if (child.type !== 'space') {
-            lastNonSpaceNode = child;
+        if (type !== 'space') {
+            lastNonSpaceValue = value;
         }
-
-        // only variables and () fucntions are allowed
-        if (!isVariable(child) && child.type === 'function') {
-            if (child.value.length > 0) {
+        // only variables and () functions are allowed
+        if (!isVariable(child) && type === 'function') {
+            if (value.length > 0) {
                 valid = false;
             }
-
-            if (child.nodes.length === 0 || !child.nodes) {
+            if (!child.nodes.length || !child.nodes) {
                 valid = false;
             }
         }
         // invalidate any invalid word node
-        if (child.type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child) && !isNumber(child) && !isPercentage(child) && operators.indexOf(child.value) < 0) {
+        if (type === 'word' && !isAngle(child) && !isLength(child) && !isTime(child) && !isInteger(child) && !isNumber(child) && !isPercentage(child) && operators.indexOf(value) < 0) {
             // + and - must be surrounded by spaces
-            if (child.value.indexOf('+') > 0 || child.value.indexOf('-') > 0) {
-
+            if (value.indexOf('+') > 0 || value.indexOf('-') > 0) {
                 valid = false;
             }
             // expression can't endwith operator
-            if (operators.indexOf(child.value[child.value.length - 1]) >= 0) {
+            if (~operators.indexOf(value[value.length - 1])) {
                 valid = false;
             }
-
             // unknown word node w/o operators is invalid
-            if (!operatorsRegexp.test(child.value)) {
+            if (!operatorsRegExp.test(value)) {
                 valid = false;
             }
         }
     });
-
     // if an expression ends with operator
-    if (~operators.indexOf(lastNonSpaceNode.value)) {
+    if (~operators.indexOf(lastNonSpaceValue)) {
         valid = false;
     }
 
