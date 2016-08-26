@@ -41,3 +41,4 @@ export blendMode from './blendMode';
 export singleAnimationIterationCount from './singleAnimationIterationCount';
 export url from './url';
 export uri from './uri';
+export geometryBox from './geometryBox';
