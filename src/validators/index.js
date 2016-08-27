@@ -4,6 +4,7 @@ export * as isAnimateableFeature from './isAnimateableFeature';
 export * as isAttachment from './isAttachment';
 export * as isBox from './isBox';
 export * as isBgImage from './isBgImage';
+export * as isBgSize from './isBgSize';
 export * as isBrStyle from './isBrStyle';
 export * as isBrWidth from './isBrWidth';
 export * as isColor from './isColor';

@@ -39,6 +39,14 @@ function handleKeywords (keywords, settings) {
     }
 }
 
+function generateBgSizeValidator ({identifier, properties}) {
+    const func = 'isBgSize';
+    return generateProgram([
+        requireModules(getValidator(func)),
+        generateValidatorStub(identifier, properties, t.identifier(func)),
+    ]);
+}
+
 function generatePositionValidator ({candidates, identifier, properties}) {
     const func = 'isPosition';
     return generateProgram([
@@ -61,6 +69,8 @@ function generateRepeatValidator ({identifier, properties}) {
 export default opts => {
     if (opts.candidates.length === 1) {
         switch (opts.candidates[0].value) {
+        case 'bg-size':
+            return generateBgSizeValidator(opts);
         case 'position':
             return generatePositionValidator(opts);
         case 'repeat-style':
