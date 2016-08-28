@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 245 of 361 CSS properties (67.87%).
+We support 246 of 361 CSS properties (68.14%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -199,6 +199,7 @@ We support 245 of 361 CSS properties (67.87%).
 * `marker-offset`
 * `mask-composite`
 * `mask-mode`
+* `mask-origin`
 * `mask-position`
 * `mask-repeat`
 * `mask-size`

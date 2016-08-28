@@ -158,6 +158,7 @@ export default [
     'marker-offset',
     'mask-composite',
     'mask-mode',
+    'mask-origin',
     'mask-position',
     'mask-repeat',
     'mask-size',
