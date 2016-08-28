@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 244 of 361 CSS properties (67.59%).
+We support 245 of 361 CSS properties (67.87%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -59,6 +59,7 @@ We support 244 of 361 CSS properties (67.59%).
 * `-webkit-border-before-color`
 * `-webkit-border-before-style`
 * `-webkit-border-before-width`
+* `-webkit-mask-attachment`
 * `-webkit-mask-repeat`
 * `-webkit-mask-repeat-x`
 * `-webkit-mask-repeat-y`

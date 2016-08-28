@@ -393,6 +393,29 @@ var webkitBorderBeforeWidth = {
   }
 };
 
+var attachments = ['scroll', 'fixed', 'local'];
+
+var isAttachment = (function (node) {
+    return isKeyword(node, attachments);
+});
+
+var webkitMaskAttachment = {
+  properties: ["-webkit-mask-attachment", "background-attachment"],
+  fn: function webkitMaskAttachment(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+
 var singleValues = ['repeat-x', 'repeat-y'];
 
 var multipleValues = ['repeat', 'space', 'round', 'no-repeat'];
@@ -832,29 +855,6 @@ var backdropFilter = {
 var backfaceVisibility = {
   properties: ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"],
   fn: isKeywordFactory(["visible", "hidden"])
-};
-
-var attachments = ['scroll', 'fixed', 'local'];
-
-var isAttachment = (function (node) {
-    return isKeyword(node, attachments);
-});
-
-var backgroundAttachment = {
-  properties: ["background-attachment"],
-  fn: function backgroundAttachment(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
 };
 
 var blendValues = ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
@@ -2270,7 +2270,7 @@ var zIndex = {
   }
 };
 
-var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundAttachment, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, backgroundSize, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
+var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskAttachment, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, backgroundSize, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskType, maxBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textSizeAdjust, textTransform, transform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
 
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {

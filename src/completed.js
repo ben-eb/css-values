@@ -18,6 +18,7 @@ export default [
     '-webkit-border-before-color',
     '-webkit-border-before-style',
     '-webkit-border-before-width',
+    '-webkit-mask-attachment',
     '-webkit-mask-repeat',
     '-webkit-mask-repeat-x',
     '-webkit-mask-repeat-y',
