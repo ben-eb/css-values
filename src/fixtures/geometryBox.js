@@ -1,5 +1,4 @@
 import {geometryBoxes, nonStandardKeywords} from '../validators/isGeometryBox';
-import globals from '../util/globals';
 import boxes from './box';
 
 export default {
@@ -7,7 +6,6 @@ export default {
         ...geometryBoxes,
         ...nonStandardKeywords,
         ...boxes.valid,
-        ...globals,
         'view-box, fill-box, border-box',
     ],
     invalid: [

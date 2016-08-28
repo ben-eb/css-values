@@ -1,5 +1,3 @@
-import {walk} from 'postcss-value-parser';
-import globals from '../util/globals';
 import isKeyword from './isKeyword';
 import isBox from './isBox';
 
@@ -17,20 +15,7 @@ export const nonStandardKeywords = [
 ];
 
 export default (node) => {
-    let valid = true;
-    if (node.nodes) {
-        walk(node.nodes, (child) => {
-            if (!isBox(child) && !isKeyword(child, geometryBoxes)) {
-                valid = false;
-            }
-        });
-    } else if (!isBox(node)
-        && !isKeyword(node, geometryBoxes)
-        && !isKeyword(node, nonStandardKeywords)
-        && !isKeyword(node, globals) ) {
-        valid = false;
-    }
-    return valid;
+    return isBox(node)
+        || isKeyword(node, geometryBoxes)
+        || isKeyword(node, nonStandardKeywords);
 };
-
-export const type = 'node';
