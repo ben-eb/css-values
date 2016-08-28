@@ -116,7 +116,7 @@ const horizontals = [right, left];
 const directions = [...horizontals, ...verticals];
 
 function isLinearGradient (node) {
-    if (!isFunction(node, 'linear-gradient') && !isFunction(node, 'repeating-linear-gradient')) {
+    if (!isFunction(node, ['linear-gradient', 'repeating-linear-gradient'])) {
         return false;
     }
     let colours = 0;
@@ -162,7 +162,7 @@ function isAt ({value}) {
 }
 
 function isRadialGradient (node) {
-    if (!isFunction(node, 'radial-gradient') && !isFunction(node, 'repeating-radial-gradient')) {
+    if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {
         return false;
     }
     let colours = 0;

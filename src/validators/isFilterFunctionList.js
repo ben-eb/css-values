@@ -8,23 +8,23 @@ import isPercentage from './isPercentage';
 import isSpace from './isSpace';
 import isVariable from './isVariable';
 
-function isNumberOrPercentageFactory (name) {
-    return function isNumberOrPercentage (node) {
-        if (!isFunction(node, name)) {
-            return false;
-        }
-        const {nodes} = node;
-        return nodes.length === 1 && (isNumber(nodes[0]) || isPercentage(nodes[0]));
-    };
-}
+const numberPercentages = [
+    'brightness',
+    'contrast',
+    'grayscale',
+    'invert',
+    'opacity',
+    'sepia',
+    'saturate',
+];
 
-const isBrightness = isNumberOrPercentageFactory('brightness');
-const isContrast = isNumberOrPercentageFactory('contrast');
-const isGrayscale = isNumberOrPercentageFactory('grayscale');
-const isInvert = isNumberOrPercentageFactory('invert');
-const isOpacity = isNumberOrPercentageFactory('opacity');
-const isSepia = isNumberOrPercentageFactory('sepia');
-const isSaturate = isNumberOrPercentageFactory('saturate');
+function isNumberOrPercentage (node) {
+    if (!isFunction(node, numberPercentages)) {
+        return false;
+    }
+    const {nodes} = node;
+    return nodes.length === 1 && (isNumber(nodes[0]) || isPercentage(nodes[0]));
+}
 
 function isBlur (node) {
     if (!isFunction(node, 'blur')) {
@@ -71,15 +71,9 @@ function isHueRotate (node) {
 
 function isFilterFunction (node) {
     return isBlur(node) ||
-           isBrightness(node) ||
-           isContrast(node) ||
            isDropShadow(node) ||
-           isGrayscale(node) ||
            isHueRotate(node) ||
-           isInvert(node) ||
-           isOpacity(node) ||
-           isSepia(node) ||
-           isSaturate(node);
+           isNumberOrPercentage(node);
 }
 
 export default function isFilterFunctionList (parsed) {

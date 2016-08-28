@@ -19,8 +19,14 @@ function isKeyword(_ref, values) {
     return lowercase(value) === values;
 }
 
-function isFunction(node, value) {
-    return node.type === 'function' && lowercase(node.value) === value;
+function isFunction(node, values) {
+    if (node.type !== 'function') {
+        return false;
+    }
+    if (Array.isArray(values)) {
+        return ~values.map(lowercase).indexOf(lowercase(node.value));
+    }
+    return lowercase(node.value) === values;
 }
 
 var isVariable = (function (node) {
@@ -732,24 +738,16 @@ var appearance = {
   fn: isKeywordFactory(["auto", "none"])
 };
 
-function isNumberOrPercentageFactory(name) {
-    return function isNumberOrPercentage(node) {
-        if (!isFunction(node, name)) {
-            return false;
-        }
-        var nodes = node.nodes;
+var numberPercentages = ['brightness', 'contrast', 'grayscale', 'invert', 'opacity', 'sepia', 'saturate'];
 
-        return nodes.length === 1 && (isNumber(nodes[0]) || isPercentage(nodes[0]));
-    };
+function isNumberOrPercentage(node) {
+    if (!isFunction(node, numberPercentages)) {
+        return false;
+    }
+    var nodes = node.nodes;
+
+    return nodes.length === 1 && (isNumber(nodes[0]) || isPercentage(nodes[0]));
 }
-
-var isBrightness = isNumberOrPercentageFactory('brightness');
-var isContrast = isNumberOrPercentageFactory('contrast');
-var isGrayscale = isNumberOrPercentageFactory('grayscale');
-var isInvert = isNumberOrPercentageFactory('invert');
-var isOpacity = isNumberOrPercentageFactory('opacity');
-var isSepia = isNumberOrPercentageFactory('sepia');
-var isSaturate = isNumberOrPercentageFactory('saturate');
 
 function isBlur(node) {
     if (!isFunction(node, 'blur')) {
@@ -797,7 +795,7 @@ function isHueRotate(node) {
 }
 
 function isFilterFunction(node) {
-    return isBlur(node) || isBrightness(node) || isContrast(node) || isDropShadow(node) || isGrayscale(node) || isHueRotate(node) || isInvert(node) || isOpacity(node) || isSepia(node) || isSaturate(node);
+    return isBlur(node) || isDropShadow(node) || isHueRotate(node) || isNumberOrPercentage(node);
 }
 
 function isFilterFunctionList(parsed) {
@@ -1106,7 +1104,7 @@ var horizontals = [right, left];
 var directions = [].concat(horizontals, verticals);
 
 function isLinearGradient(node) {
-    if (!isFunction(node, 'linear-gradient') && !isFunction(node, 'repeating-linear-gradient')) {
+    if (!isFunction(node, ['linear-gradient', 'repeating-linear-gradient'])) {
         return false;
     }
     var colours = 0;
@@ -1146,7 +1144,7 @@ function isAt(_ref2) {
 }
 
 function isRadialGradient(node) {
-    if (!isFunction(node, 'radial-gradient') && !isFunction(node, 'repeating-radial-gradient')) {
+    if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {
         return false;
     }
     var colours = 0;
