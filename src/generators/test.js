@@ -80,7 +80,7 @@ function createTests ({properties, candidates, identifier}) {
             if (!fixtures[camel]) {
                 return list;
             }
-            if (camel === 'filterFunctionList') {
+            if (camel === 'filterFunctionList' || camel === 'transformList') {
                 candidate.min = 1;
                 candidate.separator = ' ';
             }

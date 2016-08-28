@@ -37,6 +37,7 @@ export * as isSingleAnimationPlayState from './isSingleAnimationPlayState';
 export * as isSingleTransitionTimingFunction from './isSingleTransitionTimingFunction';
 export * as isString from './isString';
 export * as isTime from './isTime';
+export * as isTransformList from './isTransformList';
 export * as isVariable from './isVariable';
 export * as isBlendMode from './isBlendMode';
 export * as isSingleAnimationIterationCount from './isSingleAnimationIterationCount';

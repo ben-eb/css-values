@@ -99,6 +99,12 @@ export default opts => {
                 );
                 return config;
             }
+            if (camel === 'isTransformList') {
+                config.preConditions.push(
+                    template(`if (${camel}(parsed)) { return true;}`)()
+                );
+                return config;
+            }
             if (candidate.min === 1) {
                 let separator;
                 if (candidate.separator === ',') {

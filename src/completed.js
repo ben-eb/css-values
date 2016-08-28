@@ -229,6 +229,7 @@ export default [
     'text-size-adjust',
     'text-transform',
     'top',
+    'transform',
     'transform-box',
     'transform-style',
     'transition-delay',
