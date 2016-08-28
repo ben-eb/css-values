@@ -44,3 +44,4 @@ export * as isSingleAnimationIterationCount from './isSingleAnimationIterationCo
 export * as isUrl from './isUrl';
 export * as isUri from './isUri';
 export * as isCalc from './isCalc';
+export * as isGeometryBox from './isGeometryBox';
