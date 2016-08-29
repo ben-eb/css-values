@@ -91,6 +91,9 @@ function createTests ({properties, candidates, identifier}) {
             list.push.apply(list, values.invalid.map(fixture => {
                 return createTest(identifier, fixture, false);
             }));
+            if (camel === 'shadowT') {
+                return list;
+            }
             if (candidate.min === 1) {
                 if (candidate.max === false && candidate.separator === ',') {
                     list.push(

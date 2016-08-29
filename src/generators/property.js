@@ -93,15 +93,9 @@ export default opts => {
                 );
                 return config;
             }
-            if (camel === 'isFilterFunctionList') {
+            if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
                 config.preConditions.push(
                     template(`if (${camel}(parsed)) { return true; }`)()
-                );
-                return config;
-            }
-            if (camel === 'isTransformList') {
-                config.preConditions.push(
-                    template(`if (${camel}(parsed)) { return true;}`)()
                 );
                 return config;
             }

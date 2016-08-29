@@ -42,7 +42,7 @@ complete any auxiliary functionality afterwards.
 
 ## Property support
 
-We support 246 of 361 CSS properties (68.14%).
+We support 247 of 361 CSS properties (68.42%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -269,6 +269,7 @@ We support 246 of 361 CSS properties (68.14%).
 * `text-emphasis-color`
 * `text-orientation`
 * `text-rendering`
+* `text-shadow`
 * `text-size-adjust`
 * `text-transform`
 * `top`

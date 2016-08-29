@@ -228,6 +228,7 @@ export default [
     'text-emphasis-color',
     'text-orientation',
     'text-rendering',
+    'text-shadow',
     'text-size-adjust',
     'text-transform',
     'top',

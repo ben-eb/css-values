@@ -30,6 +30,7 @@ export position from './position';
 export relativeSize from './relativeSize';
 export repeatStyle from './repeatStyle';
 export resolution from './resolution';
+export shadowT from './shadowT';
 export singleAnimationDirection from './singleAnimationDirection';
 export singleAnimationFillMode from './singleAnimationFillMode';
 export singleAnimationName from './singleAnimationName';
