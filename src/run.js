@@ -8,7 +8,6 @@ import map from 'map-stream';
 import * as generator from './generators/index';
 import * as log from './loggers/html';
 import dataValidator from './util/dataValidator';
-import formatGroup from './util/formatGroup';
 import handleError from './util/handleError';
 import writeBundle from './util/writeBundle';
 import {properties} from './data';
@@ -80,7 +79,6 @@ properties.forEach(property => {
         return;
     }
     log.pass(property.name, property.syntax, parsed);
-    let group = property.groups.map(formatGroup)[0];
     let promise = prefixer({
         property: property.name,
         values: getExclusives(parsed),
@@ -112,7 +110,6 @@ properties.forEach(property => {
 
                 config.push({
                     identifier,
-                    group,
                     properties: merge.properties,
                     candidates,
                 });
