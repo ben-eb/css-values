@@ -165,9 +165,7 @@ Promise.all(promises).then((configs) => {
     fileSystem.push(new File({
         path: resolve(`packages/css-values/index.js`),
         contents: new Buffer(generator.property(validatorConfig)),
-    }));
-
-    fileSystem.push(new File({
+    }), new File({
         path: resolve(`packages/css-values/test.js`),
         contents: new Buffer(generator.test(validatorConfig)),
     }));
@@ -184,15 +182,13 @@ Promise.all(promises).then((configs) => {
             entry: './packages/css-values/index.js',
             dest: './packages/css-values/index.js',
             files: fileSystem,
-        }).then(() => {
-            return writeBundle({
-                entry: './packages/css-values/test.js',
-                dest: './packages/css-values/test.js',
-                files: fileSystem,
-                external: [
-                    resolve('./packages/css-values/index.js'),
-                ],
-            }).catch(handleError);
-        }).catch(handleError);
+        }).then(writeBundle({
+            entry: './packages/css-values/test.js',
+            dest: './packages/css-values/test.js',
+            files: fileSystem,
+            external: [
+                resolve('./packages/css-values/index.js'),
+            ],
+        })).catch(handleError);
     });
 }).catch(handleError);
