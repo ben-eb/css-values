@@ -1,4 +1,4 @@
-import lowercase from './lowercase';
+import lowercase from '../util/lowercase';
 
 export default function isKeyword ({type, value}, values) {
     if (type !== 'word') {

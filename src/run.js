@@ -136,7 +136,6 @@ function renamer (path) {
 
 Promise.all(promises).then((configs) => {
     const fileSystem = [];
-    const testFiles = [];
     const outputs = configs.reduce((list, configArray) => {
         configArray.forEach(config => {
             const canMerge = Object.keys(list).some(key => {
@@ -168,12 +167,12 @@ Promise.all(promises).then((configs) => {
         contents: new Buffer(generator.property(validatorConfig)),
     }));
 
-    testFiles.push(new File({
+    fileSystem.push(new File({
         path: resolve(`packages/css-values/test.js`),
         contents: new Buffer(generator.test(validatorConfig)),
     }));
 
-    const stream = vfs.src('./src/validators/**/*.js', {base: process.cwd()})
+    const stream = vfs.src(['./src/util/**/*.js', './src/validators/**/*.js'], {base: process.cwd()})
         .pipe(rename(renamer))
         .pipe(map((file, cb) => {
             fileSystem.push(file);
@@ -186,23 +185,14 @@ Promise.all(promises).then((configs) => {
             dest: './packages/css-values/index.js',
             files: fileSystem,
         }).then(() => {
-            const testStream = vfs.src('./src/util/**/*.js', {base: process.cwd()})
-                .pipe(rename(renamer))
-                .pipe(map((file, cb) => {
-                    testFiles.push(file);
-                    cb(null, file);
-                }));
-
-            testStream.on('close', () => {
-                return writeBundle({
-                    entry: './packages/css-values/test.js',
-                    dest: './packages/css-values/test.js',
-                    files: testFiles,
-                    external: [
-                        resolve('./packages/css-values/index.js'),
-                    ],
-                }).catch(handleError);
-            });
+            return writeBundle({
+                entry: './packages/css-values/test.js',
+                dest: './packages/css-values/test.js',
+                files: fileSystem,
+                external: [
+                    resolve('./packages/css-values/index.js'),
+                ],
+            }).catch(handleError);
         }).catch(handleError);
     });
 }).catch(handleError);

@@ -1,4 +1,4 @@
-import lowercase from './lowercase';
+import lowercase from '../util/lowercase';
 
 export default function isFunction (node, values) {
     if (node.type !== 'function') {
