@@ -45,3 +45,4 @@ export singleAnimationIterationCount from './singleAnimationIterationCount';
 export url from './url';
 export uri from './uri';
 export geometryBox from './geometryBox';
+export trackSize from './trackSize';
