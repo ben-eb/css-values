@@ -58,82 +58,91 @@ function genericValidatorStub (name, {identifier, properties}) {
     return generateValidatorStub(identifier, properties, t.identifier(name));
 }
 
+function keyword (config, candidate) {
+    config.keywords.push(candidate.value);
+    return config;
+}
+
+function dataString (config, candidate) {
+    const camel = candidate.type === 'string' ? 'isString' : dataValidator(candidate.value);
+    if (!validators[camel]) {
+        return config;
+    }
+    addDependency(camel);
+    if (camel === 'isPosition') {
+        config.preConditions.push(
+            template(`if (${camel}(true)(parsed)) { return true; }`)()
+        );
+        return config;
+    }
+    if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
+        config.preConditions.push(
+            template(`if (${camel}(parsed)) { return true; }`)()
+        );
+        return config;
+    }
+    if (candidate.min === 1) {
+        const method = candidate.separator === ',' ? 'isComma' : 'isSpace';
+        const separator = `!${method}(node)`;
+        addDependency(method);
+
+        config.repeatingConditions.push(
+            ifAnyTruthy([
+                allTruthy(
+                    templateExpression(`even`),
+                    allTruthy(
+                        templateExpression(`!${camel}(node)`),
+                        templateExpression('!isVariable(node)'),
+                    ),
+                ),
+                allTruthy(
+                    templateExpression(`!even`),
+                    templateExpression(separator),
+                ),
+            ], [
+                t.expressionStatement(
+                    t.assignmentExpression(
+                        '=',
+                        t.identifier('valid'),
+                        t.booleanLiteral(false)
+                    ),
+                ),
+            ])
+        );
+        const tmpl = `return valid && parsed.nodes.length % 2 !== 0`;
+        if (candidate.max !== false) {
+            config.repeatingReturn = template(`${tmpl} && parsed.nodes.length <= ${(candidate.max * 2) - 1};`)();
+        } else {
+            config.repeatingReturn = template(`${tmpl};`)();
+        }
+
+        return config;
+    }
+    config.conditions.push(templateExpression(`${camel}(node)`));
+    return config;
+}
+
+const candidateTypes = {
+    keyword,
+    data: dataString,
+    string: dataString,
+};
+
 function createValidator (opts) {
     if (opts.candidates.length === 1) {
-        switch (opts.candidates[0].value) {
+        const {value} = opts.candidates[0];
+        switch (value) {
         case 'bg-size':
-            return genericValidatorStub('isBgSize', opts);
+        case 'repeat-style':
+            return genericValidatorStub(dataValidator(value), opts);
         case 'position':
             return generatePositionValidator(opts);
-        case 'repeat-style':
-            return genericValidatorStub('isRepeatStyle', opts);
         }
     }
     const settings = opts.candidates.reduce((config, candidate) => {
-        if (candidate.type === 'keyword') {
-            config.keywords.push(candidate.value);
-        }
-        if (candidate.type === 'data' || candidate.type === 'string') {
-            const camel = candidate.type === 'string' ? 'isString' : dataValidator(candidate.value);
-            if (!validators[camel]) {
-                return config;
-            }
-            addDependency(camel);
-            if (camel === 'isPosition') {
-                config.preConditions.push(
-                    template(`if (${camel}(true)(parsed)) { return true; }`)()
-                );
-                return config;
-            }
-            if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
-                config.preConditions.push(
-                    template(`if (${camel}(parsed)) { return true; }`)()
-                );
-                return config;
-            }
-            if (candidate.min === 1) {
-                let separator;
-                if (candidate.separator === ',') {
-                    separator = `!isComma(node)`;
-                    addDependency('isComma');
-                } else {
-                    separator = `!isSpace(node)`;
-                    addDependency('isSpace');
-                }
-
-                config.repeatingConditions.push(
-                    ifAnyTruthy([
-                        allTruthy(
-                            templateExpression(`even`),
-                            allTruthy(
-                                templateExpression(`!${camel}(node)`),
-                                templateExpression('!isVariable(node)'),
-                            ),
-                        ),
-                        allTruthy(
-                            templateExpression(`!even`),
-                            templateExpression(separator),
-                        ),
-                    ], [
-                        t.expressionStatement(
-                            t.assignmentExpression(
-                                '=',
-                                t.identifier('valid'),
-                                t.booleanLiteral(false)
-                            ),
-                        ),
-                    ])
-                );
-                const tmpl = `return valid && parsed.nodes.length % 2 !== 0`;
-                if (candidate.max !== false) {
-                    config.repeatingReturn = template(`${tmpl} && parsed.nodes.length <= ${(candidate.max * 2) - 1};`)();
-                } else {
-                    config.repeatingReturn = template(`${tmpl};`)();
-                }
-
-                return config;
-            }
-            config.conditions.push(templateExpression(`${camel}(node)`));
+        const {type} = candidate;
+        if (candidateTypes[type]) {
+            return candidateTypes[type](config, candidate);
         }
         return config;
     }, {
