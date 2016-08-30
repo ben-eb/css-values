@@ -1,11 +1,12 @@
 import * as t from 'babel-types';
+import * as validators from '../validators';
 import arrayOfStrings from '../util/arrayOfStrings';
 import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditionals';
 import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
+import globals from '../util/globals';
 import template from '../util/moduleTemplate';
 import templateExpression from '../util/templateExpression';
-import * as validators from '../validators';
 import generateProgram from './program';
 import requireModules from './requireModules';
 import validator, {generateValidatorStub} from './validator';
@@ -15,66 +16,57 @@ const parsedNodes = t.memberExpression(
     t.identifier('nodes')
 );
 
-function getValidator (identifier) {
-    return {
-        identifier,
-        module: `../../validators/${identifier}`,
-    };
-}
-
-function handleKeywords (keywords, settings) {
+function handleKeywords (keywords, settings, id) {
     if (!settings.keywords.length) {
         return;
     }
     const isKeyword = 'isKeyword';
-    settings.dependencies.push(getValidator(isKeyword));
     if (settings.keywords.length === 1) {
         settings.conditions.push(templateExpression(`${isKeyword}(node, "${settings.keywords[0]}")`));
     } else {
-        settings.conditions.push(templateExpression(`${isKeyword}(node, keywords)`));
+        settings.conditions.push(templateExpression(`${isKeyword}(node, ${id}Keywords)`));
         keywords.push(createConst(
-            t.identifier('keywords'),
+            t.identifier(`${id}Keywords`),
             arrayOfStrings(settings.keywords.filter(Boolean))
         ));
     }
 }
 
-function generateBgSizeValidator ({identifier, properties}) {
-    const func = 'isBgSize';
-    return generateProgram([
-        requireModules(getValidator(func)),
-        generateValidatorStub(identifier, properties, t.identifier(func)),
-    ]);
+const dependencies = {
+    valueParser: 'postcss-value-parser',
+    isKeyword: './validators/isKeyword',
+    isVariable: './validators/isVariable',
+};
+
+function addDependency (dep) {
+    if (!dependencies[dep]) {
+        dependencies[dep] = `./validators/${dep}`;
+    }
 }
 
 function generatePositionValidator ({candidates, identifier, properties}) {
     const func = 'isPosition';
-    return generateProgram([
-        requireModules(getValidator(func)),
-        generateValidatorStub(identifier, properties, t.callExpression(
-            t.identifier(func),
-            [t.booleanLiteral(candidates[0].separator === ',')]
-        )),
-    ]);
+    addDependency(func);
+    return generateValidatorStub(identifier, properties, t.callExpression(
+        t.identifier(func),
+        [t.booleanLiteral(candidates[0].separator === ',')]
+    ));
 }
 
-function generateRepeatValidator ({identifier, properties}) {
-    const func = 'isRepeatStyle';
-    return generateProgram([
-        requireModules(getValidator(func)),
-        generateValidatorStub(identifier, properties, t.identifier(func)),
-    ]);
+function genericValidatorStub (name, {identifier, properties}) {
+    addDependency(name);
+    return generateValidatorStub(identifier, properties, t.identifier(name));
 }
 
-export default opts => {
+function createValidator (opts) {
     if (opts.candidates.length === 1) {
         switch (opts.candidates[0].value) {
         case 'bg-size':
-            return generateBgSizeValidator(opts);
+            return genericValidatorStub('isBgSize', opts);
         case 'position':
             return generatePositionValidator(opts);
         case 'repeat-style':
-            return generateRepeatValidator(opts);
+            return genericValidatorStub('isRepeatStyle', opts);
         }
     }
     const settings = opts.candidates.reduce((config, candidate) => {
@@ -86,7 +78,7 @@ export default opts => {
             if (!validators[camel]) {
                 return config;
             }
-            config.dependencies.push(getValidator(camel));
+            addDependency(camel);
             if (camel === 'isPosition') {
                 config.preConditions.push(
                     template(`if (${camel}(true)(parsed)) { return true; }`)()
@@ -103,13 +95,11 @@ export default opts => {
                 let separator;
                 if (candidate.separator === ',') {
                     separator = `!isComma(node)`;
-                    config.dependencies.push(getValidator('isComma'));
+                    addDependency('isComma');
                 } else {
                     separator = `!isSpace(node)`;
-                    config.dependencies.push(getValidator('isSpace'));
+                    addDependency('isSpace');
                 }
-
-                config.dependencies.push(getValidator('isVariable'));
 
                 config.repeatingConditions.push(
                     ifAnyTruthy([
@@ -151,14 +141,13 @@ export default opts => {
         conditions: [],
         preConditions: [],
         repeatingConditions: [],
-        dependencies: [],
         repeatingReturn: false,
     });
 
     let keywords = [];
 
     if (settings.repeatingConditions.length) {
-        handleKeywords(keywords, settings);
+        handleKeywords(keywords, settings, opts.identifier);
 
         const prevalid = settings.conditions.length ? [
             createConst(
@@ -184,8 +173,7 @@ export default opts => {
             ]),
         ] : [t.emptyStatement()];
 
-        return generateProgram([
-            requireModules(...settings.dependencies),
+        return [
             ...keywords,
             validator(opts.identifier, opts.properties, [
                 ...prevalid,
@@ -203,22 +191,21 @@ export default opts => {
                     POSTCONDITIONS: settings.repeatingReturn ? settings.repeatingReturn : t.emptyStatement(),
                 }),
             ]),
-        ]);
+        ];
     }
 
     if (settings.keywords.length) {
         if (!settings.conditions.length && !settings.preConditions.length) {
             const identifier = 'isKeywordFactory';
-            settings.dependencies.push(getValidator(identifier));
-            return generateProgram([
-                requireModules(...settings.dependencies),
+            addDependency(identifier);
+            return [
                 generateValidatorStub(opts.identifier, opts.properties, t.callExpression(
                     t.identifier(identifier),
                     [arrayOfStrings(settings.keywords.filter(Boolean))]
                 )),
-            ]);
+            ];
         }
-        handleKeywords(keywords, settings);
+        handleKeywords(keywords, settings, opts.identifier);
     }
 
     let block;
@@ -241,8 +228,7 @@ export default opts => {
         ];
     }
 
-    return generateProgram([
-        requireModules(...settings.dependencies),
+    return [
         ...keywords,
         validator(opts.identifier, opts.properties, [
             ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
@@ -259,5 +245,55 @@ export default opts => {
             ),
             t.returnStatement(t.booleanLiteral(false)),
         ]),
+    ];
+}
+
+function generateValidatorsList (config) {
+    return t.arrayExpression(config.map(({identifier}) => {
+        return t.identifier(identifier);
+    }));
+}
+
+export default config => {
+    const funcs = config.reduce((list, descriptor) => {
+        const fn = createValidator(descriptor);
+        if (fn) {
+            return [...list, fn];
+        }
+        return list;
+    }, []);
+    return generateProgram([
+        requireModules(...Object.keys(dependencies).map(key => {
+            return {
+                identifier: key,
+                module: dependencies[key],
+            };
+        })),
+        ...funcs,
+        createConst(
+            t.identifier('validators'),
+            generateValidatorsList(config)
+        ),
+        createConst(
+            t.identifier('cssGlobals'),
+            arrayOfStrings(globals)
+        ),
+        template(`
+            export default function cssValues (property, value) {
+                if (typeof value === 'string') {
+                    value = valueParser(value);
+                }
+                const first = value.nodes[0];
+                if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
+                    return true;
+                }
+                return validators.some(validator => {
+                    if (!~validator.properties.indexOf(property)) {
+                        return;
+                    }
+                    return validator.fn(value);
+                });
+            }
+        `)(),
     ]);
 };

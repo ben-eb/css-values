@@ -1,8 +1,10 @@
 import * as t from 'babel-types';
+import {createConst} from '../util/createVariable';
 import arrayOfStrings from '../util/arrayOfStrings';
 
 export default function generateValidator (identifier, properties, body) {
-    return t.exportDefaultDeclaration(
+    return createConst(
+        t.identifier(identifier),
         t.objectExpression([
             t.objectProperty(
                 t.identifier('properties'),
@@ -21,7 +23,8 @@ export default function generateValidator (identifier, properties, body) {
 }
 
 export function generateValidatorStub (identifier, properties, stub) {
-    return t.exportDefaultDeclaration(
+    return createConst(
+        t.identifier(identifier),
         t.objectExpression([
             t.objectProperty(
                 t.identifier('properties'),

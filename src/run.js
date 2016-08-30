@@ -67,8 +67,6 @@ function getExclusives (parsed) {
 }
 
 let promises = [];
-let imported = [];
-let exported = [];
 
 properties.forEach(property => {
     let parsed = new Parser(property.syntax);
@@ -95,7 +93,7 @@ properties.forEach(property => {
             let config = [];
             merged.forEach(merge => {
                 // Assume the specification property is on the bottom of the array
-                let identifier = camelCase(merge.properties.slice(0).reverse()[0]);
+                let identifier = camelCase(merge.properties.slice(0).reverse()[0]) + 'Validator';
 
                 let candidates = merge.values.reduce((list, value) => {
                     if (list.some(p => p.type === 'keyword' && p.value === value)) {
@@ -142,7 +140,6 @@ function renamer (path) {
 Promise.all(promises).then((configs) => {
     const fileSystem = [];
     const testFiles = [];
-    const testConfig = [];
     const outputs = configs.reduce((list, configArray) => {
         configArray.forEach(config => {
             const canMerge = Object.keys(list).some(key => {
@@ -162,37 +159,21 @@ Promise.all(promises).then((configs) => {
         });
         return list;
     }, {});
-    Object.keys(outputs).forEach(output => {
-        const config = outputs[output];
-        imported.push({
-            identifier: config.identifier,
-            module: `./${config.group}/${config.identifier}`,
-        });
-
-        exported.push(config.identifier);
-
-        fileSystem.push(new File({
-            path: resolve(`packages/css-values/properties/${config.group}/${config.identifier}.js`),
-            contents: new Buffer(generator.property(config)),
-        }));
-
-        testConfig.push(config);
-    });
+    const validatorConfig = Object.keys(outputs).reduce((conf, output) => {
+        return [
+            ...conf,
+            outputs[output],
+        ];
+    }, []);
 
     fileSystem.push(new File({
-        path: resolve(`packages/css-values/properties/index.js`),
-        contents: new Buffer(generator.program([
-            generator.requireModules(...imported),
-            generator.exportModules(exported),
-        ])),
-    }), new File({
         path: resolve(`packages/css-values/index.js`),
-        contents: new Buffer(generator.plugin()),
+        contents: new Buffer(generator.property(validatorConfig)),
     }));
 
     testFiles.push(new File({
         path: resolve(`packages/css-values/test.js`),
-        contents: new Buffer(generator.test(testConfig)),
+        contents: new Buffer(generator.test(validatorConfig)),
     }));
 
     const stream = vfs.src('./src/validators/**/*.js', {base: process.cwd()})

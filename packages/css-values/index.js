@@ -42,36 +42,9 @@ function isKeywordFactory(keywords) {
     };
 }
 
-var msOverflowStyle = {
-  properties: ["-ms-overflow-style"],
-  fn: isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"])
-};
-
-var mozAppearance = {
-  properties: ["-moz-appearance"],
-  fn: isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"])
-};
-
 var isUrl = (function (node) {
   return isFunction(node, 'url');
 });
-
-var mozBinding = {
-  properties: ["-moz-binding", "list-style-image"],
-  fn: function mozBinding(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isUrl(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var mozFloatEdge = {
-  properties: ["-moz-float-edge"],
-  fn: isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"])
-};
 
 var isInteger = (function (_ref) {
     var type = _ref.type;
@@ -83,53 +56,6 @@ var isInteger = (function (_ref) {
     var int = unit(value);
     return int && !~value.indexOf('.') && !int.unit;
 });
-
-var mozForceBrokenImageIcon = {
-  properties: ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"],
-  fn: function mozForceBrokenImageIcon(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isInteger(node);
-    }
-
-    return false;
-  }
-};
-
-var mozOrient = {
-  properties: ["-moz-orient"],
-  fn: isKeywordFactory(["inline", "block", "horizontal", "vertical"])
-};
-
-var mozStackSizing = {
-  properties: ["-moz-stack-sizing"],
-  fn: isKeywordFactory(["ignore", "stretch-to-fit"])
-};
-
-var mozTextBlink = {
-  properties: ["-moz-text-blink"],
-  fn: isKeywordFactory(["none", "blink"])
-};
-
-var mozUserFocus = {
-  properties: ["-moz-user-focus"],
-  fn: isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"])
-};
-
-var mozUserInput = {
-  properties: ["-moz-user-input"],
-  fn: isKeywordFactory(["none", "enabled", "disabled"])
-};
-
-var mozUserModify = {
-  properties: ["-moz-user-modify"],
-  fn: isKeywordFactory(["read-only", "read-write", "write-only"])
-};
-
-var mozWindowShadow = {
-  properties: ["-moz-window-shadow"],
-  fn: isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"])
-};
 
 var isComma = (function (_ref) {
     var type = _ref.type;
@@ -242,18 +168,6 @@ function isColor(node) {
     return isRgb(node) || isRgba(node) || isHsl(node) || isHsla(node) || isHex(node) || isNamedColor(node) || isCurrentColor(node);
 }
 
-var webkitBorderBeforeColor = {
-  properties: ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"],
-  fn: function webkitBorderBeforeColor(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isColor(node);
-    }
-
-    return false;
-  }
-};
-
 var brStyles = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
 
 var isBrStyle = (function (node) {
@@ -265,28 +179,6 @@ var isSpace = (function (_ref) {
 
     return type === 'space';
 });
-
-var webkitBorderBeforeStyle = {
-  properties: ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"],
-  fn: function webkitBorderBeforeStyle(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-
-/*
- * See the specification for more details:
- * https://drafts.csswg.org/css-values-3/#angles
- */
 
 var angles = ['deg', 'grad', 'rad', 'turn'];
 
@@ -381,45 +273,11 @@ var isBrWidth = (function (node) {
     return isLength(node) || isKeyword(node, brWidths);
 });
 
-var webkitBorderBeforeWidth = {
-  properties: ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"],
-  fn: function webkitBorderBeforeWidth(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-
 var attachments = ['scroll', 'fixed', 'local'];
 
 var isAttachment = (function (node) {
     return isKeyword(node, attachments);
 });
-
-var webkitMaskAttachment = {
-  properties: ["-webkit-mask-attachment", "background-attachment"],
-  fn: function webkitMaskAttachment(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 var singleValues = ['repeat-x', 'repeat-y'];
 
@@ -457,119 +315,11 @@ var isRepeatStyle = (function (parsed) {
     return valid;
 });
 
-var webkitMaskRepeat = {
-  properties: ["-webkit-mask-repeat", "background-repeat", "mask-repeat"],
-  fn: isRepeatStyle
-};
-
-var webkitMaskRepeatX = {
-  properties: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
-  fn: isKeywordFactory(["repeat", "no-repeat", "space", "round"])
-};
-
-var webkitTapHighlightColor = {
-  properties: ["-webkit-tap-highlight-color"],
-  fn: function webkitTapHighlightColor(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
-var webkitTextStrokeWidth = {
-  properties: ["-webkit-text-stroke-width", "outline-offset"],
-  fn: function webkitTextStrokeWidth(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node);
-    }
-
-    return false;
-  }
-};
-
-var webkitTouchCallout = {
-  properties: ["-webkit-touch-callout"],
-  fn: isKeywordFactory(["default", "none"])
-};
-
-var alignContent = {
-  properties: ["-webkit-align-content", "align-content"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"])
-};
-
-var msFlexLinePack = {
-  properties: ["-ms-flex-line-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"])
-};
-
-var msFlexAlign = {
-  properties: ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
-};
-
-var alignItems = {
-  properties: ["-webkit-align-items", "-ms-grid-row-align", "align-items"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"])
-};
-
-var alignSelf = {
-  properties: ["-webkit-align-self", "align-self"],
-  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"])
-};
-
-var msFlexItemAlign = {
-  properties: ["-ms-flex-item-align"],
-  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
-};
-
-var animationDelay = {
-  properties: ["animation-delay", "animation-duration", "transition-delay", "transition-duration"],
-  fn: function animationDelay(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
 var singleAnimationDirections = ['normal', 'reverse', 'alternate', 'alternate-reverse'];
 
 var isSingleAnimationDirection = (function (node) {
     return isKeyword(node, singleAnimationDirections);
 });
-
-var animationDirection = {
-  properties: ["animation-direction"],
-  fn: function animationDirection(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 var singleAnimationFillModes = ['none', 'forwards', 'backwards', 'both'];
 
@@ -577,45 +327,11 @@ var isSingleAnimationFillMode = (function (node) {
     return isKeyword(node, singleAnimationFillModes);
 });
 
-var animationFillMode = {
-  properties: ["animation-fill-mode"],
-  fn: function animationFillMode(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
 var value = ['infinite'];
 
 var isSingleAnimationIterationCount = (function (node) {
     return isKeyword(node, value) || isNumber(node);
 });
-
-var animationIterationCount = {
-  properties: ["animation-iteration-count"],
-  fn: function animationIterationCount(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 function isInvalid(value) {
     return (/[^a-z0-9_-]/ig.test(value)
@@ -654,45 +370,11 @@ var isSingleAnimationName = (function (node) {
     return isKeyword(node, 'none') || isCustomIdent(node);
 });
 
-var animationName = {
-  properties: ["animation-name"],
-  fn: function animationName(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
 var singleAnimationPlayStates = ['running', 'paused'];
 
 var isSingleAnimationPlayState = (function (node) {
     return isKeyword(node, singleAnimationPlayStates);
 });
-
-var animationPlayState = {
-  properties: ["animation-play-state"],
-  fn: function animationPlayState(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 var keywords = ['ease', 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-end'];
 
@@ -743,28 +425,6 @@ function isCubicBezier(node) {
 var isSingleTransitionTimingFunction = (function (node) {
     return isTimingKeyword(node) || isSteps(node) || isCubicBezier(node);
 });
-
-var animationTimingFunction = {
-  properties: ["animation-timing-function", "transition-timing-function"],
-  fn: function animationTimingFunction(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
-var appearance = {
-  properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
-  fn: isKeywordFactory(["auto", "none"])
-};
 
 var numberPercentages = ['brightness', 'contrast', 'grayscale', 'invert', 'opacity', 'sepia', 'saturate'];
 
@@ -841,72 +501,17 @@ function isFilterFunctionList(parsed) {
     return valid;
 }
 
-var backdropFilter = {
-  properties: ["-webkit-backdrop-filter", "backdrop-filter", "-webkit-filter", "filter"],
-  fn: function backdropFilter(parsed) {
-    if (isFilterFunctionList(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var backfaceVisibility = {
-  properties: ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"],
-  fn: isKeywordFactory(["visible", "hidden"])
-};
-
 var blendValues = ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'];
 
 var isBlendMode = (function (node) {
     return isKeyword(node, blendValues);
 });
 
-var backgroundBlendMode = {
-  properties: ["background-blend-mode"],
-  fn: function backgroundBlendMode(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
 var boxes = ['border-box', 'padding-box', 'content-box'];
 
 var isBox = (function (node) {
     return isKeyword(node, boxes);
 });
-
-var backgroundClip = {
-  properties: ["background-clip", "background-origin"],
-  fn: function backgroundClip(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 function getArguments(node) {
     return node.nodes.reduce(function (list, child) {
@@ -1208,30 +813,6 @@ function isBgImage(node) {
     return isImage(node) || isKeyword(node, 'none');
 }
 
-var backgroundImage = {
-  properties: ["background-image"],
-  fn: function backgroundImage(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
-var backgroundPosition = {
-  properties: ["background-position", "mask-position"],
-  fn: isPositionFactory(true)
-};
-
-// [ &lt;length-percentage&gt; | auto ]{1,2} | cover | contain
-
 var sizeKeywords = ['cover', 'contain'];
 
 var auto = 'auto';
@@ -1263,288 +844,6 @@ function isBgSize(parsed) {
     return getArguments(parsed).every(validateGroup$1);
 }
 
-var backgroundSize = {
-  properties: ["background-size", "mask-size"],
-  fn: isBgSize
-};
-
-var borderBottomLeftRadius = {
-  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
-  fn: function borderBottomLeftRadius(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
-  }
-};
-
-var borderBottomStyle = {
-  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
-  fn: function borderBottomStyle(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrStyle(node);
-    }
-
-    return false;
-  }
-};
-
-var borderBottomWidth = {
-  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
-  fn: function borderBottomWidth(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrWidth(node);
-    }
-
-    return false;
-  }
-};
-
-var borderCollapse = {
-  properties: ["border-collapse"],
-  fn: isKeywordFactory(["collapse", "separate"])
-};
-
-var borderColor = {
-  properties: ["border-color"],
-  fn: function borderColor(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-
-var borderImageSource = {
-  properties: ["border-image-source"],
-  fn: function borderImageSource(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isImage(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var bottom$2 = {
-  properties: ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"],
-  fn: function bottom(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-
-var boxAlign = {
-  properties: ["box-align"],
-  fn: isKeywordFactory(["start", "center", "end", "baseline", "stretch"])
-};
-
-var boxDecorationBreak = {
-  properties: ["-webkit-box-decoration-break", "box-decoration-break"],
-  fn: isKeywordFactory(["slice", "clone"])
-};
-
-var boxDirection = {
-  properties: ["box-direction"],
-  fn: isKeywordFactory(["normal", "reverse", "inherit"])
-};
-
-var boxFlex = {
-  properties: ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"],
-  fn: function boxFlex(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node);
-    }
-
-    return false;
-  }
-};
-
-var boxLines = {
-  properties: ["box-lines"],
-  fn: isKeywordFactory(["single", "multiple"])
-};
-
-var boxOrient = {
-  properties: ["box-orient"],
-  fn: isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"])
-};
-
-var boxPack = {
-  properties: ["box-pack"],
-  fn: isKeywordFactory(["start", "center", "end", "justify"])
-};
-
-var boxSizing = {
-  properties: ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"],
-  fn: isKeywordFactory(["content-box", "border-box"])
-};
-
-var boxSuppress = {
-  properties: ["box-suppress"],
-  fn: isKeywordFactory(["show", "discard", "hide"])
-};
-
-var pageBreakAfter = {
-  properties: ["page-break-after", "page-break-before"],
-  fn: isKeywordFactory(["auto", "always", "avoid", "left", "right"])
-};
-
-var webkitColumnBreakInside = {
-  properties: ["-webkit-column-break-inside", "page-break-inside", "break-inside"],
-  fn: isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"])
-};
-
-var captionSide = {
-  properties: ["caption-side"],
-  fn: isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"])
-};
-
-var clear = {
-  properties: ["clear"],
-  fn: isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"])
-};
-
-var columnCount = {
-  properties: ["-webkit-column-count", "-moz-column-count", "column-count"],
-  fn: function columnCount(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-
-var columnFill = {
-  properties: ["-webkit-column-fill", "-moz-column-fill", "column-fill"],
-  fn: isKeywordFactory(["auto", "balance"])
-};
-
-var columnGap = {
-  properties: ["-webkit-column-gap", "-moz-column-gap", "column-gap"],
-  fn: function columnGap(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-
-var columnSpan = {
-  properties: ["-webkit-column-span", "-moz-column-span", "column-span"],
-  fn: isKeywordFactory(["none", "all"])
-};
-
-var columnWidth = {
-  properties: ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"],
-  fn: function columnWidth(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-
-var direction = {
-  properties: ["direction"],
-  fn: isKeywordFactory(["ltr", "rtl"])
-};
-
-var display = {
-  properties: ["display"],
-  fn: isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"])
-};
-
-var displayInside = {
-  properties: ["display-inside"],
-  fn: isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"])
-};
-
-var displayList = {
-  properties: ["display-list"],
-  fn: isKeywordFactory(["none", "list-item"])
-};
-
-var displayOutside = {
-  properties: ["display-outside"],
-  fn: isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"])
-};
-
-var emptyCells = {
-  properties: ["empty-cells"],
-  fn: isKeywordFactory(["show", "hide"])
-};
-
-var mozBoxOrient = {
-  properties: ["-webkit-box-orient", "-moz-box-orient"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"])
-};
-
-var mozBoxDirection = {
-  properties: ["-webkit-box-direction", "-moz-box-direction"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"])
-};
-
-var flexDirection = {
-  properties: ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse"])
-};
-
-var flexWrap = {
-  properties: ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"],
-  fn: isKeywordFactory(["nowrap", "wrap", "wrap-reverse"])
-};
-
-var float = {
-  properties: ["float"],
-  fn: isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"])
-};
-
-var fontKerning = {
-  properties: ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"],
-  fn: isKeywordFactory(["auto", "normal", "none"])
-};
-
-var fontLanguageOverride = {
-  properties: ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"],
-  fn: function fontLanguageOverride(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isString(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-
 var absoluteSizes = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
 
 var isAbsoluteSize = (function (node) {
@@ -1556,55 +855,6 @@ var relativeSizes = ['larger', 'smaller'];
 var isRelativeSize = (function (node) {
     return isKeyword(node, relativeSizes);
 });
-
-var fontSize = {
-  properties: ["font-size"],
-  fn: function fontSize(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
-    }
-
-    return false;
-  }
-};
-
-var fontSizeAdjust = {
-  properties: ["font-size-adjust"],
-  fn: function fontSizeAdjust(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var fontStretch = {
-  properties: ["font-stretch"],
-  fn: isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"])
-};
-
-var fontStyle = {
-  properties: ["font-style"],
-  fn: isKeywordFactory(["normal", "italic", "oblique"])
-};
-
-var fontVariantCaps = {
-  properties: ["font-variant-caps"],
-  fn: isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"])
-};
-
-var fontVariantPosition = {
-  properties: ["font-variant-position"],
-  fn: isKeywordFactory(["normal", "sub", "super"])
-};
-
-var fontWeight = {
-  properties: ["font-weight"],
-  fn: isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"])
-};
 
 var isNegative = (function (num) {
     return num < 0;
@@ -1648,132 +898,6 @@ var isTrackSize = (function (node) {
     return isMinMax(node) || isFlex(node) || isLengthPercentage(node) || isKeyword(node, keywords$1);
 });
 
-var gridAutoColumns = {
-  properties: ["grid-auto-columns", "grid-auto-rows"],
-  fn: function gridAutoColumns(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isTrackSize(node);
-    }
-
-    return false;
-  }
-};
-
-var gridColumnGap = {
-  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top", "shape-margin"],
-  fn: function gridColumnGap(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node);
-    }
-
-    return false;
-  }
-};
-
-var gridTemplateAreas = {
-  properties: ["grid-template-areas"],
-  fn: function gridTemplateAreas(parsed) {
-    var node = parsed.nodes[0];
-
-    if (parsed.nodes.length === 1 && isKeyword(node, "none")) {
-      return true;
-    }
-
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
-var hyphens = {
-  properties: ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"],
-  fn: isKeywordFactory(["none", "manual", "auto"])
-};
-
-var imageRendering = {
-  properties: ["image-rendering"],
-  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "-webkit-optimize-contrast", "-moz-crisp-edges", "-o-pixelated"])
-};
-
-var msInterpolationMode = {
-  properties: ["-ms-interpolation-mode"],
-  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"])
-};
-
-var imeMode = {
-  properties: ["ime-mode"],
-  fn: isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"])
-};
-
-var initialLetterAlign = {
-  properties: ["initial-letter-align"],
-  fn: isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"])
-};
-
-var isolation = {
-  properties: ["isolation"],
-  fn: isKeywordFactory(["auto", "isolate"])
-};
-
-var mozBoxPack = {
-  properties: ["-webkit-box-pack", "-moz-box-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"])
-};
-
-var justifyContent = {
-  properties: ["-webkit-justify-content", "justify-content"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"])
-};
-
-var msFlexPack = {
-  properties: ["-ms-flex-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"])
-};
-
-var letterSpacing = {
-  properties: ["letter-spacing"],
-  fn: function letterSpacing(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-
-var lineBreak = {
-  properties: ["line-break"],
-  fn: isKeywordFactory(["auto", "loose", "normal", "strict"])
-};
-
-var lineHeight = {
-  properties: ["line-height"],
-  fn: function lineHeight(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-
-var listStylePosition = {
-  properties: ["list-style-position"],
-  fn: isKeywordFactory(["inside", "outside"])
-};
-
 var standard = ['disc', 'circle', 'square', 'decimal', 'cjk-decimal', 'decimal-leading-zero', 'lower-roman', 'upper-roman', 'lower-greek', 'lower-alpha', 'lower-latin', 'upper-alpha', 'upper-latin', 'arabic-indic', '-moz-arabic-indic', 'armenian', 'bengali', '-moz-bengali', 'cambodian', 'cjk-earthly-branch', '-moz-cjk-earthly-branch', 'cjk-heavenly-stem', '-moz-cjk-heavenly-stem', 'cjk-ideographic', 'devanagari', '-moz-devanagari', 'ethiopic-numeric', 'georgian', 'gujarati', '-moz-gujarati', 'gurmukhi', '-moz-gurmukhi', 'hebrew', 'hiragana', 'hiragana-iroha', 'japanese-formal', 'japanese-informal', 'kannada', '-moz-kannada', 'katakana', 'katakana-iroha', 'khmer', '-moz-khmer', 'korean-hangul-formal', 'korean-hanja-formal', 'korean-hanja-informal', 'lao', '-moz-lao', 'lower-armenian', 'malayalam', '-moz-malayalam', 'mongolian', 'myanmar', '-moz-myanmar', 'oriya', '-moz-oriya', 'persian', '-moz-persian', 'simp-chinese-formal', 'simp-chinese-informal', 'tamil', '-moz-tamil', 'telugu', '-moz-telugu', 'thai', '-moz-thai', 'tibetan', 'trad-chinese-formal', 'trad-chinese-informal', 'upper-armenian', 'disclosure-open', 'disclosure-closed'];
 
 var nonStandard = ['-moz-ethiopic-halehame', '-moz-ethiopic-halehame-am', 'ethiopic-halehame-ti-er', '-moz-ethiopic-halehame-ti-er', 'ethiopic-halehame-ti-et', '-moz-ethiopic-halehame-ti-et', 'hangul', '-moz-hangul', 'hangul-consonant', '-moz-hangul-consonant', 'urdu', '-moz-urdu'];
@@ -1801,63 +925,17 @@ function isCounterStyle(node) {
     return isCustomIdent(node) || isKeyword(node, valid) || isSymbols(node);
 }
 
-var listStyleType = {
-  properties: ["list-style-type"],
-  fn: function listStyleType(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
 var compositingOperators = ['add', 'subtract', 'intersect', 'exclude'];
 
 var isCompositingOperator = (function (node) {
     return isKeyword(node, compositingOperators);
 });
 
-var maskComposite = {
-  properties: ["mask-composite"],
-  fn: function maskComposite(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
 var maskingModes = ['alpha', 'luminance', 'match-source'];
 
 var isMaskingMode = (function (node) {
     return isKeyword(node, maskingModes);
 });
-
-var maskMode = {
-  properties: ["mask-mode"],
-  fn: function maskMode(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
 
 var geometryBoxes = ['margin-box', 'fill-box', 'stroke-box', 'view-box'];
 
@@ -1866,217 +944,6 @@ var nonStandardKeywords = ['content', 'padding', 'border'];
 var isGeometryBox = (function (node) {
     return isBox(node) || isKeyword(node, geometryBoxes) || isKeyword(node, nonStandardKeywords);
 });
-
-var maskOrigin = {
-  properties: ["mask-origin"],
-  fn: function maskOrigin(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-
-var maskType = {
-  properties: ["mask-type"],
-  fn: isKeywordFactory(["luminance", "alpha"])
-};
-
-var keywords$2 = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
-var maxBlockSize = {
-  properties: ["max-block-size", "max-height", "max-inline-size", "max-width", "min-block-size", "min-height", "min-inline-size", "min-width"],
-  fn: function maxBlockSize(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, keywords$2);
-    }
-
-    return false;
-  }
-};
-
-var mixBlendMode = {
-  properties: ["mix-blend-mode"],
-  fn: function mixBlendMode(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBlendMode(node);
-    }
-
-    return false;
-  }
-};
-
-var objectFit = {
-  properties: ["-o-object-fit", "object-fit"],
-  fn: isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"])
-};
-
-var objectPosition = {
-  properties: ["object-position", "perspective-origin", "scroll-snap-destination"],
-  fn: isPositionFactory(false)
-};
-
-var outlineColor = {
-  properties: ["outline-color"],
-  fn: function outlineColor(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isColor(node) || isKeyword(node, "invert");
-    }
-
-    return false;
-  }
-};
-
-var outlineStyle = {
-  properties: ["outline-style"],
-  fn: function outlineStyle(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrStyle(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-
-var overflow = {
-  properties: ["overflow", "overflow-x", "overflow-y"],
-  fn: isKeywordFactory(["visible", "hidden", "scroll", "auto"])
-};
-
-var overflowClipBox = {
-  properties: ["overflow-clip-box"],
-  fn: isKeywordFactory(["padding-box", "content-box"])
-};
-
-var overflowWrap = {
-  properties: ["overflow-wrap", "word-wrap"],
-  fn: isKeywordFactory(["normal", "break-word"])
-};
-
-var pageBreakInside = {
-  properties: ["page-break-inside"],
-  fn: isKeywordFactory(["auto", "avoid"])
-};
-
-var perspective = {
-  properties: ["-webkit-perspective", "-moz-perspective", "perspective"],
-  fn: function perspective(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var pointerEvents = {
-  properties: ["pointer-events"],
-  fn: isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"])
-};
-
-var position = {
-  properties: ["position"],
-  fn: isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"])
-};
-
-var resize = {
-  properties: ["resize"],
-  fn: isKeywordFactory(["none", "both", "horizontal", "vertical"])
-};
-
-var rubyAlign = {
-  properties: ["ruby-align"],
-  fn: isKeywordFactory(["start", "center", "space-between", "space-around"])
-};
-
-var rubyMerge = {
-  properties: ["ruby-merge"],
-  fn: isKeywordFactory(["separate", "collapse", "auto"])
-};
-
-var rubyPosition = {
-  properties: ["ruby-position"],
-  fn: isKeywordFactory(["over", "under", "inter-character"])
-};
-
-var scrollBehavior = {
-  properties: ["scroll-behavior"],
-  fn: isKeywordFactory(["auto", "smooth"])
-};
-
-var scrollSnapCoordinate = {
-  properties: ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"],
-  fn: function scrollSnapCoordinate(parsed) {
-    if (isPositionFactory(true)(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var scrollSnapType = {
-  properties: ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"],
-  fn: isKeywordFactory(["none", "mandatory", "proximity"])
-};
-
-var tabSize = {
-  properties: ["tab-size"],
-  fn: function tabSize(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isInteger(node) || isLength(node);
-    }
-
-    return false;
-  }
-};
-
-var tableLayout = {
-  properties: ["table-layout"],
-  fn: isKeywordFactory(["auto", "fixed"])
-};
-
-var textAlign = {
-  properties: ["text-align"],
-  fn: isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"])
-};
-
-var textAlignLast = {
-  properties: ["-moz-text-align-last", "text-align-last"],
-  fn: isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"])
-};
-
-var textDecorationStyle = {
-  properties: ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"],
-  fn: isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"])
-};
-
-var textOrientation = {
-  properties: ["text-orientation"],
-  fn: isKeywordFactory(["mixed", "upright", "sideways"])
-};
-
-var textRendering = {
-  properties: ["text-rendering"],
-  fn: isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"])
-};
 
 function validateShadow(nodes) {
     var hasColor = false;
@@ -2128,40 +995,6 @@ function validateShadow(nodes) {
 function isShadowT(parsed) {
     return getArguments(parsed).every(validateShadow);
 }
-
-var textShadow = {
-  properties: ["text-shadow"],
-  fn: function textShadow(parsed) {
-    if (isShadowT(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-
-var keywords$3 = ["none", "auto"];
-var textSizeAdjust = {
-  properties: ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"],
-  fn: function textSizeAdjust(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isPercentage(node) || isKeyword(node, keywords$3);
-    }
-
-    return false;
-  }
-};
-
-var textTransform = {
-  properties: ["text-transform"],
-  fn: isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"])
-};
 
 var matrix = 'matrix';
 var matrix3d = 'matrix3d';
@@ -2296,9 +1129,1041 @@ function isTransformList(parsed) {
     return valid;
 }
 
-var transform = {
+var animateableFeatures = ['scroll-position', 'contents'];
+
+var isAnimateableFeature = (function (node) {
+    return isKeyword(node, animateableFeatures) || isCustomIdent(node);
+});
+
+var msOverflowStyleValidator = {
+  properties: ["-ms-overflow-style"],
+  fn: isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"])
+};
+var mozAppearanceValidator = {
+  properties: ["-moz-appearance"],
+  fn: isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"])
+};
+var mozBindingValidator = {
+  properties: ["-moz-binding", "list-style-image"],
+  fn: function mozBindingValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isUrl(node) || isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var mozFloatEdgeValidator = {
+  properties: ["-moz-float-edge"],
+  fn: isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"])
+};
+var mozForceBrokenImageIconValidator = {
+  properties: ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"],
+  fn: function mozForceBrokenImageIconValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isInteger(node);
+    }
+
+    return false;
+  }
+};
+var mozOrientValidator = {
+  properties: ["-moz-orient"],
+  fn: isKeywordFactory(["inline", "block", "horizontal", "vertical"])
+};
+var mozStackSizingValidator = {
+  properties: ["-moz-stack-sizing"],
+  fn: isKeywordFactory(["ignore", "stretch-to-fit"])
+};
+var mozTextBlinkValidator = {
+  properties: ["-moz-text-blink"],
+  fn: isKeywordFactory(["none", "blink"])
+};
+var mozUserFocusValidator = {
+  properties: ["-moz-user-focus"],
+  fn: isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"])
+};
+var mozUserInputValidator = {
+  properties: ["-moz-user-input"],
+  fn: isKeywordFactory(["none", "enabled", "disabled"])
+};
+var mozUserModifyValidator = {
+  properties: ["-moz-user-modify"],
+  fn: isKeywordFactory(["read-only", "read-write", "write-only"])
+};
+var mozWindowShadowValidator = {
+  properties: ["-moz-window-shadow"],
+  fn: isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"])
+};
+var webkitBorderBeforeColorValidator = {
+  properties: ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"],
+  fn: function webkitBorderBeforeColorValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isColor(node);
+    }
+
+    return false;
+  }
+};
+var webkitBorderBeforeStyleValidator = {
+  properties: ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"],
+  fn: function webkitBorderBeforeStyleValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
+var webkitBorderBeforeWidthValidator = {
+  properties: ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"],
+  fn: function webkitBorderBeforeWidthValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
+var webkitMaskAttachmentValidator = {
+  properties: ["-webkit-mask-attachment", "background-attachment"],
+  fn: function webkitMaskAttachmentValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var webkitMaskRepeatValidator = {
+  properties: ["-webkit-mask-repeat", "background-repeat", "mask-repeat"],
+  fn: isRepeatStyle
+};
+var webkitMaskRepeatXValidator = {
+  properties: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
+  fn: isKeywordFactory(["repeat", "no-repeat", "space", "round"])
+};
+var webkitTapHighlightColorValidator = {
+  properties: ["-webkit-tap-highlight-color"],
+  fn: function webkitTapHighlightColorValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var webkitTextStrokeWidthValidator = {
+  properties: ["-webkit-text-stroke-width", "outline-offset"],
+  fn: function webkitTextStrokeWidthValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node);
+    }
+
+    return false;
+  }
+};
+var webkitTouchCalloutValidator = {
+  properties: ["-webkit-touch-callout"],
+  fn: isKeywordFactory(["default", "none"])
+};
+var alignContentValidator = {
+  properties: ["-webkit-align-content", "align-content"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"])
+};
+var msFlexLinePackValidator = {
+  properties: ["-ms-flex-line-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"])
+};
+var msFlexAlignValidator = {
+  properties: ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
+};
+var alignItemsValidator = {
+  properties: ["-webkit-align-items", "-ms-grid-row-align", "align-items"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"])
+};
+var alignSelfValidator = {
+  properties: ["-webkit-align-self", "align-self"],
+  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"])
+};
+var msFlexItemAlignValidator = {
+  properties: ["-ms-flex-item-align"],
+  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
+};
+var allValidator = {
+  properties: ["all"],
+  fn: isKeywordFactory(["initial", "inherit", "unset"])
+};
+var animationDelayValidator = {
+  properties: ["animation-delay", "animation-duration", "transition-delay", "transition-duration"],
+  fn: function animationDelayValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationDirectionValidator = {
+  properties: ["animation-direction"],
+  fn: function animationDirectionValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationFillModeValidator = {
+  properties: ["animation-fill-mode"],
+  fn: function animationFillModeValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationIterationCountValidator = {
+  properties: ["animation-iteration-count"],
+  fn: function animationIterationCountValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationNameValidator = {
+  properties: ["animation-name"],
+  fn: function animationNameValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationPlayStateValidator = {
+  properties: ["animation-play-state"],
+  fn: function animationPlayStateValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var animationTimingFunctionValidator = {
+  properties: ["animation-timing-function", "transition-timing-function"],
+  fn: function animationTimingFunctionValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var appearanceValidator = {
+  properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
+  fn: isKeywordFactory(["auto", "none"])
+};
+var backdropFilterValidator = {
+  properties: ["-webkit-backdrop-filter", "backdrop-filter", "-webkit-filter", "filter"],
+  fn: function backdropFilterValidator(parsed) {
+    if (isFilterFunctionList(parsed)) {
+      return true;
+    }
+
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var backfaceVisibilityValidator = {
+  properties: ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"],
+  fn: isKeywordFactory(["visible", "hidden"])
+};
+var backgroundBlendModeValidator = {
+  properties: ["background-blend-mode"],
+  fn: function backgroundBlendModeValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var backgroundClipValidator = {
+  properties: ["background-clip", "background-origin"],
+  fn: function backgroundClipValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var backgroundImageValidator = {
+  properties: ["background-image"],
+  fn: function backgroundImageValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var backgroundPositionValidator = {
+  properties: ["background-position", "mask-position"],
+  fn: isPositionFactory(true)
+};
+var backgroundSizeValidator = {
+  properties: ["background-size", "mask-size"],
+  fn: isBgSize
+};
+var borderBottomLeftRadiusValidator = {
+  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
+  fn: function borderBottomLeftRadiusValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
+  }
+};
+var borderBottomStyleValidator = {
+  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
+  fn: function borderBottomStyleValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrStyle(node);
+    }
+
+    return false;
+  }
+};
+var borderBottomWidthValidator = {
+  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
+  fn: function borderBottomWidthValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrWidth(node);
+    }
+
+    return false;
+  }
+};
+var borderCollapseValidator = {
+  properties: ["border-collapse"],
+  fn: isKeywordFactory(["collapse", "separate"])
+};
+var borderColorValidator = {
+  properties: ["border-color"],
+  fn: function borderColorValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  }
+};
+var borderImageSourceValidator = {
+  properties: ["border-image-source"],
+  fn: function borderImageSourceValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isImage(node) || isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var bottomValidator = {
+  properties: ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"],
+  fn: function bottomValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLengthPercentage(node) || isKeyword(node, "auto");
+    }
+
+    return false;
+  }
+};
+var boxAlignValidator = {
+  properties: ["box-align"],
+  fn: isKeywordFactory(["start", "center", "end", "baseline", "stretch"])
+};
+var boxDecorationBreakValidator = {
+  properties: ["-webkit-box-decoration-break", "box-decoration-break"],
+  fn: isKeywordFactory(["slice", "clone"])
+};
+var boxDirectionValidator = {
+  properties: ["box-direction"],
+  fn: isKeywordFactory(["normal", "reverse", "inherit"])
+};
+var boxFlexValidator = {
+  properties: ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"],
+  fn: function boxFlexValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node);
+    }
+
+    return false;
+  }
+};
+var boxLinesValidator = {
+  properties: ["box-lines"],
+  fn: isKeywordFactory(["single", "multiple"])
+};
+var boxOrientValidator = {
+  properties: ["box-orient"],
+  fn: isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"])
+};
+var boxPackValidator = {
+  properties: ["box-pack"],
+  fn: isKeywordFactory(["start", "center", "end", "justify"])
+};
+var boxSizingValidator = {
+  properties: ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"],
+  fn: isKeywordFactory(["content-box", "border-box"])
+};
+var boxSuppressValidator = {
+  properties: ["box-suppress"],
+  fn: isKeywordFactory(["show", "discard", "hide"])
+};
+var pageBreakAfterValidator = {
+  properties: ["page-break-after", "page-break-before"],
+  fn: isKeywordFactory(["auto", "always", "avoid", "left", "right"])
+};
+var webkitColumnBreakInsideValidator = {
+  properties: ["-webkit-column-break-inside", "page-break-inside", "break-inside"],
+  fn: isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"])
+};
+var captionSideValidator = {
+  properties: ["caption-side"],
+  fn: isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"])
+};
+var clearValidator = {
+  properties: ["clear"],
+  fn: isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"])
+};
+var columnCountValidator = {
+  properties: ["-webkit-column-count", "-moz-column-count", "column-count"],
+  fn: function columnCountValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || isKeyword(node, "auto");
+    }
+
+    return false;
+  }
+};
+var columnFillValidator = {
+  properties: ["-webkit-column-fill", "-moz-column-fill", "column-fill"],
+  fn: isKeywordFactory(["auto", "balance"])
+};
+var columnGapValidator = {
+  properties: ["-webkit-column-gap", "-moz-column-gap", "column-gap"],
+  fn: function columnGapValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isKeyword(node, "normal");
+    }
+
+    return false;
+  }
+};
+var columnSpanValidator = {
+  properties: ["-webkit-column-span", "-moz-column-span", "column-span"],
+  fn: isKeywordFactory(["none", "all"])
+};
+var columnWidthValidator = {
+  properties: ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"],
+  fn: function columnWidthValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isKeyword(node, "auto");
+    }
+
+    return false;
+  }
+};
+var directionValidator = {
+  properties: ["direction"],
+  fn: isKeywordFactory(["ltr", "rtl"])
+};
+var displayValidator = {
+  properties: ["display"],
+  fn: isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"])
+};
+var displayInsideValidator = {
+  properties: ["display-inside"],
+  fn: isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"])
+};
+var displayListValidator = {
+  properties: ["display-list"],
+  fn: isKeywordFactory(["none", "list-item"])
+};
+var displayOutsideValidator = {
+  properties: ["display-outside"],
+  fn: isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"])
+};
+var emptyCellsValidator = {
+  properties: ["empty-cells"],
+  fn: isKeywordFactory(["show", "hide"])
+};
+var mozBoxOrientValidator = {
+  properties: ["-webkit-box-orient", "-moz-box-orient"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"])
+};
+var mozBoxDirectionValidator = {
+  properties: ["-webkit-box-direction", "-moz-box-direction"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"])
+};
+var flexDirectionValidator = {
+  properties: ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"],
+  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse"])
+};
+var flexWrapValidator = {
+  properties: ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"],
+  fn: isKeywordFactory(["nowrap", "wrap", "wrap-reverse"])
+};
+var floatValidator = {
+  properties: ["float"],
+  fn: isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"])
+};
+var fontKerningValidator = {
+  properties: ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"],
+  fn: isKeywordFactory(["auto", "normal", "none"])
+};
+var fontLanguageOverrideValidator = {
+  properties: ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"],
+  fn: function fontLanguageOverrideValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isString(node) || isKeyword(node, "normal");
+    }
+
+    return false;
+  }
+};
+var fontSizeValidator = {
+  properties: ["font-size"],
+  fn: function fontSizeValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
+    }
+
+    return false;
+  }
+};
+var fontSizeAdjustValidator = {
+  properties: ["font-size-adjust"],
+  fn: function fontSizeAdjustValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var fontStretchValidator = {
+  properties: ["font-stretch"],
+  fn: isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"])
+};
+var fontStyleValidator = {
+  properties: ["font-style"],
+  fn: isKeywordFactory(["normal", "italic", "oblique"])
+};
+var fontVariantCapsValidator = {
+  properties: ["font-variant-caps"],
+  fn: isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"])
+};
+var fontVariantPositionValidator = {
+  properties: ["font-variant-position"],
+  fn: isKeywordFactory(["normal", "sub", "super"])
+};
+var fontWeightValidator = {
+  properties: ["font-weight"],
+  fn: isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"])
+};
+var gridAutoColumnsValidator = {
+  properties: ["grid-auto-columns", "grid-auto-rows"],
+  fn: function gridAutoColumnsValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isTrackSize(node);
+    }
+
+    return false;
+  }
+};
+var gridColumnGapValidator = {
+  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top", "shape-margin"],
+  fn: function gridColumnGapValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLengthPercentage(node);
+    }
+
+    return false;
+  }
+};
+var gridTemplateAreasValidator = {
+  properties: ["grid-template-areas"],
+  fn: function gridTemplateAreasValidator(parsed) {
+    var node = parsed.nodes[0];
+
+    if (parsed.nodes.length === 1 && isKeyword(node, "none")) {
+      return true;
+    }
+
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var hyphensValidator = {
+  properties: ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"],
+  fn: isKeywordFactory(["none", "manual", "auto"])
+};
+var imageRenderingValidator = {
+  properties: ["image-rendering"],
+  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "-webkit-optimize-contrast", "-moz-crisp-edges", "-o-pixelated"])
+};
+var msInterpolationModeValidator = {
+  properties: ["-ms-interpolation-mode"],
+  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"])
+};
+var imeModeValidator = {
+  properties: ["ime-mode"],
+  fn: isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"])
+};
+var initialLetterAlignValidator = {
+  properties: ["initial-letter-align"],
+  fn: isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"])
+};
+var isolationValidator = {
+  properties: ["isolation"],
+  fn: isKeywordFactory(["auto", "isolate"])
+};
+var mozBoxPackValidator = {
+  properties: ["-webkit-box-pack", "-moz-box-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"])
+};
+var justifyContentValidator = {
+  properties: ["-webkit-justify-content", "justify-content"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"])
+};
+var msFlexPackValidator = {
+  properties: ["-ms-flex-pack"],
+  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"])
+};
+var letterSpacingValidator = {
+  properties: ["letter-spacing"],
+  fn: function letterSpacingValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isKeyword(node, "normal");
+    }
+
+    return false;
+  }
+};
+var lineBreakValidator = {
+  properties: ["line-break"],
+  fn: isKeywordFactory(["auto", "loose", "normal", "strict"])
+};
+var lineHeightValidator = {
+  properties: ["line-height"],
+  fn: function lineHeightValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
+    }
+
+    return false;
+  }
+};
+var listStylePositionValidator = {
+  properties: ["list-style-position"],
+  fn: isKeywordFactory(["inside", "outside"])
+};
+var listStyleTypeValidator = {
+  properties: ["list-style-type"],
+  fn: function listStyleTypeValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var maskCompositeValidator = {
+  properties: ["mask-composite"],
+  fn: function maskCompositeValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var maskModeValidator = {
+  properties: ["mask-mode"],
+  fn: function maskModeValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var maskOriginValidator = {
+  properties: ["mask-origin"],
+  fn: function maskOriginValidator(parsed) {
+    var valid = true;
+    parsed.walk(function (node, index) {
+      var even = index % 2 === 0;
+
+      if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
+        valid = false;
+      }
+
+      return false;
+    });
+    return valid && parsed.nodes.length % 2 !== 0;
+  }
+};
+var maskTypeValidator = {
+  properties: ["mask-type"],
+  fn: isKeywordFactory(["luminance", "alpha"])
+};
+var maxBlockSizeValidatorKeywords = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
+var maxBlockSizeValidator = {
+  properties: ["max-block-size", "max-height", "max-inline-size", "max-width", "min-block-size", "min-height", "min-inline-size", "min-width"],
+  fn: function maxBlockSizeValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
+    }
+
+    return false;
+  }
+};
+var mixBlendModeValidator = {
+  properties: ["mix-blend-mode"],
+  fn: function mixBlendModeValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBlendMode(node);
+    }
+
+    return false;
+  }
+};
+var objectFitValidator = {
+  properties: ["-o-object-fit", "object-fit"],
+  fn: isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"])
+};
+var objectPositionValidator = {
+  properties: ["object-position", "perspective-origin", "scroll-snap-destination"],
+  fn: isPositionFactory(false)
+};
+var outlineColorValidator = {
+  properties: ["outline-color"],
+  fn: function outlineColorValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isColor(node) || isKeyword(node, "invert");
+    }
+
+    return false;
+  }
+};
+var outlineStyleValidator = {
+  properties: ["outline-style"],
+  fn: function outlineStyleValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isBrStyle(node) || isKeyword(node, "auto");
+    }
+
+    return false;
+  }
+};
+var overflowValidator = {
+  properties: ["overflow", "overflow-x", "overflow-y"],
+  fn: isKeywordFactory(["visible", "hidden", "scroll", "auto"])
+};
+var overflowClipBoxValidator = {
+  properties: ["overflow-clip-box"],
+  fn: isKeywordFactory(["padding-box", "content-box"])
+};
+var overflowWrapValidator = {
+  properties: ["overflow-wrap", "word-wrap"],
+  fn: isKeywordFactory(["normal", "break-word"])
+};
+var pageBreakInsideValidator = {
+  properties: ["page-break-inside"],
+  fn: isKeywordFactory(["auto", "avoid"])
+};
+var perspectiveValidator = {
+  properties: ["-webkit-perspective", "-moz-perspective", "perspective"],
+  fn: function perspectiveValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isLength(node) || isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var pointerEventsValidator = {
+  properties: ["pointer-events"],
+  fn: isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"])
+};
+var positionValidator = {
+  properties: ["position"],
+  fn: isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"])
+};
+var resizeValidator = {
+  properties: ["resize"],
+  fn: isKeywordFactory(["none", "both", "horizontal", "vertical"])
+};
+var rubyAlignValidator = {
+  properties: ["ruby-align"],
+  fn: isKeywordFactory(["start", "center", "space-between", "space-around"])
+};
+var rubyMergeValidator = {
+  properties: ["ruby-merge"],
+  fn: isKeywordFactory(["separate", "collapse", "auto"])
+};
+var rubyPositionValidator = {
+  properties: ["ruby-position"],
+  fn: isKeywordFactory(["over", "under", "inter-character"])
+};
+var scrollBehaviorValidator = {
+  properties: ["scroll-behavior"],
+  fn: isKeywordFactory(["auto", "smooth"])
+};
+var scrollSnapCoordinateValidator = {
+  properties: ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"],
+  fn: function scrollSnapCoordinateValidator(parsed) {
+    if (isPositionFactory(true)(parsed)) {
+      return true;
+    }
+
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var scrollSnapTypeValidator = {
+  properties: ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"],
+  fn: isKeywordFactory(["none", "mandatory", "proximity"])
+};
+var tabSizeValidator = {
+  properties: ["tab-size"],
+  fn: function tabSizeValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isInteger(node) || isLength(node);
+    }
+
+    return false;
+  }
+};
+var tableLayoutValidator = {
+  properties: ["table-layout"],
+  fn: isKeywordFactory(["auto", "fixed"])
+};
+var textAlignValidator = {
+  properties: ["text-align"],
+  fn: isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"])
+};
+var textAlignLastValidator = {
+  properties: ["-moz-text-align-last", "text-align-last"],
+  fn: isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"])
+};
+var textDecorationStyleValidator = {
+  properties: ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"],
+  fn: isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"])
+};
+var textOrientationValidator = {
+  properties: ["text-orientation"],
+  fn: isKeywordFactory(["mixed", "upright", "sideways"])
+};
+var textRenderingValidator = {
+  properties: ["text-rendering"],
+  fn: isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"])
+};
+var textShadowValidator = {
+  properties: ["text-shadow"],
+  fn: function textShadowValidator(parsed) {
+    if (isShadowT(parsed)) {
+      return true;
+    }
+
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isKeyword(node, "none");
+    }
+
+    return false;
+  }
+};
+var textSizeAdjustValidatorKeywords = ["none", "auto"];
+var textSizeAdjustValidator = {
+  properties: ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"],
+  fn: function textSizeAdjustValidator(parsed) {
+    if (parsed.nodes.length === 1) {
+      var node = parsed.nodes[0];
+      return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
+    }
+
+    return false;
+  }
+};
+var textTransformValidator = {
+  properties: ["text-transform"],
+  fn: isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"])
+};
+var transformValidator = {
   properties: ["-webkit-transform", "-moz-transform", "-ms-transform", "-o-transform", "transform"],
-  fn: function transform(parsed) {
+  fn: function transformValidator(parsed) {
     if (isTransformList(parsed)) {
       return true;
     }
@@ -2311,59 +2176,45 @@ var transform = {
     return false;
   }
 };
-
-var transformBox = {
+var transformBoxValidator = {
   properties: ["transform-box"],
   fn: isKeywordFactory(["border-box", "fill-box", "view-box"])
 };
-
-var transformStyle = {
+var transformStyleValidator = {
   properties: ["-webkit-transform-style", "-moz-transform-style", "transform-style"],
   fn: isKeywordFactory(["flat", "preserve-3d"])
 };
-
-var unicodeBidi = {
+var unicodeBidiValidator = {
   properties: ["unicode-bidi"],
   fn: isKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"])
 };
-
-var userSelect = {
+var userSelectValidator = {
   properties: ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"],
   fn: isKeywordFactory(["auto", "text", "none", "contain", "all"])
 };
-
-var keywords$4 = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
-var verticalAlign = {
+var verticalAlignValidatorKeywords = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
+var verticalAlignValidator = {
   properties: ["vertical-align"],
-  fn: function verticalAlign(parsed) {
+  fn: function verticalAlignValidator(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, keywords$4);
+      return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
     }
 
     return false;
   }
 };
-
-var visibility = {
+var visibilityValidator = {
   properties: ["visibility"],
   fn: isKeywordFactory(["visible", "hidden", "collapse"])
 };
-
-var whiteSpace = {
+var whiteSpaceValidator = {
   properties: ["white-space"],
   fn: isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"])
 };
-
-var animateableFeatures = ['scroll-position', 'contents'];
-
-var isAnimateableFeature = (function (node) {
-    return isKeyword(node, animateableFeatures) || isCustomIdent(node);
-});
-
-var willChange = {
+var willChangeValidator = {
   properties: ["will-change"],
-  fn: function willChange(parsed) {
+  fn: function willChangeValidator(parsed) {
     var node = parsed.nodes[0];
 
     if (parsed.nodes.length === 1 && isKeyword(node, "auto")) {
@@ -2383,15 +2234,13 @@ var willChange = {
     return valid && parsed.nodes.length % 2 !== 0;
   }
 };
-
-var wordBreak = {
+var wordBreakValidator = {
   properties: ["word-break"],
   fn: isKeywordFactory(["normal", "break-all", "keep-all"])
 };
-
-var wordSpacing = {
+var wordSpacingValidator = {
   properties: ["word-spacing"],
-  fn: function wordSpacing(parsed) {
+  fn: function wordSpacingValidator(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
       return isLengthPercentage(node) || isKeyword(node, "normal");
@@ -2400,20 +2249,17 @@ var wordSpacing = {
     return false;
   }
 };
-
-var writingMode = {
+var writingModeValidator = {
   properties: ["-webkit-writing-mode", "writing-mode"],
   fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"])
 };
-
-var msWritingMode = {
+var msWritingModeValidator = {
   properties: ["-ms-writing-mode"],
   fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"])
 };
-
-var zIndex = {
+var zIndexValidator = {
   properties: ["z-index"],
-  fn: function zIndex(parsed) {
+  fn: function zIndexValidator(parsed) {
     if (parsed.nodes.length === 1) {
       var node = parsed.nodes[0];
       return isInteger(node) || isKeyword(node, "auto");
@@ -2422,9 +2268,7 @@ var zIndex = {
     return false;
   }
 };
-
-var validators = [msOverflowStyle, mozAppearance, mozBinding, mozFloatEdge, mozForceBrokenImageIcon, mozOrient, mozStackSizing, mozTextBlink, mozUserFocus, mozUserInput, mozUserModify, mozWindowShadow, webkitBorderBeforeColor, webkitBorderBeforeStyle, webkitBorderBeforeWidth, webkitMaskAttachment, webkitMaskRepeat, webkitMaskRepeatX, webkitTapHighlightColor, webkitTextStrokeWidth, webkitTouchCallout, alignContent, msFlexLinePack, msFlexAlign, alignItems, alignSelf, msFlexItemAlign, animationDelay, animationDirection, animationFillMode, animationIterationCount, animationName, animationPlayState, animationTimingFunction, appearance, backdropFilter, backfaceVisibility, backgroundBlendMode, backgroundClip, backgroundImage, backgroundPosition, backgroundSize, borderBottomLeftRadius, borderBottomStyle, borderBottomWidth, borderCollapse, borderColor, borderImageSource, bottom$2, boxAlign, boxDecorationBreak, boxDirection, boxFlex, boxLines, boxOrient, boxPack, boxSizing, boxSuppress, pageBreakAfter, webkitColumnBreakInside, captionSide, clear, columnCount, columnFill, columnGap, columnSpan, columnWidth, direction, display, displayInside, displayList, displayOutside, emptyCells, mozBoxOrient, mozBoxDirection, flexDirection, flexWrap, float, fontKerning, fontLanguageOverride, fontSize, fontSizeAdjust, fontStretch, fontStyle, fontVariantCaps, fontVariantPosition, fontWeight, gridAutoColumns, gridColumnGap, gridTemplateAreas, hyphens, imageRendering, msInterpolationMode, imeMode, initialLetterAlign, isolation, mozBoxPack, justifyContent, msFlexPack, letterSpacing, lineBreak, lineHeight, listStylePosition, listStyleType, maskComposite, maskMode, maskOrigin, maskType, maxBlockSize, mixBlendMode, objectFit, objectPosition, outlineColor, outlineStyle, overflow, overflowClipBox, overflowWrap, pageBreakInside, perspective, pointerEvents, position, resize, rubyAlign, rubyMerge, rubyPosition, scrollBehavior, scrollSnapCoordinate, scrollSnapType, tabSize, tableLayout, textAlign, textAlignLast, textDecorationStyle, textOrientation, textRendering, textShadow, textSizeAdjust, textTransform, transform, transformBox, transformStyle, unicodeBidi, userSelect, verticalAlign, visibility, whiteSpace, willChange, wordBreak, wordSpacing, writingMode, msWritingMode, zIndex];
-
+var validators = [msOverflowStyleValidator, mozAppearanceValidator, mozBindingValidator, mozFloatEdgeValidator, mozForceBrokenImageIconValidator, mozOrientValidator, mozStackSizingValidator, mozTextBlinkValidator, mozUserFocusValidator, mozUserInputValidator, mozUserModifyValidator, mozWindowShadowValidator, webkitBorderBeforeColorValidator, webkitBorderBeforeStyleValidator, webkitBorderBeforeWidthValidator, webkitMaskAttachmentValidator, webkitMaskRepeatValidator, webkitMaskRepeatXValidator, webkitTapHighlightColorValidator, webkitTextStrokeWidthValidator, webkitTouchCalloutValidator, alignContentValidator, msFlexLinePackValidator, msFlexAlignValidator, alignItemsValidator, alignSelfValidator, msFlexItemAlignValidator, allValidator, animationDelayValidator, animationDirectionValidator, animationFillModeValidator, animationIterationCountValidator, animationNameValidator, animationPlayStateValidator, animationTimingFunctionValidator, appearanceValidator, backdropFilterValidator, backfaceVisibilityValidator, backgroundBlendModeValidator, backgroundClipValidator, backgroundImageValidator, backgroundPositionValidator, backgroundSizeValidator, borderBottomLeftRadiusValidator, borderBottomStyleValidator, borderBottomWidthValidator, borderCollapseValidator, borderColorValidator, borderImageSourceValidator, bottomValidator, boxAlignValidator, boxDecorationBreakValidator, boxDirectionValidator, boxFlexValidator, boxLinesValidator, boxOrientValidator, boxPackValidator, boxSizingValidator, boxSuppressValidator, pageBreakAfterValidator, webkitColumnBreakInsideValidator, captionSideValidator, clearValidator, columnCountValidator, columnFillValidator, columnGapValidator, columnSpanValidator, columnWidthValidator, directionValidator, displayValidator, displayInsideValidator, displayListValidator, displayOutsideValidator, emptyCellsValidator, mozBoxOrientValidator, mozBoxDirectionValidator, flexDirectionValidator, flexWrapValidator, floatValidator, fontKerningValidator, fontLanguageOverrideValidator, fontSizeValidator, fontSizeAdjustValidator, fontStretchValidator, fontStyleValidator, fontVariantCapsValidator, fontVariantPositionValidator, fontWeightValidator, gridAutoColumnsValidator, gridColumnGapValidator, gridTemplateAreasValidator, hyphensValidator, imageRenderingValidator, msInterpolationModeValidator, imeModeValidator, initialLetterAlignValidator, isolationValidator, mozBoxPackValidator, justifyContentValidator, msFlexPackValidator, letterSpacingValidator, lineBreakValidator, lineHeightValidator, listStylePositionValidator, listStyleTypeValidator, maskCompositeValidator, maskModeValidator, maskOriginValidator, maskTypeValidator, maxBlockSizeValidator, mixBlendModeValidator, objectFitValidator, objectPositionValidator, outlineColorValidator, outlineStyleValidator, overflowValidator, overflowClipBoxValidator, overflowWrapValidator, pageBreakInsideValidator, perspectiveValidator, pointerEventsValidator, positionValidator, resizeValidator, rubyAlignValidator, rubyMergeValidator, rubyPositionValidator, scrollBehaviorValidator, scrollSnapCoordinateValidator, scrollSnapTypeValidator, tabSizeValidator, tableLayoutValidator, textAlignValidator, textAlignLastValidator, textDecorationStyleValidator, textOrientationValidator, textRenderingValidator, textShadowValidator, textSizeAdjustValidator, textTransformValidator, transformValidator, transformBoxValidator, transformStyleValidator, unicodeBidiValidator, userSelectValidator, verticalAlignValidator, visibilityValidator, whiteSpaceValidator, willChangeValidator, wordBreakValidator, wordSpacingValidator, writingModeValidator, msWritingModeValidator, zIndexValidator];
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {
   if (typeof value === 'string') {
