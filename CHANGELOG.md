@@ -1,3 +1,10 @@
+# 0.1.0
+
+* This release changes the initial API, to one that takes a property value
+  pair. For more details on this, see <https://github.com/ben-eb/css-values/issues/9>.
+* css-values supports 247 properties, with improved support for global values
+  such as custom properties, calc functionality and case-insensitivity.
+
 # 0.0.1
 
 * Initial release. 218 properties are covered, albeit in a limited capacity.
