@@ -1,3 +1,9 @@
+# Head
+
+* Adds support for the non-standard -webkit-mask-composite property.
+
+* * *
+
 # 0.1.0
 
 * This release changes the initial API, to one that takes a property value

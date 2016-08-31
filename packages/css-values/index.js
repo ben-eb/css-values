@@ -279,6 +279,12 @@ var isAttachment = (function (node) {
     return isKeyword(node, attachments);
 });
 
+var compositeStyles = ['clear', 'copy', 'source-over', 'source-in', 'source-out', 'source-atop', 'destination-over', 'destination-in', 'destination-out', 'destination-atop', 'xor'];
+
+var isCompositeStyle = (function (node) {
+    return isKeyword(node, compositeStyles);
+});
+
 var singleValues = ['repeat-x', 'repeat-y'];
 
 var multipleValues = ['repeat', 'space', 'round', 'no-repeat'];
@@ -1217,6 +1223,20 @@ var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(parse
   return valid && parsed.nodes.length % 2 !== 0;
 };
 
+var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isCompositeStyle(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
 var webkitMaskRepeatValidator = isRepeatStyle;
 var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space", "round"]);
 
@@ -1980,6 +2000,7 @@ var validators = {
   "-webkit-margin-end": bottomValidator,
   "-webkit-margin-start": bottomValidator,
   "-webkit-mask-attachment": webkitMaskAttachmentValidator,
+  "-webkit-mask-composite": webkitMaskCompositeValidator,
   "-webkit-mask-repeat": webkitMaskRepeatValidator,
   "-webkit-mask-repeat-x": webkitMaskRepeatXValidator,
   "-webkit-mask-repeat-y": webkitMaskRepeatXValidator,

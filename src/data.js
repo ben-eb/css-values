@@ -7,6 +7,7 @@ const overrides = {
     // properties
     '-webkit-tap-highlight-color': '<color>#',
     '-webkit-mask-attachment': '<attachment>#',
+    '-webkit-mask-composite': '<composite-style>#',
     '-webkit-mask-repeat': '<repeat-style>#',
     'animation-timing-function': '<single-transition-timing-function>#',
     bottom: '<length-percentage> | auto',

@@ -31,7 +31,7 @@ valid, even though they are not to specification.
 
 ## Property support
 
-We support 249 of 361 CSS properties (68.98%).
+We support 250 of 361 CSS properties (69.25%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -49,6 +49,7 @@ We support 249 of 361 CSS properties (68.98%).
 * `-webkit-border-before-style`
 * `-webkit-border-before-width`
 * `-webkit-mask-attachment`
+* `-webkit-mask-composite`
 * `-webkit-mask-repeat`
 * `-webkit-mask-repeat-x`
 * `-webkit-mask-repeat-y`
