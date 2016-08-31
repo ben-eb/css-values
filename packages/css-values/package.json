@@ -1,6 +1,6 @@
 {
   "name": "css-values",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Validate CSS property value pairs.",
   "main": "dist/index.js",
   "keywords": [
