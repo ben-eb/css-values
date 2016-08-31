@@ -282,16 +282,6 @@ We support 247 of 361 CSS properties (68.42%).
 * `z-index`
 
 
-
-## Install
-
-With [npm](https://npmjs.org/package/css-values) do:
-
-```
-npm install css-values --save-dev
-```
-
-
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
