@@ -664,6 +664,16 @@ function isImageSet(node) {
     return getArguments(node).every(validateImageSet);
 }
 
+function isIdSelector(_ref2) {
+    var type = _ref2.type;
+    var value = _ref2.value;
+
+    if (type !== 'word') {
+        return false;
+    }
+    return value[0] === '#' && isCustomIdent({ type: 'word', value: value.slice(1) });
+}
+
 function isElement(node) {
     if (!isFunction(node, 'element')) {
         return false;
@@ -671,11 +681,7 @@ function isElement(node) {
     if (node.nodes.length !== 1) {
         return false;
     }
-    var _node$nodes$ = node.nodes[0];
-    var type = _node$nodes$.type;
-    var value = _node$nodes$.value;
-
-    return value[0] === '#' && type === 'word';
+    return isIdSelector(node.nodes[0]);
 }
 
 function isCrossFade(node) {
@@ -753,8 +759,8 @@ var extentKeywords = ['closest-corner', 'closest-side', 'farthest-corner', 'fart
 
 var isRadialGradientPosition = isPositionFactory(false);
 
-function isAt(_ref2) {
-    var value = _ref2.value;
+function isAt(_ref3) {
+    var value = _ref3.value;
 
     return value === at;
 }

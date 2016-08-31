@@ -4,6 +4,7 @@ import getArguments from './getArguments';
 import isAngle from './isAngle';
 import isColor from './isColor';
 import isComma from './isComma';
+import isCustomIdent from './isCustomIdent';
 import isFunction from './isFunction';
 import isKeyword from './isKeyword';
 import isLength from './isLength';
@@ -64,6 +65,13 @@ function isImageSet (node) {
     return getArguments(node).every(validateImageSet);
 }
 
+function isIdSelector ({type, value}) {
+    if (type !== 'word') {
+        return false;
+    }
+    return value[0] === '#' && isCustomIdent({type: 'word', value: value.slice(1)});
+}
+
 function isElement (node) {
     if (!isFunction(node, 'element')) {
         return false;
@@ -71,8 +79,7 @@ function isElement (node) {
     if (node.nodes.length !== 1) {
         return false;
     }
-    const {type, value} = node.nodes[0];
-    return value[0] === '#' && type === 'word';
+    return isIdSelector(node.nodes[0]);
 }
 
 function isCrossFade (node) {
