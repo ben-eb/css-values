@@ -131,6 +131,8 @@ export default [
     'font-variant-caps',
     'font-variant-position',
     'font-weight',
+    'grid-auto-columns',
+    'grid-auto-rows',
     'grid-column-gap',
     'grid-row-gap',
     'grid-template-areas',

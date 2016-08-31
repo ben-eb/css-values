@@ -31,7 +31,7 @@ valid, even though they are not to specification.
 
 ## Property support
 
-We support 247 of 361 CSS properties (68.42%).
+We support 249 of 361 CSS properties (68.98%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -161,6 +161,8 @@ We support 247 of 361 CSS properties (68.42%).
 * `font-variant-caps`
 * `font-variant-position`
 * `font-weight`
+* `grid-auto-columns`
+* `grid-auto-rows`
 * `grid-column-gap`
 * `grid-row-gap`
 * `grid-template-areas`
@@ -280,6 +282,7 @@ We support 247 of 361 CSS properties (68.42%).
 * `word-wrap`
 * `writing-mode`
 * `z-index`
+
 
 
 ## Contributors
