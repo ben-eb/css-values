@@ -129,5 +129,11 @@ export default config => {
             true,
             t.stringLiteral('should accept an ast')
         ),
+        createGenericTest(
+            t.stringLiteral('foobar'),
+            t.stringLiteral('baz'),
+            true,
+            t.stringLiteral('should pass through unknown properties')
+        ),
     ]);
 };
