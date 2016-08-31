@@ -24,6 +24,7 @@ export default function writeBundle ({entry, dest, external, files}) {
         ],
     }).then(bundle => {
         bundle.write({
+            footer: '\n',
             format: 'es',
             dest,
         });
