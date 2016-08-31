@@ -2,7 +2,7 @@
   "name": "css-values",
   "version": "0.0.0",
   "description": "Validate CSS property value pairs.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "keywords": [
     "css"
   ],
@@ -20,6 +20,9 @@
   },
   "repository": "https://github.com/ben-eb/css-values/tree/master/packages/css-values",
   "files": [
-    "index.js"
-  ]
+    "dist"
+  ],
+  "scripts": {
+    "release": "cross-env BABEL_ENV=publish babel index.js --out-dir dist"
+  }
 }

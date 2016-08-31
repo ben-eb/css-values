@@ -10,6 +10,7 @@
     "markdown": "remark *.md --quiet",
     "pretest": "eslint src",
     "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
+    "release": "npm test && lerna run release && lerna publish",
     "report": "nyc report --reporter=html",
     "test": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava",
     "test-012": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava"
