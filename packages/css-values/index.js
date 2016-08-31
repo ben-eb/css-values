@@ -1135,1140 +1135,1092 @@ var isAnimateableFeature = (function (node) {
     return isKeyword(node, animateableFeatures) || isCustomIdent(node);
 });
 
-var msOverflowStyleValidator = {
-  properties: ["-ms-overflow-style"],
-  fn: isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"])
-};
-var mozAppearanceValidator = {
-  properties: ["-moz-appearance"],
-  fn: isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"])
-};
-var mozBindingValidator = {
-  properties: ["-moz-binding", "list-style-image"],
-  fn: function mozBindingValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isUrl(node) || isKeyword(node, "none");
-    }
+var msOverflowStyleValidator = isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"]);
+var mozAppearanceValidator = isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"]);
 
-    return false;
-  }
-};
-var mozFloatEdgeValidator = {
-  properties: ["-moz-float-edge"],
-  fn: isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"])
-};
-var mozForceBrokenImageIconValidator = {
-  properties: ["-moz-force-broken-image-icon", "box-flex-group", "box-ordinal-group", "order", "orphans", "widows"],
-  fn: function mozForceBrokenImageIconValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isInteger(node);
-    }
-
-    return false;
-  }
-};
-var mozOrientValidator = {
-  properties: ["-moz-orient"],
-  fn: isKeywordFactory(["inline", "block", "horizontal", "vertical"])
-};
-var mozStackSizingValidator = {
-  properties: ["-moz-stack-sizing"],
-  fn: isKeywordFactory(["ignore", "stretch-to-fit"])
-};
-var mozTextBlinkValidator = {
-  properties: ["-moz-text-blink"],
-  fn: isKeywordFactory(["none", "blink"])
-};
-var mozUserFocusValidator = {
-  properties: ["-moz-user-focus"],
-  fn: isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"])
-};
-var mozUserInputValidator = {
-  properties: ["-moz-user-input"],
-  fn: isKeywordFactory(["none", "enabled", "disabled"])
-};
-var mozUserModifyValidator = {
-  properties: ["-moz-user-modify"],
-  fn: isKeywordFactory(["read-only", "read-write", "write-only"])
-};
-var mozWindowShadowValidator = {
-  properties: ["-moz-window-shadow"],
-  fn: isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"])
-};
-var webkitBorderBeforeColorValidator = {
-  properties: ["-webkit-border-before-color", "-webkit-text-fill-color", "-webkit-text-stroke-color", "background-color", "border-block-end-color", "border-block-start-color", "border-bottom-color", "border-inline-end-color", "border-inline-start-color", "border-left-color", "border-right-color", "border-top-color", "color", "column-rule-color", "text-decoration-color", "text-emphasis-color"],
-  fn: function webkitBorderBeforeColorValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isColor(node);
-    }
-
-    return false;
-  }
-};
-var webkitBorderBeforeStyleValidator = {
-  properties: ["-webkit-border-before-style", "border-block-end-style", "border-block-start-style", "border-inline-end-style", "border-inline-start-style", "border-style"],
-  fn: function webkitBorderBeforeStyleValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-var webkitBorderBeforeWidthValidator = {
-  properties: ["-webkit-border-before-width", "border-block-end-width", "border-block-start-width", "border-inline-end-width", "border-inline-start-width", "border-width"],
-  fn: function webkitBorderBeforeWidthValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-var webkitMaskAttachmentValidator = {
-  properties: ["-webkit-mask-attachment", "background-attachment"],
-  fn: function webkitMaskAttachmentValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var webkitMaskRepeatValidator = {
-  properties: ["-webkit-mask-repeat", "background-repeat", "mask-repeat"],
-  fn: isRepeatStyle
-};
-var webkitMaskRepeatXValidator = {
-  properties: ["-webkit-mask-repeat-x", "-webkit-mask-repeat-y"],
-  fn: isKeywordFactory(["repeat", "no-repeat", "space", "round"])
-};
-var webkitTapHighlightColorValidator = {
-  properties: ["-webkit-tap-highlight-color"],
-  fn: function webkitTapHighlightColorValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var webkitTextStrokeWidthValidator = {
-  properties: ["-webkit-text-stroke-width", "outline-offset"],
-  fn: function webkitTextStrokeWidthValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node);
-    }
-
-    return false;
-  }
-};
-var webkitTouchCalloutValidator = {
-  properties: ["-webkit-touch-callout"],
-  fn: isKeywordFactory(["default", "none"])
-};
-var alignContentValidator = {
-  properties: ["-webkit-align-content", "align-content"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"])
-};
-var msFlexLinePackValidator = {
-  properties: ["-ms-flex-line-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"])
-};
-var msFlexAlignValidator = {
-  properties: ["-webkit-box-align", "-moz-box-align", "-ms-flex-align"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
-};
-var alignItemsValidator = {
-  properties: ["-webkit-align-items", "-ms-grid-row-align", "align-items"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"])
-};
-var alignSelfValidator = {
-  properties: ["-webkit-align-self", "align-self"],
-  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"])
-};
-var msFlexItemAlignValidator = {
-  properties: ["-ms-flex-item-align"],
-  fn: isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"])
-};
-var allValidator = {
-  properties: ["all"],
-  fn: isKeywordFactory(["initial", "inherit", "unset"])
-};
-var animationDelayValidator = {
-  properties: ["animation-delay", "animation-duration", "transition-delay", "transition-duration"],
-  fn: function animationDelayValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationDirectionValidator = {
-  properties: ["animation-direction"],
-  fn: function animationDirectionValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationFillModeValidator = {
-  properties: ["animation-fill-mode"],
-  fn: function animationFillModeValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationIterationCountValidator = {
-  properties: ["animation-iteration-count"],
-  fn: function animationIterationCountValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationNameValidator = {
-  properties: ["animation-name"],
-  fn: function animationNameValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationPlayStateValidator = {
-  properties: ["animation-play-state"],
-  fn: function animationPlayStateValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var animationTimingFunctionValidator = {
-  properties: ["animation-timing-function", "transition-timing-function"],
-  fn: function animationTimingFunctionValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var appearanceValidator = {
-  properties: ["-webkit-appearance", "-moz-appearance", "appearance"],
-  fn: isKeywordFactory(["auto", "none"])
-};
-var backdropFilterValidator = {
-  properties: ["-webkit-backdrop-filter", "backdrop-filter", "-webkit-filter", "filter"],
-  fn: function backdropFilterValidator(parsed) {
-    if (isFilterFunctionList(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var backfaceVisibilityValidator = {
-  properties: ["-webkit-backface-visibility", "-moz-backface-visibility", "backface-visibility"],
-  fn: isKeywordFactory(["visible", "hidden"])
-};
-var backgroundBlendModeValidator = {
-  properties: ["background-blend-mode"],
-  fn: function backgroundBlendModeValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var backgroundClipValidator = {
-  properties: ["background-clip", "background-origin"],
-  fn: function backgroundClipValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var backgroundImageValidator = {
-  properties: ["background-image"],
-  fn: function backgroundImageValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
-  }
-};
-var backgroundPositionValidator = {
-  properties: ["background-position", "mask-position"],
-  fn: isPositionFactory(true)
-};
-var backgroundSizeValidator = {
-  properties: ["background-size", "mask-size"],
-  fn: isBgSize
-};
-var borderBottomLeftRadiusValidator = {
-  properties: ["border-bottom-left-radius", "border-bottom-right-radius", "border-top-left-radius", "border-top-right-radius"],
-  fn: function borderBottomLeftRadiusValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
-  }
-};
-var borderBottomStyleValidator = {
-  properties: ["border-bottom-style", "border-left-style", "border-right-style", "border-top-style", "column-rule-style"],
-  fn: function borderBottomStyleValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrStyle(node);
-    }
-
-    return false;
-  }
-};
-var borderBottomWidthValidator = {
-  properties: ["border-bottom-width", "border-left-width", "border-right-width", "border-top-width", "column-rule-width", "outline-width"],
-  fn: function borderBottomWidthValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrWidth(node);
-    }
-
-    return false;
-  }
-};
-var borderCollapseValidator = {
-  properties: ["border-collapse"],
-  fn: isKeywordFactory(["collapse", "separate"])
-};
-var borderColorValidator = {
-  properties: ["border-color"],
-  fn: function borderColorValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
-  }
-};
-var borderImageSourceValidator = {
-  properties: ["border-image-source"],
-  fn: function borderImageSourceValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isImage(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var bottomValidator = {
-  properties: ["bottom", "left", "-webkit-margin-after", "margin-block-end", "-webkit-margin-before", "margin-block-start", "margin-bottom", "-webkit-margin-end", "-moz-margin-end", "margin-inline-end", "-webkit-margin-start", "-moz-margin-start", "margin-inline-start", "margin-left", "margin-right", "margin-top", "offset-block-end", "offset-block-start", "offset-inline-end", "offset-inline-start", "right", "top"],
-  fn: function bottomValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-var boxAlignValidator = {
-  properties: ["box-align"],
-  fn: isKeywordFactory(["start", "center", "end", "baseline", "stretch"])
-};
-var boxDecorationBreakValidator = {
-  properties: ["-webkit-box-decoration-break", "box-decoration-break"],
-  fn: isKeywordFactory(["slice", "clone"])
-};
-var boxDirectionValidator = {
-  properties: ["box-direction"],
-  fn: isKeywordFactory(["normal", "reverse", "inherit"])
-};
-var boxFlexValidator = {
-  properties: ["box-flex", "flex-grow", "flex-shrink", "opacity", "shape-image-threshold"],
-  fn: function boxFlexValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node);
-    }
-
-    return false;
-  }
-};
-var boxLinesValidator = {
-  properties: ["box-lines"],
-  fn: isKeywordFactory(["single", "multiple"])
-};
-var boxOrientValidator = {
-  properties: ["box-orient"],
-  fn: isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"])
-};
-var boxPackValidator = {
-  properties: ["box-pack"],
-  fn: isKeywordFactory(["start", "center", "end", "justify"])
-};
-var boxSizingValidator = {
-  properties: ["-webkit-box-sizing", "-moz-box-sizing", "box-sizing"],
-  fn: isKeywordFactory(["content-box", "border-box"])
-};
-var boxSuppressValidator = {
-  properties: ["box-suppress"],
-  fn: isKeywordFactory(["show", "discard", "hide"])
-};
-var pageBreakAfterValidator = {
-  properties: ["page-break-after", "page-break-before"],
-  fn: isKeywordFactory(["auto", "always", "avoid", "left", "right"])
-};
-var webkitColumnBreakInsideValidator = {
-  properties: ["-webkit-column-break-inside", "page-break-inside", "break-inside"],
-  fn: isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"])
-};
-var captionSideValidator = {
-  properties: ["caption-side"],
-  fn: isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"])
-};
-var clearValidator = {
-  properties: ["clear"],
-  fn: isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"])
-};
-var columnCountValidator = {
-  properties: ["-webkit-column-count", "-moz-column-count", "column-count"],
-  fn: function columnCountValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-var columnFillValidator = {
-  properties: ["-webkit-column-fill", "-moz-column-fill", "column-fill"],
-  fn: isKeywordFactory(["auto", "balance"])
-};
-var columnGapValidator = {
-  properties: ["-webkit-column-gap", "-moz-column-gap", "column-gap"],
-  fn: function columnGapValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-var columnSpanValidator = {
-  properties: ["-webkit-column-span", "-moz-column-span", "column-span"],
-  fn: isKeywordFactory(["none", "all"])
-};
-var columnWidthValidator = {
-  properties: ["-webkit-column-width", "-moz-column-width", "column-width", "marker-offset"],
-  fn: function columnWidthValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-var directionValidator = {
-  properties: ["direction"],
-  fn: isKeywordFactory(["ltr", "rtl"])
-};
-var displayValidator = {
-  properties: ["display"],
-  fn: isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"])
-};
-var displayInsideValidator = {
-  properties: ["display-inside"],
-  fn: isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"])
-};
-var displayListValidator = {
-  properties: ["display-list"],
-  fn: isKeywordFactory(["none", "list-item"])
-};
-var displayOutsideValidator = {
-  properties: ["display-outside"],
-  fn: isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"])
-};
-var emptyCellsValidator = {
-  properties: ["empty-cells"],
-  fn: isKeywordFactory(["show", "hide"])
-};
-var mozBoxOrientValidator = {
-  properties: ["-webkit-box-orient", "-moz-box-orient"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"])
-};
-var mozBoxDirectionValidator = {
-  properties: ["-webkit-box-direction", "-moz-box-direction"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"])
-};
-var flexDirectionValidator = {
-  properties: ["-webkit-flex-direction", "-ms-flex-direction", "flex-direction"],
-  fn: isKeywordFactory(["row", "row-reverse", "column", "column-reverse"])
-};
-var flexWrapValidator = {
-  properties: ["-webkit-flex-wrap", "-ms-flex-wrap", "flex-wrap"],
-  fn: isKeywordFactory(["nowrap", "wrap", "wrap-reverse"])
-};
-var floatValidator = {
-  properties: ["float"],
-  fn: isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"])
-};
-var fontKerningValidator = {
-  properties: ["-webkit-font-kerning", "-moz-font-kerning", "font-kerning"],
-  fn: isKeywordFactory(["auto", "normal", "none"])
-};
-var fontLanguageOverrideValidator = {
-  properties: ["-webkit-font-language-override", "-moz-font-language-override", "font-language-override"],
-  fn: function fontLanguageOverrideValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isString(node) || isKeyword(node, "normal");
-    }
-
-    return false;
-  }
-};
-var fontSizeValidator = {
-  properties: ["font-size"],
-  fn: function fontSizeValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
-    }
-
-    return false;
-  }
-};
-var fontSizeAdjustValidator = {
-  properties: ["font-size-adjust"],
-  fn: function fontSizeAdjustValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var fontStretchValidator = {
-  properties: ["font-stretch"],
-  fn: isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"])
-};
-var fontStyleValidator = {
-  properties: ["font-style"],
-  fn: isKeywordFactory(["normal", "italic", "oblique"])
-};
-var fontVariantCapsValidator = {
-  properties: ["font-variant-caps"],
-  fn: isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"])
-};
-var fontVariantPositionValidator = {
-  properties: ["font-variant-position"],
-  fn: isKeywordFactory(["normal", "sub", "super"])
-};
-var fontWeightValidator = {
-  properties: ["font-weight"],
-  fn: isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"])
-};
-var gridAutoColumnsValidator = {
-  properties: ["grid-auto-columns", "grid-auto-rows"],
-  fn: function gridAutoColumnsValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isTrackSize(node);
-    }
-
-    return false;
-  }
-};
-var gridColumnGapValidator = {
-  properties: ["grid-column-gap", "grid-row-gap", "motion-offset", "padding-block-end", "padding-block-start", "padding-bottom", "padding-inline-end", "padding-inline-start", "padding-left", "padding-right", "padding-top", "shape-margin"],
-  fn: function gridColumnGapValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node);
-    }
-
-    return false;
-  }
-};
-var gridTemplateAreasValidator = {
-  properties: ["grid-template-areas"],
-  fn: function gridTemplateAreasValidator(parsed) {
+var mozBindingValidator = function mozBindingValidator(parsed) {
+  if (parsed.nodes.length === 1) {
     var node = parsed.nodes[0];
-
-    if (parsed.nodes.length === 1 && isKeyword(node, "none")) {
-      return true;
-    }
-
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
+    return isUrl(node) || isKeyword(node, "none");
   }
+
+  return false;
 };
-var hyphensValidator = {
-  properties: ["-webkit-hyphens", "-moz-hyphens", "-ms-hyphens", "hyphens"],
-  fn: isKeywordFactory(["none", "manual", "auto"])
+
+var mozFloatEdgeValidator = isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"]);
+
+var mozForceBrokenImageIconValidator = function mozForceBrokenImageIconValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isInteger(node);
+  }
+
+  return false;
 };
-var imageRenderingValidator = {
-  properties: ["image-rendering"],
-  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "-webkit-optimize-contrast", "-moz-crisp-edges", "-o-pixelated"])
+
+var mozOrientValidator = isKeywordFactory(["inline", "block", "horizontal", "vertical"]);
+var mozStackSizingValidator = isKeywordFactory(["ignore", "stretch-to-fit"]);
+var mozTextBlinkValidator = isKeywordFactory(["none", "blink"]);
+var mozUserFocusValidator = isKeywordFactory(["ignore", "normal", "select-after", "select-before", "select-menu", "select-same", "select-all", "none"]);
+var mozUserInputValidator = isKeywordFactory(["none", "enabled", "disabled"]);
+var mozUserModifyValidator = isKeywordFactory(["read-only", "read-write", "write-only"]);
+var mozWindowShadowValidator = isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"]);
+
+var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isColor(node);
+  }
+
+  return false;
 };
-var msInterpolationModeValidator = {
-  properties: ["-ms-interpolation-mode"],
-  fn: isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"])
-};
-var imeModeValidator = {
-  properties: ["ime-mode"],
-  fn: isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"])
-};
-var initialLetterAlignValidator = {
-  properties: ["initial-letter-align"],
-  fn: isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"])
-};
-var isolationValidator = {
-  properties: ["isolation"],
-  fn: isKeywordFactory(["auto", "isolate"])
-};
-var mozBoxPackValidator = {
-  properties: ["-webkit-box-pack", "-moz-box-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"])
-};
-var justifyContentValidator = {
-  properties: ["-webkit-justify-content", "justify-content"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"])
-};
-var msFlexPackValidator = {
-  properties: ["-ms-flex-pack"],
-  fn: isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"])
-};
-var letterSpacingValidator = {
-  properties: ["letter-spacing"],
-  fn: function letterSpacingValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "normal");
+
+var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
+      valid = false;
     }
 
     return false;
-  }
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
 };
-var lineBreakValidator = {
-  properties: ["line-break"],
-  fn: isKeywordFactory(["auto", "loose", "normal", "strict"])
-};
-var lineHeightValidator = {
-  properties: ["line-height"],
-  fn: function lineHeightValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
+
+var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
+      valid = false;
     }
 
     return false;
-  }
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
 };
-var listStylePositionValidator = {
-  properties: ["list-style-position"],
-  fn: isKeywordFactory(["inside", "outside"])
-};
-var listStyleTypeValidator = {
-  properties: ["list-style-type"],
-  fn: function listStyleTypeValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
+
+var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
     }
 
     return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var webkitMaskRepeatValidator = isRepeatStyle;
+var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space", "round"]);
+
+var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLength(node);
   }
+
+  return false;
 };
-var maskCompositeValidator = {
-  properties: ["mask-composite"],
-  fn: function maskCompositeValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
 
-      if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
+var webkitTouchCalloutValidator = isKeywordFactory(["default", "none"]);
+var alignContentValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch"]);
+var msFlexLinePackValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "stretch", "start", "end", "justify", "distribute"]);
+var msFlexAlignValidator = isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"]);
+var alignItemsValidator = isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"]);
+var alignSelfValidator = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"]);
+var msFlexItemAlignValidator = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"]);
+var allValidator = isKeywordFactory(["initial", "inherit", "unset"]);
 
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
+var animationDelayValidator = function animationDelayValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationDirectionValidator = function animationDirectionValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationFillModeValidator = function animationFillModeValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationIterationCountValidator = function animationIterationCountValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationNameValidator = function animationNameValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationPlayStateValidator = function animationPlayStateValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var animationTimingFunctionValidator = function animationTimingFunctionValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var appearanceValidator = isKeywordFactory(["auto", "none"]);
+
+var backdropFilterValidator = function backdropFilterValidator(parsed) {
+  if (isFilterFunctionList(parsed)) {
+    return true;
   }
-};
-var maskModeValidator = {
-  properties: ["mask-mode"],
-  fn: function maskModeValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
 
-      if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isKeyword(node, "none");
   }
+
+  return false;
 };
-var maskOriginValidator = {
-  properties: ["mask-origin"],
-  fn: function maskOriginValidator(parsed) {
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
 
-      if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
+var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
 
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
+var backgroundBlendModeValidator = function backgroundBlendModeValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var backgroundClipValidator = function backgroundClipValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var backgroundImageValidator = function backgroundImageValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var backgroundPositionValidator = isPositionFactory(true);
+var backgroundSizeValidator = isBgSize;
+
+var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
+};
+
+var borderBottomStyleValidator = function borderBottomStyleValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isBrStyle(node);
   }
+
+  return false;
 };
-var maskTypeValidator = {
-  properties: ["mask-type"],
-  fn: isKeywordFactory(["luminance", "alpha"])
+
+var borderBottomWidthValidator = function borderBottomWidthValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isBrWidth(node);
+  }
+
+  return false;
 };
+
+var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
+
+var borderColorValidator = function borderColorValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+};
+
+var borderImageSourceValidator = function borderImageSourceValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isImage(node) || isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var bottomValidator = function bottomValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLengthPercentage(node) || isKeyword(node, "auto");
+  }
+
+  return false;
+};
+
+var boxAlignValidator = isKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
+var boxDecorationBreakValidator = isKeywordFactory(["slice", "clone"]);
+var boxDirectionValidator = isKeywordFactory(["normal", "reverse", "inherit"]);
+
+var boxFlexValidator = function boxFlexValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isNumber(node);
+  }
+
+  return false;
+};
+
+var boxLinesValidator = isKeywordFactory(["single", "multiple"]);
+var boxOrientValidator = isKeywordFactory(["horizontal", "vertical", "inline-axis", "block-axis", "inherit"]);
+var boxPackValidator = isKeywordFactory(["start", "center", "end", "justify"]);
+var boxSizingValidator = isKeywordFactory(["content-box", "border-box"]);
+var boxSuppressValidator = isKeywordFactory(["show", "discard", "hide"]);
+var pageBreakAfterValidator = isKeywordFactory(["auto", "always", "avoid", "left", "right"]);
+var webkitColumnBreakInsideValidator = isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"]);
+var captionSideValidator = isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"]);
+var clearValidator = isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"]);
+
+var columnCountValidator = function columnCountValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isNumber(node) || isKeyword(node, "auto");
+  }
+
+  return false;
+};
+
+var columnFillValidator = isKeywordFactory(["auto", "balance"]);
+
+var columnGapValidator = function columnGapValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLength(node) || isKeyword(node, "normal");
+  }
+
+  return false;
+};
+
+var columnSpanValidator = isKeywordFactory(["none", "all"]);
+
+var columnWidthValidator = function columnWidthValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLength(node) || isKeyword(node, "auto");
+  }
+
+  return false;
+};
+
+var directionValidator = isKeywordFactory(["ltr", "rtl"]);
+var displayValidator = isKeywordFactory(["none", "inline", "block", "list-item", "inline-list-item", "inline-block", "inline-table", "table", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row", "table-row-group", "flex", "inline-flex", "grid", "inline-grid", "run-in", "ruby", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container", "contents", "-webkit-box", "-webkit-flex", "-moz-box", "-ms-flexbox", "-webkit-inline-box", "-webkit-inline-flex", "-moz-inline-box", "-ms-inline-flexbox", "-ms-grid", "-ms-inline-grid"]);
+var displayInsideValidator = isKeywordFactory(["auto", "block", "table", "flex", "grid", "ruby"]);
+var displayListValidator = isKeywordFactory(["none", "list-item"]);
+var displayOutsideValidator = isKeywordFactory(["block-level", "inline-level", "run-in", "contents", "none", "table-row-group", "table-header-group", "table-footer-group", "table-row", "table-cell", "table-column-group", "table-column", "table-caption", "ruby-base", "ruby-text", "ruby-base-container", "ruby-text-container"]);
+var emptyCellsValidator = isKeywordFactory(["show", "hide"]);
+var mozBoxOrientValidator = isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "horizontal", "vertical"]);
+var mozBoxDirectionValidator = isKeywordFactory(["row", "row-reverse", "column", "column-reverse", "normal", "reverse"]);
+var flexDirectionValidator = isKeywordFactory(["row", "row-reverse", "column", "column-reverse"]);
+var flexWrapValidator = isKeywordFactory(["nowrap", "wrap", "wrap-reverse"]);
+var floatValidator = isKeywordFactory(["left", "right", "none", "inline-start", "inline-end"]);
+var fontKerningValidator = isKeywordFactory(["auto", "normal", "none"]);
+
+var fontLanguageOverrideValidator = function fontLanguageOverrideValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isString(node) || isKeyword(node, "normal");
+  }
+
+  return false;
+};
+
+var fontSizeValidator = function fontSizeValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
+  }
+
+  return false;
+};
+
+var fontSizeAdjustValidator = function fontSizeAdjustValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isNumber(node) || isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var fontStretchValidator = isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
+var fontStyleValidator = isKeywordFactory(["normal", "italic", "oblique"]);
+var fontVariantCapsValidator = isKeywordFactory(["normal", "small-caps", "all-small-caps", "petite-caps", "all-petite-caps", "unicase", "titling-caps"]);
+var fontVariantPositionValidator = isKeywordFactory(["normal", "sub", "super"]);
+var fontWeightValidator = isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
+
+var gridAutoColumnsValidator = function gridAutoColumnsValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isTrackSize(node);
+  }
+
+  return false;
+};
+
+var gridColumnGapValidator = function gridColumnGapValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLengthPercentage(node);
+  }
+
+  return false;
+};
+
+var gridTemplateAreasValidator = function gridTemplateAreasValidator(parsed) {
+  var node = parsed.nodes[0];
+
+  if (parsed.nodes.length === 1 && isKeyword(node, "none")) {
+    return true;
+  }
+
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var hyphensValidator = isKeywordFactory(["none", "manual", "auto"]);
+var imageRenderingValidator = isKeywordFactory(["auto", "crisp-edges", "pixelated", "-webkit-optimize-contrast", "-moz-crisp-edges", "-o-pixelated"]);
+var msInterpolationModeValidator = isKeywordFactory(["auto", "crisp-edges", "pixelated", "nearest-neighbor"]);
+var imeModeValidator = isKeywordFactory(["auto", "normal", "active", "inactive", "disabled"]);
+var initialLetterAlignValidator = isKeywordFactory(["auto", "alphabetic", "hanging", "ideographic"]);
+var isolationValidator = isKeywordFactory(["auto", "isolate"]);
+var mozBoxPackValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify"]);
+var justifyContentValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around"]);
+var msFlexPackValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"]);
+
+var letterSpacingValidator = function letterSpacingValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLength(node) || isKeyword(node, "normal");
+  }
+
+  return false;
+};
+
+var lineBreakValidator = isKeywordFactory(["auto", "loose", "normal", "strict"]);
+
+var lineHeightValidator = function lineHeightValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
+  }
+
+  return false;
+};
+
+var listStylePositionValidator = isKeywordFactory(["inside", "outside"]);
+
+var listStyleTypeValidator = function listStyleTypeValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var maskCompositeValidator = function maskCompositeValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var maskModeValidator = function maskModeValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var maskOriginValidator = function maskOriginValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
+var maskTypeValidator = isKeywordFactory(["luminance", "alpha"]);
 var maxBlockSizeValidatorKeywords = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
-var maxBlockSizeValidator = {
-  properties: ["max-block-size", "max-height", "max-inline-size", "max-width", "min-block-size", "min-height", "min-inline-size", "min-width"],
-  fn: function maxBlockSizeValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
-    }
 
-    return false;
-  }
-};
-var mixBlendModeValidator = {
-  properties: ["mix-blend-mode"],
-  fn: function mixBlendModeValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBlendMode(node);
-    }
-
-    return false;
-  }
-};
-var objectFitValidator = {
-  properties: ["-o-object-fit", "object-fit"],
-  fn: isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"])
-};
-var objectPositionValidator = {
-  properties: ["object-position", "perspective-origin", "scroll-snap-destination"],
-  fn: isPositionFactory(false)
-};
-var outlineColorValidator = {
-  properties: ["outline-color"],
-  fn: function outlineColorValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isColor(node) || isKeyword(node, "invert");
-    }
-
-    return false;
-  }
-};
-var outlineStyleValidator = {
-  properties: ["outline-style"],
-  fn: function outlineStyleValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isBrStyle(node) || isKeyword(node, "auto");
-    }
-
-    return false;
-  }
-};
-var overflowValidator = {
-  properties: ["overflow", "overflow-x", "overflow-y"],
-  fn: isKeywordFactory(["visible", "hidden", "scroll", "auto"])
-};
-var overflowClipBoxValidator = {
-  properties: ["overflow-clip-box"],
-  fn: isKeywordFactory(["padding-box", "content-box"])
-};
-var overflowWrapValidator = {
-  properties: ["overflow-wrap", "word-wrap"],
-  fn: isKeywordFactory(["normal", "break-word"])
-};
-var pageBreakInsideValidator = {
-  properties: ["page-break-inside"],
-  fn: isKeywordFactory(["auto", "avoid"])
-};
-var perspectiveValidator = {
-  properties: ["-webkit-perspective", "-moz-perspective", "perspective"],
-  fn: function perspectiveValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLength(node) || isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var pointerEventsValidator = {
-  properties: ["pointer-events"],
-  fn: isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"])
-};
-var positionValidator = {
-  properties: ["position"],
-  fn: isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"])
-};
-var resizeValidator = {
-  properties: ["resize"],
-  fn: isKeywordFactory(["none", "both", "horizontal", "vertical"])
-};
-var rubyAlignValidator = {
-  properties: ["ruby-align"],
-  fn: isKeywordFactory(["start", "center", "space-between", "space-around"])
-};
-var rubyMergeValidator = {
-  properties: ["ruby-merge"],
-  fn: isKeywordFactory(["separate", "collapse", "auto"])
-};
-var rubyPositionValidator = {
-  properties: ["ruby-position"],
-  fn: isKeywordFactory(["over", "under", "inter-character"])
-};
-var scrollBehaviorValidator = {
-  properties: ["scroll-behavior"],
-  fn: isKeywordFactory(["auto", "smooth"])
-};
-var scrollSnapCoordinateValidator = {
-  properties: ["-webkit-scroll-snap-coordinate", "-ms-scroll-snap-coordinate", "scroll-snap-coordinate"],
-  fn: function scrollSnapCoordinateValidator(parsed) {
-    if (isPositionFactory(true)(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var scrollSnapTypeValidator = {
-  properties: ["-webkit-scroll-snap-type", "-ms-scroll-snap-type", "scroll-snap-type", "scroll-snap-type-x", "scroll-snap-type-y"],
-  fn: isKeywordFactory(["none", "mandatory", "proximity"])
-};
-var tabSizeValidator = {
-  properties: ["tab-size"],
-  fn: function tabSizeValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isInteger(node) || isLength(node);
-    }
-
-    return false;
-  }
-};
-var tableLayoutValidator = {
-  properties: ["table-layout"],
-  fn: isKeywordFactory(["auto", "fixed"])
-};
-var textAlignValidator = {
-  properties: ["text-align"],
-  fn: isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"])
-};
-var textAlignLastValidator = {
-  properties: ["-moz-text-align-last", "text-align-last"],
-  fn: isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"])
-};
-var textDecorationStyleValidator = {
-  properties: ["-webkit-text-decoration-style", "-moz-text-decoration-style", "text-decoration-style"],
-  fn: isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"])
-};
-var textOrientationValidator = {
-  properties: ["text-orientation"],
-  fn: isKeywordFactory(["mixed", "upright", "sideways"])
-};
-var textRenderingValidator = {
-  properties: ["text-rendering"],
-  fn: isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"])
-};
-var textShadowValidator = {
-  properties: ["text-shadow"],
-  fn: function textShadowValidator(parsed) {
-    if (isShadowT(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var textSizeAdjustValidatorKeywords = ["none", "auto"];
-var textSizeAdjustValidator = {
-  properties: ["-webkit-text-size-adjust", "-moz-text-size-adjust", "-ms-text-size-adjust", "text-size-adjust"],
-  fn: function textSizeAdjustValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
-    }
-
-    return false;
-  }
-};
-var textTransformValidator = {
-  properties: ["text-transform"],
-  fn: isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"])
-};
-var transformValidator = {
-  properties: ["-webkit-transform", "-moz-transform", "-ms-transform", "-o-transform", "transform"],
-  fn: function transformValidator(parsed) {
-    if (isTransformList(parsed)) {
-      return true;
-    }
-
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isKeyword(node, "none");
-    }
-
-    return false;
-  }
-};
-var transformBoxValidator = {
-  properties: ["transform-box"],
-  fn: isKeywordFactory(["border-box", "fill-box", "view-box"])
-};
-var transformStyleValidator = {
-  properties: ["-webkit-transform-style", "-moz-transform-style", "transform-style"],
-  fn: isKeywordFactory(["flat", "preserve-3d"])
-};
-var unicodeBidiValidator = {
-  properties: ["unicode-bidi"],
-  fn: isKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"])
-};
-var userSelectValidator = {
-  properties: ["-webkit-user-select", "-moz-user-select", "-ms-user-select", "user-select"],
-  fn: isKeywordFactory(["auto", "text", "none", "contain", "all"])
-};
-var verticalAlignValidatorKeywords = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
-var verticalAlignValidator = {
-  properties: ["vertical-align"],
-  fn: function verticalAlignValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
-    }
-
-    return false;
-  }
-};
-var visibilityValidator = {
-  properties: ["visibility"],
-  fn: isKeywordFactory(["visible", "hidden", "collapse"])
-};
-var whiteSpaceValidator = {
-  properties: ["white-space"],
-  fn: isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"])
-};
-var willChangeValidator = {
-  properties: ["will-change"],
-  fn: function willChangeValidator(parsed) {
+var maxBlockSizeValidator = function maxBlockSizeValidator(parsed) {
+  if (parsed.nodes.length === 1) {
     var node = parsed.nodes[0];
-
-    if (parsed.nodes.length === 1 && isKeyword(node, "auto")) {
-      return true;
-    }
-
-    var valid = true;
-    parsed.walk(function (node, index) {
-      var even = index % 2 === 0;
-
-      if (even && !isAnimateableFeature(node) && !isVariable(node) || !even && !isComma(node)) {
-        valid = false;
-      }
-
-      return false;
-    });
-    return valid && parsed.nodes.length % 2 !== 0;
+    return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
   }
+
+  return false;
 };
-var wordBreakValidator = {
-  properties: ["word-break"],
-  fn: isKeywordFactory(["normal", "break-all", "keep-all"])
+
+var mixBlendModeValidator = function mixBlendModeValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isBlendMode(node);
+  }
+
+  return false;
 };
-var wordSpacingValidator = {
-  properties: ["word-spacing"],
-  fn: function wordSpacingValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isLengthPercentage(node) || isKeyword(node, "normal");
+
+var objectFitValidator = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
+var objectPositionValidator = isPositionFactory(false);
+
+var outlineColorValidator = function outlineColorValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isColor(node) || isKeyword(node, "invert");
+  }
+
+  return false;
+};
+
+var outlineStyleValidator = function outlineStyleValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isBrStyle(node) || isKeyword(node, "auto");
+  }
+
+  return false;
+};
+
+var overflowValidator = isKeywordFactory(["visible", "hidden", "scroll", "auto"]);
+var overflowClipBoxValidator = isKeywordFactory(["padding-box", "content-box"]);
+var overflowWrapValidator = isKeywordFactory(["normal", "break-word"]);
+var pageBreakInsideValidator = isKeywordFactory(["auto", "avoid"]);
+
+var perspectiveValidator = function perspectiveValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLength(node) || isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var pointerEventsValidator = isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
+var positionValidator = isKeywordFactory(["static", "relative", "absolute", "sticky", "fixed", "-webkit-sticky"]);
+var resizeValidator = isKeywordFactory(["none", "both", "horizontal", "vertical"]);
+var rubyAlignValidator = isKeywordFactory(["start", "center", "space-between", "space-around"]);
+var rubyMergeValidator = isKeywordFactory(["separate", "collapse", "auto"]);
+var rubyPositionValidator = isKeywordFactory(["over", "under", "inter-character"]);
+var scrollBehaviorValidator = isKeywordFactory(["auto", "smooth"]);
+
+var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(parsed) {
+  if (isPositionFactory(true)(parsed)) {
+    return true;
+  }
+
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var scrollSnapTypeValidator = isKeywordFactory(["none", "mandatory", "proximity"]);
+
+var tabSizeValidator = function tabSizeValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isInteger(node) || isLength(node);
+  }
+
+  return false;
+};
+
+var tableLayoutValidator = isKeywordFactory(["auto", "fixed"]);
+var textAlignValidator = isKeywordFactory(["start", "end", "left", "right", "center", "justify", "match-parent"]);
+var textAlignLastValidator = isKeywordFactory(["auto", "start", "end", "left", "right", "center", "justify"]);
+var textDecorationStyleValidator = isKeywordFactory(["solid", "double", "dotted", "dashed", "wavy"]);
+var textOrientationValidator = isKeywordFactory(["mixed", "upright", "sideways"]);
+var textRenderingValidator = isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"]);
+
+var textShadowValidator = function textShadowValidator(parsed) {
+  if (isShadowT(parsed)) {
+    return true;
+  }
+
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var textSizeAdjustValidatorKeywords = ["none", "auto"];
+
+var textSizeAdjustValidator = function textSizeAdjustValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
+  }
+
+  return false;
+};
+
+var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
+
+var transformValidator = function transformValidator(parsed) {
+  if (isTransformList(parsed)) {
+    return true;
+  }
+
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isKeyword(node, "none");
+  }
+
+  return false;
+};
+
+var transformBoxValidator = isKeywordFactory(["border-box", "fill-box", "view-box"]);
+var transformStyleValidator = isKeywordFactory(["flat", "preserve-3d"]);
+var unicodeBidiValidator = isKeywordFactory(["normal", "embed", "isolate", "bidi-override", "isolate-override", "plaintext"]);
+var userSelectValidator = isKeywordFactory(["auto", "text", "none", "contain", "all"]);
+var verticalAlignValidatorKeywords = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
+
+var verticalAlignValidator = function verticalAlignValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
+  }
+
+  return false;
+};
+
+var visibilityValidator = isKeywordFactory(["visible", "hidden", "collapse"]);
+var whiteSpaceValidator = isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap", "pre-line"]);
+
+var willChangeValidator = function willChangeValidator(parsed) {
+  var node = parsed.nodes[0];
+
+  if (parsed.nodes.length === 1 && isKeyword(node, "auto")) {
+    return true;
+  }
+
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isAnimateableFeature(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
     }
 
     return false;
-  }
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
 };
-var writingModeValidator = {
-  properties: ["-webkit-writing-mode", "writing-mode"],
-  fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"])
-};
-var msWritingModeValidator = {
-  properties: ["-ms-writing-mode"],
-  fn: isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"])
-};
-var zIndexValidator = {
-  properties: ["z-index"],
-  fn: function zIndexValidator(parsed) {
-    if (parsed.nodes.length === 1) {
-      var node = parsed.nodes[0];
-      return isInteger(node) || isKeyword(node, "auto");
-    }
 
-    return false;
+var wordBreakValidator = isKeywordFactory(["normal", "break-all", "keep-all"]);
+
+var wordSpacingValidator = function wordSpacingValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isLengthPercentage(node) || isKeyword(node, "normal");
   }
+
+  return false;
 };
-var validators = [msOverflowStyleValidator, mozAppearanceValidator, mozBindingValidator, mozFloatEdgeValidator, mozForceBrokenImageIconValidator, mozOrientValidator, mozStackSizingValidator, mozTextBlinkValidator, mozUserFocusValidator, mozUserInputValidator, mozUserModifyValidator, mozWindowShadowValidator, webkitBorderBeforeColorValidator, webkitBorderBeforeStyleValidator, webkitBorderBeforeWidthValidator, webkitMaskAttachmentValidator, webkitMaskRepeatValidator, webkitMaskRepeatXValidator, webkitTapHighlightColorValidator, webkitTextStrokeWidthValidator, webkitTouchCalloutValidator, alignContentValidator, msFlexLinePackValidator, msFlexAlignValidator, alignItemsValidator, alignSelfValidator, msFlexItemAlignValidator, allValidator, animationDelayValidator, animationDirectionValidator, animationFillModeValidator, animationIterationCountValidator, animationNameValidator, animationPlayStateValidator, animationTimingFunctionValidator, appearanceValidator, backdropFilterValidator, backfaceVisibilityValidator, backgroundBlendModeValidator, backgroundClipValidator, backgroundImageValidator, backgroundPositionValidator, backgroundSizeValidator, borderBottomLeftRadiusValidator, borderBottomStyleValidator, borderBottomWidthValidator, borderCollapseValidator, borderColorValidator, borderImageSourceValidator, bottomValidator, boxAlignValidator, boxDecorationBreakValidator, boxDirectionValidator, boxFlexValidator, boxLinesValidator, boxOrientValidator, boxPackValidator, boxSizingValidator, boxSuppressValidator, pageBreakAfterValidator, webkitColumnBreakInsideValidator, captionSideValidator, clearValidator, columnCountValidator, columnFillValidator, columnGapValidator, columnSpanValidator, columnWidthValidator, directionValidator, displayValidator, displayInsideValidator, displayListValidator, displayOutsideValidator, emptyCellsValidator, mozBoxOrientValidator, mozBoxDirectionValidator, flexDirectionValidator, flexWrapValidator, floatValidator, fontKerningValidator, fontLanguageOverrideValidator, fontSizeValidator, fontSizeAdjustValidator, fontStretchValidator, fontStyleValidator, fontVariantCapsValidator, fontVariantPositionValidator, fontWeightValidator, gridAutoColumnsValidator, gridColumnGapValidator, gridTemplateAreasValidator, hyphensValidator, imageRenderingValidator, msInterpolationModeValidator, imeModeValidator, initialLetterAlignValidator, isolationValidator, mozBoxPackValidator, justifyContentValidator, msFlexPackValidator, letterSpacingValidator, lineBreakValidator, lineHeightValidator, listStylePositionValidator, listStyleTypeValidator, maskCompositeValidator, maskModeValidator, maskOriginValidator, maskTypeValidator, maxBlockSizeValidator, mixBlendModeValidator, objectFitValidator, objectPositionValidator, outlineColorValidator, outlineStyleValidator, overflowValidator, overflowClipBoxValidator, overflowWrapValidator, pageBreakInsideValidator, perspectiveValidator, pointerEventsValidator, positionValidator, resizeValidator, rubyAlignValidator, rubyMergeValidator, rubyPositionValidator, scrollBehaviorValidator, scrollSnapCoordinateValidator, scrollSnapTypeValidator, tabSizeValidator, tableLayoutValidator, textAlignValidator, textAlignLastValidator, textDecorationStyleValidator, textOrientationValidator, textRenderingValidator, textShadowValidator, textSizeAdjustValidator, textTransformValidator, transformValidator, transformBoxValidator, transformStyleValidator, unicodeBidiValidator, userSelectValidator, verticalAlignValidator, visibilityValidator, whiteSpaceValidator, willChangeValidator, wordBreakValidator, wordSpacingValidator, writingModeValidator, msWritingModeValidator, zIndexValidator];
+
+var writingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
+var msWritingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"]);
+
+var zIndexValidator = function zIndexValidator(parsed) {
+  if (parsed.nodes.length === 1) {
+    var node = parsed.nodes[0];
+    return isInteger(node) || isKeyword(node, "auto");
+  }
+
+  return false;
+};
+
+var validators = {
+  "-moz-appearance": mozAppearanceValidator,
+  "-moz-backface-visibility": backfaceVisibilityValidator,
+  "-moz-binding": mozBindingValidator,
+  "-moz-box-align": msFlexAlignValidator,
+  "-moz-box-direction": mozBoxDirectionValidator,
+  "-moz-box-orient": mozBoxOrientValidator,
+  "-moz-box-pack": mozBoxPackValidator,
+  "-moz-box-sizing": boxSizingValidator,
+  "-moz-column-count": columnCountValidator,
+  "-moz-column-fill": columnFillValidator,
+  "-moz-column-gap": columnGapValidator,
+  "-moz-column-span": columnSpanValidator,
+  "-moz-column-width": columnWidthValidator,
+  "-moz-float-edge": mozFloatEdgeValidator,
+  "-moz-font-kerning": fontKerningValidator,
+  "-moz-font-language-override": fontLanguageOverrideValidator,
+  "-moz-force-broken-image-icon": mozForceBrokenImageIconValidator,
+  "-moz-hyphens": hyphensValidator,
+  "-moz-margin-end": bottomValidator,
+  "-moz-margin-start": bottomValidator,
+  "-moz-orient": mozOrientValidator,
+  "-moz-perspective": perspectiveValidator,
+  "-moz-stack-sizing": mozStackSizingValidator,
+  "-moz-text-align-last": textAlignLastValidator,
+  "-moz-text-blink": mozTextBlinkValidator,
+  "-moz-text-decoration-style": textDecorationStyleValidator,
+  "-moz-text-size-adjust": textSizeAdjustValidator,
+  "-moz-transform": transformValidator,
+  "-moz-transform-style": transformStyleValidator,
+  "-moz-user-focus": mozUserFocusValidator,
+  "-moz-user-input": mozUserInputValidator,
+  "-moz-user-modify": mozUserModifyValidator,
+  "-moz-user-select": userSelectValidator,
+  "-moz-window-shadow": mozWindowShadowValidator,
+  "-ms-flex-align": msFlexAlignValidator,
+  "-ms-flex-direction": flexDirectionValidator,
+  "-ms-flex-item-align": msFlexItemAlignValidator,
+  "-ms-flex-line-pack": msFlexLinePackValidator,
+  "-ms-flex-pack": msFlexPackValidator,
+  "-ms-flex-wrap": flexWrapValidator,
+  "-ms-grid-row-align": alignItemsValidator,
+  "-ms-hyphens": hyphensValidator,
+  "-ms-interpolation-mode": msInterpolationModeValidator,
+  "-ms-overflow-style": msOverflowStyleValidator,
+  "-ms-scroll-snap-coordinate": scrollSnapCoordinateValidator,
+  "-ms-scroll-snap-type": scrollSnapTypeValidator,
+  "-ms-text-size-adjust": textSizeAdjustValidator,
+  "-ms-transform": transformValidator,
+  "-ms-user-select": userSelectValidator,
+  "-ms-writing-mode": msWritingModeValidator,
+  "-o-object-fit": objectFitValidator,
+  "-o-transform": transformValidator,
+  "-webkit-align-content": alignContentValidator,
+  "-webkit-align-items": alignItemsValidator,
+  "-webkit-align-self": alignSelfValidator,
+  "-webkit-appearance": appearanceValidator,
+  "-webkit-backdrop-filter": backdropFilterValidator,
+  "-webkit-backface-visibility": backfaceVisibilityValidator,
+  "-webkit-border-before-color": webkitBorderBeforeColorValidator,
+  "-webkit-border-before-style": webkitBorderBeforeStyleValidator,
+  "-webkit-border-before-width": webkitBorderBeforeWidthValidator,
+  "-webkit-box-align": msFlexAlignValidator,
+  "-webkit-box-decoration-break": boxDecorationBreakValidator,
+  "-webkit-box-direction": mozBoxDirectionValidator,
+  "-webkit-box-orient": mozBoxOrientValidator,
+  "-webkit-box-pack": mozBoxPackValidator,
+  "-webkit-box-sizing": boxSizingValidator,
+  "-webkit-column-break-inside": webkitColumnBreakInsideValidator,
+  "-webkit-column-count": columnCountValidator,
+  "-webkit-column-fill": columnFillValidator,
+  "-webkit-column-gap": columnGapValidator,
+  "-webkit-column-span": columnSpanValidator,
+  "-webkit-column-width": columnWidthValidator,
+  "-webkit-filter": backdropFilterValidator,
+  "-webkit-flex-direction": flexDirectionValidator,
+  "-webkit-flex-wrap": flexWrapValidator,
+  "-webkit-font-kerning": fontKerningValidator,
+  "-webkit-font-language-override": fontLanguageOverrideValidator,
+  "-webkit-hyphens": hyphensValidator,
+  "-webkit-justify-content": justifyContentValidator,
+  "-webkit-margin-after": bottomValidator,
+  "-webkit-margin-before": bottomValidator,
+  "-webkit-margin-end": bottomValidator,
+  "-webkit-margin-start": bottomValidator,
+  "-webkit-mask-attachment": webkitMaskAttachmentValidator,
+  "-webkit-mask-repeat": webkitMaskRepeatValidator,
+  "-webkit-mask-repeat-x": webkitMaskRepeatXValidator,
+  "-webkit-mask-repeat-y": webkitMaskRepeatXValidator,
+  "-webkit-perspective": perspectiveValidator,
+  "-webkit-scroll-snap-coordinate": scrollSnapCoordinateValidator,
+  "-webkit-scroll-snap-type": scrollSnapTypeValidator,
+  "-webkit-tap-highlight-color": webkitTapHighlightColorValidator,
+  "-webkit-text-decoration-style": textDecorationStyleValidator,
+  "-webkit-text-fill-color": webkitBorderBeforeColorValidator,
+  "-webkit-text-size-adjust": textSizeAdjustValidator,
+  "-webkit-text-stroke-color": webkitBorderBeforeColorValidator,
+  "-webkit-text-stroke-width": webkitTextStrokeWidthValidator,
+  "-webkit-touch-callout": webkitTouchCalloutValidator,
+  "-webkit-transform": transformValidator,
+  "-webkit-transform-style": transformStyleValidator,
+  "-webkit-user-select": userSelectValidator,
+  "-webkit-writing-mode": writingModeValidator,
+  "align-content": alignContentValidator,
+  "align-items": alignItemsValidator,
+  "align-self": alignSelfValidator,
+  "all": allValidator,
+  "animation-delay": animationDelayValidator,
+  "animation-direction": animationDirectionValidator,
+  "animation-duration": animationDelayValidator,
+  "animation-fill-mode": animationFillModeValidator,
+  "animation-iteration-count": animationIterationCountValidator,
+  "animation-name": animationNameValidator,
+  "animation-play-state": animationPlayStateValidator,
+  "animation-timing-function": animationTimingFunctionValidator,
+  "appearance": appearanceValidator,
+  "backdrop-filter": backdropFilterValidator,
+  "backface-visibility": backfaceVisibilityValidator,
+  "background-attachment": webkitMaskAttachmentValidator,
+  "background-blend-mode": backgroundBlendModeValidator,
+  "background-clip": backgroundClipValidator,
+  "background-color": webkitBorderBeforeColorValidator,
+  "background-image": backgroundImageValidator,
+  "background-origin": backgroundClipValidator,
+  "background-position": backgroundPositionValidator,
+  "background-repeat": webkitMaskRepeatValidator,
+  "background-size": backgroundSizeValidator,
+  "border-block-end-color": webkitBorderBeforeColorValidator,
+  "border-block-end-style": webkitBorderBeforeStyleValidator,
+  "border-block-end-width": webkitBorderBeforeWidthValidator,
+  "border-block-start-color": webkitBorderBeforeColorValidator,
+  "border-block-start-style": webkitBorderBeforeStyleValidator,
+  "border-block-start-width": webkitBorderBeforeWidthValidator,
+  "border-bottom-color": webkitBorderBeforeColorValidator,
+  "border-bottom-left-radius": borderBottomLeftRadiusValidator,
+  "border-bottom-right-radius": borderBottomLeftRadiusValidator,
+  "border-bottom-style": borderBottomStyleValidator,
+  "border-bottom-width": borderBottomWidthValidator,
+  "border-collapse": borderCollapseValidator,
+  "border-color": borderColorValidator,
+  "border-image-source": borderImageSourceValidator,
+  "border-inline-end-color": webkitBorderBeforeColorValidator,
+  "border-inline-end-style": webkitBorderBeforeStyleValidator,
+  "border-inline-end-width": webkitBorderBeforeWidthValidator,
+  "border-inline-start-color": webkitBorderBeforeColorValidator,
+  "border-inline-start-style": webkitBorderBeforeStyleValidator,
+  "border-inline-start-width": webkitBorderBeforeWidthValidator,
+  "border-left-color": webkitBorderBeforeColorValidator,
+  "border-left-style": borderBottomStyleValidator,
+  "border-left-width": borderBottomWidthValidator,
+  "border-right-color": webkitBorderBeforeColorValidator,
+  "border-right-style": borderBottomStyleValidator,
+  "border-right-width": borderBottomWidthValidator,
+  "border-style": webkitBorderBeforeStyleValidator,
+  "border-top-color": webkitBorderBeforeColorValidator,
+  "border-top-left-radius": borderBottomLeftRadiusValidator,
+  "border-top-right-radius": borderBottomLeftRadiusValidator,
+  "border-top-style": borderBottomStyleValidator,
+  "border-top-width": borderBottomWidthValidator,
+  "border-width": webkitBorderBeforeWidthValidator,
+  "bottom": bottomValidator,
+  "box-align": boxAlignValidator,
+  "box-decoration-break": boxDecorationBreakValidator,
+  "box-direction": boxDirectionValidator,
+  "box-flex": boxFlexValidator,
+  "box-flex-group": mozForceBrokenImageIconValidator,
+  "box-lines": boxLinesValidator,
+  "box-ordinal-group": mozForceBrokenImageIconValidator,
+  "box-orient": boxOrientValidator,
+  "box-pack": boxPackValidator,
+  "box-sizing": boxSizingValidator,
+  "box-suppress": boxSuppressValidator,
+  "break-inside": webkitColumnBreakInsideValidator,
+  "caption-side": captionSideValidator,
+  "clear": clearValidator,
+  "color": webkitBorderBeforeColorValidator,
+  "column-count": columnCountValidator,
+  "column-fill": columnFillValidator,
+  "column-gap": columnGapValidator,
+  "column-rule-color": webkitBorderBeforeColorValidator,
+  "column-rule-style": borderBottomStyleValidator,
+  "column-rule-width": borderBottomWidthValidator,
+  "column-span": columnSpanValidator,
+  "column-width": columnWidthValidator,
+  "direction": directionValidator,
+  "display": displayValidator,
+  "display-inside": displayInsideValidator,
+  "display-list": displayListValidator,
+  "display-outside": displayOutsideValidator,
+  "empty-cells": emptyCellsValidator,
+  "filter": backdropFilterValidator,
+  "flex-direction": flexDirectionValidator,
+  "flex-grow": boxFlexValidator,
+  "flex-shrink": boxFlexValidator,
+  "flex-wrap": flexWrapValidator,
+  "float": floatValidator,
+  "font-kerning": fontKerningValidator,
+  "font-language-override": fontLanguageOverrideValidator,
+  "font-size": fontSizeValidator,
+  "font-size-adjust": fontSizeAdjustValidator,
+  "font-stretch": fontStretchValidator,
+  "font-style": fontStyleValidator,
+  "font-variant-caps": fontVariantCapsValidator,
+  "font-variant-position": fontVariantPositionValidator,
+  "font-weight": fontWeightValidator,
+  "grid-auto-columns": gridAutoColumnsValidator,
+  "grid-auto-rows": gridAutoColumnsValidator,
+  "grid-column-gap": gridColumnGapValidator,
+  "grid-row-gap": gridColumnGapValidator,
+  "grid-template-areas": gridTemplateAreasValidator,
+  "hyphens": hyphensValidator,
+  "image-rendering": imageRenderingValidator,
+  "ime-mode": imeModeValidator,
+  "initial-letter-align": initialLetterAlignValidator,
+  "isolation": isolationValidator,
+  "justify-content": justifyContentValidator,
+  "left": bottomValidator,
+  "letter-spacing": letterSpacingValidator,
+  "line-break": lineBreakValidator,
+  "line-height": lineHeightValidator,
+  "list-style-image": mozBindingValidator,
+  "list-style-position": listStylePositionValidator,
+  "list-style-type": listStyleTypeValidator,
+  "margin-block-end": bottomValidator,
+  "margin-block-start": bottomValidator,
+  "margin-bottom": bottomValidator,
+  "margin-inline-end": bottomValidator,
+  "margin-inline-start": bottomValidator,
+  "margin-left": bottomValidator,
+  "margin-right": bottomValidator,
+  "margin-top": bottomValidator,
+  "marker-offset": columnWidthValidator,
+  "mask-composite": maskCompositeValidator,
+  "mask-mode": maskModeValidator,
+  "mask-origin": maskOriginValidator,
+  "mask-position": backgroundPositionValidator,
+  "mask-repeat": webkitMaskRepeatValidator,
+  "mask-size": backgroundSizeValidator,
+  "mask-type": maskTypeValidator,
+  "max-block-size": maxBlockSizeValidator,
+  "max-height": maxBlockSizeValidator,
+  "max-inline-size": maxBlockSizeValidator,
+  "max-width": maxBlockSizeValidator,
+  "min-block-size": maxBlockSizeValidator,
+  "min-height": maxBlockSizeValidator,
+  "min-inline-size": maxBlockSizeValidator,
+  "min-width": maxBlockSizeValidator,
+  "mix-blend-mode": mixBlendModeValidator,
+  "motion-offset": gridColumnGapValidator,
+  "object-fit": objectFitValidator,
+  "object-position": objectPositionValidator,
+  "offset-block-end": bottomValidator,
+  "offset-block-start": bottomValidator,
+  "offset-inline-end": bottomValidator,
+  "offset-inline-start": bottomValidator,
+  "opacity": boxFlexValidator,
+  "order": mozForceBrokenImageIconValidator,
+  "orphans": mozForceBrokenImageIconValidator,
+  "outline-color": outlineColorValidator,
+  "outline-offset": webkitTextStrokeWidthValidator,
+  "outline-style": outlineStyleValidator,
+  "outline-width": borderBottomWidthValidator,
+  "overflow": overflowValidator,
+  "overflow-clip-box": overflowClipBoxValidator,
+  "overflow-wrap": overflowWrapValidator,
+  "overflow-x": overflowValidator,
+  "overflow-y": overflowValidator,
+  "padding-block-end": gridColumnGapValidator,
+  "padding-block-start": gridColumnGapValidator,
+  "padding-bottom": gridColumnGapValidator,
+  "padding-inline-end": gridColumnGapValidator,
+  "padding-inline-start": gridColumnGapValidator,
+  "padding-left": gridColumnGapValidator,
+  "padding-right": gridColumnGapValidator,
+  "padding-top": gridColumnGapValidator,
+  "page-break-after": pageBreakAfterValidator,
+  "page-break-before": pageBreakAfterValidator,
+  "page-break-inside": webkitColumnBreakInsideValidator,
+  "perspective": perspectiveValidator,
+  "perspective-origin": objectPositionValidator,
+  "pointer-events": pointerEventsValidator,
+  "position": positionValidator,
+  "resize": resizeValidator,
+  "right": bottomValidator,
+  "ruby-align": rubyAlignValidator,
+  "ruby-merge": rubyMergeValidator,
+  "ruby-position": rubyPositionValidator,
+  "scroll-behavior": scrollBehaviorValidator,
+  "scroll-snap-coordinate": scrollSnapCoordinateValidator,
+  "scroll-snap-destination": objectPositionValidator,
+  "scroll-snap-type": scrollSnapTypeValidator,
+  "scroll-snap-type-x": scrollSnapTypeValidator,
+  "scroll-snap-type-y": scrollSnapTypeValidator,
+  "shape-image-threshold": boxFlexValidator,
+  "shape-margin": gridColumnGapValidator,
+  "tab-size": tabSizeValidator,
+  "table-layout": tableLayoutValidator,
+  "text-align": textAlignValidator,
+  "text-align-last": textAlignLastValidator,
+  "text-decoration-color": webkitBorderBeforeColorValidator,
+  "text-decoration-style": textDecorationStyleValidator,
+  "text-emphasis-color": webkitBorderBeforeColorValidator,
+  "text-orientation": textOrientationValidator,
+  "text-rendering": textRenderingValidator,
+  "text-shadow": textShadowValidator,
+  "text-size-adjust": textSizeAdjustValidator,
+  "text-transform": textTransformValidator,
+  "top": bottomValidator,
+  "transform": transformValidator,
+  "transform-box": transformBoxValidator,
+  "transform-style": transformStyleValidator,
+  "transition-delay": animationDelayValidator,
+  "transition-duration": animationDelayValidator,
+  "transition-timing-function": animationTimingFunctionValidator,
+  "unicode-bidi": unicodeBidiValidator,
+  "user-select": userSelectValidator,
+  "vertical-align": verticalAlignValidator,
+  "visibility": visibilityValidator,
+  "white-space": whiteSpaceValidator,
+  "widows": mozForceBrokenImageIconValidator,
+  "will-change": willChangeValidator,
+  "word-break": wordBreakValidator,
+  "word-spacing": wordSpacingValidator,
+  "word-wrap": overflowWrapValidator,
+  "writing-mode": writingModeValidator,
+  "z-index": zIndexValidator
+};
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
 function cssValues(property, value) {
   if (typeof value === 'string') {
@@ -2281,13 +2233,11 @@ function cssValues(property, value) {
     return true;
   }
 
-  return validators.some(function (validator) {
-    if (!~validator.properties.indexOf(property)) {
-      return;
-    }
+  if (validators[property]) {
+    return !!validators[property](value);
+  }
 
-    return validator.fn(value);
-  });
+  return true;
 }
 
 export default cssValues;

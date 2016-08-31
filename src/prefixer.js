@@ -19,6 +19,10 @@ export default ({property, values}) => {
     let promises = values.reduce((properties, value) => {
         properties.push(pipe.process(`${property}:${value}`).then(result => {
             return result.root.nodes.reduce((list, node) => {
+                // -moz-appearance has different semantics, so ignore it
+                if (property === 'appearance' && node.prop === '-moz-appearance') {
+                    return list;
+                }
                 if (!list[node.prop]) {
                     list[node.prop] = [];
                 }
@@ -28,6 +32,6 @@ export default ({property, values}) => {
         }));
         return properties;
     }, []);
-    
+
     return Promise.all(promises).then(handleResults);
 };

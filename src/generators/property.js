@@ -44,18 +44,18 @@ function addDependency (dep) {
     }
 }
 
-function generatePositionValidator ({candidates, identifier, properties}) {
+function generatePositionValidator ({candidates, identifier}) {
     const func = 'isPosition';
     addDependency(func);
-    return generateValidatorStub(identifier, properties, t.callExpression(
+    return generateValidatorStub(identifier, t.callExpression(
         t.identifier(func),
         [t.booleanLiteral(candidates[0].separator === ',')]
     ));
 }
 
-function genericValidatorStub (name, {identifier, properties}) {
+function genericValidatorStub (name, {identifier}) {
     addDependency(name);
-    return generateValidatorStub(identifier, properties, t.identifier(name));
+    return generateValidatorStub(identifier, t.identifier(name));
 }
 
 function keyword (config, candidate) {
@@ -184,7 +184,7 @@ function createValidator (opts) {
 
         return [
             ...keywords,
-            validator(opts.identifier, opts.properties, [
+            validator(opts.identifier, [
                 ...prevalid,
                 createLet(
                     t.identifier('valid'),
@@ -208,7 +208,7 @@ function createValidator (opts) {
             const identifier = 'isKeywordFactory';
             addDependency(identifier);
             return [
-                generateValidatorStub(opts.identifier, opts.properties, t.callExpression(
+                generateValidatorStub(opts.identifier, t.callExpression(
                     t.identifier(identifier),
                     [arrayOfStrings(settings.keywords.filter(Boolean))]
                 )),
@@ -239,7 +239,7 @@ function createValidator (opts) {
 
     return [
         ...keywords,
-        validator(opts.identifier, opts.properties, [
+        validator(opts.identifier, [
             ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
             t.ifStatement(
                 t.binaryExpression(
@@ -257,10 +257,25 @@ function createValidator (opts) {
     ];
 }
 
-function generateValidatorsList (config) {
-    return t.arrayExpression(config.map(({identifier}) => {
-        return t.identifier(identifier);
-    }));
+function generateValidatorMap (config) {
+    const validatorMap = config.reduce((map, {identifier, properties}) => {
+        properties.forEach(property => {
+            if (map[property]) {
+                return;
+            }
+            map[property] = identifier;
+        });
+        return map;
+    }, {});
+    return createConst(
+        t.identifier('validators'),
+        t.objectExpression(Object.keys(validatorMap).sort().map(key => {
+            return t.objectProperty(
+                t.stringLiteral(key),
+                t.identifier(validatorMap[key])
+            );
+        }))
+    );
 }
 
 export default config => {
@@ -279,10 +294,7 @@ export default config => {
             };
         })),
         ...funcs,
-        createConst(
-            t.identifier('validators'),
-            generateValidatorsList(config)
-        ),
+        generateValidatorMap(config),
         createConst(
             t.identifier('cssGlobals'),
             arrayOfStrings(globals)
@@ -296,12 +308,11 @@ export default config => {
                 if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
                     return true;
                 }
-                return validators.some(validator => {
-                    if (!~validator.properties.indexOf(property)) {
-                        return;
-                    }
-                    return validator.fn(value);
-                });
+                if (validators[property]) {
+                    return !!validators[property](value);
+                }
+                // Pass through unknown properties
+                return true;
             }
         `)(),
     ]);
