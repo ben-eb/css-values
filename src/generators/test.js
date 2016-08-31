@@ -3,30 +3,9 @@ import * as t from 'babel-types';
 import * as fixtures from '../fixtures/index';
 import arrayOfStrings from '../util/arrayOfStrings';
 import importMethod from '../util/importMethod';
+import avaTest from './avaTest';
 import generateProgram from './program';
 import requireModules from './requireModules';
-
-/**
- * Generate an AVA test.
- *
- * @param  {Babel} ...args Pass any number of Babel nodes as arguments to the test function.
- * @return {Babel}         {@link https://github.com/babel/babel/tree/master/packages/babel-types#texpressionstatementexpression|t.expressionStatement}
- * @example
- * import * as t from 'babel-types';
- *
- * const test = avaTest(t.stringLiteral('description'), t.identifier('valid'));
- *
- * // => test('description', valid);
- */
-
-function avaTest (...args) {
-    return t.expressionStatement(
-        t.callExpression(
-            t.identifier('test'),
-            args
-        )
-    );
-}
 
 function createGenericTest (property, value, valid = true, message = false) {
     let args = [
