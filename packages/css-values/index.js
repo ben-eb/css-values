@@ -285,6 +285,88 @@ var isCompositeStyle = (function (node) {
     return isKeyword(node, compositeStyles);
 });
 
+function getArguments(node) {
+    return node.nodes.reduce(function (list, child) {
+        if (isComma(child)) {
+            list.push([]);
+        } else {
+            list[list.length - 1].push(child);
+        }
+        return list;
+    }, [[]]);
+}
+
+var isLengthPercentage = (function (node) {
+    return isLength(node) || isPercentage(node);
+});
+
+var left = 'left';
+var center = 'center';
+var right = 'right';
+var top = 'top';
+var bottom = 'bottom';
+
+var horizontals = [left, right, center];
+var verticals = [top, bottom, center];
+
+function isKeywordOrVar(node, keywords) {
+    return isKeyword(node, keywords) || isVariable(node);
+}
+
+function isLengthPercentageOrVar(node) {
+    return isLengthPercentage(node) || isVariable(node);
+}
+
+function validateGroup(group) {
+    var length = group.length;
+
+    if (length === 1) {
+        if (!isKeywordOrVar(group[0], [left, center, right, top, bottom]) && !isLengthPercentage(group[0])) {
+            return false;
+        }
+    }
+    if (length === 3) {
+        if (!isSpace(group[1])) {
+            return false;
+        }
+        if (isKeywordOrVar(group[0], horizontals) && isKeywordOrVar(group[2], verticals) || isKeywordOrVar(group[0], verticals) && isKeywordOrVar(group[2], horizontals)) {
+            return true;
+        }
+        if (!isKeywordOrVar(group[0], horizontals) && !isLengthPercentage(group[0])) {
+            return false;
+        }
+        if (!isKeywordOrVar(group[2], verticals) && !isLengthPercentage(group[2])) {
+            return false;
+        }
+    }
+    if (length >= 5 && length <= 7) {
+        if (isKeywordOrVar(group[0], [left, right]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+                return false;
+            }
+            return true;
+        }
+        if (isKeywordOrVar(group[0], [top, bottom]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    return length < 8;
+}
+
+function isPositionFactory(repeating) {
+    return function isPosition(parsed) {
+        if (repeating && parsed.nodes[parsed.nodes.length - 1].type === 'div') {
+            return false;
+        }
+
+        return getArguments(parsed).every(validateGroup);
+    };
+}
+
 var singleValues = ['repeat-x', 'repeat-y'];
 
 var multipleValues = ['repeat', 'space', 'round', 'no-repeat'];
@@ -519,88 +601,6 @@ var isBox = (function (node) {
     return isKeyword(node, boxes);
 });
 
-function getArguments(node) {
-    return node.nodes.reduce(function (list, child) {
-        if (isComma(child)) {
-            list.push([]);
-        } else {
-            list[list.length - 1].push(child);
-        }
-        return list;
-    }, [[]]);
-}
-
-var isLengthPercentage = (function (node) {
-    return isLength(node) || isPercentage(node);
-});
-
-var left$1 = 'left';
-var center = 'center';
-var right$1 = 'right';
-var top$1 = 'top';
-var bottom$1 = 'bottom';
-
-var horizontals$1 = [left$1, right$1, center];
-var verticals$1 = [top$1, bottom$1, center];
-
-function isKeywordOrVar(node, keywords) {
-    return isKeyword(node, keywords) || isVariable(node);
-}
-
-function isLengthPercentageOrVar(node) {
-    return isLengthPercentage(node) || isVariable(node);
-}
-
-function validateGroup(group) {
-    var length = group.length;
-
-    if (length === 1) {
-        if (!isKeywordOrVar(group[0], [left$1, center, right$1, top$1, bottom$1]) && !isLengthPercentage(group[0])) {
-            return false;
-        }
-    }
-    if (length === 3) {
-        if (!isSpace(group[1])) {
-            return false;
-        }
-        if (isKeywordOrVar(group[0], horizontals$1) && isKeywordOrVar(group[2], verticals$1) || isKeywordOrVar(group[0], verticals$1) && isKeywordOrVar(group[2], horizontals$1)) {
-            return true;
-        }
-        if (!isKeywordOrVar(group[0], horizontals$1) && !isLengthPercentage(group[0])) {
-            return false;
-        }
-        if (!isKeywordOrVar(group[2], verticals$1) && !isLengthPercentage(group[2])) {
-            return false;
-        }
-    }
-    if (length >= 5 && length <= 7) {
-        if (isKeywordOrVar(group[0], [left$1, right$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals$1)) {
-            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
-                return false;
-            }
-            return true;
-        }
-        if (isKeywordOrVar(group[0], [top$1, bottom$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals$1)) {
-            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-    return length < 8;
-}
-
-function isPositionFactory(repeating) {
-    return function isPosition(parsed) {
-        if (repeating && parsed.nodes[parsed.nodes.length - 1].type === 'div') {
-            return false;
-        }
-
-        return getArguments(parsed).every(validateGroup);
-    };
-}
-
 var resolutions = ['dpi', 'dpcm', 'dppx'];
 
 function isResolution(_ref) {
@@ -710,14 +710,14 @@ function isColourStop(group) {
     return false;
 }
 
-var top = 'top';
-var right = 'right';
-var bottom = 'bottom';
-var left = 'left';
+var top$1 = 'top';
+var right$1 = 'right';
+var bottom$1 = 'bottom';
+var left$1 = 'left';
 
-var verticals = [top, bottom];
-var horizontals = [right, left];
-var directions = [].concat(horizontals, verticals);
+var verticals$1 = [top$1, bottom$1];
+var horizontals$1 = [right$1, left$1];
+var directions = [].concat(horizontals$1, verticals$1);
 
 function isLinearGradient(node) {
     if (!isFunction(node, ['linear-gradient', 'repeating-linear-gradient'])) {
@@ -732,7 +732,7 @@ function isLinearGradient(node) {
                 return true;
             }
             if (length > 1 && group[0].value === 'to' && length <= 5) {
-                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals) && isKeyword(group[4], verticals) || isKeyword(group[2], verticals) && isKeyword(group[4], horizontals);
+                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals$1) && isKeyword(group[4], verticals$1) || isKeyword(group[2], verticals$1) && isKeyword(group[4], horizontals$1);
             }
         }
         var colour = isColourStop(group);
@@ -1237,6 +1237,7 @@ var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(parsed)
   return valid && parsed.nodes.length % 2 !== 0;
 };
 
+var webkitMaskPositionValidator = isPositionFactory(true);
 var webkitMaskRepeatValidator = isRepeatStyle;
 var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space", "round"]);
 
@@ -1429,7 +1430,6 @@ var backgroundImageValidator = function backgroundImageValidator(parsed) {
   return valid && parsed.nodes.length % 2 !== 0;
 };
 
-var backgroundPositionValidator = isPositionFactory(true);
 var backgroundSizeValidator = isBgSize;
 
 var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(parsed) {
@@ -2001,6 +2001,7 @@ var validators = {
   "-webkit-margin-start": bottomValidator,
   "-webkit-mask-attachment": webkitMaskAttachmentValidator,
   "-webkit-mask-composite": webkitMaskCompositeValidator,
+  "-webkit-mask-position": webkitMaskPositionValidator,
   "-webkit-mask-repeat": webkitMaskRepeatValidator,
   "-webkit-mask-repeat-x": webkitMaskRepeatXValidator,
   "-webkit-mask-repeat-y": webkitMaskRepeatXValidator,
@@ -2039,7 +2040,7 @@ var validators = {
   "background-color": webkitBorderBeforeColorValidator,
   "background-image": backgroundImageValidator,
   "background-origin": backgroundClipValidator,
-  "background-position": backgroundPositionValidator,
+  "background-position": webkitMaskPositionValidator,
   "background-repeat": webkitMaskRepeatValidator,
   "background-size": backgroundSizeValidator,
   "border-block-end-color": webkitBorderBeforeColorValidator,
@@ -2150,7 +2151,7 @@ var validators = {
   "mask-composite": maskCompositeValidator,
   "mask-mode": maskModeValidator,
   "mask-origin": maskOriginValidator,
-  "mask-position": backgroundPositionValidator,
+  "mask-position": webkitMaskPositionValidator,
   "mask-repeat": webkitMaskRepeatValidator,
   "mask-size": backgroundSizeValidator,
   "mask-type": maskTypeValidator,

@@ -20,6 +20,7 @@ export default [
     '-webkit-border-before-width',
     '-webkit-mask-attachment',
     '-webkit-mask-composite',
+    '-webkit-mask-position',
     '-webkit-mask-repeat',
     '-webkit-mask-repeat-x',
     '-webkit-mask-repeat-y',
