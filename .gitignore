@@ -3,3 +3,6 @@
 
 dist
 node_modules
+
+# For now, ignore generated documentation
+docs.md
