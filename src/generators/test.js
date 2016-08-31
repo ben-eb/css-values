@@ -117,6 +117,7 @@ export default config => {
             importMethod(t.identifier('valid')),
             importMethod(t.identifier('validCI')),
             importMethod(t.identifier('globals')),
+            importMethod(t.identifier('unknown')),
         ], t.stringLiteral('./util/testMacro')),
         ...config.map(descriptor => createTests(descriptor)),
         createGenericTest(
@@ -129,11 +130,11 @@ export default config => {
             true,
             t.stringLiteral('should accept an ast')
         ),
-        createGenericTest(
+        avaTest(
+            t.stringLiteral('should pass through unknown properties'),
+            t.identifier('unknown'),
             t.stringLiteral('foobar'),
             t.stringLiteral('baz'),
-            true,
-            t.stringLiteral('should pass through unknown properties')
         ),
     ]);
 };

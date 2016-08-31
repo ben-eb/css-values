@@ -37,10 +37,10 @@ valid.title = (title, property, value) => {
 
 export const invalid = (t, property, value) => {
     if (Array.isArray(property)) {
-        property.forEach(prop => t.is(cssValues(prop, value), false));
+        property.forEach(prop => t.is(cssValues(prop, value).type, 'invalid'));
         return;
     }
-    t.is(cssValues(property, value), false);
+    t.is(cssValues(property, value).type, 'invalid');
 };
 
 invalid.title = (title, property, value) => {
@@ -57,3 +57,11 @@ export const globals = (t, property) => {
 };
 
 globals.title = (title, property) => `${property} should handle global keywords`;
+
+export const unknown = (t, property, value) => {
+    t.is(cssValues(property, value).type, 'unknown');
+};
+
+unknown.title = (title, property, value) => {
+    return `${property}: ${value} (unknown)`;
+};

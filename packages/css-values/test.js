@@ -48,11 +48,11 @@ valid.title = function (title, property, value) {
 var invalid = function invalid(t, property, value) {
     if (Array.isArray(property)) {
         property.forEach(function (prop) {
-            return t.is(cssValues(prop, value), false);
+            return t.is(cssValues(prop, value).type, 'invalid');
         });
         return;
     }
-    t.is(cssValues(property, value), false);
+    t.is(cssValues(property, value).type, 'invalid');
 };
 
 invalid.title = function (title, property, value) {
@@ -72,6 +72,14 @@ var globals = function globals(t, property) {
 
 globals.title = function (title, property) {
     return property + ' should handle global keywords';
+};
+
+var unknown = function unknown(t, property, value) {
+    t.is(cssValues(property, value).type, 'unknown');
+};
+
+unknown.title = function (title, property, value) {
+    return property + ': ' + value + ' (unknown)';
 };
 
 var msOverflowStyleValidator = "-ms-overflow-style";
@@ -3432,5 +3440,5 @@ test(invalid, zIndexValidator, "_5");
 test(invalid, zIndexValidator, "\"100\"");
 test(invalid, zIndexValidator, "10 10");
 test("should accept an ast", valid, "color", valueParser("blue"));
-test("should pass through unknown properties", valid, "foobar", "baz");
+test("should pass through unknown properties", unknown, "foobar", "baz");
 

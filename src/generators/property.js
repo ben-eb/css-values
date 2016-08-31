@@ -309,10 +309,19 @@ export default config => {
                     return true;
                 }
                 if (validators[property]) {
-                    return !!validators[property](value);
+                    if (!!validators[property](value) === false) {
+                        return {
+                            type: 'invalid',
+                            message: '"' + value + '" is not a valid value for "' + property + '".'
+                        };
+                    }
+                    return true;
                 }
                 // Pass through unknown properties
-                return true;
+                return {
+                    type: 'unknown',
+                    message: '"' + property + '" is not a recognised property.'
+                };
             }
         `)(),
     ]);
