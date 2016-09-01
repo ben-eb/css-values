@@ -9,6 +9,8 @@ import isPercentage from './isPercentage';
 
 const namedColours = Object.keys(colors);
 
+export const colorKeywords = ['transparent', 'currentcolor'];
+
 export function isRgb (node) {
     if (!isFunction(node, 'rgb')) {
         return;
@@ -103,8 +105,8 @@ export function isNamedColor (node) {
     return isKeyword(node, namedColours);
 }
 
-export function isCurrentColor (node) {
-    return isKeyword(node, 'currentcolor');
+export function isColorKeyword (node) {
+    return isKeyword(node, colorKeywords);
 }
 
 export default function isColor (node) {
@@ -114,5 +116,5 @@ export default function isColor (node) {
            isHsla(node) ||
            isHex(node) ||
            isNamedColor(node) ||
-           isCurrentColor(node);
+           isColorKeyword(node);
 }
