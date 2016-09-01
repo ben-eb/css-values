@@ -5,6 +5,7 @@ import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditiona
 import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
 import globals from '../util/globals';
+import importMethod from '../util/importMethod';
 import template from '../util/moduleTemplate';
 import templateExpression from '../util/templateExpression';
 import generateProgram from './program';
@@ -293,6 +294,10 @@ export default config => {
                 module: dependencies[key],
             };
         })),
+        t.importDeclaration([
+            importMethod(t.identifier('invalidMessage')),
+            importMethod(t.identifier('unknownMessage')),
+        ], t.stringLiteral('./util/validationMessages')),
         ...funcs,
         generateValidatorMap(config),
         createConst(
@@ -310,18 +315,12 @@ export default config => {
                 }
                 if (validators[property]) {
                     if (!!validators[property](value) === false) {
-                        return {
-                            type: 'invalid',
-                            message: '"' + value + '" is not a valid value for "' + property + '".'
-                        };
+                        return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
                     }
                     return true;
                 }
                 // Pass through unknown properties
-                return {
-                    type: 'unknown',
-                    message: '"' + property + '" is not a recognised property.'
-                };
+                return unknownMessage('"' + property + '" is not a recognised property.');
             }
         `)(),
     ]);

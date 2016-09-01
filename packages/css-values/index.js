@@ -1147,6 +1147,20 @@ var isAnimateableFeature = (function (node) {
     return isKeyword(node, animateableFeatures) || isCustomIdent(node);
 });
 
+function invalidMessage(message) {
+    return {
+        type: 'invalid',
+        message: message
+    };
+}
+
+function unknownMessage(message) {
+    return {
+        type: 'unknown',
+        message: message
+    };
+}
+
 var msOverflowStyleValidator = isKeywordFactory(["auto", "none", "scrollbar", "-ms-autohiding-scrollbar"]);
 var mozAppearanceValidator = isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"]);
 
@@ -2263,19 +2277,13 @@ function cssValues(property, value) {
 
   if (validators[property]) {
     if (!!validators[property](value) === false) {
-      return {
-        type: 'invalid',
-        message: '"' + value + '" is not a valid value for "' + property + '".'
-      };
+      return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
     }
 
     return true;
   }
 
-  return {
-    type: 'unknown',
-    message: '"' + property + '" is not a recognised property.'
-  };
+  return unknownMessage('"' + property + '" is not a recognised property.');
 }
 
 export default cssValues;
