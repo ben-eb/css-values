@@ -84,6 +84,8 @@ var isPercentage = (function (_ref) {
 
 var namedColours = Object.keys(colors);
 
+var colorKeywords = ['transparent', 'currentcolor'];
+
 function isRgb(node) {
     if (!isFunction(node, 'rgb')) {
         return;
@@ -160,12 +162,12 @@ function isNamedColor(node) {
     return isKeyword(node, namedColours);
 }
 
-function isCurrentColor(node) {
-    return isKeyword(node, 'currentcolor');
+function isColorKeyword(node) {
+    return isKeyword(node, colorKeywords);
 }
 
 function isColor(node) {
-    return isRgb(node) || isRgba(node) || isHsl(node) || isHsla(node) || isHex(node) || isNamedColor(node) || isCurrentColor(node);
+    return isRgb(node) || isRgba(node) || isHsl(node) || isHsla(node) || isHex(node) || isNamedColor(node) || isColorKeyword(node);
 }
 
 var brStyles = ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'];
@@ -179,6 +181,11 @@ var isSpace = (function (_ref) {
 
     return type === 'space';
 });
+
+/*
+ * See the specification for more details:
+ * https://drafts.csswg.org/css-values-3/#angles
+ */
 
 var angles = ['deg', 'grad', 'rad', 'turn'];
 
@@ -825,6 +832,8 @@ function isBgImage(node) {
     return isImage(node) || isKeyword(node, 'none');
 }
 
+// [ &lt;length-percentage&gt; | auto ]{1,2} | cover | contain
+
 var sizeKeywords = ['cover', 'contain'];
 
 var auto = 'auto';
@@ -941,6 +950,10 @@ var compositingOperators = ['add', 'subtract', 'intersect', 'exclude'];
 
 var isCompositingOperator = (function (node) {
     return isKeyword(node, compositingOperators);
+});
+
+var isMaskReference = (function (node) {
+    return isImage(node) || isUrl(node) || isKeyword(node, 'none');
 });
 
 var maskingModes = ['alpha', 'luminance', 'match-source'];
@@ -1711,6 +1724,20 @@ var maskCompositeValidator = function maskCompositeValidator(parsed) {
   return valid && parsed.nodes.length % 2 !== 0;
 };
 
+var maskImageValidator = function maskImageValidator(parsed) {
+  var valid = true;
+  parsed.walk(function (node, index) {
+    var even = index % 2 === 0;
+
+    if (even && !isMaskReference(node) && !isVariable(node) || !even && !isComma(node)) {
+      valid = false;
+    }
+
+    return false;
+  });
+  return valid && parsed.nodes.length % 2 !== 0;
+};
+
 var maskModeValidator = function maskModeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
@@ -2169,6 +2196,7 @@ var validators = {
   "margin-top": bottomValidator,
   "marker-offset": columnWidthValidator,
   "mask-composite": maskCompositeValidator,
+  "mask-image": maskImageValidator,
   "mask-mode": maskModeValidator,
   "mask-origin": maskOriginValidator,
   "mask-position": webkitMaskPositionValidator,

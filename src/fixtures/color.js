@@ -1,5 +1,9 @@
+import {colorKeywords} from '../validators/isColor';
+
 export default {
     valid: [
+        ...colorKeywords,
+        ...colorKeywords.map(value => value.toUpperCase()),
         'RGB(1, 2, 3)',
         'rgb(10%, 20%, 30%)',
         'rgb(400, 400, 400)',
@@ -17,8 +21,6 @@ export default {
         '#000000FF',
         'RED',
         'black',
-        'currentcolor',
-        'CURRENTCOLOR',
     ],
     invalid: [
         'rgb(1, 2, 3, 4, 5)',

@@ -151,6 +151,7 @@ export default [
     'list-style-image',
     'list-style-position',
     'list-style-type',
+    'mask-image',
     'margin-block-end',
     'margin-block-start',
     'margin-bottom',

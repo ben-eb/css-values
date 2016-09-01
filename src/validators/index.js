@@ -47,3 +47,4 @@ export * as isUri from './isUri';
 export * as isCalc from './isCalc';
 export * as isGeometryBox from './isGeometryBox';
 export * as isTrackSize from './isTrackSize';
+export * as isMaskReference from './isMaskReference';

@@ -1,5 +1,6 @@
 # Head
 
+* Adds `<mask-reference>` validator.
 * Adds support for the non-standard -webkit-mask-position property.
 * Adds support for the non-standard -webkit-mask-composite property.
 
