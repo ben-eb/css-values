@@ -1,6 +1,14 @@
-# css-values [![Build Status](https://travis-ci.org/ben-eb/css-values.svg?branch=master)][ci] [![NPM version](https://badge.fury.io/js/css-values.svg)][npm] [![Coverage Status](https://coveralls.io/repos/github/ben-eb/css-values/badge.svg?branch=master)](https://coveralls.io/github/ben-eb/css-values?branch=master)
+<h1 align="center">
+    <br>
+    <img width="360" src="https://rawgit.com/ben-eb/css-values/master/media/logo.svg" alt="css-values">
+    <br>
+    <br>
+    <br>
+</h1>
 
 > Validate CSS property value pairs.
+
+[![Build Status](https://travis-ci.org/ben-eb/css-values.svg?branch=master)][ci] [![NPM version](https://badge.fury.io/js/css-values.svg)][npm] [![Coverage Status](https://coveralls.io/repos/github/ben-eb/css-values/badge.svg?branch=master)](https://coveralls.io/github/ben-eb/css-values?branch=master)
 
 _This project is in very early alpha stages. At present, around half of the
 existing CSS specification is covered in a very limited capacity. Please feel
