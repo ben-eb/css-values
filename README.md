@@ -31,7 +31,7 @@ valid, even though they are not to specification.
 
 ## Property support
 
-We support 251 of 361 CSS properties (69.53%).
+We support 252 of 361 CSS properties (69.81%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -181,6 +181,7 @@ We support 251 of 361 CSS properties (69.53%).
 * `list-style-image`
 * `list-style-position`
 * `list-style-type`
+* `mask-image`
 * `margin-block-end`
 * `margin-block-start`
 * `margin-bottom`
