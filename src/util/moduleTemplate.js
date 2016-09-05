@@ -1,5 +1,8 @@
 import template from 'babel-template';
 
-export default str => {
-    return template(str, {sourceType: 'module'});
+export default (str, opts = {}) => {
+    return template(str, {
+        ...opts,
+        sourceType: 'module',
+    });
 };
