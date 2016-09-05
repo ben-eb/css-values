@@ -170,10 +170,10 @@ function validateNode (node) {
            isVariable(node);
 }
 
-export default function isTransformList (parsed) {
+export default function isTransformList (valueParserAST) {
     let valid = true;
 
-    parsed.walk((node, index) => {
+    valueParserAST.walk((node, index) => {
         const even = isEven(index);
         if (even && !validateNode(node) || !even && !isSpace(node)) {
             valid = false;

@@ -15,13 +15,13 @@ const multipleValues = [
     'no-repeat',
 ];
 
-export default parsed => {
+export default valueParserAST => {
     let group = [];
     let valid = true;
-    if (parsed.nodes[parsed.nodes.length - 1].type === 'div') {
+    if (valueParserAST.nodes[valueParserAST.nodes.length - 1].type === 'div') {
         return false;
     }
-    parsed.walk(node => {
+    valueParserAST.walk(node => {
         if (isKeyword(node, singleValues)) {
             if (group.length) {
                 valid = false;

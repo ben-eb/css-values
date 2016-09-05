@@ -30,10 +30,10 @@ function validateGroup (group) {
     return false;
 }
 
-export default function isBgSize (parsed) {
-    if (parsed.nodes.length === 1 && isKeyword(parsed.nodes[0], sizeKeywords)) {
+export default function isBgSize (valueParserAST) {
+    if (valueParserAST.nodes.length === 1 && isKeyword(valueParserAST.nodes[0], sizeKeywords)) {
         return true;
     }
 
-    return getArguments(parsed).every(validateGroup);
+    return getArguments(valueParserAST).every(validateGroup);
 }

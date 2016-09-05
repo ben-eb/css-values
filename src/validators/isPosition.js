@@ -79,11 +79,11 @@ function validateGroup (group) {
 }
 
 export default function isPositionFactory (repeating) {
-    return function isPosition (parsed) {
-        if (repeating && parsed.nodes[parsed.nodes.length - 1].type === 'div') {
+    return function isPosition (valueParserAST) {
+        if (repeating && valueParserAST.nodes[valueParserAST.nodes.length - 1].type === 'div') {
             return false;
         }
 
-        return getArguments(parsed).every(validateGroup);
+        return getArguments(valueParserAST).every(validateGroup);
     };
 }

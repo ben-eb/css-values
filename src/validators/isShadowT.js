@@ -53,6 +53,6 @@ function validateShadow (nodes) {
     return valid;
 }
 
-export default function isShadowT (parsed) {
-    return getArguments(parsed).every(validateShadow);
+export default function isShadowT (valueParserAST) {
+    return getArguments(valueParserAST).every(validateShadow);
 }

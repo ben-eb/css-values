@@ -12,8 +12,8 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 import validator, {generateValidatorStub} from './validator';
 
-const parsedNodes = t.memberExpression(
-    t.identifier('parsed'),
+const valueParserASTNodes = t.memberExpression(
+    t.identifier('valueParserAST'),
     t.identifier('nodes')
 );
 
@@ -72,13 +72,13 @@ function dataString (config, candidate) {
     addDependency(camel);
     if (camel === 'isPosition') {
         config.preConditions.push(
-            template(`if (${camel}(true)(parsed)) { return true; }`)()
+            template(`if (${camel}(true)(valueParserAST)) { return true; }`)()
         );
         return config;
     }
     if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
         config.preConditions.push(
-            template(`if (${camel}(parsed)) { return true; }`)()
+            template(`if (${camel}(valueParserAST)) { return true; }`)()
         );
         return config;
     }
@@ -110,9 +110,9 @@ function dataString (config, candidate) {
                 ),
             ])
         );
-        const tmpl = `return valid && !isEven(parsed.nodes.length)`;
+        const tmpl = `return valid && !isEven(valueParserAST.nodes.length)`;
         if (candidate.max !== false) {
-            config.repeatingReturn = template(`${tmpl} && parsed.nodes.length <= ${(candidate.max * 2) - 1};`)();
+            config.repeatingReturn = template(`${tmpl} && valueParserAST.nodes.length <= ${(candidate.max * 2) - 1};`)();
         } else {
             config.repeatingReturn = template(`${tmpl};`)();
         }
@@ -163,7 +163,7 @@ function createValidator (opts) {
             createConst(
                 t.identifier('node'),
                 t.memberExpression(
-                    parsedNodes,
+                    valueParserASTNodes,
                     t.numericLiteral(0),
                     true
                 )
@@ -172,7 +172,7 @@ function createValidator (opts) {
                 t.binaryExpression(
                     '===',
                     t.memberExpression(
-                        parsedNodes,
+                        valueParserASTNodes,
                         t.identifier('length')
                     ),
                     t.numericLiteral(1)
@@ -196,7 +196,7 @@ function createValidator (opts) {
                 template('PRECONDITIONS')({
                     PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
                 }),
-                template('parsed.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
+                template('valueParserAST.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
                     CONDITIONS: settings.repeatingConditions.length ? settings.repeatingConditions : t.emptyStatement(),
                 }),
                 template('POSTCONDITIONS')({
@@ -227,7 +227,7 @@ function createValidator (opts) {
             createConst(
                 t.identifier('node'),
                 t.memberExpression(
-                    parsedNodes,
+                    valueParserASTNodes,
                     t.numericLiteral(0),
                     true
                 )
@@ -248,7 +248,7 @@ function createValidator (opts) {
                 t.binaryExpression(
                     '===',
                     t.memberExpression(
-                        parsedNodes,
+                        valueParserASTNodes,
                         t.identifier('length')
                     ),
                     t.numericLiteral(1)

@@ -77,9 +77,9 @@ function isFilterFunction (node) {
            isNumberOrPercentage(node);
 }
 
-export default function isFilterFunctionList (parsed) {
+export default function isFilterFunctionList (valueParserAST) {
     let valid = true;
-    parsed.walk((node, index) => {
+    valueParserAST.walk((node, index) => {
         const even = isEven(index);
         if (even && !isFilterFunction(node) && !isVariable(node)) {
             valid = false;
