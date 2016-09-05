@@ -25,7 +25,7 @@ or a message object if either invalid or unknown.
 
 **Examples**
 
-_Valid CSS_
+_Valid CSS (string)_
 
 ```javascript
 import cssValues from 'css-values';
@@ -34,22 +34,32 @@ cssValues('color', 'transparent');
 //=> true
 ```
 
-_Invalid CSS (recognised properties)_
+_Valid CSS (valueParser)_
+
+```javascript
+import valueParser from 'postcss-value-parser';
+import cssValues from 'css-values';
+
+cssValues('color', valueParser('transparent'));
+//=> true
+```
+
+_Invalid CSS (string, recognised properties)_
 
 ```javascript
 import cssValues from 'css-values';
 
 cssValues('color', 'traansparent');
-// => {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
+//=> {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
 ```
 
-_Invalid CSS (unknown properties)_
+_Invalid CSS (string, unknown properties)_
 
 ```javascript
 import cssValues from 'css-values';
 
 cssValues('colr', 'transparent');
-// => {type: 'unknown', message: '"colr" is not a recognised property.'}
+//=> {type: 'unknown', message: '"colr" is not a recognised property.'}
 ```
 
 Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object))** 

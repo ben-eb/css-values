@@ -316,21 +316,27 @@ export default config => {
              * @param {string|valueParser} value Either a string or an AST yielded
              * by postcss-value-parser.
              * @return {boolean|object}
-             * @example <caption>Valid CSS</caption>
+             * @example <caption>Valid CSS (string)</caption>
              * import cssValues from 'css-values';
              *
              * cssValues('color', 'transparent');
              * //=> true
-             * @example <caption>Invalid CSS (recognised properties)</caption>
+             * @example <caption>Valid CSS (valueParser)</caption>
+             * import valueParser from 'postcss-value-parser';
+             * import cssValues from 'css-values';
+             *
+             * cssValues('color', valueParser('transparent'));
+             * //=> true
+             * @example <caption>Invalid CSS (string, recognised properties)</caption>
              * import cssValues from 'css-values';
              *
              * cssValues('color', 'traansparent');
-             * // => {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
-             * @example <caption>Invalid CSS (unknown properties)</caption>
+             * //=> {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
+             * @example <caption>Invalid CSS (string, unknown properties)</caption>
              * import cssValues from 'css-values';
              *
              * cssValues('colr', 'transparent');
-             * // => {type: 'unknown', message: '"colr" is not a recognised property.'}
+             * //=> {type: 'unknown', message: '"colr" is not a recognised property.'}
              */
             export default function cssValues (property, value) {
                 if (typeof value === 'string') {
