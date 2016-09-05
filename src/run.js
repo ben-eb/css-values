@@ -104,7 +104,7 @@ properties.forEach(property => {
                 // The all property is already covered by the global
                 // validator, so it's not necessary to generate a validator
                 // or tests for it.
-                if (identifier === 'all') {
+                if (identifier === 'allValidator') {
                     return;
                 }
 

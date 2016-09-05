@@ -1308,7 +1308,6 @@ var msFlexAlignValidator = isKeywordFactory(["flex-start", "flex-end", "center",
 var alignItemsValidator = isKeywordFactory(["flex-start", "flex-end", "center", "baseline", "stretch"]);
 var alignSelfValidator = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch"]);
 var msFlexItemAlignValidator = isKeywordFactory(["auto", "flex-start", "flex-end", "center", "baseline", "stretch", "start", "end"]);
-var allValidator = isKeywordFactory(["initial", "inherit", "unset"]);
 
 var animationDelayValidator = function animationDelayValidator(valueParserAST) {
   var valid = true;
@@ -2073,7 +2072,6 @@ var validators = {
   "align-content": alignContentValidator,
   "align-items": alignItemsValidator,
   "align-self": alignSelfValidator,
-  "all": allValidator,
   "animation-delay": animationDelayValidator,
   "animation-direction": animationDirectionValidator,
   "animation-duration": animationDelayValidator,
