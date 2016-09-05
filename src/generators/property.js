@@ -7,6 +7,7 @@ import dataValidator from '../util/dataValidator';
 import globals from '../util/globals';
 import importMethod from '../util/importMethod';
 import template from '../util/moduleTemplate';
+import {returnTrue, returnFalse} from '../util/returnBooleans';
 import templateExpression from '../util/templateExpression';
 import generateProgram from './program';
 import requireModules from './requireModules';
@@ -25,9 +26,6 @@ const firstValueParserNode = createConst(
         true
     )
 );
-
-const returnTrue = t.returnStatement(t.booleanLiteral(true));
-const returnFalse = t.returnStatement(t.booleanLiteral(false));
 
 function handleKeywords (keywords, settings, id) {
     if (!settings.keywords.length) {
