@@ -1,6 +1,7 @@
 import * as t from 'babel-types';
 import * as validators from '../validators';
 import arrayOfStrings from '../util/arrayOfStrings';
+import {notCallExpression, callExpression} from '../util/callExpressions';
 import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditionals';
 import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
@@ -13,13 +14,16 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 import validator from './validator';
 
+const nodeIdentifier = t.identifier('node');
+const lengthIdentifier = t.identifier('length');
+
 const valueParserASTNodes = t.memberExpression(
     t.identifier('valueParserAST'),
     t.identifier('nodes')
 );
 
 const firstValueParserNode = createConst(
-    t.identifier('node'),
+    nodeIdentifier,
     t.memberExpression(
         valueParserASTNodes,
         t.numericLiteral(0),
@@ -94,7 +98,6 @@ function dataString (config, candidate) {
     }
     if (candidate.min === 1) {
         const method = candidate.separator === ',' ? 'isComma' : 'isSpace';
-        const separator = `!${method}(node)`;
         addDependency(method);
         addDependency('isEven');
         config.repeatingConditions.push(
@@ -102,13 +105,13 @@ function dataString (config, candidate) {
                 allTruthy(
                     templateExpression(`even`),
                     allTruthy(
-                        templateExpression(`!${camel}(node)`),
-                        templateExpression('!isVariable(node)'),
+                        notCallExpression(camel, nodeIdentifier),
+                        notCallExpression('isVariable', nodeIdentifier)
                     ),
                 ),
                 allTruthy(
                     templateExpression(`!even`),
-                    templateExpression(separator),
+                    notCallExpression(method, nodeIdentifier)
                 ),
             ], [
                 t.expressionStatement(
@@ -129,7 +132,7 @@ function dataString (config, candidate) {
 
         return config;
     }
-    config.conditions.push(templateExpression(`${camel}(node)`));
+    config.conditions.push(callExpression(camel, nodeIdentifier));
     return config;
 }
 
@@ -176,7 +179,7 @@ function createValidator (opts) {
                     '===',
                     t.memberExpression(
                         valueParserASTNodes,
-                        t.identifier('length')
+                        lengthIdentifier
                     ),
                     t.numericLiteral(1)
                 ),
@@ -239,7 +242,7 @@ function createValidator (opts) {
                     '===',
                     t.memberExpression(
                         valueParserASTNodes,
-                        t.identifier('length')
+                        lengthIdentifier
                     ),
                     t.numericLiteral(1)
                 ),
