@@ -23,6 +23,7 @@
     "dist"
   ],
   "scripts": {
+    "docs": "documentation readme index.js --section 'API'",
     "release": "cross-env BABEL_ENV=publish babel index.js --out-dir dist"
   }
 }

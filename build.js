@@ -16,7 +16,10 @@ const tasks = new Listr([{
     title: 'Generating coverage report',
     task: () => execa('npm', run('report')),
 }, {
-    title: 'Updating documentation',
+    title: 'Updating docs',
+    task: () => execa('npm', run('docs')),
+}, {
+    title: 'Updating readme',
     task: () => execa('npm', run('markdown')),
 }]);
 
