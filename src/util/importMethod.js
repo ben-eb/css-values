@@ -5,6 +5,7 @@ import {importSpecifier} from 'babel-types';
  * This method is a stub, intended to be used in conjunction with
  * an importDeclaration.
  *
+ * @private
  * @param  {Babel} identifier {@link https://github.com/babel/babel/tree/master/packages/babel-types#tidentifiername|t.identifier}
  * @return {Babel} {@link https://github.com/babel/babel/tree/master/packages/babel-types#timportspecifierlocal-imported|t.importSpecifier}
  * @example

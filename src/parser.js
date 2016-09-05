@@ -3,6 +3,7 @@ import * as t from './types';
 
 /**
  * @class Parser
+ * @private
  */
 
 export default class Parser {

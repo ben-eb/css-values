@@ -5,6 +5,7 @@
     "contributorAdd": "all-contributors add",
     "contributorGenerate": "all-contributors generate",
     "docs": "documentation build src -f md -o docs.md",
+    "docs:dev": "documentation build src -f md -o docs.md -p",
     "generate": "node ./dist/run.js",
     "generate-es5": "npm run generate && cross-env BABEL_ENV=publish babel output --out-dir output",
     "markdown": "remark *.md --quiet",
