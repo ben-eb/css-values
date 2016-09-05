@@ -186,6 +186,11 @@ var isSpace = (function (_ref) {
     return type === 'space';
 });
 
+/*
+ * See the specification for more details:
+ * https://drafts.csswg.org/css-values-3/#angles
+ */
+
 var angles = ['deg', 'grad', 'rad', 'turn'];
 
 var isAngle = (function (_ref) {
@@ -830,6 +835,8 @@ function isImage(node) {
 function isBgImage(node) {
     return isImage(node) || isKeyword(node, 'none');
 }
+
+// [ &lt;length-percentage&gt; | auto ]{1,2} | cover | contain
 
 var sizeKeywords = ['cover', 'contain'];
 
@@ -2289,7 +2296,31 @@ var validators = {
   "z-index": zIndexValidator
 };
 var cssGlobals = ["inherit", "initial", "revert", "unset"];
-function cssValues(property, value) {
+/**
+ * The main entry point of this module takes a CSS property/value
+ * pair, and validates it. It will return either `true` if valid,
+ * or a message object if either invalid or unknown.
+ *
+ * @param {string} property The CSS property to validate.
+ * @param {string|valueParser} value Either a string or an AST yielded
+ * by postcss-value-parser.
+ * @return {boolean|object}
+ * @example <caption>Valid CSS</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('color', 'transparent');
+ * //=> true
+ * @example <caption>Invalid CSS (recognised properties)</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('color', 'traansparent');
+ * // => {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
+ * @example <caption>Invalid CSS (unknown properties)</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('colr', 'transparent');
+ * // => {type: 'unknown', message: '"colr" is not a recognised property.'}
+ */function cssValues(property, value) {
   if (typeof value === 'string') {
     value = valueParser(value);
   }
@@ -2306,7 +2337,8 @@ function cssValues(property, value) {
     }
 
     return true;
-  }
+  } // Pass through unknown properties
+
 
   return unknownMessage('"' + property + '" is not a recognised property.');
 }
