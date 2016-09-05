@@ -10,12 +10,24 @@ import template from '../util/moduleTemplate';
 import templateExpression from '../util/templateExpression';
 import generateProgram from './program';
 import requireModules from './requireModules';
-import validator, {generateValidatorStub} from './validator';
+import validator from './validator';
 
 const valueParserASTNodes = t.memberExpression(
     t.identifier('valueParserAST'),
     t.identifier('nodes')
 );
+
+const firstValueParserNode = createConst(
+    t.identifier('node'),
+    t.memberExpression(
+        valueParserASTNodes,
+        t.numericLiteral(0),
+        true
+    )
+);
+
+const returnTrue = t.returnStatement(t.booleanLiteral(true));
+const returnFalse = t.returnStatement(t.booleanLiteral(false));
 
 function handleKeywords (keywords, settings, id) {
     if (!settings.keywords.length) {
@@ -48,7 +60,7 @@ function addDependency (dep) {
 function generatePositionValidator ({candidates, identifier}) {
     const func = 'isPosition';
     addDependency(func);
-    return generateValidatorStub(identifier, t.callExpression(
+    return createConst(t.identifier(identifier), t.callExpression(
         t.identifier(func),
         [t.booleanLiteral(candidates[0].separator === ',')]
     ));
@@ -56,7 +68,7 @@ function generatePositionValidator ({candidates, identifier}) {
 
 function genericValidatorStub (name, {identifier}) {
     addDependency(name);
-    return generateValidatorStub(identifier, t.identifier(name));
+    return createConst(t.identifier(identifier), t.identifier(name));
 }
 
 function keyword (config, candidate) {
@@ -160,14 +172,7 @@ function createValidator (opts) {
         handleKeywords(keywords, settings, opts.identifier);
 
         const prevalid = settings.conditions.length ? [
-            createConst(
-                t.identifier('node'),
-                t.memberExpression(
-                    valueParserASTNodes,
-                    t.numericLiteral(0),
-                    true
-                )
-            ),
+            firstValueParserNode,
             ifAllTruthy([
                 t.binaryExpression(
                     '===',
@@ -179,7 +184,7 @@ function createValidator (opts) {
                 ),
                 ...settings.conditions,
             ], [
-                t.returnStatement(t.booleanLiteral(true)),
+                returnTrue,
             ]),
         ] : [t.emptyStatement()];
 
@@ -211,7 +216,7 @@ function createValidator (opts) {
             const identifier = 'isKeywordFactory';
             addDependency(identifier);
             return [
-                generateValidatorStub(opts.identifier, t.callExpression(
+                createConst(t.identifier(opts.identifier), t.callExpression(
                     t.identifier(identifier),
                     [arrayOfStrings(settings.keywords.filter(Boolean))]
                 )),
@@ -220,25 +225,12 @@ function createValidator (opts) {
         handleKeywords(keywords, settings, opts.identifier);
     }
 
-    let block;
-
-    if (settings.conditions.length) {
-        block = [
-            createConst(
-                t.identifier('node'),
-                t.memberExpression(
-                    valueParserASTNodes,
-                    t.numericLiteral(0),
-                    true
-                )
-            ),
-            t.returnStatement(anyTruthy(...settings.conditions)),
-        ];
-    } else {
-        block = [
-            t.returnStatement(t.booleanLiteral(true)),
-        ];
-    }
+    const block = settings.conditions.length ? [
+        firstValueParserNode,
+        t.returnStatement(anyTruthy(...settings.conditions)),
+    ] : [
+        returnTrue,
+    ];
 
     return [
         ...keywords,
@@ -255,7 +247,7 @@ function createValidator (opts) {
                 ),
                 t.blockStatement(block)
             ),
-            t.returnStatement(t.booleanLiteral(false)),
+            returnFalse,
         ]),
     ];
 }
