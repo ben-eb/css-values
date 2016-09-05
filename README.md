@@ -305,7 +305,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 | :---: | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-🎨 Logo design by [Arina Rish](https://facebook.com/arina.rish).
+🎨 Logo design by [Arina Efremova](https://facebook.com/arina.rish).
 
 This project follows the [all-contributors] specification. Contributions of
 any kind welcome!
