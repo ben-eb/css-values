@@ -1,5 +1,6 @@
 import {walk} from 'postcss-value-parser';
 import isCustomIdent from './isCustomIdent';
+import isEven from './isEven';
 import isFunction from './isFunction';
 import isImage from './isImage';
 import isKeyword from './isKeyword';
@@ -115,7 +116,7 @@ function isSymbols (node) {
     }
     let validSym = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (
                 (index === 0 && !isKeyword(child, symbolTypes) && !isString(child) && !isImage(child)) ||

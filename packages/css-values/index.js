@@ -57,6 +57,10 @@ var isInteger = (function (_ref) {
     return int && !~value.indexOf('.') && !int.unit;
 });
 
+function isEven(index) {
+    return index % 2 === 0;
+}
+
 var isComma = (function (_ref) {
     var type = _ref.type;
     var value = _ref.value;
@@ -92,7 +96,7 @@ function isRgb(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && !isInteger(child) && !isPercentage(child) || !even && !isComma(child)) {
             valid = false;
         }
@@ -108,7 +112,7 @@ function isRgba(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && (index < 6 && !isInteger(child) && !isPercentage(child) || index > 5 && !isNumber(child)) || !even && !isComma(child)) {
             valid = false;
         }
@@ -124,7 +128,7 @@ function isHsl(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && (index < 1 && !isNumber(child) || index > 1 && !isPercentage(child)) || !even && !isComma(child)) {
             valid = false;
         }
@@ -140,7 +144,7 @@ function isHsla(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && ((index === 0 || index === 6) && !isNumber(child) || (index === 2 || index === 4) && !isPercentage(child)) || !even && !isComma(child)) {
             valid = false;
         }
@@ -181,11 +185,6 @@ var isSpace = (function (_ref) {
 
     return type === 'space';
 });
-
-/*
- * See the specification for more details:
- * https://drafts.csswg.org/css-values-3/#angles
- */
 
 var angles = ['deg', 'grad', 'rad', 'turn'];
 
@@ -507,7 +506,7 @@ function isCubicBezier(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && ((index === 0 || index === 4) && !isValidAbscissa(child) || (index === 2 || index === 6) && !isNumber(child)) || !even && !isComma(child)) {
             valid = false;
         }
@@ -547,7 +546,7 @@ function isDropShadow(node) {
     }
     var valid = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && index <= 2 && !isLength(child)) {
             valid = false;
             return false;
@@ -584,7 +583,7 @@ function isFilterFunction(node) {
 function isFilterFunctionList(parsed) {
     var valid = true;
     parsed.walk(function (node, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && !isFilterFunction(node) && !isVariable(node)) {
             valid = false;
         }
@@ -832,8 +831,6 @@ function isBgImage(node) {
     return isImage(node) || isKeyword(node, 'none');
 }
 
-// [ &lt;length-percentage&gt; | auto ]{1,2} | cover | contain
-
 var sizeKeywords = ['cover', 'contain'];
 
 var auto = 'auto';
@@ -933,7 +930,7 @@ function isSymbols(node) {
     }
     var validSym = true;
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && (index === 0 && !isKeyword(child, symbolTypes) && !isString(child) && !isImage(child) || index > 1 && !isString(child) && !isImage(child)) || !even && !isSpace(child)) {
             validSym = false;
         }
@@ -978,7 +975,7 @@ function validateShadow(nodes) {
     var valid = true;
 
     walk(nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even) {
             if (isLength(child)) {
                 if (!index) {
@@ -1035,7 +1032,7 @@ function isMatrix(node) {
     var valid = true;
 
     walk(node.nodes, function (child, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && !isNumber(child) || !even && !isComma(child)) {
             valid = false;
         }
@@ -1057,7 +1054,7 @@ function isMultipleValue(name, fn) {
         var valid = true;
 
         walk(node.nodes, function (child, index) {
-            var even = index % 2 === 0;
+            var even = isEven(index);
             if (even && !fn(child) || !even && !isComma(child)) {
                 valid = false;
             }
@@ -1144,7 +1141,7 @@ function isTransformList(parsed) {
     var valid = true;
 
     parsed.walk(function (node, index) {
-        var even = index % 2 === 0;
+        var even = isEven(index);
         if (even && !validateNode$1(node) || !even && !isSpace(node)) {
             valid = false;
         }
@@ -1217,7 +1214,7 @@ var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator
 var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
       valid = false;
@@ -1225,13 +1222,13 @@ var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  return valid && !isEven(parsed.nodes.length) && parsed.nodes.length <= 7;
 };
 
 var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
       valid = false;
@@ -1239,13 +1236,13 @@ var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  return valid && !isEven(parsed.nodes.length) && parsed.nodes.length <= 7;
 };
 
 var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1253,13 +1250,13 @@ var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(parse
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isCompositeStyle(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1267,7 +1264,7 @@ var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(parsed)
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var webkitMaskPositionValidator = isPositionFactory(true);
@@ -1277,7 +1274,7 @@ var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space
 var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1285,7 +1282,7 @@ var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(parsed) {
@@ -1309,7 +1306,7 @@ var allValidator = isKeywordFactory(["initial", "inherit", "unset"]);
 var animationDelayValidator = function animationDelayValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1317,13 +1314,13 @@ var animationDelayValidator = function animationDelayValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationDirectionValidator = function animationDirectionValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1331,13 +1328,13 @@ var animationDirectionValidator = function animationDirectionValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationFillModeValidator = function animationFillModeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1345,13 +1342,13 @@ var animationFillModeValidator = function animationFillModeValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationIterationCountValidator = function animationIterationCountValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1359,13 +1356,13 @@ var animationIterationCountValidator = function animationIterationCountValidator
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationNameValidator = function animationNameValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1373,13 +1370,13 @@ var animationNameValidator = function animationNameValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationPlayStateValidator = function animationPlayStateValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1387,13 +1384,13 @@ var animationPlayStateValidator = function animationPlayStateValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var animationTimingFunctionValidator = function animationTimingFunctionValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1401,7 +1398,7 @@ var animationTimingFunctionValidator = function animationTimingFunctionValidator
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var appearanceValidator = isKeywordFactory(["auto", "none"]);
@@ -1424,7 +1421,7 @@ var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
 var backgroundBlendModeValidator = function backgroundBlendModeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1432,13 +1429,13 @@ var backgroundBlendModeValidator = function backgroundBlendModeValidator(parsed)
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var backgroundClipValidator = function backgroundClipValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1446,13 +1443,13 @@ var backgroundClipValidator = function backgroundClipValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var backgroundImageValidator = function backgroundImageValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1460,7 +1457,7 @@ var backgroundImageValidator = function backgroundImageValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var backgroundSizeValidator = isBgSize;
@@ -1468,7 +1465,7 @@ var backgroundSizeValidator = isBgSize;
 var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
       valid = false;
@@ -1476,7 +1473,7 @@ var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(p
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 3;
+  return valid && !isEven(parsed.nodes.length) && parsed.nodes.length <= 3;
 };
 
 var borderBottomStyleValidator = function borderBottomStyleValidator(parsed) {
@@ -1502,7 +1499,7 @@ var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
 var borderColorValidator = function borderColorValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
       valid = false;
@@ -1510,7 +1507,7 @@ var borderColorValidator = function borderColorValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0 && parsed.nodes.length <= 7;
+  return valid && !isEven(parsed.nodes.length) && parsed.nodes.length <= 7;
 };
 
 var borderImageSourceValidator = function borderImageSourceValidator(parsed) {
@@ -1658,7 +1655,7 @@ var gridTemplateAreasValidator = function gridTemplateAreasValidator(parsed) {
 
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
       valid = false;
@@ -1666,7 +1663,7 @@ var gridTemplateAreasValidator = function gridTemplateAreasValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var hyphensValidator = isKeywordFactory(["none", "manual", "auto"]);
@@ -1713,7 +1710,7 @@ var listStyleTypeValidator = function listStyleTypeValidator(parsed) {
 var maskCompositeValidator = function maskCompositeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1721,13 +1718,13 @@ var maskCompositeValidator = function maskCompositeValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var maskImageValidator = function maskImageValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isMaskReference(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1735,13 +1732,13 @@ var maskImageValidator = function maskImageValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var maskModeValidator = function maskModeValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1749,13 +1746,13 @@ var maskModeValidator = function maskModeValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var maskOriginValidator = function maskOriginValidator(parsed) {
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1763,7 +1760,7 @@ var maskOriginValidator = function maskOriginValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var maskTypeValidator = isKeywordFactory(["luminance", "alpha"]);
@@ -1927,7 +1924,7 @@ var willChangeValidator = function willChangeValidator(parsed) {
 
   var valid = true;
   parsed.walk(function (node, index) {
-    var even = index % 2 === 0;
+    var even = isEven(index);
 
     if (even && !isAnimateableFeature(node) && !isVariable(node) || !even && !isComma(node)) {
       valid = false;
@@ -1935,7 +1932,7 @@ var willChangeValidator = function willChangeValidator(parsed) {
 
     return false;
   });
-  return valid && parsed.nodes.length % 2 !== 0;
+  return valid && !isEven(parsed.nodes.length);
 };
 
 var wordBreakValidator = isKeywordFactory(["normal", "break-all", "keep-all"]);

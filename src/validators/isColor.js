@@ -1,5 +1,6 @@
 import {walk} from 'postcss-value-parser';
 import colors from 'css-color-names';
+import isEven from './isEven';
 import isFunction from './isFunction';
 import isKeyword from './isKeyword';
 import isComma from './isComma';
@@ -17,7 +18,7 @@ export function isRgb (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (!isInteger(child) && !isPercentage(child)) ||
             !even && !isComma(child)
@@ -36,7 +37,7 @@ export function isRgba (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (
                 (index < 6 && !isInteger(child) && !isPercentage(child)) ||
@@ -57,7 +58,7 @@ export function isHsl (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (
                 (index < 1 && !isNumber(child)) ||
@@ -78,7 +79,7 @@ export function isHsla (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (
                 ((index === 0 || index === 6) && !isNumber(child)) ||

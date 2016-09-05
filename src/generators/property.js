@@ -86,7 +86,7 @@ function dataString (config, candidate) {
         const method = candidate.separator === ',' ? 'isComma' : 'isSpace';
         const separator = `!${method}(node)`;
         addDependency(method);
-
+        addDependency('isEven');
         config.repeatingConditions.push(
             ifAnyTruthy([
                 allTruthy(
@@ -110,7 +110,7 @@ function dataString (config, candidate) {
                 ),
             ])
         );
-        const tmpl = `return valid && parsed.nodes.length % 2 !== 0`;
+        const tmpl = `return valid && !isEven(parsed.nodes.length)`;
         if (candidate.max !== false) {
             config.repeatingReturn = template(`${tmpl} && parsed.nodes.length <= ${(candidate.max * 2) - 1};`)();
         } else {
@@ -183,6 +183,8 @@ function createValidator (opts) {
             ]),
         ] : [t.emptyStatement()];
 
+        addDependency('isEven');
+
         return [
             ...keywords,
             validator(opts.identifier, [
@@ -194,7 +196,7 @@ function createValidator (opts) {
                 template('PRECONDITIONS')({
                     PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
                 }),
-                template('parsed.walk((node, index) => { const even = index % 2 === 0; CONDITIONS; return false; });')({
+                template('parsed.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
                     CONDITIONS: settings.repeatingConditions.length ? settings.repeatingConditions : t.emptyStatement(),
                 }),
                 template('POSTCONDITIONS')({

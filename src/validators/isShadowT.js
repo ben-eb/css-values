@@ -1,6 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import getArguments from './getArguments';
 import isColor from './isColor';
+import isEven from './isEven';
 import isLength from './isLength';
 import isSpace from './isSpace';
 import isVariable from './isVariable';
@@ -13,7 +14,7 @@ function validateShadow (nodes) {
     let valid = true;
 
     walk(nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (even) {
             if (isLength(child)) {
                 if (!index) {

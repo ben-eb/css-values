@@ -1,4 +1,5 @@
 import {walk} from 'postcss-value-parser';
+import isEven from './isEven';
 import isFunction from './isFunction';
 import isKeyword from './isKeyword';
 import isComma from './isComma';
@@ -49,7 +50,7 @@ export function isCubicBezier (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (
             even && (
                 ((index === 0 || index === 4) && !isValidAbscissa(child)) ||

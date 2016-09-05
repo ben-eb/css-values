@@ -1,6 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import isAngle from './isAngle';
 import isColor from './isColor';
+import isEven from './isEven';
 import isFunction from './isFunction';
 import isLength from './isLength';
 import isNumber from './isNumber';
@@ -40,7 +41,7 @@ function isDropShadow (node) {
     }
     let valid = true;
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (even && index <= 2 && !isLength(child)) {
             valid = false;
             return false;
@@ -79,7 +80,7 @@ function isFilterFunction (node) {
 export default function isFilterFunctionList (parsed) {
     let valid = true;
     parsed.walk((node, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (even && !isFilterFunction(node) && !isVariable(node)) {
             valid = false;
         }

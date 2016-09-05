@@ -1,6 +1,7 @@
 import {walk} from 'postcss-value-parser';
 import isAngle from './isAngle';
 import isComma from './isComma';
+import isEven from './isEven';
 import isFunction from './isFunction';
 import isLength from './isLength';
 import isLengthPercentage from './isLengthPercentage';
@@ -25,7 +26,7 @@ function isMatrix (node) {
     let valid = true;
 
     walk(node.nodes, (child, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (even && !isNumber(child) || !even && !isComma(child)) {
             valid = false;
         }
@@ -47,7 +48,7 @@ function isMultipleValue (name, fn) {
         let valid = true;
 
         walk(node.nodes, (child, index) => {
-            const even = index % 2 === 0;
+            const even = isEven(index);
             if (even && !fn(child) || !even && !isComma(child)) {
                 valid = false;
             }
@@ -173,7 +174,7 @@ export default function isTransformList (parsed) {
     let valid = true;
 
     parsed.walk((node, index) => {
-        const even = index % 2 === 0;
+        const even = isEven(index);
         if (even && !validateNode(node) || !even && !isSpace(node)) {
             valid = false;
         }
