@@ -9,7 +9,6 @@ import globals from '../util/globals';
 import importMethod from '../util/importMethod';
 import template from '../util/moduleTemplate';
 import {returnTrue, returnFalse} from '../util/returnBooleans';
-import templateExpression from '../util/templateExpression';
 import generateProgram from './program';
 import requireModules from './requireModules';
 import validator from './validator';
@@ -135,14 +134,14 @@ function dataString (config, candidate) {
         config.repeatingConditions.push(
             ifAnyTruthy([
                 allTruthy(
-                    templateExpression(`even`),
+                    t.identifier('even'),
                     allTruthy(
                         notCallExpression(camel, nodeIdentifier),
                         notCallExpression('isVariable', nodeIdentifier)
                     ),
                 ),
                 allTruthy(
-                    templateExpression(`!even`),
+                    t.unaryExpression('!', t.identifier('even')),
                     notCallExpression(method, nodeIdentifier)
                 ),
             ], [
