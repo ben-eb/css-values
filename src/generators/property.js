@@ -18,12 +18,13 @@ import validator from './validator';
  * Common Babel nodes.
  */
 
-const lengthIdentifier = t.identifier('length');
-const nodeIdentifier   = t.identifier('node');
-const validIdentifier  = t.identifier('valid');
+const lengthIdentifier         = t.identifier('length');
+const nodeIdentifier           = t.identifier('node');
+const validIdentifier          = t.identifier('valid');
+const valueParserASTIdentifier = t.identifier('valueParserAST');
 
 const valueParserASTNodes = t.memberExpression(
-    t.identifier('valueParserAST'),
+    valueParserASTIdentifier,
     t.identifier('nodes')
 );
 
@@ -104,13 +105,26 @@ function dataString (config, candidate) {
     addDependency(camel);
     if (camel === 'isPosition') {
         config.preConditions.push(
-            template(`if (${camel}(true)(valueParserAST)) { return true; }`)()
+            t.ifStatement(
+                t.callExpression(
+                    callExpression(camel, t.booleanLiteral(true)),
+                    [valueParserASTIdentifier]
+                ),
+                t.blockStatement([
+                    returnTrue,
+                ])
+            )
         );
         return config;
     }
     if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
         config.preConditions.push(
-            template(`if (${camel}(valueParserAST)) { return true; }`)()
+            t.ifStatement(
+                callExpression(camel, valueParserASTIdentifier),
+                t.blockStatement([
+                    returnTrue,
+                ])
+            )
         );
         return config;
     }
