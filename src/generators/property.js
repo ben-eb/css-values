@@ -253,8 +253,6 @@ function createValidator (opts) {
     }
 
     if (settings.repeatingConditions.length) {
-        addDependency('isEven');
-
         body.unshift(createLet(
             validIdentifier,
             t.booleanLiteral(true)
@@ -275,24 +273,17 @@ function createValidator (opts) {
         body.push(
             template('valueParserAST.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
                 CONDITIONS: settings.repeatingConditions,
-            })
+            }),
+            settings.repeatingReturn
         );
-
-        if (settings.repeatingReturn) {
-            body.push(settings.repeatingReturn);
-        }
     } else {
-        const block = settings.conditions.length ? [
-            firstValueParserNode,
-            t.returnStatement(anyTruthy(...settings.conditions)),
-        ] : [
-            returnTrue,
-        ];
-
         body.push(
             t.ifStatement(
                 valueParserNodesLength(1),
-                t.blockStatement(block)
+                t.blockStatement([
+                    firstValueParserNode,
+                    t.returnStatement(anyTruthy(...settings.conditions)),
+                ])
             ),
             returnFalse,
         );
