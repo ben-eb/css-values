@@ -178,6 +178,12 @@ const candidateTypes = {
 
 function createValidator (opts) {
     const {candidates, identifier} = opts;
+    /*
+     * These candidates are excluded from the automatic generation
+     * of a validator because they work on the whole AST from
+     * postcss-value-parser, whereas automatically generated
+     * conditions tend to work on a single node instead.
+     */
     if (candidates.length === 1) {
         const {value} = candidates[0];
         switch (value) {
@@ -255,6 +261,13 @@ function createValidator (opts) {
     }
 
     if (settings.repeatingConditions.length) {
+        /*
+         * Handle the case where the validator needs to validate *multiple*
+         * values; in this case, we need to iterate over postcss-value-parser's
+         * AST and check that each *even* index fulfills any of the validation
+         * conditions, and that the correct separator is supplied in each
+         * *odd* index.
+         */
         body.unshift(createLet(
             validIdentifier,
             t.booleanLiteral(true)
@@ -265,7 +278,7 @@ function createValidator (opts) {
                 firstValueParserNode,
                 ifAllTruthy([
                     valueParserNodesLength(1),
-                    ...settings.conditions,
+                    anyTruthy(...settings.conditions),
                 ], [
                     returnTrue,
                 ])
@@ -296,6 +309,13 @@ function createValidator (opts) {
             settings.repeatingReturn
         );
     } else {
+        /*
+         * Handle the case where the validator should only need to validate
+         * a *single* value; i.e, an AST yielded from postcss-value-parser
+         * should only have a length of 1. If it is 1, then check that this
+         * node fulfills any of the validation conditions, otherwise
+         * return false.
+         */
         body.push(
             t.ifStatement(
                 valueParserNodesLength(1),
