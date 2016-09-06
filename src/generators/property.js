@@ -17,6 +17,8 @@ import validator from './validator';
  * Common Babel nodes.
  */
 
+const evenIdentifier           = t.identifier('even');
+const indexIdentifier          = t.identifier('index');
 const lengthIdentifier         = t.identifier('length');
 const nodeIdentifier           = t.identifier('node');
 const validIdentifier          = t.identifier('valid');
@@ -134,14 +136,14 @@ function dataString (config, candidate) {
         config.repeatingConditions.push(
             ifAnyTruthy([
                 allTruthy(
-                    t.identifier('even'),
+                    evenIdentifier,
                     allTruthy(
                         notCallExpression(camel, nodeIdentifier),
                         notCallExpression('isVariable', nodeIdentifier)
                     ),
                 ),
                 allTruthy(
-                    t.unaryExpression('!', t.identifier('even')),
+                    t.unaryExpression('!', evenIdentifier),
                     notCallExpression(method, nodeIdentifier)
                 ),
             ], [
@@ -270,9 +272,26 @@ function createValidator (opts) {
         }
 
         body.push(
-            template('valueParserAST.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
-                CONDITIONS: settings.repeatingConditions,
-            }),
+            t.expressionStatement(
+                t.callExpression(
+                    t.memberExpression(
+                        valueParserASTIdentifier,
+                        t.identifier('walk')
+                    ), [
+                        t.arrowFunctionExpression([
+                            nodeIdentifier,
+                            indexIdentifier,
+                        ], t.blockStatement([
+                            createConst(
+                                evenIdentifier,
+                                callExpression('isEven', indexIdentifier)
+                            ),
+                            ...settings.repeatingConditions,
+                            returnFalse,
+                        ])
+                    )]
+                )
+            ),
             settings.repeatingReturn
         );
     } else {
