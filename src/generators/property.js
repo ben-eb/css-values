@@ -312,6 +312,57 @@ function generateValidatorMap (config) {
     );
 }
 
+const defaultExport = template(`
+/**
+ * The main entry point of this module takes a CSS property/value
+ * pair, and validates it. It will return either \`true\` if valid,
+ * or a message object if either invalid or unknown.
+ *
+ * @param {string} property The CSS property to validate.
+ * @param {string|valueParser} value Either a string or an AST yielded
+ * by postcss-value-parser.
+ * @return {boolean|object}
+ * @example <caption>Valid CSS (string)</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('color', 'transparent');
+ * //=> true
+ * @example <caption>Valid CSS (valueParser)</caption>
+ * import valueParser from 'postcss-value-parser';
+ * import cssValues from 'css-values';
+ *
+ * cssValues('color', valueParser('transparent'));
+ * //=> true
+ * @example <caption>Invalid CSS (string, recognised properties)</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('color', 'traansparent');
+ * //=> {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
+ * @example <caption>Invalid CSS (string, unknown properties)</caption>
+ * import cssValues from 'css-values';
+ *
+ * cssValues('colr', 'transparent');
+ * //=> {type: 'unknown', message: '"colr" is not a recognised property.'}
+ */
+export default function cssValues (property, value) {
+    if (typeof value === 'string') {
+        value = valueParser(value);
+    }
+    const first = value.nodes[0];
+    if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
+        return true;
+    }
+    if (validators[property]) {
+        if (!!validators[property](value) === false) {
+            return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
+        }
+        return true;
+    }
+    // Pass through unknown properties
+    return unknownMessage('"' + property + '" is not a recognised property.');
+}
+`, {preserveComments: true});
+
 export default config => {
     const funcs = config.reduce((list, descriptor) => {
         const fn = createValidator(descriptor);
@@ -337,55 +388,6 @@ export default config => {
             t.identifier('cssGlobals'),
             arrayOfStrings(globals)
         ),
-        template(`
-            /**
-             * The main entry point of this module takes a CSS property/value
-             * pair, and validates it. It will return either \`true\` if valid,
-             * or a message object if either invalid or unknown.
-             *
-             * @param {string} property The CSS property to validate.
-             * @param {string|valueParser} value Either a string or an AST yielded
-             * by postcss-value-parser.
-             * @return {boolean|object}
-             * @example <caption>Valid CSS (string)</caption>
-             * import cssValues from 'css-values';
-             *
-             * cssValues('color', 'transparent');
-             * //=> true
-             * @example <caption>Valid CSS (valueParser)</caption>
-             * import valueParser from 'postcss-value-parser';
-             * import cssValues from 'css-values';
-             *
-             * cssValues('color', valueParser('transparent'));
-             * //=> true
-             * @example <caption>Invalid CSS (string, recognised properties)</caption>
-             * import cssValues from 'css-values';
-             *
-             * cssValues('color', 'traansparent');
-             * //=> {type: 'invalid', message: '"traansparent" is not a valid value for "color".'}
-             * @example <caption>Invalid CSS (string, unknown properties)</caption>
-             * import cssValues from 'css-values';
-             *
-             * cssValues('colr', 'transparent');
-             * //=> {type: 'unknown', message: '"colr" is not a recognised property.'}
-             */
-            export default function cssValues (property, value) {
-                if (typeof value === 'string') {
-                    value = valueParser(value);
-                }
-                const first = value.nodes[0];
-                if (value.nodes.length === 1 && (isKeyword(first, cssGlobals) || isVariable(first))) {
-                    return true;
-                }
-                if (validators[property]) {
-                    if (!!validators[property](value) === false) {
-                        return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
-                    }
-                    return true;
-                }
-                // Pass through unknown properties
-                return unknownMessage('"' + property + '" is not a recognised property.');
-            }
-        `, {preserveComments: true})(),
+        defaultExport(),
     ]);
 };
