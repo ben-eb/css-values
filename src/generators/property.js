@@ -317,14 +317,13 @@ function createValidator (opts) {
          * return false.
          */
         body.push(
-            t.ifStatement(
-                valueParserNodesLength(1),
-                t.blockStatement([
-                    firstValueParserNode,
-                    t.returnStatement(anyTruthy(...settings.conditions)),
-                ])
-            ),
-            returnFalse,
+            firstValueParserNode,
+            t.returnStatement(
+                allTruthy(
+                    valueParserNodesLength(1),
+                    anyTruthy(...settings.conditions)
+                )
+            )
         );
     }
 

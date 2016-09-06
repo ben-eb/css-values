@@ -1182,23 +1182,15 @@ var msOverflowStyleValidator = isKeywordFactory(["auto", "none", "scrollbar", "-
 var mozAppearanceValidator = isKeywordFactory(["none", "button", "button-arrow-down", "button-arrow-next", "button-arrow-previous", "button-arrow-up", "button-bevel", "button-focus", "caret", "checkbox", "checkbox-container", "checkbox-label", "checkmenuitem", "dualbutton", "groupbox", "listbox", "listitem", "menuarrow", "menubar", "menucheckbox", "menuimage", "menuitem", "menuitemtext", "menulist", "menulist-button", "menulist-text", "menulist-textfield", "menupopup", "menuradio", "menuseparator", "meterbar", "meterchunk", "progressbar", "progressbar-vertical", "progresschunk", "progresschunk-vertical", "radio", "radio-container", "radio-label", "radiomenuitem", "range", "range-thumb", "resizer", "resizerpanel", "scale-horizontal", "scalethumbend", "scalethumb-horizontal", "scalethumbstart", "scalethumbtick", "scalethumb-vertical", "scale-vertical", "scrollbarbutton-down", "scrollbarbutton-left", "scrollbarbutton-right", "scrollbarbutton-up", "scrollbarthumb-horizontal", "scrollbarthumb-vertical", "scrollbartrack-horizontal", "scrollbartrack-vertical", "searchfield", "separator", "sheet", "spinner", "spinner-downbutton", "spinner-textfield", "spinner-upbutton", "splitter", "statusbar", "statusbarpanel", "tab", "tabpanel", "tabpanels", "tab-scroll-arrow-back", "tab-scroll-arrow-forward", "textfield", "textfield-multiline", "toolbar", "toolbarbutton", "toolbarbutton-dropdown", "toolbargripper", "toolbox", "tooltip", "treeheader", "treeheadercell", "treeheadersortarrow", "treeitem", "treeline", "treetwisty", "treetwistyopen", "treeview", "-moz-mac-unified-toolbar", "-moz-win-borderless-glass", "-moz-win-browsertabbar-toolbox", "-moz-win-communicationstext", "-moz-win-communications-toolbox", "-moz-win-exclude-glass", "-moz-win-glass", "-moz-win-mediatext", "-moz-win-media-toolbox", "-moz-window-button-box", "-moz-window-button-box-maximized", "-moz-window-button-close", "-moz-window-button-maximize", "-moz-window-button-minimize", "-moz-window-button-restore", "-moz-window-frame-bottom", "-moz-window-frame-left", "-moz-window-frame-right", "-moz-window-titlebar", "-moz-window-titlebar-maximized"]);
 
 var mozBindingValidator = function mozBindingValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isUrl(node) || isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isUrl(node) || isKeyword(node, "none"));
 };
 
 var mozFloatEdgeValidator = isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"]);
 
 var mozForceBrokenImageIconValidator = function mozForceBrokenImageIconValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isInteger(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isInteger(node);
 };
 
 var mozOrientValidator = isKeywordFactory(["inline", "block", "horizontal", "vertical"]);
@@ -1210,12 +1202,8 @@ var mozUserModifyValidator = isKeywordFactory(["read-only", "read-write", "write
 var mozWindowShadowValidator = isKeywordFactory(["default", "menu", "tooltip", "sheet", "none"]);
 
 var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isColor(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isColor(node);
 };
 
 var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(valueParserAST) {
@@ -1293,12 +1281,8 @@ var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator
 };
 
 var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLength(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isLength(node);
 };
 
 var webkitTouchCalloutValidator = isKeywordFactory(["default", "none"]);
@@ -1414,12 +1398,8 @@ var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
     return true;
   }
 
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
 };
 
 var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
@@ -1483,21 +1463,13 @@ var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(v
 };
 
 var borderBottomStyleValidator = function borderBottomStyleValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isBrStyle(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isBrStyle(node);
 };
 
 var borderBottomWidthValidator = function borderBottomWidthValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isBrWidth(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isBrWidth(node);
 };
 
 var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
@@ -1517,21 +1489,13 @@ var borderColorValidator = function borderColorValidator(valueParserAST) {
 };
 
 var borderImageSourceValidator = function borderImageSourceValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isImage(node) || isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isImage(node) || isKeyword(node, "none"));
 };
 
 var bottomValidator = function bottomValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLengthPercentage(node) || isKeyword(node, "auto");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, "auto"));
 };
 
 var boxAlignValidator = isKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
@@ -1539,12 +1503,8 @@ var boxDecorationBreakValidator = isKeywordFactory(["slice", "clone"]);
 var boxDirectionValidator = isKeywordFactory(["normal", "reverse", "inherit"]);
 
 var boxFlexValidator = function boxFlexValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isNumber(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isNumber(node);
 };
 
 var boxLinesValidator = isKeywordFactory(["single", "multiple"]);
@@ -1558,34 +1518,22 @@ var captionSideValidator = isKeywordFactory(["top", "bottom", "block-start", "bl
 var clearValidator = isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"]);
 
 var columnCountValidator = function columnCountValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isNumber(node) || isKeyword(node, "auto");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isNumber(node) || isKeyword(node, "auto"));
 };
 
 var columnFillValidator = isKeywordFactory(["auto", "balance"]);
 
 var columnGapValidator = function columnGapValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLength(node) || isKeyword(node, "normal");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "normal"));
 };
 
 var columnSpanValidator = isKeywordFactory(["none", "all"]);
 
 var columnWidthValidator = function columnWidthValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLength(node) || isKeyword(node, "auto");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "auto"));
 };
 
 var directionValidator = isKeywordFactory(["ltr", "rtl"]);
@@ -1602,30 +1550,18 @@ var floatValidator = isKeywordFactory(["left", "right", "none", "inline-start", 
 var fontKerningValidator = isKeywordFactory(["auto", "normal", "none"]);
 
 var fontLanguageOverrideValidator = function fontLanguageOverrideValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isString(node) || isKeyword(node, "normal");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isString(node) || isKeyword(node, "normal"));
 };
 
 var fontSizeValidator = function fontSizeValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node));
 };
 
 var fontSizeAdjustValidator = function fontSizeAdjustValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isNumber(node) || isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isNumber(node) || isKeyword(node, "none"));
 };
 
 var fontStretchValidator = isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
@@ -1635,21 +1571,13 @@ var fontVariantPositionValidator = isKeywordFactory(["normal", "sub", "super"]);
 var fontWeightValidator = isKeywordFactory(["normal", "bold", "bolder", "lighter", "100", "200", "300", "400", "500", "600", "700", "800", "900"]);
 
 var gridAutoColumnsValidator = function gridAutoColumnsValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isTrackSize(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isTrackSize(node);
 };
 
 var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLengthPercentage(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isLengthPercentage(node);
 };
 
 var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParserAST) {
@@ -1683,34 +1611,22 @@ var justifyContentValidator = isKeywordFactory(["flex-start", "flex-end", "cente
 var msFlexPackValidator = isKeywordFactory(["flex-start", "flex-end", "center", "space-between", "space-around", "start", "end", "justify", "distribute"]);
 
 var letterSpacingValidator = function letterSpacingValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLength(node) || isKeyword(node, "normal");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "normal"));
 };
 
 var lineBreakValidator = isKeywordFactory(["auto", "loose", "normal", "strict"]);
 
 var lineHeightValidator = function lineHeightValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal"));
 };
 
 var listStylePositionValidator = isKeywordFactory(["inside", "outside"]);
 
 var listStyleTypeValidator = function listStyleTypeValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isCounterStyle(node) || isString(node) || isKeyword(node, "none"));
 };
 
 var maskCompositeValidator = function maskCompositeValidator(valueParserAST) {
@@ -1773,42 +1689,26 @@ var maskTypeValidator = isKeywordFactory(["luminance", "alpha"]);
 var maxBlockSizeValidatorKeywords = ["none", "max-content", "min-content", "fit-content", "fill-available", "-webkit-max-content", "-moz-max-content", "-webkit-min-content", "-moz-min-content", "-webkit-fit-content", "-moz-fit-content", "-webkit-fill-available", "-moz-available"];
 
 var maxBlockSizeValidator = function maxBlockSizeValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords));
 };
 
 var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isBlendMode(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isBlendMode(node);
 };
 
 var objectFitValidator = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
 var objectPositionValidator = isPositionFactory(false);
 
 var outlineColorValidator = function outlineColorValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isColor(node) || isKeyword(node, "invert");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isColor(node) || isKeyword(node, "invert"));
 };
 
 var outlineStyleValidator = function outlineStyleValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isBrStyle(node) || isKeyword(node, "auto");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isBrStyle(node) || isKeyword(node, "auto"));
 };
 
 var overflowValidator = isKeywordFactory(["visible", "hidden", "scroll", "auto"]);
@@ -1817,12 +1717,8 @@ var overflowWrapValidator = isKeywordFactory(["normal", "break-word"]);
 var pageBreakInsideValidator = isKeywordFactory(["auto", "avoid"]);
 
 var perspectiveValidator = function perspectiveValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLength(node) || isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "none"));
 };
 
 var pointerEventsValidator = isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
@@ -1838,23 +1734,15 @@ var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(value
     return true;
   }
 
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
 };
 
 var scrollSnapTypeValidator = isKeywordFactory(["none", "mandatory", "proximity"]);
 
 var tabSizeValidator = function tabSizeValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isInteger(node) || isLength(node);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isInteger(node) || isLength(node));
 };
 
 var tableLayoutValidator = isKeywordFactory(["auto", "fixed"]);
@@ -1869,23 +1757,15 @@ var textShadowValidator = function textShadowValidator(valueParserAST) {
     return true;
   }
 
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
 };
 
 var textSizeAdjustValidatorKeywords = ["none", "auto"];
 
 var textSizeAdjustValidator = function textSizeAdjustValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords));
 };
 
 var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
@@ -1895,12 +1775,8 @@ var transformValidator = function transformValidator(valueParserAST) {
     return true;
   }
 
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isKeyword(node, "none");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
 };
 
 var transformBoxValidator = isKeywordFactory(["border-box", "fill-box", "view-box"]);
@@ -1910,12 +1786,8 @@ var userSelectValidator = isKeywordFactory(["auto", "text", "none", "contain", "
 var verticalAlignValidatorKeywords = ["baseline", "sub", "super", "text-top", "text-bottom", "middle", "top", "bottom"];
 
 var verticalAlignValidator = function verticalAlignValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords));
 };
 
 var visibilityValidator = isKeywordFactory(["visible", "hidden", "collapse"]);
@@ -1944,24 +1816,16 @@ var willChangeValidator = function willChangeValidator(valueParserAST) {
 var wordBreakValidator = isKeywordFactory(["normal", "break-all", "keep-all"]);
 
 var wordSpacingValidator = function wordSpacingValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isLengthPercentage(node) || isKeyword(node, "normal");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, "normal"));
 };
 
 var writingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
 var msWritingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr", "lr-tb", "tb-rl", "tb-lr"]);
 
 var zIndexValidator = function zIndexValidator(valueParserAST) {
-  if (valueParserAST.nodes.length === 1) {
-    var node = valueParserAST.nodes[0];
-    return isInteger(node) || isKeyword(node, "auto");
-  }
-
-  return false;
+  var node = valueParserAST.nodes[0];
+  return valueParserAST.nodes.length === 1 && (isInteger(node) || isKeyword(node, "auto"));
 };
 
 var validators = {
