@@ -14,8 +14,13 @@ import generateProgram from './program';
 import requireModules from './requireModules';
 import validator from './validator';
 
-const nodeIdentifier = t.identifier('node');
+/*
+ * Common Babel nodes.
+ */
+
 const lengthIdentifier = t.identifier('length');
+const nodeIdentifier   = t.identifier('node');
+const validIdentifier  = t.identifier('valid');
 
 const valueParserASTNodes = t.memberExpression(
     t.identifier('valueParserAST'),
@@ -145,7 +150,7 @@ function dataString (config, candidate) {
                 t.expressionStatement(
                     t.assignmentExpression(
                         '=',
-                        t.identifier('valid'),
+                        validIdentifier,
                         t.booleanLiteral(false)
                     ),
                 ),
@@ -219,7 +224,7 @@ function createValidator (opts) {
             validator(opts.identifier, [
                 ...prevalid,
                 createLet(
-                    t.identifier('valid'),
+                    validIdentifier,
                     t.booleanLiteral(true)
                 ),
                 template('PRECONDITIONS')({
