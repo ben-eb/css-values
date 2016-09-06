@@ -63,23 +63,6 @@ function valueParserNodesLength (length, operator = '===') {
     );
 }
 
-function handleKeywords (keywords, settings, id) {
-    if (!settings.keywords.length) {
-        return;
-    }
-    const list = settings.keywords.length === 1 ?
-        t.stringLiteral(settings.keywords[0]) :
-        t.identifier(`${id}Keywords`);
-    settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
-    if (settings.keywords.length === 1) {
-        return;
-    }
-    keywords.push(createConst(
-        t.identifier(`${id}Keywords`),
-        arrayOfStrings(settings.keywords.filter(Boolean))
-    ));
-}
-
 const dependencies = {
     valueParser: 'postcss-value-parser',
     isKeyword: './validators/isKeyword',
@@ -204,8 +187,49 @@ function createValidator (opts) {
 
     let keywords = [];
 
+    if (settings.keywords.length) {
+        /*
+         * This handles the simplest case; where the grammar defines a list
+         * of keywords and nothing else. In this case we can use the
+         * isKeywordFactory function which saves us from having to generate
+         * a validator ourselves. It produces output such as:
+         *
+         * const property = isKeywordFactory(['foo', 'bar', 'baz']);
+         */
+        if (
+            !settings.conditions.length &&
+            !settings.preConditions.length &&
+            !settings.repeatingConditions.length
+        ) {
+            const identifier = 'isKeywordFactory';
+            addDependency(identifier);
+            return [
+                createConst(t.identifier(opts.identifier), callExpression(
+                    identifier,
+                    arrayOfStrings(settings.keywords.filter(Boolean))
+                )),
+            ];
+        }
+        /*
+         * Otherwise, we need to generate a list of keywords that are used
+         * as another validation condition. If we only have one keyword,
+         * this can be inlined inside the `isKeyword` function - i.e.
+         * `isKeyword(node, 'foo')`. Otherwise, we create a new list
+         * and use it as a reference - `isKeyword(node, propertyKeywords)`,
+         * where `propertyKeywords` is `const propertyKeywords = ['foo', 'bar']`
+         */
+        const keywordsList = t.identifier(`${opts.identifier}Keywords`);
+        const list = settings.keywords.length === 1 ? t.stringLiteral(settings.keywords[0]) : keywordsList;
+        settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
+        if (settings.keywords.length > 1) {
+            keywords.push(createConst(
+                keywordsList,
+                arrayOfStrings(settings.keywords.filter(Boolean))
+            ));
+        }
+    }
+
     if (settings.repeatingConditions.length) {
-        handleKeywords(keywords, settings, opts.identifier);
         addDependency('isEven');
 
         let body = [];
@@ -242,28 +266,6 @@ function createValidator (opts) {
         }
 
         return validator(opts.identifier, keywords, body);
-    }
-
-    if (settings.keywords.length) {
-        /*
-         * This handles the simplest case; where the grammar defines a list
-         * of keywords and nothing else. In this case we can use the
-         * isKeywordFactory function which saves us from having to generate
-         * a validator ourselves. It produces output such as:
-         *
-         * const property = isKeywordFactory(['foo', 'bar', 'baz']);
-         */
-        if (!settings.conditions.length && !settings.preConditions.length) {
-            const identifier = 'isKeywordFactory';
-            addDependency(identifier);
-            return [
-                createConst(t.identifier(opts.identifier), callExpression(
-                    identifier,
-                    arrayOfStrings(settings.keywords.filter(Boolean))
-                )),
-            ];
-        }
-        handleKeywords(keywords, settings, opts.identifier);
     }
 
     const block = settings.conditions.length ? [
