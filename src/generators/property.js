@@ -177,8 +177,9 @@ const candidateTypes = {
 };
 
 function createValidator (opts) {
-    if (opts.candidates.length === 1) {
-        const {value} = opts.candidates[0];
+    const {candidates, identifier} = opts;
+    if (candidates.length === 1) {
+        const {value} = candidates[0];
         switch (value) {
         case 'bg-size':
         case 'repeat-style':
@@ -187,7 +188,7 @@ function createValidator (opts) {
             return generatePositionValidator(opts);
         }
     }
-    const settings = opts.candidates.reduce((config, candidate) => {
+    const settings = candidates.reduce((config, candidate) => {
         const {type} = candidate;
         if (candidateTypes[type]) {
             return candidateTypes[type](config, candidate);
@@ -217,11 +218,11 @@ function createValidator (opts) {
             !settings.preConditions.length &&
             !settings.repeatingConditions.length
         ) {
-            const identifier = 'isKeywordFactory';
-            addDependency(identifier);
+            const keywordFactory = 'isKeywordFactory';
+            addDependency(keywordFactory);
             return [
-                createConst(t.identifier(opts.identifier), callExpression(
-                    identifier,
+                createConst(t.identifier(identifier), callExpression(
+                    keywordFactory,
                     arrayOfStrings(settings.keywords.filter(Boolean))
                 )),
             ];
@@ -234,7 +235,7 @@ function createValidator (opts) {
          * and use it as a reference - `isKeyword(node, propertyKeywords)`,
          * where `propertyKeywords` is `const propertyKeywords = ['foo', 'bar']`
          */
-        const keywordsList = t.identifier(`${opts.identifier}Keywords`);
+        const keywordsList = t.identifier(`${identifier}Keywords`);
         const list = settings.keywords.length === 1 ? t.stringLiteral(settings.keywords[0]) : keywordsList;
         settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
         if (settings.keywords.length > 1) {
@@ -307,7 +308,7 @@ function createValidator (opts) {
         );
     }
 
-    return validator(opts.identifier, keywords, body);
+    return validator(identifier, keywords, body);
 }
 
 function generateValidatorMap (config) {
