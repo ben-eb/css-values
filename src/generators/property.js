@@ -229,13 +229,24 @@ function createValidator (opts) {
         }
     }
 
+    let body = [];
+
+    if (settings.preConditions.length) {
+        body = [
+            ...settings.preConditions,
+        ];
+    }
+
     if (settings.repeatingConditions.length) {
         addDependency('isEven');
 
-        let body = [];
+        body.unshift(createLet(
+            validIdentifier,
+            t.booleanLiteral(true)
+        ));
 
         if (settings.conditions.length) {
-            body.push(
+            body.unshift(
                 firstValueParserNode,
                 ifAllTruthy([
                     valueParserNodesLength(1),
@@ -244,15 +255,6 @@ function createValidator (opts) {
                     returnTrue,
                 ])
             );
-        }
-
-        body.push(createLet(
-            validIdentifier,
-            t.booleanLiteral(true)
-        ));
-
-        if (settings.preConditions.length) {
-            body.push(settings.preConditions);
         }
 
         body.push(
@@ -264,25 +266,24 @@ function createValidator (opts) {
         if (settings.repeatingReturn) {
             body.push(settings.repeatingReturn);
         }
+    } else {
+        const block = settings.conditions.length ? [
+            firstValueParserNode,
+            t.returnStatement(anyTruthy(...settings.conditions)),
+        ] : [
+            returnTrue,
+        ];
 
-        return validator(opts.identifier, keywords, body);
+        body.push(
+            t.ifStatement(
+                valueParserNodesLength(1),
+                t.blockStatement(block)
+            ),
+            returnFalse,
+        );
     }
 
-    const block = settings.conditions.length ? [
-        firstValueParserNode,
-        t.returnStatement(anyTruthy(...settings.conditions)),
-    ] : [
-        returnTrue,
-    ];
-
-    return validator(opts.identifier, keywords, [
-        ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
-        t.ifStatement(
-            valueParserNodesLength(1),
-            t.blockStatement(block)
-        ),
-        returnFalse,
-    ]);
+    return validator(opts.identifier, keywords, body);
 }
 
 function generateValidatorMap (config) {
