@@ -6,29 +6,39 @@ import {createConst} from '../util/createVariable';
  *
  * @private
  * @param  {string} identifier The name of the validator function.
+ * @param  {array}  keywords   The list of keywords.
  * @param  {array}  body       The function's contents.
  * @return {Babel}             The generated validator.
  * @example
  * import * as t from 'babel-types';
+ * import {createConst} from '../util/createVariable';
  *
- * const validator = generateValidator('foo', [
+ * const keywords = createConst(
+ *     t.identifier('fooKeywords'),
+ *     arrayOfStrings(['foo', 'bar'])
+ * );
+ * const validator = generateValidator('foo', keywords, [
  *     t.returnStatement(t.booleanLiteral(true)),
  * ]);
  *
  * // Outputs =>
+ * // const fooKeywords = ['foo', 'bar'];
  * // const foo = function foo (valueParserAST) {
  * //     return true;
  * // }
  */
 
-export default function generateValidator (identifier, body) {
+export default function generateValidator (identifier, keywords, body) {
     const id = t.identifier(identifier);
-    return createConst(
-        id,
-        t.functionExpression(
+    return [
+        ...keywords,
+        createConst(
             id,
-            [t.identifier('valueParserAST')],
-            t.blockStatement(body)
-        )
-    );
+            t.functionExpression(
+                id,
+                [t.identifier('valueParserAST')],
+                t.blockStatement(body)
+            )
+        ),
+    ];
 }

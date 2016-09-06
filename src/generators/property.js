@@ -241,10 +241,7 @@ function createValidator (opts) {
             body.push(settings.repeatingReturn);
         }
 
-        return [
-            ...keywords,
-            validator(opts.identifier, body),
-        ];
+        return validator(opts.identifier, keywords, body);
     }
 
     if (settings.keywords.length) {
@@ -276,17 +273,14 @@ function createValidator (opts) {
         returnTrue,
     ];
 
-    return [
-        ...keywords,
-        validator(opts.identifier, [
-            ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
-            t.ifStatement(
-                valueParserNodesLength(1),
-                t.blockStatement(block)
-            ),
-            returnFalse,
-        ]),
-    ];
+    return validator(opts.identifier, keywords, [
+        ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
+        t.ifStatement(
+            valueParserNodesLength(1),
+            t.blockStatement(block)
+        ),
+        returnFalse,
+    ]);
 }
 
 function generateValidatorMap (config) {
