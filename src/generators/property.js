@@ -35,6 +35,7 @@ const firstValueParserNode = createConst(
  * Test that the nodes from postcss-value-parser is a certain length. This
  * uses strict equality by default, but you can supply an alternate operator.
  *
+ * @private
  * @param  {number} length          The length to check
  * @param  {type} operator = '==='  The operator to use.
  * @return {Babel}                  The binary expression.
