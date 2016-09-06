@@ -206,37 +206,44 @@ function createValidator (opts) {
 
     if (settings.repeatingConditions.length) {
         handleKeywords(keywords, settings, opts.identifier);
-
-        const prevalid = settings.conditions.length ? [
-            firstValueParserNode,
-            ifAllTruthy([
-                valueParserNodesLength(1),
-                ...settings.conditions,
-            ], [
-                returnTrue,
-            ]),
-        ] : [t.emptyStatement()];
-
         addDependency('isEven');
+
+        let body = [];
+
+        if (settings.conditions.length) {
+            body.push(
+                firstValueParserNode,
+                ifAllTruthy([
+                    valueParserNodesLength(1),
+                    ...settings.conditions,
+                ], [
+                    returnTrue,
+                ])
+            );
+        }
+
+        body.push(createLet(
+            validIdentifier,
+            t.booleanLiteral(true)
+        ));
+
+        if (settings.preConditions.length) {
+            body.push(settings.preConditions);
+        }
+
+        body.push(
+            template('valueParserAST.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
+                CONDITIONS: settings.repeatingConditions,
+            })
+        );
+
+        if (settings.repeatingReturn) {
+            body.push(settings.repeatingReturn);
+        }
 
         return [
             ...keywords,
-            validator(opts.identifier, [
-                ...prevalid,
-                createLet(
-                    validIdentifier,
-                    t.booleanLiteral(true)
-                ),
-                template('PRECONDITIONS')({
-                    PRECONDITIONS: settings.preConditions.length ? settings.preConditions : t.emptyStatement(),
-                }),
-                template('valueParserAST.walk((node, index) => { const even = isEven(index); CONDITIONS; return false; });')({
-                    CONDITIONS: settings.repeatingConditions.length ? settings.repeatingConditions : t.emptyStatement(),
-                }),
-                template('POSTCONDITIONS')({
-                    POSTCONDITIONS: settings.repeatingReturn ? settings.repeatingReturn : t.emptyStatement(),
-                }),
-            ]),
+            validator(opts.identifier, body),
         ];
     }
 
