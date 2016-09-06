@@ -89,9 +89,9 @@ function addDependency (dep) {
 function generatePositionValidator ({candidates, identifier}) {
     const func = 'isPosition';
     addDependency(func);
-    return createConst(t.identifier(identifier), t.callExpression(
-        t.identifier(func),
-        [t.booleanLiteral(candidates[0].separator === ',')]
+    return createConst(t.identifier(identifier), callExpression(
+        func,
+        t.booleanLiteral(candidates[0].separator === ',')
     ));
 }
 
@@ -239,9 +239,9 @@ function createValidator (opts) {
             const identifier = 'isKeywordFactory';
             addDependency(identifier);
             return [
-                createConst(t.identifier(opts.identifier), t.callExpression(
-                    t.identifier(identifier),
-                    [arrayOfStrings(settings.keywords.filter(Boolean))]
+                createConst(t.identifier(opts.identifier), callExpression(
+                    identifier,
+                    arrayOfStrings(settings.keywords.filter(Boolean))
                 )),
             ];
         }
