@@ -61,16 +61,17 @@ function handleKeywords (keywords, settings, id) {
     if (!settings.keywords.length) {
         return;
     }
-    const isKeyword = 'isKeyword';
+    const list = settings.keywords.length === 1 ?
+        t.stringLiteral(settings.keywords[0]) :
+        t.identifier(`${id}Keywords`);
+    settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
     if (settings.keywords.length === 1) {
-        settings.conditions.push(templateExpression(`${isKeyword}(node, "${settings.keywords[0]}")`));
-    } else {
-        settings.conditions.push(templateExpression(`${isKeyword}(node, ${id}Keywords)`));
-        keywords.push(createConst(
-            t.identifier(`${id}Keywords`),
-            arrayOfStrings(settings.keywords.filter(Boolean))
-        ));
+        return;
     }
+    keywords.push(createConst(
+        t.identifier(`${id}Keywords`),
+        arrayOfStrings(settings.keywords.filter(Boolean))
+    ));
 }
 
 const dependencies = {
