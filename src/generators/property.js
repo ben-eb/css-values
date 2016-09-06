@@ -31,6 +31,32 @@ const firstValueParserNode = createConst(
     )
 );
 
+/**
+ * Test that the nodes from postcss-value-parser is a certain length. This
+ * uses strict equality by default, but you can supply an alternate operator.
+ *
+ * @param  {number} length          The length to check
+ * @param  {type} operator = '==='  The operator to use.
+ * @return {Babel}                  The binary expression.
+ * @example
+ * const equality = valueParserNodesLength(5);
+ * //=> valueParserAST.nodes.length === 5;
+ *
+ * const lessThan = valueParserNodesLength(5, '<');
+ * //=> valueParserAST.nodes.length < 5;
+ */
+
+function valueParserNodesLength (length, operator = '===') {
+    return t.binaryExpression(
+        operator,
+        t.memberExpression(
+            valueParserASTNodes,
+            lengthIdentifier
+        ),
+        t.numericLiteral(length)
+    );
+}
+
 function handleKeywords (keywords, settings, id) {
     if (!settings.keywords.length) {
         return;
@@ -125,7 +151,9 @@ function dataString (config, candidate) {
         );
         const tmpl = `return valid && !isEven(valueParserAST.nodes.length)`;
         if (candidate.max !== false) {
-            config.repeatingReturn = template(`${tmpl} && valueParserAST.nodes.length <= ${(candidate.max * 2) - 1};`)();
+            config.repeatingReturn = template(`${tmpl} && len;`)({
+                len: valueParserNodesLength((candidate.max * 2) - 1, '<='),
+            });
         } else {
             config.repeatingReturn = template(`${tmpl};`)();
         }
@@ -175,14 +203,7 @@ function createValidator (opts) {
         const prevalid = settings.conditions.length ? [
             firstValueParserNode,
             ifAllTruthy([
-                t.binaryExpression(
-                    '===',
-                    t.memberExpression(
-                        valueParserASTNodes,
-                        lengthIdentifier
-                    ),
-                    t.numericLiteral(1)
-                ),
+                valueParserNodesLength(1),
                 ...settings.conditions,
             ], [
                 returnTrue,
@@ -238,14 +259,7 @@ function createValidator (opts) {
         validator(opts.identifier, [
             ...(settings.preConditions.length ? settings.preConditions : t.emptyStatement()),
             t.ifStatement(
-                t.binaryExpression(
-                    '===',
-                    t.memberExpression(
-                        valueParserASTNodes,
-                        lengthIdentifier
-                    ),
-                    t.numericLiteral(1)
-                ),
+                valueParserNodesLength(1),
                 t.blockStatement(block)
             ),
             returnFalse,
