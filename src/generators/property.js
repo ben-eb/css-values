@@ -27,6 +27,11 @@ const valueParserASTNodes = t.memberExpression(
     t.identifier('nodes')
 );
 
+const valueParserASTNodesLength = t.memberExpression(
+    valueParserASTNodes,
+    lengthIdentifier
+);
+
 const firstValueParserNode = createConst(
     nodeIdentifier,
     t.memberExpression(
@@ -55,10 +60,7 @@ const firstValueParserNode = createConst(
 function valueParserNodesLength (length, operator = '===') {
     return t.binaryExpression(
         operator,
-        t.memberExpression(
-            valueParserASTNodes,
-            lengthIdentifier
-        ),
+        valueParserASTNodesLength,
         t.numericLiteral(length)
     );
 }
@@ -139,15 +141,14 @@ function dataString (config, candidate) {
                 ),
             ])
         );
-        const tmpl = `return valid && !isEven(valueParserAST.nodes.length)`;
+        let conditions = [
+            validIdentifier,
+            notCallExpression('isEven', valueParserASTNodesLength),
+        ];
         if (candidate.max !== false) {
-            config.repeatingReturn = template(`${tmpl} && len;`)({
-                len: valueParserNodesLength((candidate.max * 2) - 1, '<='),
-            });
-        } else {
-            config.repeatingReturn = template(`${tmpl};`)();
+            conditions.push(valueParserNodesLength((candidate.max * 2) - 1, '<='));
         }
-
+        config.repeatingReturn = t.returnStatement(allTruthy(...conditions));
         return config;
     }
     config.conditions.push(callExpression(camel, nodeIdentifier));
