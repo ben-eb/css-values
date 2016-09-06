@@ -248,6 +248,14 @@ function createValidator (opts) {
     }
 
     if (settings.keywords.length) {
+        /*
+         * This handles the simplest case; where the grammar defines a list
+         * of keywords and nothing else. In this case we can use the
+         * isKeywordFactory function which saves us from having to generate
+         * a validator ourselves. It produces output such as:
+         *
+         * const property = isKeywordFactory(['foo', 'bar', 'baz']);
+         */
         if (!settings.conditions.length && !settings.preConditions.length) {
             const identifier = 'isKeywordFactory';
             addDependency(identifier);
