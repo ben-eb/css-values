@@ -12,6 +12,7 @@ import {returnTrue, returnFalse} from '../util/returnBooleans';
 import generateProgram from './program';
 import requireModules from './requireModules';
 import validator from './validator';
+import validatorMap from './validatorMap';
 
 /*
  * Common Babel nodes.
@@ -331,27 +332,6 @@ function createValidator (opts) {
     return validator(identifier, keywords, body);
 }
 
-function generateValidatorMap (config) {
-    const validatorMap = config.reduce((map, {identifier, properties}) => {
-        properties.forEach(property => {
-            if (map[property]) {
-                return;
-            }
-            map[property] = identifier;
-        });
-        return map;
-    }, {});
-    return createConst(
-        t.identifier('validators'),
-        t.objectExpression(Object.keys(validatorMap).sort().map(key => {
-            return t.objectProperty(
-                t.stringLiteral(key),
-                t.identifier(validatorMap[key])
-            );
-        }))
-    );
-}
-
 const defaultExport = template(`
 /**
  * The main entry point of this module takes a CSS property/value
@@ -423,7 +403,7 @@ export default config => {
             importMethod(t.identifier('unknownMessage')),
         ], t.stringLiteral('./util/validationMessages')),
         ...funcs,
-        generateValidatorMap(config),
+        validatorMap(config),
         createConst(
             t.identifier('cssGlobals'),
             arrayOfStrings(globals)
