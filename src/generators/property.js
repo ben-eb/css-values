@@ -93,8 +93,8 @@ function genericValidatorStub (name, {identifier}) {
     return createConst(t.identifier(identifier), t.identifier(name));
 }
 
-function keyword (config, candidate) {
-    config.keywords.push(candidate.value);
+function keyword (config, {value}) {
+    config.keywords.push(value);
     return config;
 }
 
@@ -161,7 +161,7 @@ function dataString (config, candidate) {
             notCallExpression('isEven', valueParserASTNodesLength),
         ];
         if (candidate.max !== false) {
-            conditions.push(valueParserNodesLength((candidate.max * 2) - 1, '<='));
+            conditions.push(valueParserNodesLength((candidate.max * 2), '<'));
         }
         config.repeatingReturn = t.returnStatement(allTruthy(...conditions));
         return config;
@@ -211,6 +211,7 @@ function createValidator (opts) {
     let keywords = [];
 
     if (settings.keywords.length) {
+        const keywordList = arrayOfStrings(settings.keywords.filter(Boolean));
         /*
          * This handles the simplest case; where the grammar defines a list
          * of keywords and nothing else. In this case we can use the
@@ -229,7 +230,7 @@ function createValidator (opts) {
             return [
                 createConst(t.identifier(identifier), callExpression(
                     keywordFactory,
-                    arrayOfStrings(settings.keywords.filter(Boolean))
+                    keywordList
                 )),
             ];
         }
@@ -247,7 +248,7 @@ function createValidator (opts) {
         if (settings.keywords.length > 1) {
             keywords.push(createConst(
                 keywordsList,
-                arrayOfStrings(settings.keywords.filter(Boolean))
+                keywordList
             ));
         }
     }

@@ -1217,7 +1217,7 @@ var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length <= 7;
+  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length < 8;
 };
 
 var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator(valueParserAST) {
@@ -1231,7 +1231,7 @@ var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length <= 7;
+  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length < 8;
 };
 
 var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(valueParserAST) {
@@ -1459,7 +1459,7 @@ var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(v
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length <= 3;
+  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length < 4;
 };
 
 var borderBottomStyleValidator = function borderBottomStyleValidator(valueParserAST) {
@@ -1485,7 +1485,7 @@ var borderColorValidator = function borderColorValidator(valueParserAST) {
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length <= 7;
+  return valid && !isEven(valueParserAST.nodes.length) && valueParserAST.nodes.length < 8;
 };
 
 var borderImageSourceValidator = function borderImageSourceValidator(valueParserAST) {
