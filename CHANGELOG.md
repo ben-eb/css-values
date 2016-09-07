@@ -3,6 +3,8 @@
 * Adds `<mask-reference>` validator.
 * Adds support for the non-standard -webkit-mask-position property.
 * Adds support for the non-standard -webkit-mask-composite property.
+* Now prints a message if multiple values were supplied to a property that only
+  expected a single value.
 
 * * *
 
