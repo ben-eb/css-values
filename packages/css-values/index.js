@@ -1183,14 +1183,24 @@ var mozAppearanceValidator = isKeywordFactory(["none", "button", "button-arrow-d
 
 var mozBindingValidator = function mozBindingValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isUrl(node) || isKeyword(node, "none"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isUrl(node) || isKeyword(node, "none");
 };
 
 var mozFloatEdgeValidator = isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"]);
 
 var mozForceBrokenImageIconValidator = function mozForceBrokenImageIconValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isInteger(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isInteger(node);
 };
 
 var mozOrientValidator = isKeywordFactory(["inline", "block", "horizontal", "vertical"]);
@@ -1203,7 +1213,12 @@ var mozWindowShadowValidator = isKeywordFactory(["default", "menu", "tooltip", "
 
 var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isColor(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isColor(node);
 };
 
 var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(valueParserAST) {
@@ -1282,7 +1297,12 @@ var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator
 
 var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isLength(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLength(node);
 };
 
 var webkitTouchCalloutValidator = isKeywordFactory(["default", "none"]);
@@ -1399,7 +1419,12 @@ var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
   }
 
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isKeyword(node, "none");
 };
 
 var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
@@ -1464,12 +1489,22 @@ var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(v
 
 var borderBottomStyleValidator = function borderBottomStyleValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isBrStyle(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isBrStyle(node);
 };
 
 var borderBottomWidthValidator = function borderBottomWidthValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isBrWidth(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isBrWidth(node);
 };
 
 var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
@@ -1490,12 +1525,22 @@ var borderColorValidator = function borderColorValidator(valueParserAST) {
 
 var borderImageSourceValidator = function borderImageSourceValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isImage(node) || isKeyword(node, "none"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isImage(node) || isKeyword(node, "none");
 };
 
 var bottomValidator = function bottomValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, "auto"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLengthPercentage(node) || isKeyword(node, "auto");
 };
 
 var boxAlignValidator = isKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
@@ -1504,7 +1549,12 @@ var boxDirectionValidator = isKeywordFactory(["normal", "reverse", "inherit"]);
 
 var boxFlexValidator = function boxFlexValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isNumber(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isNumber(node);
 };
 
 var boxLinesValidator = isKeywordFactory(["single", "multiple"]);
@@ -1519,21 +1569,36 @@ var clearValidator = isKeywordFactory(["none", "left", "right", "both", "inline-
 
 var columnCountValidator = function columnCountValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isNumber(node) || isKeyword(node, "auto"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isNumber(node) || isKeyword(node, "auto");
 };
 
 var columnFillValidator = isKeywordFactory(["auto", "balance"]);
 
 var columnGapValidator = function columnGapValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "normal"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLength(node) || isKeyword(node, "normal");
 };
 
 var columnSpanValidator = isKeywordFactory(["none", "all"]);
 
 var columnWidthValidator = function columnWidthValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "auto"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLength(node) || isKeyword(node, "auto");
 };
 
 var directionValidator = isKeywordFactory(["ltr", "rtl"]);
@@ -1551,17 +1616,32 @@ var fontKerningValidator = isKeywordFactory(["auto", "normal", "none"]);
 
 var fontLanguageOverrideValidator = function fontLanguageOverrideValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isString(node) || isKeyword(node, "normal"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isString(node) || isKeyword(node, "normal");
 };
 
 var fontSizeValidator = function fontSizeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
 };
 
 var fontSizeAdjustValidator = function fontSizeAdjustValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isNumber(node) || isKeyword(node, "none"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isNumber(node) || isKeyword(node, "none");
 };
 
 var fontStretchValidator = isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
@@ -1572,12 +1652,22 @@ var fontWeightValidator = isKeywordFactory(["normal", "bold", "bolder", "lighter
 
 var gridAutoColumnsValidator = function gridAutoColumnsValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isTrackSize(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isTrackSize(node);
 };
 
 var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isLengthPercentage(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLengthPercentage(node);
 };
 
 var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParserAST) {
@@ -1612,21 +1702,36 @@ var msFlexPackValidator = isKeywordFactory(["flex-start", "flex-end", "center", 
 
 var letterSpacingValidator = function letterSpacingValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "normal"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLength(node) || isKeyword(node, "normal");
 };
 
 var lineBreakValidator = isKeywordFactory(["auto", "loose", "normal", "strict"]);
 
 var lineHeightValidator = function lineHeightValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
 };
 
 var listStylePositionValidator = isKeywordFactory(["inside", "outside"]);
 
 var listStyleTypeValidator = function listStyleTypeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isCounterStyle(node) || isString(node) || isKeyword(node, "none"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
 };
 
 var maskCompositeValidator = function maskCompositeValidator(valueParserAST) {
@@ -1690,12 +1795,22 @@ var maxBlockSizeValidatorKeywords = ["none", "max-content", "min-content", "fit-
 
 var maxBlockSizeValidator = function maxBlockSizeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
 };
 
 var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isBlendMode(node);
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isBlendMode(node);
 };
 
 var objectFitValidator = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
@@ -1703,12 +1818,22 @@ var objectPositionValidator = isPositionFactory(false);
 
 var outlineColorValidator = function outlineColorValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isColor(node) || isKeyword(node, "invert"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isColor(node) || isKeyword(node, "invert");
 };
 
 var outlineStyleValidator = function outlineStyleValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isBrStyle(node) || isKeyword(node, "auto"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isBrStyle(node) || isKeyword(node, "auto");
 };
 
 var overflowValidator = isKeywordFactory(["visible", "hidden", "scroll", "auto"]);
@@ -1718,7 +1843,12 @@ var pageBreakInsideValidator = isKeywordFactory(["auto", "avoid"]);
 
 var perspectiveValidator = function perspectiveValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLength(node) || isKeyword(node, "none"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLength(node) || isKeyword(node, "none");
 };
 
 var pointerEventsValidator = isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
@@ -1735,14 +1865,24 @@ var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(value
   }
 
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isKeyword(node, "none");
 };
 
 var scrollSnapTypeValidator = isKeywordFactory(["none", "mandatory", "proximity"]);
 
 var tabSizeValidator = function tabSizeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isInteger(node) || isLength(node));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isInteger(node) || isLength(node);
 };
 
 var tableLayoutValidator = isKeywordFactory(["auto", "fixed"]);
@@ -1758,14 +1898,24 @@ var textShadowValidator = function textShadowValidator(valueParserAST) {
   }
 
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isKeyword(node, "none");
 };
 
 var textSizeAdjustValidatorKeywords = ["none", "auto"];
 
 var textSizeAdjustValidator = function textSizeAdjustValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
 };
 
 var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
@@ -1776,7 +1926,12 @@ var transformValidator = function transformValidator(valueParserAST) {
   }
 
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && isKeyword(node, "none");
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isKeyword(node, "none");
 };
 
 var transformBoxValidator = isKeywordFactory(["border-box", "fill-box", "view-box"]);
@@ -1787,7 +1942,12 @@ var verticalAlignValidatorKeywords = ["baseline", "sub", "super", "text-top", "t
 
 var verticalAlignValidator = function verticalAlignValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
 };
 
 var visibilityValidator = isKeywordFactory(["visible", "hidden", "collapse"]);
@@ -1817,7 +1977,12 @@ var wordBreakValidator = isKeywordFactory(["normal", "break-all", "keep-all"]);
 
 var wordSpacingValidator = function wordSpacingValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isLengthPercentage(node) || isKeyword(node, "normal"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isLengthPercentage(node) || isKeyword(node, "normal");
 };
 
 var writingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
@@ -1825,7 +1990,12 @@ var msWritingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "
 
 var zIndexValidator = function zIndexValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
-  return valueParserAST.nodes.length === 1 && (isInteger(node) || isKeyword(node, "auto"));
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  return isInteger(node) || isKeyword(node, "auto");
 };
 
 var validators = {
@@ -2200,7 +2370,13 @@ var cssGlobals = ["inherit", "initial", "revert", "unset"];
   }
 
   if (validators[property]) {
-    if (!!validators[property](value) === false) {
+    var result = validators[property](value);
+
+    if (result.type) {
+      return result;
+    }
+
+    if (!!result === false) {
       return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
     }
 

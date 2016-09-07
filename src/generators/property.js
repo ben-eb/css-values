@@ -45,7 +45,7 @@ const firstValueParserNode = createConst(
 );
 
 /**
- * Test that the nodes from postcss-value-parser is a certain length. This
+ * Test that the nodes from postcss-value-parser are a certain length. This
  * uses strict equality by default, but you can supply an alternate operator.
  *
  * @private
@@ -162,7 +162,7 @@ function dataString (config, candidate) {
             notCallExpression('isEven', valueParserASTNodesLength),
         ];
         if (candidate.max !== false) {
-            conditions.push(valueParserNodesLength((candidate.max * 2), '<'));
+            conditions.push(valueParserNodesLength(candidate.max * 2, '<'));
         }
         config.repeatingReturn = t.returnStatement(allTruthy(...conditions));
         return config;
@@ -320,11 +320,17 @@ function createValidator (opts) {
          */
         body.push(
             firstValueParserNode,
+            t.ifStatement(
+                valueParserNodesLength(1, '!=='),
+                t.blockStatement([
+                    t.returnStatement(callExpression(
+                        'invalidMessage',
+                        t.stringLiteral('Expected a single value to be passed.')
+                    )),
+                ])
+            ),
             t.returnStatement(
-                allTruthy(
-                    valueParserNodesLength(1),
-                    anyTruthy(...settings.conditions)
-                )
+                anyTruthy(...settings.conditions)
             )
         );
     }
@@ -373,7 +379,11 @@ export default function cssValues (property, value) {
         return true;
     }
     if (validators[property]) {
-        if (!!validators[property](value) === false) {
+        const result = validators[property](value);
+        if (result.type) {
+            return result;
+        }
+        if (!!result === false) {
             return invalidMessage('"' + value + '" is not a valid value for "' + property + '".');
         }
         return true;
