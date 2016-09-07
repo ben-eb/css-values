@@ -1,4 +1,5 @@
 import * as t from 'babel-types';
+import plur from 'plur';
 import * as validators from '../validators';
 import arrayOfStrings from '../util/arrayOfStrings';
 import {notCallExpression, callExpression} from '../util/callExpressions';
@@ -157,14 +158,25 @@ function dataString (config, candidate) {
                 ),
             ])
         );
-        let conditions = [
-            validIdentifier,
-            notCallExpression('isEven', valueParserASTNodesLength),
+        config.repeatingReturn = [
+            t.returnStatement(allTruthy(
+                validIdentifier,
+                notCallExpression('isEven', valueParserASTNodesLength)
+            )),
         ];
         if (candidate.max !== false) {
-            conditions.push(valueParserNodesLength(candidate.max * 2, '<'));
+            config.preConditions.push(
+                t.ifStatement(
+                    valueParserNodesLength((candidate.max * 2) - 1, '>'),
+                    t.blockStatement([
+                        t.returnStatement(callExpression(
+                            'invalidMessage',
+                            t.stringLiteral(`Expected a maximum of ${candidate.max} ${plur('value', candidate.max)}.`)
+                        )),
+                    ])
+                )
+            );
         }
-        config.repeatingReturn = t.returnStatement(allTruthy(...conditions));
         return config;
     }
     config.conditions.push(callExpression(camel, nodeIdentifier));
@@ -308,7 +320,7 @@ function createValidator (opts) {
                     )]
                 )
             ),
-            settings.repeatingReturn
+            ...settings.repeatingReturn
         );
     } else {
         /*

@@ -89,6 +89,11 @@ function createTests ({properties, candidates, identifier}) {
                         createTest(identifier, `var(--foo), var(--bar)`, false),
                     );
                 }
+                if (typeof candidate.max === 'number') {
+                    list.push(
+                        createTest(identifier, Array(candidate.max + 1).fill(values.valid[0]).join(candidate.separator), false)
+                    );
+                }
             } else {
                 list.push(createTest(identifier, `${values.valid[0]} ${values.valid[0]}`, false));
             }
