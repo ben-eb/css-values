@@ -2,6 +2,7 @@ import endsWith from 'ends-with';
 import {walk, unit} from 'postcss-value-parser';
 import getArguments from './getArguments';
 import isAngle from './isAngle';
+import isAt from './isAt';
 import isColor from './isColor';
 import isComma from './isComma';
 import isCustomIdent from './isCustomIdent';
@@ -150,7 +151,6 @@ function isLinearGradient (node) {
     return valid && colours > 1;
 }
 
-const at = 'at';
 const circle = 'circle';
 const ellipse = 'ellipse';
 const endingShapes = [circle, ellipse];
@@ -163,10 +163,6 @@ export const extentKeywords = [
 ];
 
 const isRadialGradientPosition = isPositionFactory(false);
-
-function isAt ({value}) {
-    return value === at;
-}
 
 function isRadialGradient (node) {
     if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {

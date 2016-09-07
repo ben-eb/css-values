@@ -612,6 +612,10 @@ var isBox = (function (node) {
     return isKeyword(node, boxes);
 });
 
+function isAt(node) {
+    return isKeyword(node, 'at');
+}
+
 var resolutions = ['dpi', 'dpcm', 'dppx'];
 
 function isResolution(_ref) {
@@ -761,7 +765,6 @@ function isLinearGradient(node) {
     return valid && colours > 1;
 }
 
-var at = 'at';
 var circle = 'circle';
 var ellipse = 'ellipse';
 var endingShapes = [circle, ellipse];
@@ -769,12 +772,6 @@ var endingShapes = [circle, ellipse];
 var extentKeywords = ['closest-corner', 'closest-side', 'farthest-corner', 'farthest-side'];
 
 var isRadialGradientPosition = isPositionFactory(false);
-
-function isAt(_ref3) {
-    var value = _ref3.value;
-
-    return value === at;
-}
 
 function isRadialGradient(node) {
     if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {
