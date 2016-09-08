@@ -82,12 +82,8 @@ function addDependency (dep) {
 }
 
 function generatePositionValidator ({candidates, identifier}) {
-    const func = 'isPosition';
-    addDependency(func);
-    return createConst(t.identifier(identifier), callExpression(
-        func,
-        t.booleanLiteral(candidates[0].separator === ',')
-    ));
+    const func = candidates[0].separator === ',' ? 'isPositionRepeat' : 'isPositionNoRepeat';
+    return createConst(t.identifier(identifier), t.identifier(func));
 }
 
 function genericValidatorStub (name, {identifier}) {
@@ -109,10 +105,7 @@ function dataString (config, candidate) {
     if (camel === 'isPosition') {
         config.preConditions.push(
             t.ifStatement(
-                t.callExpression(
-                    callExpression(camel, t.booleanLiteral(true)),
-                    [valueParserASTIdentifier]
-                ),
+                callExpression('isPositionRepeat', valueParserASTIdentifier),
                 t.blockStatement([
                     returnTrue,
                 ])
@@ -424,6 +417,10 @@ export default config => {
             importMethod(t.identifier('invalidMessage')),
             importMethod(t.identifier('unknownMessage')),
         ], t.stringLiteral('./util/validationMessages')),
+        t.importDeclaration([
+            importMethod(t.identifier('isPositionRepeat')),
+            importMethod(t.identifier('isPositionNoRepeat')),
+        ], t.stringLiteral('./validators/isPosition')),
         ...funcs,
         validatorMap(config),
         createConst(

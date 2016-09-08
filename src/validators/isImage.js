@@ -11,7 +11,7 @@ import isKeyword from './isKeyword';
 import isLength from './isLength';
 import isLengthPercentage from './isLengthPercentage';
 import isPercentage from './isPercentage';
-import isPositionFactory from './isPosition';
+import {isPositionNoRepeat} from './isPosition';
 import isResolution from './isResolution';
 import isString from './isString';
 import isUrl from './isUrl';
@@ -162,8 +162,6 @@ export const extentKeywords = [
     'farthest-side',
 ];
 
-const isRadialGradientPosition = isPositionFactory(false);
-
 function isRadialGradient (node) {
     if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {
         return false;
@@ -182,7 +180,7 @@ function isRadialGradient (node) {
             )) {
                 return true;
             }
-            const position2 = isRadialGradientPosition({nodes: group.slice(2)});
+            const position2 = isPositionNoRepeat({nodes: group.slice(2)});
             if (isAt(group[0]) && position2) {
                 return true;
             }
@@ -201,9 +199,9 @@ function isRadialGradient (node) {
             const firstIsLP = isLengthPercentage(group[0]);
             const secondIsLP = group[2] && isLengthPercentage(group[2]);
             const thirdIsLP = group[4] && isLengthPercentage(group[4]);
-            const position4 = isRadialGradientPosition({nodes: group.slice(4)});
-            const position6 = isRadialGradientPosition({nodes: group.slice(6)});
-            const position8 = isRadialGradientPosition({nodes: group.slice(8)});
+            const position4 = isPositionNoRepeat({nodes: group.slice(4)});
+            const position6 = isPositionNoRepeat({nodes: group.slice(6)});
+            const position8 = isPositionNoRepeat({nodes: group.slice(8)});
             if (length === 5 && (
                 (firstIsEllipse && secondIsLP && thirdIsLP) ||
                 (firstIsLP && secondIsLP && group[4].value === ellipse)

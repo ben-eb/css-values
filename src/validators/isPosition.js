@@ -78,7 +78,7 @@ function validateGroup (group) {
     return length < 8;
 }
 
-export default function isPositionFactory (repeating) {
+function isPositionFactory (repeating) {
     return function isPosition (valueParserAST) {
         if (repeating && valueParserAST.nodes[valueParserAST.nodes.length - 1].type === 'div') {
             return false;
@@ -87,3 +87,6 @@ export default function isPositionFactory (repeating) {
         return getArguments(valueParserAST).every(validateGroup);
     };
 }
+
+export const isPositionRepeat = isPositionFactory(true);
+export const isPositionNoRepeat = isPositionFactory(false);

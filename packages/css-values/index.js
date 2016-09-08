@@ -310,88 +310,6 @@ var isCompositeStyle = (function (node) {
     return isKeyword(node, compositeStyles);
 });
 
-function getArguments(node) {
-    return node.nodes.reduce(function (list, child) {
-        if (isComma(child)) {
-            list.push([]);
-        } else {
-            list[list.length - 1].push(child);
-        }
-        return list;
-    }, [[]]);
-}
-
-var isLengthPercentage = (function (node) {
-    return isLength(node) || isPercentage(node);
-});
-
-var left = 'left';
-var center = 'center';
-var right = 'right';
-var top = 'top';
-var bottom = 'bottom';
-
-var horizontals = [left, right, center];
-var verticals = [top, bottom, center];
-
-function isKeywordOrVar(node, keywords) {
-    return isKeyword(node, keywords) || isVariable(node);
-}
-
-function isLengthPercentageOrVar(node) {
-    return isLengthPercentage(node) || isVariable(node);
-}
-
-function validateGroup(group) {
-    var length = group.length;
-
-    if (length === 1) {
-        if (!isKeywordOrVar(group[0], [left, center, right, top, bottom]) && !isLengthPercentage(group[0])) {
-            return false;
-        }
-    }
-    if (length === 3) {
-        if (!isSpace(group[1])) {
-            return false;
-        }
-        if (isKeywordOrVar(group[0], horizontals) && isKeywordOrVar(group[2], verticals) || isKeywordOrVar(group[0], verticals) && isKeywordOrVar(group[2], horizontals)) {
-            return true;
-        }
-        if (!isKeywordOrVar(group[0], horizontals) && !isLengthPercentage(group[0])) {
-            return false;
-        }
-        if (!isKeywordOrVar(group[2], verticals) && !isLengthPercentage(group[2])) {
-            return false;
-        }
-    }
-    if (length >= 5 && length <= 7) {
-        if (isKeywordOrVar(group[0], [left, right]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals)) {
-            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
-                return false;
-            }
-            return true;
-        }
-        if (isKeywordOrVar(group[0], [top, bottom]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals)) {
-            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-    return length < 8;
-}
-
-function isPositionFactory(repeating) {
-    return function isPosition(valueParserAST) {
-        if (repeating && valueParserAST.nodes[valueParserAST.nodes.length - 1].type === 'div') {
-            return false;
-        }
-
-        return getArguments(valueParserAST).every(validateGroup);
-    };
-}
-
 var singleValues = ['repeat-x', 'repeat-y'];
 
 var multipleValues = ['repeat', 'space', 'round', 'no-repeat'];
@@ -626,9 +544,94 @@ var isBox = (function (node) {
     return isKeyword(node, boxes);
 });
 
+function getArguments(node) {
+    return node.nodes.reduce(function (list, child) {
+        if (isComma(child)) {
+            list.push([]);
+        } else {
+            list[list.length - 1].push(child);
+        }
+        return list;
+    }, [[]]);
+}
+
 function isAt(node) {
     return isKeyword(node, 'at');
 }
+
+var isLengthPercentage = (function (node) {
+    return isLength(node) || isPercentage(node);
+});
+
+var left$1 = 'left';
+var center = 'center';
+var right$1 = 'right';
+var top$1 = 'top';
+var bottom$1 = 'bottom';
+
+var horizontals$1 = [left$1, right$1, center];
+var verticals$1 = [top$1, bottom$1, center];
+
+function isKeywordOrVar(node, keywords) {
+    return isKeyword(node, keywords) || isVariable(node);
+}
+
+function isLengthPercentageOrVar(node) {
+    return isLengthPercentage(node) || isVariable(node);
+}
+
+function validateGroup(group) {
+    var length = group.length;
+
+    if (length === 1) {
+        if (!isKeywordOrVar(group[0], [left$1, center, right$1, top$1, bottom$1]) && !isLengthPercentage(group[0])) {
+            return false;
+        }
+    }
+    if (length === 3) {
+        if (!isSpace(group[1])) {
+            return false;
+        }
+        if (isKeywordOrVar(group[0], horizontals$1) && isKeywordOrVar(group[2], verticals$1) || isKeywordOrVar(group[0], verticals$1) && isKeywordOrVar(group[2], horizontals$1)) {
+            return true;
+        }
+        if (!isKeywordOrVar(group[0], horizontals$1) && !isLengthPercentage(group[0])) {
+            return false;
+        }
+        if (!isKeywordOrVar(group[2], verticals$1) && !isLengthPercentage(group[2])) {
+            return false;
+        }
+    }
+    if (length >= 5 && length <= 7) {
+        if (isKeywordOrVar(group[0], [left$1, right$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], verticals$1)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+                return false;
+            }
+            return true;
+        }
+        if (isKeywordOrVar(group[0], [top$1, bottom$1]) && isSpace(group[1]) && isLengthPercentageOrVar(group[2]) && isSpace(group[3]) && isKeywordOrVar(group[4], horizontals$1)) {
+            if (group[6] && isSpace(group[5]) && (!isLengthPercentageOrVar(group[6]) || group[4].value === center)) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+    return length < 8;
+}
+
+function isPositionFactory(repeating) {
+    return function isPosition(valueParserAST) {
+        if (repeating && valueParserAST.nodes[valueParserAST.nodes.length - 1].type === 'div') {
+            return false;
+        }
+
+        return getArguments(valueParserAST).every(validateGroup);
+    };
+}
+
+var isPositionRepeat = isPositionFactory(true);
+var isPositionNoRepeat = isPositionFactory(false);
 
 var resolutions = ['dpi', 'dpcm', 'dppx'];
 
@@ -745,14 +748,14 @@ function isColourStop(group) {
     return false;
 }
 
-var top$1 = 'top';
-var right$1 = 'right';
-var bottom$1 = 'bottom';
-var left$1 = 'left';
+var top = 'top';
+var right = 'right';
+var bottom = 'bottom';
+var left = 'left';
 
-var verticals$1 = [top$1, bottom$1];
-var horizontals$1 = [right$1, left$1];
-var directions = [].concat(horizontals$1, verticals$1);
+var verticals = [top, bottom];
+var horizontals = [right, left];
+var directions = [].concat(horizontals, verticals);
 
 function isLinearGradient(node) {
     if (!isFunction(node, ['linear-gradient', 'repeating-linear-gradient'])) {
@@ -767,7 +770,7 @@ function isLinearGradient(node) {
                 return true;
             }
             if (length > 1 && group[0].value === 'to' && length <= 5) {
-                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals$1) && isKeyword(group[4], verticals$1) || isKeyword(group[2], verticals$1) && isKeyword(group[4], horizontals$1);
+                return !group[4] && isKeyword(group[2], directions) || isKeyword(group[2], horizontals) && isKeyword(group[4], verticals) || isKeyword(group[2], verticals) && isKeyword(group[4], horizontals);
             }
         }
         var colour = isColourStop(group);
@@ -785,8 +788,6 @@ var endingShapes = [circle, ellipse];
 
 var extentKeywords = ['closest-corner', 'closest-side', 'farthest-corner', 'farthest-side'];
 
-var isRadialGradientPosition = isPositionFactory(false);
-
 function isRadialGradient(node) {
     if (!isFunction(node, ['radial-gradient', 'repeating-radial-gradient'])) {
         return false;
@@ -802,7 +803,7 @@ function isRadialGradient(node) {
             if (length === 1 && (firstIsEndingShape || firstIsLength || firstIsExtent)) {
                 return true;
             }
-            var position2 = isRadialGradientPosition({ nodes: group.slice(2) });
+            var position2 = isPositionNoRepeat({ nodes: group.slice(2) });
             if (isAt(group[0]) && position2) {
                 return true;
             }
@@ -816,9 +817,9 @@ function isRadialGradient(node) {
             var firstIsLP = isLengthPercentage(group[0]);
             var secondIsLP = group[2] && isLengthPercentage(group[2]);
             var thirdIsLP = group[4] && isLengthPercentage(group[4]);
-            var position4 = isRadialGradientPosition({ nodes: group.slice(4) });
-            var position6 = isRadialGradientPosition({ nodes: group.slice(6) });
-            var position8 = isRadialGradientPosition({ nodes: group.slice(8) });
+            var position4 = isPositionNoRepeat({ nodes: group.slice(4) });
+            var position6 = isPositionNoRepeat({ nodes: group.slice(6) });
+            var position8 = isPositionNoRepeat({ nodes: group.slice(8) });
             if (length === 5 && (firstIsEllipse && secondIsLP && thirdIsLP || firstIsLP && secondIsLP && group[4].value === ellipse)) {
                 return true;
             }
@@ -1284,7 +1285,7 @@ var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(valuePa
   return valid && !isEven(valueParserAST.nodes.length);
 };
 
-var webkitMaskPositionValidator = isPositionFactory(true);
+var webkitMaskPositionValidator = isPositionRepeat;
 var webkitMaskRepeatValidator = isRepeatStyle;
 var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space", "round"]);
 
@@ -1831,7 +1832,7 @@ var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
 };
 
 var objectFitValidator = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
-var objectPositionValidator = isPositionFactory(false);
+var objectPositionValidator = isPositionNoRepeat;
 
 var outlineColorValidator = function outlineColorValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
@@ -1877,7 +1878,7 @@ var rubyPositionValidator = isKeywordFactory(["over", "under", "inter-character"
 var scrollBehaviorValidator = isKeywordFactory(["auto", "smooth"]);
 
 var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(valueParserAST) {
-  if (isPositionFactory(true)(valueParserAST)) {
+  if (isPositionRepeat(valueParserAST)) {
     return true;
   }
 
