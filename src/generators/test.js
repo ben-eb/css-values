@@ -105,6 +105,11 @@ function createTests ({properties, candidates, identifier}) {
             t.identifier('globals'),
             t.identifier(identifier),
         ),
+        createTest(
+            identifier,
+            '0118-999-881-999-119-725-3',
+            false
+        ),
     ]);
 }
 
