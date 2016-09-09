@@ -173,6 +173,7 @@ function dataString (config, candidate) {
         return config;
     }
     config.conditions.push(callExpression(camel, nodeIdentifier));
+    config.validators[camel] = callExpression(camel, nodeIdentifier);
     return config;
 }
 
@@ -212,6 +213,7 @@ function createValidator (opts) {
         preConditions: [],
         repeatingConditions: [],
         repeatingReturn: false,
+        validators: {},
     });
 
     let keywords = [];
@@ -251,6 +253,7 @@ function createValidator (opts) {
         const keywordsList = t.identifier(`${identifier}Keywords`);
         const list = settings.keywords.length === 1 ? t.stringLiteral(settings.keywords[0]) : keywordsList;
         settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
+        settings.validators.isKeyword = callExpression('isKeyword', nodeIdentifier, list);
         if (settings.keywords.length > 1) {
             keywords.push(createConst(
                 keywordsList,
@@ -334,9 +337,30 @@ function createValidator (opts) {
                     )),
                 ])
             ),
-            t.returnStatement(
-                anyTruthy(...settings.conditions)
-            )
+        );
+
+        Object.keys(settings.validators).sort(k => k === 'isKeyword' ? -1 : 1).forEach(key => {
+            const result = t.identifier(`${key}Result`);
+            body.push(
+                createConst(
+                    result,
+                    settings.validators[key]
+                ),
+                t.ifStatement(
+                    t.binaryExpression(
+                        '!==',
+                        t.unaryExpression('!', t.unaryExpression('!', result)),
+                        t.booleanLiteral(false)
+                    ),
+                    t.blockStatement([
+                        t.returnStatement(result),
+                    ])
+                )
+            );
+        });
+
+        body.push(
+            returnFalse
         );
     }
 

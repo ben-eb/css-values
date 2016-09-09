@@ -1186,7 +1186,19 @@ var mozBindingValidator = function mozBindingValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isUrl(node) || isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isUriResult = isUrl(node);
+
+  if (!!isUriResult !== false) {
+    return isUriResult;
+  }
+
+  return false;
 };
 
 var mozFloatEdgeValidator = isKeywordFactory(["border-box", "content-box", "margin-box", "padding-box"]);
@@ -1198,7 +1210,13 @@ var mozForceBrokenImageIconValidator = function mozForceBrokenImageIconValidator
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isInteger(node);
+  var isIntegerResult = isInteger(node);
+
+  if (!!isIntegerResult !== false) {
+    return isIntegerResult;
+  }
+
+  return false;
 };
 
 var mozOrientValidator = isKeywordFactory(["inline", "block", "horizontal", "vertical"]);
@@ -1216,7 +1234,13 @@ var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isColor(node);
+  var isColorResult = isColor(node);
+
+  if (!!isColorResult !== false) {
+    return isColorResult;
+  }
+
+  return false;
 };
 
 var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(valueParserAST) {
@@ -1310,7 +1334,13 @@ var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(val
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLength(node);
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  return false;
 };
 
 var webkitTouchCalloutValidator = isKeywordFactory(["default", "none"]);
@@ -1432,7 +1462,13 @@ var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  return false;
 };
 
 var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
@@ -1507,7 +1543,13 @@ var borderBottomStyleValidator = function borderBottomStyleValidator(valueParser
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isBrStyle(node);
+  var isBrStyleResult = isBrStyle(node);
+
+  if (!!isBrStyleResult !== false) {
+    return isBrStyleResult;
+  }
+
+  return false;
 };
 
 var borderBottomWidthValidator = function borderBottomWidthValidator(valueParserAST) {
@@ -1517,7 +1559,13 @@ var borderBottomWidthValidator = function borderBottomWidthValidator(valueParser
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isBrWidth(node);
+  var isBrWidthResult = isBrWidth(node);
+
+  if (!!isBrWidthResult !== false) {
+    return isBrWidthResult;
+  }
+
+  return false;
 };
 
 var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
@@ -1548,7 +1596,19 @@ var borderImageSourceValidator = function borderImageSourceValidator(valueParser
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isImage(node) || isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isImageResult = isImage(node);
+
+  if (!!isImageResult !== false) {
+    return isImageResult;
+  }
+
+  return false;
 };
 
 var bottomValidator = function bottomValidator(valueParserAST) {
@@ -1558,7 +1618,19 @@ var bottomValidator = function bottomValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLengthPercentage(node) || isKeyword(node, "auto");
+  var isKeywordResult = isKeyword(node, "auto");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  return false;
 };
 
 var boxAlignValidator = isKeywordFactory(["start", "center", "end", "baseline", "stretch"]);
@@ -1572,7 +1644,13 @@ var boxFlexValidator = function boxFlexValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isNumber(node);
+  var isNumberResult = isNumber(node);
+
+  if (!!isNumberResult !== false) {
+    return isNumberResult;
+  }
+
+  return false;
 };
 
 var boxLinesValidator = isKeywordFactory(["single", "multiple"]);
@@ -1592,7 +1670,19 @@ var columnCountValidator = function columnCountValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isNumber(node) || isKeyword(node, "auto");
+  var isKeywordResult = isKeyword(node, "auto");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isNumberResult = isNumber(node);
+
+  if (!!isNumberResult !== false) {
+    return isNumberResult;
+  }
+
+  return false;
 };
 
 var columnFillValidator = isKeywordFactory(["auto", "balance"]);
@@ -1604,7 +1694,19 @@ var columnGapValidator = function columnGapValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLength(node) || isKeyword(node, "normal");
+  var isKeywordResult = isKeyword(node, "normal");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  return false;
 };
 
 var columnSpanValidator = isKeywordFactory(["none", "all"]);
@@ -1616,7 +1718,19 @@ var columnWidthValidator = function columnWidthValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLength(node) || isKeyword(node, "auto");
+  var isKeywordResult = isKeyword(node, "auto");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  return false;
 };
 
 var directionValidator = isKeywordFactory(["ltr", "rtl"]);
@@ -1639,7 +1753,19 @@ var fontLanguageOverrideValidator = function fontLanguageOverrideValidator(value
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isString(node) || isKeyword(node, "normal");
+  var isKeywordResult = isKeyword(node, "normal");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isStringResult = isString(node);
+
+  if (!!isStringResult !== false) {
+    return isStringResult;
+  }
+
+  return false;
 };
 
 var fontSizeValidator = function fontSizeValidator(valueParserAST) {
@@ -1649,7 +1775,25 @@ var fontSizeValidator = function fontSizeValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isAbsoluteSize(node) || isRelativeSize(node) || isLengthPercentage(node);
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  var isRelativeSizeResult = isRelativeSize(node);
+
+  if (!!isRelativeSizeResult !== false) {
+    return isRelativeSizeResult;
+  }
+
+  var isAbsoluteSizeResult = isAbsoluteSize(node);
+
+  if (!!isAbsoluteSizeResult !== false) {
+    return isAbsoluteSizeResult;
+  }
+
+  return false;
 };
 
 var fontSizeAdjustValidator = function fontSizeAdjustValidator(valueParserAST) {
@@ -1659,7 +1803,19 @@ var fontSizeAdjustValidator = function fontSizeAdjustValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isNumber(node) || isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isNumberResult = isNumber(node);
+
+  if (!!isNumberResult !== false) {
+    return isNumberResult;
+  }
+
+  return false;
 };
 
 var fontStretchValidator = isKeywordFactory(["normal", "ultra-condensed", "extra-condensed", "condensed", "semi-condensed", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"]);
@@ -1675,7 +1831,13 @@ var gridAutoColumnsValidator = function gridAutoColumnsValidator(valueParserAST)
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isTrackSize(node);
+  var isTrackSizeResult = isTrackSize(node);
+
+  if (!!isTrackSizeResult !== false) {
+    return isTrackSizeResult;
+  }
+
+  return false;
 };
 
 var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
@@ -1685,7 +1847,13 @@ var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLengthPercentage(node);
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  return false;
 };
 
 var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParserAST) {
@@ -1725,7 +1893,19 @@ var letterSpacingValidator = function letterSpacingValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLength(node) || isKeyword(node, "normal");
+  var isKeywordResult = isKeyword(node, "normal");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  return false;
 };
 
 var lineBreakValidator = isKeywordFactory(["auto", "loose", "normal", "strict"]);
@@ -1737,7 +1917,25 @@ var lineHeightValidator = function lineHeightValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isNumber(node) || isLengthPercentage(node) || isKeyword(node, "normal");
+  var isKeywordResult = isKeyword(node, "normal");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  var isNumberResult = isNumber(node);
+
+  if (!!isNumberResult !== false) {
+    return isNumberResult;
+  }
+
+  return false;
 };
 
 var listStylePositionValidator = isKeywordFactory(["inside", "outside"]);
@@ -1749,7 +1947,25 @@ var listStyleTypeValidator = function listStyleTypeValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isCounterStyle(node) || isString(node) || isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isStringResult = isString(node);
+
+  if (!!isStringResult !== false) {
+    return isStringResult;
+  }
+
+  var isCounterStyleResult = isCounterStyle(node);
+
+  if (!!isCounterStyleResult !== false) {
+    return isCounterStyleResult;
+  }
+
+  return false;
 };
 
 var maskCompositeValidator = function maskCompositeValidator(valueParserAST) {
@@ -1818,7 +2034,19 @@ var maxBlockSizeValidator = function maxBlockSizeValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLengthPercentage(node) || isKeyword(node, maxBlockSizeValidatorKeywords);
+  var isKeywordResult = isKeyword(node, maxBlockSizeValidatorKeywords);
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  return false;
 };
 
 var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
@@ -1828,7 +2056,13 @@ var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isBlendMode(node);
+  var isBlendModeResult = isBlendMode(node);
+
+  if (!!isBlendModeResult !== false) {
+    return isBlendModeResult;
+  }
+
+  return false;
 };
 
 var objectFitValidator = isKeywordFactory(["fill", "contain", "cover", "none", "scale-down"]);
@@ -1841,7 +2075,19 @@ var outlineColorValidator = function outlineColorValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isColor(node) || isKeyword(node, "invert");
+  var isKeywordResult = isKeyword(node, "invert");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isColorResult = isColor(node);
+
+  if (!!isColorResult !== false) {
+    return isColorResult;
+  }
+
+  return false;
 };
 
 var outlineStyleValidator = function outlineStyleValidator(valueParserAST) {
@@ -1851,7 +2097,19 @@ var outlineStyleValidator = function outlineStyleValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isBrStyle(node) || isKeyword(node, "auto");
+  var isKeywordResult = isKeyword(node, "auto");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isBrStyleResult = isBrStyle(node);
+
+  if (!!isBrStyleResult !== false) {
+    return isBrStyleResult;
+  }
+
+  return false;
 };
 
 var overflowValidator = isKeywordFactory(["visible", "hidden", "scroll", "auto"]);
@@ -1866,7 +2124,19 @@ var perspectiveValidator = function perspectiveValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLength(node) || isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  return false;
 };
 
 var pointerEventsValidator = isKeywordFactory(["auto", "none", "visiblePainted", "visibleFill", "visibleStroke", "visible", "painted", "fill", "stroke", "all", "inherit"]);
@@ -1888,7 +2158,13 @@ var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(value
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  return false;
 };
 
 var scrollSnapTypeValidator = isKeywordFactory(["none", "mandatory", "proximity"]);
@@ -1900,7 +2176,19 @@ var tabSizeValidator = function tabSizeValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isInteger(node) || isLength(node);
+  var isLengthResult = isLength(node);
+
+  if (!!isLengthResult !== false) {
+    return isLengthResult;
+  }
+
+  var isIntegerResult = isInteger(node);
+
+  if (!!isIntegerResult !== false) {
+    return isIntegerResult;
+  }
+
+  return false;
 };
 
 var tableLayoutValidator = isKeywordFactory(["auto", "fixed"]);
@@ -1921,7 +2209,13 @@ var textShadowValidator = function textShadowValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  return false;
 };
 
 var textSizeAdjustValidatorKeywords = ["none", "auto"];
@@ -1933,7 +2227,19 @@ var textSizeAdjustValidator = function textSizeAdjustValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isPercentage(node) || isKeyword(node, textSizeAdjustValidatorKeywords);
+  var isKeywordResult = isKeyword(node, textSizeAdjustValidatorKeywords);
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isPercentageResult = isPercentage(node);
+
+  if (!!isPercentageResult !== false) {
+    return isPercentageResult;
+  }
+
+  return false;
 };
 
 var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
@@ -1949,7 +2255,13 @@ var transformValidator = function transformValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isKeyword(node, "none");
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  return false;
 };
 
 var transformBoxValidator = isKeywordFactory(["border-box", "fill-box", "view-box"]);
@@ -1965,7 +2277,19 @@ var verticalAlignValidator = function verticalAlignValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLengthPercentage(node) || isKeyword(node, verticalAlignValidatorKeywords);
+  var isKeywordResult = isKeyword(node, verticalAlignValidatorKeywords);
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  return false;
 };
 
 var visibilityValidator = isKeywordFactory(["visible", "hidden", "collapse"]);
@@ -2000,7 +2324,19 @@ var wordSpacingValidator = function wordSpacingValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isLengthPercentage(node) || isKeyword(node, "normal");
+  var isKeywordResult = isKeyword(node, "normal");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isLengthPercentageResult = isLengthPercentage(node);
+
+  if (!!isLengthPercentageResult !== false) {
+    return isLengthPercentageResult;
+  }
+
+  return false;
 };
 
 var writingModeValidator = isKeywordFactory(["horizontal-tb", "vertical-rl", "vertical-lr", "sideways-rl", "sideways-lr"]);
@@ -2013,7 +2349,19 @@ var zIndexValidator = function zIndexValidator(valueParserAST) {
     return invalidMessage("Expected a single value to be passed.");
   }
 
-  return isInteger(node) || isKeyword(node, "auto");
+  var isKeywordResult = isKeyword(node, "auto");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isIntegerResult = isInteger(node);
+
+  if (!!isIntegerResult !== false) {
+    return isIntegerResult;
+  }
+
+  return false;
 };
 
 var validators = {
