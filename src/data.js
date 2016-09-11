@@ -32,6 +32,7 @@ const overrides = {
     'text-indent': '[ <length> | <percentage> ] && hanging? && each-line?',
     top: '<length-percentage> | auto',
     'vertical-align': 'baseline | sub | super | text-top | text-bottom | middle | top | bottom | <length-percentage>',
+    'clip-path': '<clip-path-property> | none ',
     // syntaxes
     'feature-value-name': '<IDENT>',
     'single-transition-property': 'all | <IDENT>',

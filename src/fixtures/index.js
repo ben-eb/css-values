@@ -47,3 +47,4 @@ export uri from './uri';
 export geometryBox from './geometryBox';
 export trackSize from './trackSize';
 export maskReference from './maskReference';
+export clipPathProperty from './clipPathProperty';

@@ -196,7 +196,8 @@ function createValidator (opts) {
         switch (value) {
         case 'bg-size':
         case 'repeat-style':
-            return genericValidatorStub(dataValidator(value), opts);
+        case 'clip-path-property':
+            return genericValidatorStub(dataValidator(value), opts);        
         case 'position':
             return generatePositionValidator(opts);
         }
