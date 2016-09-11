@@ -1859,8 +1859,12 @@ var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
 var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
 
-  if (valueParserAST.nodes.length === 1 && isKeyword(node, "none")) {
-    return true;
+  if (valueParserAST.nodes.length === 1) {
+    var isKeywordResult = isKeyword(node, "none");
+
+    if (!!isKeywordResult !== false) {
+      return isKeywordResult;
+    }
   }
 
   var valid = true;
@@ -2298,8 +2302,12 @@ var whiteSpaceValidator = isKeywordFactory(["normal", "pre", "nowrap", "pre-wrap
 var willChangeValidator = function willChangeValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
 
-  if (valueParserAST.nodes.length === 1 && isKeyword(node, "auto")) {
-    return true;
+  if (valueParserAST.nodes.length === 1) {
+    var isKeywordResult = isKeyword(node, "auto");
+
+    if (!!isKeywordResult !== false) {
+      return isKeywordResult;
+    }
   }
 
   var valid = true;

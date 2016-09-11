@@ -3,7 +3,7 @@ import plur from 'plur';
 import * as validators from '../validators';
 import arrayOfStrings from '../util/arrayOfStrings';
 import {notCallExpression, callExpression} from '../util/callExpressions';
-import {ifAllTruthy, ifAnyTruthy, anyTruthy, allTruthy} from '../util/conditionals';
+import {ifAllTruthy, ifAnyTruthy, allTruthy} from '../util/conditionals';
 import {createConst, createLet} from '../util/createVariable';
 import dataValidator from '../util/dataValidator';
 import globals from '../util/globals';
@@ -172,7 +172,6 @@ function dataString (config, candidate) {
         }
         return config;
     }
-    config.conditions.push(callExpression(camel, nodeIdentifier));
     config.validators[camel] = callExpression(camel, nodeIdentifier);
     return config;
 }
@@ -209,7 +208,6 @@ function createValidator (opts) {
         return config;
     }, {
         keywords: [],
-        conditions: [],
         preConditions: [],
         repeatingConditions: [],
         repeatingReturn: false,
@@ -229,7 +227,7 @@ function createValidator (opts) {
          * const property = isKeywordFactory(['foo', 'bar', 'baz']);
          */
         if (
-            !settings.conditions.length &&
+            !Object.keys(settings.validators).length &&
             !settings.preConditions.length &&
             !settings.repeatingConditions.length
         ) {
@@ -252,7 +250,6 @@ function createValidator (opts) {
          */
         const keywordsList = t.identifier(`${identifier}Keywords`);
         const list = settings.keywords.length === 1 ? t.stringLiteral(settings.keywords[0]) : keywordsList;
-        settings.conditions.push(callExpression('isKeyword', nodeIdentifier, list));
         settings.validators.isKeyword = callExpression('isKeyword', nodeIdentifier, list);
         if (settings.keywords.length > 1) {
             keywords.push(createConst(
@@ -261,6 +258,28 @@ function createValidator (opts) {
             ));
         }
     }
+
+    const validatorKeys = Object.keys(settings.validators);
+
+    const validatorList = validatorKeys.sort(k => k === 'isKeyword' ? -1 : 1).reduce((list, key) => {
+        const result = t.identifier(`${key}Result`);
+        list.push(
+            createConst(
+                result,
+                settings.validators[key]
+            ),
+            t.ifStatement(
+                t.binaryExpression(
+                    '!==',
+                    t.unaryExpression('!', t.unaryExpression('!', result)),
+                    t.booleanLiteral(false)
+                ),
+                t.blockStatement([
+                    t.returnStatement(result),
+                ])
+            )
+        );
+    }, []);
 
     let body = [];
 
@@ -283,15 +302,12 @@ function createValidator (opts) {
             t.booleanLiteral(true)
         ));
 
-        if (settings.conditions.length) {
+        if (validatorKeys.length) {
             body.unshift(
                 firstValueParserNode,
                 ifAllTruthy([
                     valueParserNodesLength(1),
-                    anyTruthy(...settings.conditions),
-                ], [
-                    returnTrue,
-                ])
+                ], validatorList)
             );
         }
 
@@ -337,29 +353,7 @@ function createValidator (opts) {
                     )),
                 ])
             ),
-        );
-
-        Object.keys(settings.validators).sort(k => k === 'isKeyword' ? -1 : 1).forEach(key => {
-            const result = t.identifier(`${key}Result`);
-            body.push(
-                createConst(
-                    result,
-                    settings.validators[key]
-                ),
-                t.ifStatement(
-                    t.binaryExpression(
-                        '!==',
-                        t.unaryExpression('!', t.unaryExpression('!', result)),
-                        t.booleanLiteral(false)
-                    ),
-                    t.blockStatement([
-                        t.returnStatement(result),
-                    ])
-                )
-            );
-        });
-
-        body.push(
+            ...validatorList,
             returnFalse
         );
     }
