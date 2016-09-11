@@ -39,7 +39,7 @@ valid, even though they are not to specification.
 
 ## Property support
 
-We support 252 of 361 CSS properties (69.81%).
+We support 254 of 361 CSS properties (70.36%).
 
 * `-ms-overflow-style`
 * `-moz-appearance`
@@ -56,6 +56,7 @@ We support 252 of 361 CSS properties (69.81%).
 * `-webkit-border-before-color`
 * `-webkit-border-before-style`
 * `-webkit-border-before-width`
+* `-webkit-clip-path`
 * `-webkit-mask-attachment`
 * `-webkit-mask-composite`
 * `-webkit-mask-position`
@@ -141,6 +142,7 @@ We support 252 of 361 CSS properties (69.81%).
 * `break-inside`
 * `caption-side`
 * `clear`
+* `clip-path`
 * `color`
 * `column-count`
 * `column-fill`

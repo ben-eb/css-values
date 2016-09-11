@@ -1,0 +1,28 @@
+export default {
+    valid: [
+        'inset(20% 50px)',
+        'circle(closest-side at 20px 20px)',
+        'circle(12%)',        
+        'ellipse(closest-side 20px at 20px 20px)',
+        'polygon(30px 20px, 15px 10px, 12% 5px)',
+        'polygon(evenodd, 30px 20px, 15px 10px, 12% 5px)',
+    ],
+    invalid: [
+        'isnet(35px)',
+        'inset(98 12kHz)',
+        'inset(20%, 50px)',
+        'clrcke(15px at 20px 20px)',
+        'circle(12kHz at 20px 20px)',
+        'circle(farthest-side, at 20px)',
+        'circle(farthest-side at 20)',
+        'ellipse(closest-side, 20px at 20px 12em)',
+        'ellipse(closest-side 90deg at 20px 20px)',
+        'ellipse(90deg 20px at 65deg)',
+        'elcipse(closest-side 20px at 201)',
+        'monogon(30px 20px, 15px 10px, 12% 5px)',
+        'polygon(25kHz, 30px 20px, 15px 10px, 12% 5px)',
+        'polygon(15px 10px, yoyo 20px, 12% 5px)',
+        'polygon(closest-side, 10% 20px 6px, 15px 10px, 12% 5px)',
+        'polygon(30px 20px, 15px 10px, 12% 5px 78px)',
+    ],
+};

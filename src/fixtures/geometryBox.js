@@ -6,7 +6,9 @@ export default {
         ...geometryBoxes,
         ...nonStandardKeywords,
         ...boxes.valid,
-        'view-box, fill-box, border-box',
+        'view-box',
+        'fill-box',
+        'border-box',
     ],
     invalid: [
         ...boxes.invalid,

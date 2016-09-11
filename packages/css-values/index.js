@@ -881,6 +881,172 @@ function isBgSize(valueParserAST) {
     return getArguments(valueParserAST).every(validateGroup$1);
 }
 
+var geometryBoxes = ['margin-box', 'fill-box', 'stroke-box', 'view-box'];
+
+var nonStandardKeywords = ['content', 'padding', 'border'];
+
+var isGeometryBox = (function (node) {
+    return isBox(node) || isKeyword(node, geometryBoxes) || isKeyword(node, nonStandardKeywords);
+});
+
+function isFillRule(node) {
+    return isKeyword(node, ['nonzero', 'evenodd']);
+}
+
+function isShapeRadius(node) {
+    return isLengthPercentage(node) || isKeyword(node, ['closest-side', 'farthest-side']);
+}
+
+function isInset(node) {
+    if (!isFunction(node, 'inset')) {
+        return false;
+    }
+    var valid = true;
+    walk(node.nodes, function (child, index) {
+        var even = isEven(index);
+        if (!even && !isSpace(child)) {
+            valid = false;
+            return false;
+        }
+        if (even && !isLengthPercentage(child)) {
+            valid = false;
+            return false;
+        }
+    });
+    return valid;
+}
+
+function isCircle(node) {
+    if (!isFunction(node, 'circle')) {
+        return false;
+    }
+    var valid = true;
+    var atIdx = 0;
+    var skip = false;
+    walk(node.nodes, function (child, index) {
+        if (skip) {
+            return false;
+        }
+        var even = isEven(index);
+        if (!even && !isSpace(child)) {
+            valid = false;
+            return false;
+        }
+        if (even) {
+            if (isAt(child)) {
+                skip = true;
+                atIdx = index;
+                return false;
+            }
+
+            if (!isShapeRadius(child)) {
+                valid = false;
+                return false;
+            }
+        }
+    });
+    if (skip && !isPositionNoRepeat({ nodes: node.nodes.slice(atIdx + 2) })) {
+        return false;
+    };
+    return valid;
+}
+
+function isEllipse(node) {
+    if (!isFunction(node, 'ellipse')) {
+        return false;
+    }
+    var valid = true;
+    var atIdx = 0;
+    var skip = false;
+    var expectShapeRadius = false;
+    walk(node.nodes, function (child, index) {
+        if (skip) {
+            return false;
+        }
+        if (index === 0) {
+            if (isShapeRadius(child)) {
+                expectShapeRadius = true;
+            }
+        };
+        if (index === 2 && expectShapeRadius) {
+            if (!isShapeRadius(child)) {
+                valid = false;
+                return false;
+            }
+        };
+        var even = isEven(index);
+        if (!even && !isSpace(child)) {
+            valid = false;
+            return false;
+        }
+        if (even) {
+            if (isAt(child)) {
+                skip = true;
+                atIdx = index;
+                return false;
+            }
+        };
+    });
+    if (skip && !isPositionNoRepeat({ nodes: node.nodes.slice(atIdx + 2) })) {
+        return false;
+    };
+    return valid;
+}
+
+function isPolygon(node) {
+    if (!isFunction(node, 'polygon')) {
+        return false;
+    }
+    var valid = true;
+    var commaIdx = void 0;
+    walk(node.nodes, function (child, index) {
+        if (index === node.nodes.length - 1) {
+            if (!isComma(node.nodes[index - 3])) {
+                valid = false;
+                return false;
+            };
+        };
+        if (index === 0) {
+            if (isFillRule(child)) {
+                commaIdx = 1;
+                return false;
+            }
+            if (isLengthPercentage(child)) {
+                commaIdx = 3;
+                return false;
+            }
+            valid = false;
+            return false;
+        };
+        if (index === commaIdx) {
+            commaIdx += 4;
+            if (!isComma(child)) {
+                valid = false;
+                return false;
+            };
+        } else {
+            var even = isEven(index);
+            if (even && !isLengthPercentage(child)) {
+                valid = false;
+                return false;
+            }
+            if (!even && !isSpace(child)) {
+                valid = false;
+                return false;
+            }
+        };
+    });
+    return valid;
+}
+
+var isBasicShape = (function (node) {
+    return isInset(node) || isCircle(node) || isEllipse(node) || isPolygon(node);
+});
+
+var isClipPathProperty = (function (node) {
+    return isUrl(node) || isBasicShape(node) || isGeometryBox(node);
+});
+
 var absoluteSizes = ['xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'];
 
 var isAbsoluteSize = (function (node) {
@@ -976,14 +1142,6 @@ var maskingModes = ['alpha', 'luminance', 'match-source'];
 
 var isMaskingMode = (function (node) {
     return isKeyword(node, maskingModes);
-});
-
-var geometryBoxes = ['margin-box', 'fill-box', 'stroke-box', 'view-box'];
-
-var nonStandardKeywords = ['content', 'padding', 'border'];
-
-var isGeometryBox = (function (node) {
-    return isBox(node) || isKeyword(node, geometryBoxes) || isKeyword(node, nonStandardKeywords);
 });
 
 function validateShadow(nodes) {
@@ -1662,6 +1820,28 @@ var pageBreakAfterValidator = isKeywordFactory(["auto", "always", "avoid", "left
 var webkitColumnBreakInsideValidator = isKeywordFactory(["auto", "avoid", "avoid-page", "avoid-column", "avoid-region"]);
 var captionSideValidator = isKeywordFactory(["top", "bottom", "block-start", "block-end", "inline-start", "inline-end"]);
 var clearValidator = isKeywordFactory(["none", "left", "right", "both", "inline-start", "inline-end"]);
+
+var clipPathValidator = function clipPathValidator(valueParserAST) {
+  var node = valueParserAST.nodes[0];
+
+  if (valueParserAST.nodes.length !== 1) {
+    return invalidMessage("Expected a single value to be passed.");
+  }
+
+  var isKeywordResult = isKeyword(node, "none");
+
+  if (!!isKeywordResult !== false) {
+    return isKeywordResult;
+  }
+
+  var isClipPathPropertyResult = isClipPathProperty(node);
+
+  if (!!isClipPathPropertyResult !== false) {
+    return isClipPathPropertyResult;
+  }
+
+  return false;
+};
 
 var columnCountValidator = function columnCountValidator(valueParserAST) {
   var node = valueParserAST.nodes[0];
@@ -2440,6 +2620,7 @@ var validators = {
   "-webkit-box-orient": mozBoxOrientValidator,
   "-webkit-box-pack": mozBoxPackValidator,
   "-webkit-box-sizing": boxSizingValidator,
+  "-webkit-clip-path": clipPathValidator,
   "-webkit-column-break-inside": webkitColumnBreakInsideValidator,
   "-webkit-column-count": columnCountValidator,
   "-webkit-column-fill": columnFillValidator,
@@ -2548,6 +2729,7 @@ var validators = {
   "break-inside": webkitColumnBreakInsideValidator,
   "caption-side": captionSideValidator,
   "clear": clearValidator,
+  "clip-path": clipPathValidator,
   "color": webkitBorderBeforeColorValidator,
   "column-count": columnCountValidator,
   "column-fill": columnFillValidator,
