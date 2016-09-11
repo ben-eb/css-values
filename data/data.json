@@ -7263,6 +7263,13 @@
       ],
       "status": "standard"
     },
+    ":placeholder-shown": {
+      "syntax": ":placeholder-shown { <var>style properties</var> }",
+      "groups": [
+        "Pseudo-classes"
+      ],
+      "status": "experimental"
+    },
     ":read-only": {
       "syntax": ":read-only { <var>style properties</var> }",
       "groups": [
