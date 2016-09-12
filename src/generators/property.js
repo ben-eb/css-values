@@ -9,7 +9,7 @@ import dataValidator from '../util/dataValidator';
 import globals from '../util/globals';
 import importMethod from '../util/importMethod';
 import template from '../util/moduleTemplate';
-import {returnTrue, returnFalse} from '../util/returnBooleans';
+import {returnFalse} from '../util/returnBooleans';
 import generateProgram from './program';
 import requireModules from './requireModules';
 import validator from './validator';
@@ -69,6 +69,23 @@ function valueParserNodesLength (length, operator = '===') {
     );
 }
 
+function getValidatorResult (identifier, cache) {
+    const result = t.identifier(`${identifier}Result`);
+    return [
+        createConst(result, cache),
+        t.ifStatement(
+            t.binaryExpression(
+                '!==',
+                t.unaryExpression('!', t.unaryExpression('!', result)),
+                t.booleanLiteral(false)
+            ),
+            t.blockStatement([
+                t.returnStatement(result),
+            ])
+        ),
+    ];
+}
+
 const dependencies = {
     valueParser: 'postcss-value-parser',
     isKeyword: './validators/isKeyword',
@@ -104,23 +121,13 @@ function dataString (config, candidate) {
     addDependency(camel);
     if (camel === 'isPosition') {
         config.preConditions.push(
-            t.ifStatement(
-                callExpression('isPositionRepeat', valueParserASTIdentifier),
-                t.blockStatement([
-                    returnTrue,
-                ])
-            )
+            ...getValidatorResult(camel, callExpression('isPositionRepeat', valueParserASTIdentifier))
         );
         return config;
     }
     if (camel === 'isTransformList' || camel === 'isShadowT' || camel === 'isFilterFunctionList') {
         config.preConditions.push(
-            t.ifStatement(
-                callExpression(camel, valueParserASTIdentifier),
-                t.blockStatement([
-                    returnTrue,
-                ])
-            )
+            ...getValidatorResult(camel, callExpression(camel, valueParserASTIdentifier))
         );
         return config;
     }
@@ -196,7 +203,7 @@ function createValidator (opts) {
         case 'bg-size':
         case 'repeat-style':
         case 'clip-path-property':
-            return genericValidatorStub(dataValidator(value), opts);        
+            return genericValidatorStub(dataValidator(value), opts);
         case 'position':
             return generatePositionValidator(opts);
         }
@@ -263,22 +270,8 @@ function createValidator (opts) {
     const validatorKeys = Object.keys(settings.validators);
 
     const validatorList = validatorKeys.sort(k => k === 'isKeyword' ? -1 : 1).reduce((list, key) => {
-        const result = t.identifier(`${key}Result`);
         list.push(
-            createConst(
-                result,
-                settings.validators[key]
-            ),
-            t.ifStatement(
-                t.binaryExpression(
-                    '!==',
-                    t.unaryExpression('!', t.unaryExpression('!', result)),
-                    t.booleanLiteral(false)
-                ),
-                t.blockStatement([
-                    t.returnStatement(result),
-                ])
-            )
+            ...getValidatorResult(key, settings.validators[key])
         );
         return list;
     }, []);

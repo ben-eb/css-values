@@ -1610,8 +1610,10 @@ var animationTimingFunctionValidator = function animationTimingFunctionValidator
 var appearanceValidator = isKeywordFactory(["auto", "none"]);
 
 var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
-  if (isFilterFunctionList(valueParserAST)) {
-    return true;
+  var isFilterFunctionListResult = isFilterFunctionList(valueParserAST);
+
+  if (!!isFilterFunctionListResult !== false) {
+    return isFilterFunctionListResult;
   }
 
   var node = valueParserAST.nodes[0];
@@ -2332,8 +2334,10 @@ var rubyPositionValidator = isKeywordFactory(["over", "under", "inter-character"
 var scrollBehaviorValidator = isKeywordFactory(["auto", "smooth"]);
 
 var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(valueParserAST) {
-  if (isPositionRepeat(valueParserAST)) {
-    return true;
+  var isPositionResult = isPositionRepeat(valueParserAST);
+
+  if (!!isPositionResult !== false) {
+    return isPositionResult;
   }
 
   var node = valueParserAST.nodes[0];
@@ -2383,8 +2387,10 @@ var textOrientationValidator = isKeywordFactory(["mixed", "upright", "sideways"]
 var textRenderingValidator = isKeywordFactory(["auto", "optimizeSpeed", "optimizeLegibility", "geometricPrecision"]);
 
 var textShadowValidator = function textShadowValidator(valueParserAST) {
-  if (isShadowT(valueParserAST)) {
-    return true;
+  var isShadowTResult = isShadowT(valueParserAST);
+
+  if (!!isShadowTResult !== false) {
+    return isShadowTResult;
   }
 
   var node = valueParserAST.nodes[0];
@@ -2429,8 +2435,10 @@ var textSizeAdjustValidator = function textSizeAdjustValidator(valueParserAST) {
 var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase", "lowercase", "full-width"]);
 
 var transformValidator = function transformValidator(valueParserAST) {
-  if (isTransformList(valueParserAST)) {
-    return true;
+  var isTransformListResult = isTransformList(valueParserAST);
+
+  if (!!isTransformListResult !== false) {
+    return isTransformListResult;
   }
 
   var node = valueParserAST.nodes[0];
