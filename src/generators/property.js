@@ -177,13 +177,6 @@ function dataString (config, candidate) {
         );
         config.repeatingConditions.push(
             ifAnyTruthy([
-                // allTruthy(
-                //     evenIdentifier,
-                //     allTruthy(
-                //         // notCallExpression(camel, nodeIdentifier),
-                //         notCallExpression('isVariable', nodeIdentifier)
-                //     ),
-                // ),
                 allTruthy(
                     t.unaryExpression('!', evenIdentifier),
                     notCallExpression(method, nodeIdentifier)
@@ -319,13 +312,9 @@ function createValidator (opts) {
         return list;
     }, []);
 
-    let body = [];
-
-    if (settings.preConditions.length) {
-        body = [
-            ...settings.preConditions,
-        ];
-    }
+    let body = [
+        ...settings.preConditions,
+    ];
 
     if (settings.repeatingConditions.length) {
         /*
