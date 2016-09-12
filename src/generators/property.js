@@ -74,10 +74,9 @@ function getValidatorResult (identifier, cache) {
     return [
         createConst(result, cache),
         t.ifStatement(
-            t.binaryExpression(
-                '!==',
-                t.unaryExpression('!', t.unaryExpression('!', result)),
-                t.booleanLiteral(false)
+            callExpression(
+                'shouldReturnResult',
+                result
             ),
             t.blockStatement([
                 t.returnStatement(result),
@@ -88,6 +87,7 @@ function getValidatorResult (identifier, cache) {
 
 const dependencies = {
     valueParser: 'postcss-value-parser',
+    shouldReturnResult: './util/shouldReturnResult',
     isKeyword: './validators/isKeyword',
     isVariable: './validators/isVariable',
 };

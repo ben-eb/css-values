@@ -2,6 +2,10 @@ import valueParser, { unit, walk } from 'postcss-value-parser';
 import colors from 'css-color-names';
 import endsWith from 'ends-with';
 
+function shouldReturnResult(result) {
+    return !!result !== false;
+}
+
 function lowercase(value) {
     return value.toLowerCase();
 }
@@ -1346,13 +1350,13 @@ var mozBindingValidator = function mozBindingValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isUriResult = isUrl(node);
 
-  if (!!isUriResult !== false) {
+  if (shouldReturnResult(isUriResult)) {
     return isUriResult;
   }
 
@@ -1370,7 +1374,7 @@ var mozForceBrokenImageIconValidator = function mozForceBrokenImageIconValidator
 
   var isIntegerResult = isInteger(node);
 
-  if (!!isIntegerResult !== false) {
+  if (shouldReturnResult(isIntegerResult)) {
     return isIntegerResult;
   }
 
@@ -1394,7 +1398,7 @@ var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator
 
   var isColorResult = isColor(node);
 
-  if (!!isColorResult !== false) {
+  if (shouldReturnResult(isColorResult)) {
     return isColorResult;
   }
 
@@ -1494,7 +1498,7 @@ var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(val
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
@@ -1612,7 +1616,7 @@ var appearanceValidator = isKeywordFactory(["auto", "none"]);
 var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
   var isFilterFunctionListResult = isFilterFunctionList(valueParserAST);
 
-  if (!!isFilterFunctionListResult !== false) {
+  if (shouldReturnResult(isFilterFunctionListResult)) {
     return isFilterFunctionListResult;
   }
 
@@ -1624,7 +1628,7 @@ var backdropFilterValidator = function backdropFilterValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
@@ -1705,7 +1709,7 @@ var borderBottomStyleValidator = function borderBottomStyleValidator(valueParser
 
   var isBrStyleResult = isBrStyle(node);
 
-  if (!!isBrStyleResult !== false) {
+  if (shouldReturnResult(isBrStyleResult)) {
     return isBrStyleResult;
   }
 
@@ -1721,7 +1725,7 @@ var borderBottomWidthValidator = function borderBottomWidthValidator(valueParser
 
   var isBrWidthResult = isBrWidth(node);
 
-  if (!!isBrWidthResult !== false) {
+  if (shouldReturnResult(isBrWidthResult)) {
     return isBrWidthResult;
   }
 
@@ -1758,13 +1762,13 @@ var borderImageSourceValidator = function borderImageSourceValidator(valueParser
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isImageResult = isImage(node);
 
-  if (!!isImageResult !== false) {
+  if (shouldReturnResult(isImageResult)) {
     return isImageResult;
   }
 
@@ -1780,13 +1784,13 @@ var bottomValidator = function bottomValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "auto");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
@@ -1806,7 +1810,7 @@ var boxFlexValidator = function boxFlexValidator(valueParserAST) {
 
   var isNumberResult = isNumber(node);
 
-  if (!!isNumberResult !== false) {
+  if (shouldReturnResult(isNumberResult)) {
     return isNumberResult;
   }
 
@@ -1832,13 +1836,13 @@ var clipPathValidator = function clipPathValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isClipPathPropertyResult = isClipPathProperty(node);
 
-  if (!!isClipPathPropertyResult !== false) {
+  if (shouldReturnResult(isClipPathPropertyResult)) {
     return isClipPathPropertyResult;
   }
 
@@ -1854,13 +1858,13 @@ var columnCountValidator = function columnCountValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "auto");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isNumberResult = isNumber(node);
 
-  if (!!isNumberResult !== false) {
+  if (shouldReturnResult(isNumberResult)) {
     return isNumberResult;
   }
 
@@ -1878,13 +1882,13 @@ var columnGapValidator = function columnGapValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "normal");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
@@ -1902,13 +1906,13 @@ var columnWidthValidator = function columnWidthValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "auto");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
@@ -1937,13 +1941,13 @@ var fontLanguageOverrideValidator = function fontLanguageOverrideValidator(value
 
   var isKeywordResult = isKeyword(node, "normal");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isStringResult = isString(node);
 
-  if (!!isStringResult !== false) {
+  if (shouldReturnResult(isStringResult)) {
     return isStringResult;
   }
 
@@ -1959,19 +1963,19 @@ var fontSizeValidator = function fontSizeValidator(valueParserAST) {
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
   var isRelativeSizeResult = isRelativeSize(node);
 
-  if (!!isRelativeSizeResult !== false) {
+  if (shouldReturnResult(isRelativeSizeResult)) {
     return isRelativeSizeResult;
   }
 
   var isAbsoluteSizeResult = isAbsoluteSize(node);
 
-  if (!!isAbsoluteSizeResult !== false) {
+  if (shouldReturnResult(isAbsoluteSizeResult)) {
     return isAbsoluteSizeResult;
   }
 
@@ -1987,13 +1991,13 @@ var fontSizeAdjustValidator = function fontSizeAdjustValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isNumberResult = isNumber(node);
 
-  if (!!isNumberResult !== false) {
+  if (shouldReturnResult(isNumberResult)) {
     return isNumberResult;
   }
 
@@ -2015,7 +2019,7 @@ var gridAutoColumnsValidator = function gridAutoColumnsValidator(valueParserAST)
 
   var isTrackSizeResult = isTrackSize(node);
 
-  if (!!isTrackSizeResult !== false) {
+  if (shouldReturnResult(isTrackSizeResult)) {
     return isTrackSizeResult;
   }
 
@@ -2031,7 +2035,7 @@ var gridColumnGapValidator = function gridColumnGapValidator(valueParserAST) {
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
@@ -2044,7 +2048,7 @@ var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParser
   if (valueParserAST.nodes.length === 1) {
     var isKeywordResult = isKeyword(node, "none");
 
-    if (!!isKeywordResult !== false) {
+    if (shouldReturnResult(isKeywordResult)) {
       return isKeywordResult;
     }
   }
@@ -2081,13 +2085,13 @@ var letterSpacingValidator = function letterSpacingValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "normal");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
@@ -2105,19 +2109,19 @@ var lineHeightValidator = function lineHeightValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "normal");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
   var isNumberResult = isNumber(node);
 
-  if (!!isNumberResult !== false) {
+  if (shouldReturnResult(isNumberResult)) {
     return isNumberResult;
   }
 
@@ -2135,19 +2139,19 @@ var listStyleTypeValidator = function listStyleTypeValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isStringResult = isString(node);
 
-  if (!!isStringResult !== false) {
+  if (shouldReturnResult(isStringResult)) {
     return isStringResult;
   }
 
   var isCounterStyleResult = isCounterStyle(node);
 
-  if (!!isCounterStyleResult !== false) {
+  if (shouldReturnResult(isCounterStyleResult)) {
     return isCounterStyleResult;
   }
 
@@ -2222,13 +2226,13 @@ var maxBlockSizeValidator = function maxBlockSizeValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, maxBlockSizeValidatorKeywords);
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
@@ -2244,7 +2248,7 @@ var mixBlendModeValidator = function mixBlendModeValidator(valueParserAST) {
 
   var isBlendModeResult = isBlendMode(node);
 
-  if (!!isBlendModeResult !== false) {
+  if (shouldReturnResult(isBlendModeResult)) {
     return isBlendModeResult;
   }
 
@@ -2263,13 +2267,13 @@ var outlineColorValidator = function outlineColorValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "invert");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isColorResult = isColor(node);
 
-  if (!!isColorResult !== false) {
+  if (shouldReturnResult(isColorResult)) {
     return isColorResult;
   }
 
@@ -2285,13 +2289,13 @@ var outlineStyleValidator = function outlineStyleValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "auto");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isBrStyleResult = isBrStyle(node);
 
-  if (!!isBrStyleResult !== false) {
+  if (shouldReturnResult(isBrStyleResult)) {
     return isBrStyleResult;
   }
 
@@ -2312,13 +2316,13 @@ var perspectiveValidator = function perspectiveValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
@@ -2336,7 +2340,7 @@ var scrollBehaviorValidator = isKeywordFactory(["auto", "smooth"]);
 var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(valueParserAST) {
   var isPositionResult = isPositionRepeat(valueParserAST);
 
-  if (!!isPositionResult !== false) {
+  if (shouldReturnResult(isPositionResult)) {
     return isPositionResult;
   }
 
@@ -2348,7 +2352,7 @@ var scrollSnapCoordinateValidator = function scrollSnapCoordinateValidator(value
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
@@ -2366,13 +2370,13 @@ var tabSizeValidator = function tabSizeValidator(valueParserAST) {
 
   var isLengthResult = isLength(node);
 
-  if (!!isLengthResult !== false) {
+  if (shouldReturnResult(isLengthResult)) {
     return isLengthResult;
   }
 
   var isIntegerResult = isInteger(node);
 
-  if (!!isIntegerResult !== false) {
+  if (shouldReturnResult(isIntegerResult)) {
     return isIntegerResult;
   }
 
@@ -2389,7 +2393,7 @@ var textRenderingValidator = isKeywordFactory(["auto", "optimizeSpeed", "optimiz
 var textShadowValidator = function textShadowValidator(valueParserAST) {
   var isShadowTResult = isShadowT(valueParserAST);
 
-  if (!!isShadowTResult !== false) {
+  if (shouldReturnResult(isShadowTResult)) {
     return isShadowTResult;
   }
 
@@ -2401,7 +2405,7 @@ var textShadowValidator = function textShadowValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
@@ -2419,13 +2423,13 @@ var textSizeAdjustValidator = function textSizeAdjustValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, textSizeAdjustValidatorKeywords);
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isPercentageResult = isPercentage(node);
 
-  if (!!isPercentageResult !== false) {
+  if (shouldReturnResult(isPercentageResult)) {
     return isPercentageResult;
   }
 
@@ -2437,7 +2441,7 @@ var textTransformValidator = isKeywordFactory(["none", "capitalize", "uppercase"
 var transformValidator = function transformValidator(valueParserAST) {
   var isTransformListResult = isTransformList(valueParserAST);
 
-  if (!!isTransformListResult !== false) {
+  if (shouldReturnResult(isTransformListResult)) {
     return isTransformListResult;
   }
 
@@ -2449,7 +2453,7 @@ var transformValidator = function transformValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "none");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
@@ -2471,13 +2475,13 @@ var verticalAlignValidator = function verticalAlignValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, verticalAlignValidatorKeywords);
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
@@ -2493,7 +2497,7 @@ var willChangeValidator = function willChangeValidator(valueParserAST) {
   if (valueParserAST.nodes.length === 1) {
     var isKeywordResult = isKeyword(node, "auto");
 
-    if (!!isKeywordResult !== false) {
+    if (shouldReturnResult(isKeywordResult)) {
       return isKeywordResult;
     }
   }
@@ -2522,13 +2526,13 @@ var wordSpacingValidator = function wordSpacingValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "normal");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isLengthPercentageResult = isLengthPercentage(node);
 
-  if (!!isLengthPercentageResult !== false) {
+  if (shouldReturnResult(isLengthPercentageResult)) {
     return isLengthPercentageResult;
   }
 
@@ -2547,13 +2551,13 @@ var zIndexValidator = function zIndexValidator(valueParserAST) {
 
   var isKeywordResult = isKeyword(node, "auto");
 
-  if (!!isKeywordResult !== false) {
+  if (shouldReturnResult(isKeywordResult)) {
     return isKeywordResult;
   }
 
   var isIntegerResult = isInteger(node);
 
-  if (!!isIntegerResult !== false) {
+  if (shouldReturnResult(isIntegerResult)) {
     return isIntegerResult;
   }
 
