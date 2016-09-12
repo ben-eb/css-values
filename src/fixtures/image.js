@@ -55,6 +55,7 @@ export default {
         'element(bar)',
         'element("bar")',
         'element(#bar #bar)',
+        'element(#111)',
         'cross-fade(50%, "cat.jpg")',
         'cross-fade(50%, #fff)',
         'cross-fade(foo, bar)',

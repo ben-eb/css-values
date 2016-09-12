@@ -707,7 +707,13 @@ function isIdSelector(_ref2) {
     if (type !== 'word') {
         return false;
     }
-    return value[0] === '#' && isCustomIdent({ type: 'word', value: value.slice(1) });
+    if (value[0] !== '#') {
+        return invalidMessage('Expected "' + value + '" to start with a "#".');
+    }
+    if (value[0] === '#' && !isCustomIdent({ type: 'word', value: value.slice(1) })) {
+        return invalidMessage('Expected "' + value + '" to be a valid custom identifier.');
+    }
+    return true;
 }
 
 function isElement(node) {
@@ -845,7 +851,11 @@ function isGradient(node) {
 }
 
 function isImage(node) {
-    return isUrl(node) || isImageFunction(node) || isImageSet(node) || isElement(node) || isCrossFade(node) || isGradient(node);
+    var element = isElement(node);
+    if (shouldReturnResult(element)) {
+        return element;
+    }
+    return isUrl(node) || isImageFunction(node) || isImageSet(node) || isCrossFade(node) || isGradient(node);
 }
 
 function isBgImage(node) {

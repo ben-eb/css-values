@@ -1204,6 +1204,7 @@ test(invalid, backgroundImageValidator, "image-set(image-set(\"cat.jpg\" 1x) 1x)
 test(invalid, backgroundImageValidator, "element(bar)");
 test(invalid, backgroundImageValidator, "element(\"bar\")");
 test(invalid, backgroundImageValidator, "element(#bar #bar)");
+test(invalid, backgroundImageValidator, "element(#111)");
 test(invalid, backgroundImageValidator, "cross-fade(50%, \"cat.jpg\")");
 test(invalid, backgroundImageValidator, "cross-fade(50%, #fff)");
 test(invalid, backgroundImageValidator, "cross-fade(foo, bar)");
@@ -1508,6 +1509,7 @@ test(invalid, borderImageSourceValidator, "image-set(image-set(\"cat.jpg\" 1x) 1
 test(invalid, borderImageSourceValidator, "element(bar)");
 test(invalid, borderImageSourceValidator, "element(\"bar\")");
 test(invalid, borderImageSourceValidator, "element(#bar #bar)");
+test(invalid, borderImageSourceValidator, "element(#111)");
 test(invalid, borderImageSourceValidator, "cross-fade(50%, \"cat.jpg\")");
 test(invalid, borderImageSourceValidator, "cross-fade(50%, #fff)");
 test(invalid, borderImageSourceValidator, "cross-fade(foo, bar)");
@@ -2836,6 +2838,7 @@ test(invalid, maskImageValidator, "image-set(image-set(\"cat.jpg\" 1x) 1x)");
 test(invalid, maskImageValidator, "element(bar)");
 test(invalid, maskImageValidator, "element(\"bar\")");
 test(invalid, maskImageValidator, "element(#bar #bar)");
+test(invalid, maskImageValidator, "element(#111)");
 test(invalid, maskImageValidator, "cross-fade(50%, \"cat.jpg\")");
 test(invalid, maskImageValidator, "cross-fade(50%, #fff)");
 test(invalid, maskImageValidator, "cross-fade(foo, bar)");

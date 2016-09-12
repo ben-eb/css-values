@@ -1,5 +1,7 @@
 import endsWith from 'ends-with';
 import {walk, unit} from 'postcss-value-parser';
+import shouldReturnResult from '../util/shouldReturnResult';
+import {invalidMessage} from '../util/validationMessages';
 import getArguments from './getArguments';
 import isAngle from './isAngle';
 import isAt from './isAt';
@@ -70,7 +72,17 @@ function isIdSelector ({type, value}) {
     if (type !== 'word') {
         return false;
     }
-    return value[0] === '#' && isCustomIdent({type: 'word', value: value.slice(1)});
+    if (value[0] !== '#') {
+        return invalidMessage(
+            `Expected "${value}" to start with a "#".`
+        );
+    }
+    if (value[0] === '#' && !isCustomIdent({type: 'word', value: value.slice(1)})) {
+        return invalidMessage(
+            `Expected "${value}" to be a valid custom identifier.`
+        );
+    }
+    return true;
 }
 
 function isElement (node) {
@@ -236,10 +248,13 @@ function isGradient (node) {
 }
 
 export default function isImage (node) {
+    const element = isElement(node);
+    if (shouldReturnResult(element)) {
+        return element;
+    }
     return isUrl(node) ||
            isImageFunction(node) ||
            isImageSet(node) ||
-           isElement(node) ||
            isCrossFade(node) ||
            isGradient(node);
 }
