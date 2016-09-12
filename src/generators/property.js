@@ -280,6 +280,7 @@ function createValidator (opts) {
                 ])
             )
         );
+        return list;
     }, []);
 
     let body = [];
