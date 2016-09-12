@@ -5,5 +5,8 @@ export default {
         ...maskingModes,
         ...maskingModes.map(value => value.toUpperCase()),
     ],
-    invalid: ['jim-carrey'],
+    invalid: [
+        'jim-carrey',
+        `${maskingModes[0]}/${maskingModes[0]}`,
+    ],
 };

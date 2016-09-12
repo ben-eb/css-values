@@ -135,15 +135,55 @@ function dataString (config, candidate) {
         const method = candidate.separator === ',' ? 'isComma' : 'isSpace';
         addDependency(method);
         addDependency('isEven');
+        const result = `${camel}Result`;
+        config.repeatingConditions.push(
+            t.ifStatement(
+                evenIdentifier,
+                t.blockStatement([
+                    createConst(t.identifier(result), callExpression(
+                        camel,
+                        nodeIdentifier
+                    )),
+                    t.ifStatement(
+                        callExpression(
+                            'shouldReturnResult',
+                            t.identifier(result)
+                        ),
+                        t.blockStatement([
+                            t.expressionStatement(
+                                t.assignmentExpression(
+                                    '=',
+                                    validIdentifier,
+                                    t.identifier(`${camel}Result`)
+                                ),
+                            ),
+                            returnFalse,
+                        ])
+                    ),
+                    createConst(t.identifier('isVariableResult'), callExpression(
+                        'isVariable',
+                        nodeIdentifier
+                    )),
+                    t.expressionStatement(
+                        t.assignmentExpression(
+                            '=',
+                            validIdentifier,
+                            t.identifier(`isVariableResult`)
+                        ),
+                    ),
+                    returnFalse,
+                ])
+            )
+        );
         config.repeatingConditions.push(
             ifAnyTruthy([
-                allTruthy(
-                    evenIdentifier,
-                    allTruthy(
-                        notCallExpression(camel, nodeIdentifier),
-                        notCallExpression('isVariable', nodeIdentifier)
-                    ),
-                ),
+                // allTruthy(
+                //     evenIdentifier,
+                //     allTruthy(
+                //         // notCallExpression(camel, nodeIdentifier),
+                //         notCallExpression('isVariable', nodeIdentifier)
+                //     ),
+                // ),
                 allTruthy(
                     t.unaryExpression('!', evenIdentifier),
                     notCallExpression(method, nodeIdentifier)
@@ -158,12 +198,15 @@ function dataString (config, candidate) {
                 ),
             ])
         );
-        config.repeatingReturn = [
-            t.returnStatement(allTruthy(
-                validIdentifier,
-                notCallExpression('isEven', valueParserASTNodesLength)
-            )),
-        ];
+        config.preConditions.push(
+            t.ifStatement(
+                callExpression('isEven', valueParserASTNodesLength),
+                t.blockStatement([
+                    returnFalse,
+                ])
+            )
+        );
+        config.repeatingReturn = [t.returnStatement(validIdentifier)];
         if (candidate.max !== false) {
             config.preConditions.push(
                 t.ifStatement(
@@ -317,6 +360,16 @@ function createValidator (opts) {
                             nodeIdentifier,
                             indexIdentifier,
                         ], t.blockStatement([
+                            t.ifStatement(
+                                t.binaryExpression(
+                                    '!==',
+                                    validIdentifier,
+                                    t.booleanLiteral(true)
+                                ),
+                                t.blockStatement([
+                                    t.returnStatement(),
+                                ])
+                            ),
                             createConst(
                                 evenIdentifier,
                                 callExpression('isEven', indexIdentifier)

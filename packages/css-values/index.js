@@ -18,7 +18,7 @@ function isKeyword(_ref, values) {
         return false;
     }
     if (Array.isArray(values)) {
-        return ~values.map(lowercase).indexOf(lowercase(value));
+        return !!~values.map(lowercase).indexOf(lowercase(value));
     }
     return lowercase(value) === values;
 }
@@ -28,7 +28,7 @@ function isFunction(node, values) {
         return false;
     }
     if (Array.isArray(values)) {
-        return ~values.map(lowercase).indexOf(lowercase(node.value));
+        return !!~values.map(lowercase).indexOf(lowercase(node.value));
     }
     return lowercase(node.value) === values;
 }
@@ -224,7 +224,7 @@ var isTime = (function (_ref) {
     var value = _ref.value;
 
     var int = unit(value);
-    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && ~units.indexOf(int.unit);
+    return int && !endsWith(int.number, '.') && !~int.unit.indexOf('.') && !!~units.indexOf(int.unit);
 });
 
 var operators = ['+', '-', '*', '/'];
@@ -882,6 +882,12 @@ function isBgSize(valueParserAST) {
         return true;
     }
 
+    if (valueParserAST.nodes.some(function (node) {
+        return node.type && node.value === '/';
+    })) {
+        return false;
+    }
+
     return getArguments(valueParserAST).every(validateGroup$1);
 }
 
@@ -1408,67 +1414,153 @@ var webkitBorderBeforeColorValidator = function webkitBorderBeforeColorValidator
 var webkitBorderBeforeStyleValidator = function webkitBorderBeforeStyleValidator(valueParserAST) {
   var valid = true;
 
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   if (valueParserAST.nodes.length > 7) {
     return invalidMessage("Expected a maximum of 4 values.");
   }
 
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isBrStyle(node) && !isVariable(node) || !even && !isSpace(node)) {
+    if (even) {
+      var isBrStyleResult = isBrStyle(node);
+
+      if (shouldReturnResult(isBrStyleResult)) {
+        valid = isBrStyleResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isSpace(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var webkitBorderBeforeWidthValidator = function webkitBorderBeforeWidthValidator(valueParserAST) {
   var valid = true;
 
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   if (valueParserAST.nodes.length > 7) {
     return invalidMessage("Expected a maximum of 4 values.");
   }
 
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isBrWidth(node) && !isVariable(node) || !even && !isSpace(node)) {
+    if (even) {
+      var isBrWidthResult = isBrWidth(node);
+
+      if (shouldReturnResult(isBrWidthResult)) {
+        valid = isBrWidthResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isSpace(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var webkitMaskAttachmentValidator = function webkitMaskAttachmentValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isAttachment(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isAttachmentResult = isAttachment(node);
+
+      if (shouldReturnResult(isAttachmentResult)) {
+        valid = isAttachmentResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var webkitMaskCompositeValidator = function webkitMaskCompositeValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isCompositeStyle(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isCompositeStyleResult = isCompositeStyle(node);
+
+      if (shouldReturnResult(isCompositeStyleResult)) {
+        valid = isCompositeStyleResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var webkitMaskPositionValidator = isPositionRepeat;
@@ -1477,16 +1569,38 @@ var webkitMaskRepeatXValidator = isKeywordFactory(["repeat", "no-repeat", "space
 
 var webkitTapHighlightColorValidator = function webkitTapHighlightColorValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isColor(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isColorResult = isColor(node);
+
+      if (shouldReturnResult(isColorResult)) {
+        valid = isColorResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var webkitTextStrokeWidthValidator = function webkitTextStrokeWidthValidator(valueParserAST) {
@@ -1515,100 +1629,254 @@ var msFlexItemAlignValidator = isKeywordFactory(["auto", "flex-start", "flex-end
 
 var animationDelayValidator = function animationDelayValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isTime(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isTimeResult = isTime(node);
+
+      if (shouldReturnResult(isTimeResult)) {
+        valid = isTimeResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationDirectionValidator = function animationDirectionValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleAnimationDirection(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleAnimationDirectionResult = isSingleAnimationDirection(node);
+
+      if (shouldReturnResult(isSingleAnimationDirectionResult)) {
+        valid = isSingleAnimationDirectionResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationFillModeValidator = function animationFillModeValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleAnimationFillMode(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleAnimationFillModeResult = isSingleAnimationFillMode(node);
+
+      if (shouldReturnResult(isSingleAnimationFillModeResult)) {
+        valid = isSingleAnimationFillModeResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationIterationCountValidator = function animationIterationCountValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleAnimationIterationCount(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleAnimationIterationCountResult = isSingleAnimationIterationCount(node);
+
+      if (shouldReturnResult(isSingleAnimationIterationCountResult)) {
+        valid = isSingleAnimationIterationCountResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationNameValidator = function animationNameValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleAnimationName(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleAnimationNameResult = isSingleAnimationName(node);
+
+      if (shouldReturnResult(isSingleAnimationNameResult)) {
+        valid = isSingleAnimationNameResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationPlayStateValidator = function animationPlayStateValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleAnimationPlayState(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleAnimationPlayStateResult = isSingleAnimationPlayState(node);
+
+      if (shouldReturnResult(isSingleAnimationPlayStateResult)) {
+        valid = isSingleAnimationPlayStateResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var animationTimingFunctionValidator = function animationTimingFunctionValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isSingleTransitionTimingFunction(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isSingleTransitionTimingFunctionResult = isSingleTransitionTimingFunction(node);
+
+      if (shouldReturnResult(isSingleTransitionTimingFunctionResult)) {
+        valid = isSingleTransitionTimingFunctionResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var appearanceValidator = isKeywordFactory(["auto", "none"]);
@@ -1639,44 +1907,110 @@ var backfaceVisibilityValidator = isKeywordFactory(["visible", "hidden"]);
 
 var backgroundBlendModeValidator = function backgroundBlendModeValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isBlendMode(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isBlendModeResult = isBlendMode(node);
+
+      if (shouldReturnResult(isBlendModeResult)) {
+        valid = isBlendModeResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var backgroundClipValidator = function backgroundClipValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isBox(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isBoxResult = isBox(node);
+
+      if (shouldReturnResult(isBoxResult)) {
+        valid = isBoxResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var backgroundImageValidator = function backgroundImageValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isBgImage(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isBgImageResult = isBgImage(node);
+
+      if (shouldReturnResult(isBgImageResult)) {
+        valid = isBgImageResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var backgroundSizeValidator = isBgSize;
@@ -1684,20 +2018,41 @@ var backgroundSizeValidator = isBgSize;
 var borderBottomLeftRadiusValidator = function borderBottomLeftRadiusValidator(valueParserAST) {
   var valid = true;
 
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   if (valueParserAST.nodes.length > 3) {
     return invalidMessage("Expected a maximum of 2 values.");
   }
 
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isLengthPercentage(node) && !isVariable(node) || !even && !isSpace(node)) {
+    if (even) {
+      var isLengthPercentageResult = isLengthPercentage(node);
+
+      if (shouldReturnResult(isLengthPercentageResult)) {
+        valid = isLengthPercentageResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isSpace(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var borderBottomStyleValidator = function borderBottomStyleValidator(valueParserAST) {
@@ -1737,20 +2092,41 @@ var borderCollapseValidator = isKeywordFactory(["collapse", "separate"]);
 var borderColorValidator = function borderColorValidator(valueParserAST) {
   var valid = true;
 
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   if (valueParserAST.nodes.length > 7) {
     return invalidMessage("Expected a maximum of 4 values.");
   }
 
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isColor(node) && !isVariable(node) || !even && !isSpace(node)) {
+    if (even) {
+      var isColorResult = isColor(node);
+
+      if (shouldReturnResult(isColorResult)) {
+        valid = isColorResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isSpace(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var borderImageSourceValidator = function borderImageSourceValidator(valueParserAST) {
@@ -2054,16 +2430,38 @@ var gridTemplateAreasValidator = function gridTemplateAreasValidator(valueParser
   }
 
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isString(node) && !isVariable(node) || !even && !isSpace(node)) {
+    if (even) {
+      var isStringResult = isString(node);
+
+      if (shouldReturnResult(isStringResult)) {
+        valid = isStringResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isSpace(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var hyphensValidator = isKeywordFactory(["none", "manual", "auto"]);
@@ -2160,58 +2558,146 @@ var listStyleTypeValidator = function listStyleTypeValidator(valueParserAST) {
 
 var maskCompositeValidator = function maskCompositeValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isCompositingOperator(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isCompositingOperatorResult = isCompositingOperator(node);
+
+      if (shouldReturnResult(isCompositingOperatorResult)) {
+        valid = isCompositingOperatorResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var maskImageValidator = function maskImageValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isMaskReference(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isMaskReferenceResult = isMaskReference(node);
+
+      if (shouldReturnResult(isMaskReferenceResult)) {
+        valid = isMaskReferenceResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var maskModeValidator = function maskModeValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isMaskingMode(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isMaskingModeResult = isMaskingMode(node);
+
+      if (shouldReturnResult(isMaskingModeResult)) {
+        valid = isMaskingModeResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var maskOriginValidator = function maskOriginValidator(valueParserAST) {
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isGeometryBox(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isGeometryBoxResult = isGeometryBox(node);
+
+      if (shouldReturnResult(isGeometryBoxResult)) {
+        valid = isGeometryBoxResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var maskTypeValidator = isKeywordFactory(["luminance", "alpha"]);
@@ -2503,16 +2989,38 @@ var willChangeValidator = function willChangeValidator(valueParserAST) {
   }
 
   var valid = true;
+
+  if (isEven(valueParserAST.nodes.length)) {
+    return false;
+  }
+
   valueParserAST.walk(function (node, index) {
+    if (valid !== true) {
+      return;
+    }
+
     var even = isEven(index);
 
-    if (even && !isAnimateableFeature(node) && !isVariable(node) || !even && !isComma(node)) {
+    if (even) {
+      var isAnimateableFeatureResult = isAnimateableFeature(node);
+
+      if (shouldReturnResult(isAnimateableFeatureResult)) {
+        valid = isAnimateableFeatureResult;
+        return false;
+      }
+
+      var isVariableResult = isVariable(node);
+      valid = isVariableResult;
+      return false;
+    }
+
+    if (!even && !isComma(node)) {
       valid = false;
     }
 
     return false;
   });
-  return valid && !isEven(valueParserAST.nodes.length);
+  return valid;
 };
 
 var wordBreakValidator = isKeywordFactory(["normal", "break-all", "keep-all"]);

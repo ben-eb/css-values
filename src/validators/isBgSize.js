@@ -35,5 +35,9 @@ export default function isBgSize (valueParserAST) {
         return true;
     }
 
+    if (valueParserAST.nodes.some(node => node.type && node.value === '/')) {
+        return false;
+    }
+
     return getArguments(valueParserAST).every(validateGroup);
 }

@@ -11,5 +11,5 @@ export default ({value}) => {
     return int &&
         !endsWith(int.number, '.') &&
         !~int.unit.indexOf('.') &&
-        ~units.indexOf(int.unit);
+        !!~units.indexOf(int.unit);
 };

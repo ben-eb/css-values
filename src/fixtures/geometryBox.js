@@ -13,5 +13,6 @@ export default {
     invalid: [
         ...boxes.invalid,
         'view-box, fill-box, 1px',
+        'view-box/fill-box',
     ],
 };

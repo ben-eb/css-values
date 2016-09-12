@@ -80,11 +80,14 @@ function createTests ({properties, candidates, identifier}) {
                         createTest(identifier, `${values.valid[0]}, ${values.valid[0]},`, false),
                         createTest(identifier, `var(--foo), var(--bar)`),
                         createTest(identifier, `var(--foo), var(--bar),`, false),
+                        createTest(identifier, `${values.valid[0]} /`, false),
+                        createTest(identifier, `${values.valid[0]} / ${values.valid[0]}`, false),
                     );
                 } else if (candidate.separator === ' ') {
                     list.push(
                         createTest(identifier, `${values.valid[0]} ${values.valid[0]}`),
                         createTest(identifier, `${values.valid[0]}, ${values.valid[0]}`, false),
+                        createTest(identifier, `${values.valid[0]},`, false),
                         createTest(identifier, `var(--foo) var(--bar)`),
                         createTest(identifier, `var(--foo), var(--bar)`, false),
                     );

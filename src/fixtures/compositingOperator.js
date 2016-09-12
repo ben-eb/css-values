@@ -5,5 +5,8 @@ export default {
         ...compositingOperators,
         ...compositingOperators.map(value => value.toUpperCase()),
     ],
-    invalid: ['add-subtract'],
+    invalid: [
+        'add-subtract',
+        `${compositingOperators[0]}/${compositingOperators[0]}`,
+    ],
 };
