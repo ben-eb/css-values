@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "acquire": "node ./dist/acquire.js > ./data/data.json",
+    "postacquire": "lerna run postacquire",
     "contributorAdd": "all-contributors add",
     "contributorGenerate": "all-contributors generate",
     "docs": "documentation build src -f md -o docs.md && lerna run docs",
@@ -13,8 +14,8 @@
     "prepublish": "del-cli dist && cross-env BABEL_ENV=publish babel src --out-dir dist --ignore /__tests__/",
     "release": "npm test && lerna run release && lerna publish",
     "report": "nyc report --reporter=html",
-    "test": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava",
-    "test-012": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava"
+    "test": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava packages/**/test.js src/__tests__/*.js",
+    "test-012": "cross-env BABEL_ENV=test BABEL_DISABLE_CACHE=1 nyc --check-coverage --lines 100 ava packages/css-values/test.js src/__tests__/*.js"
   },
   "keywords": [
     "css"
@@ -88,10 +89,6 @@
     "instrument": false
   },
   "ava": {
-    "files": [
-      "packages/**/test.js",
-      "src/__tests__/**/*.js"
-    ],
     "babel": "inherit",
     "require": "babel-register"
   },
